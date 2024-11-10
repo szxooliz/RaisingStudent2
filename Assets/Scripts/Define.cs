@@ -8,7 +8,7 @@ public class Define
 {
     public enum Scene
     {
-
+        Base, Title
     }
 
     public enum Sound
@@ -43,7 +43,7 @@ public class Define
     }
     public enum StatNameKor
     {
-        Áö·Â, ´ö·Â, Ã¼·Â, ¸Å·Â
+        ì§€ë ¥, ë•ë ¥, ì²´ë ¥, ë§¤ë ¥
     }
 
     public static string GetStatNameKor(StatName statName)
@@ -75,17 +75,19 @@ public class Define
 
     }
 
+    [System.Serializable]
     public class PlayerData
     {
         public int currentTerm;
         public int currentTurn;
         public float[] statsAmounts;
+        [SerializeField] float _stressAmount;
         public float stressAmount
         {
-            get => stressAmount;
+            get => _stressAmount;
             set
             {
-                stressAmount = Mathf.Clamp(value, 0, 100);
+                _stressAmount = Mathf.Clamp(value, 0, 100);
 
             }
         }
