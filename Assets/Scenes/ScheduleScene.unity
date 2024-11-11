@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 265931089}
   - component: {fileID: 265931088}
   m_Layer: 5
-  m_Name: Button
+  m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 1829160269}
   - component: {fileID: 1829160268}
   m_Layer: 5
-  m_Name: Image
+  m_Name: ScheduleImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
