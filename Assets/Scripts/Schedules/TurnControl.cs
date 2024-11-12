@@ -9,10 +9,12 @@ public class TurnControl : MonoBehaviour
     protected int[] Status = { 0, 0, 0, 0, 0 };
     protected int turn = 0;
     protected int StressGauge = (int)Define.ActivityType.Rest;
-    private TMPro.TextMeshPro ScheduleMonth = GameObject.Find("MainGameCanvas").transform.Find("ScheduleUI").transform.Find("MonthText").gameObject.GetComponent<TMPro.TextMeshPro>();
-    private TMPro.TextMeshPro ScheduleSeg = GameObject.Find("MainGameCanvas").transform.Find("ScheduleUI").transform.Find("SegText").gameObject.GetComponent<TMPro.TextMeshPro>();
-    private void Awake() // 게임 시작할 때 UI를 업데이트하고 시작한다
+    private TMPro.TextMeshProUGUI ScheduleMonth;
+    private TMPro.TextMeshProUGUI ScheduleSeg;
+    private void Start() // 게임 시작할 때 UI를 업데이트하고 시작한다
     {
+        ScheduleMonth = GameObject.Find("MonthText").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+        ScheduleSeg = GameObject.Find("SegText").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
         UpdateScheduleUI(turn);
     }
     protected void OnStatusButtonClick()  // 스탯 올리는 버튼 눌렀을 때 기능
@@ -32,28 +34,28 @@ public class TurnControl : MonoBehaviour
         switch (turn/3)
         {
             case 0:
-                ScheduleMonth.text = "March";
+                ScheduleMonth.SetText("March");
                 break;
             case 1:
-                ScheduleMonth.text = "April";
+                ScheduleMonth.SetText("April");
                 break;
             case 2:
-                ScheduleMonth.text = "May";
+                ScheduleMonth.SetText("May");
                 break;
             case 3:
-                ScheduleMonth.text = "June";
+                ScheduleMonth.SetText("June");
                 break;
             case 4:
-                ScheduleMonth.text = "September";
+                ScheduleMonth.SetText("September");
                 break;
             case 5:
-                ScheduleMonth.text = "October";
+                ScheduleMonth.SetText("October");
                 break;
             case 6:
-                ScheduleMonth.text = "November";
+                ScheduleMonth.SetText("November");
                 break;
             case 7:
-                ScheduleMonth.text = "December";
+                ScheduleMonth.SetText("December");
                 break;
             default:
                 break;
@@ -61,13 +63,13 @@ public class TurnControl : MonoBehaviour
         switch (turn % 3)
         {
             case 0:
-                ScheduleSeg.text = "First";
+                ScheduleSeg.SetText("First");
                 break;
             case 1:
-                ScheduleSeg.text = "Second";
+                ScheduleSeg.SetText("Second");
                 break;
             case 2:
-                ScheduleSeg.text = "Third";
+                ScheduleSeg.SetText("Third");
                 break;
             default:
                 break;
