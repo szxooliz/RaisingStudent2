@@ -14,8 +14,6 @@ namespace Client
         private void Start()
         {
             UI_Manager.Instance.ShowSceneUI<UI_BaseScene>();
-            UI_Manager.Instance.ShowSceneUI<UI_BaseSceneTxt>();
-
         }
     }
 
