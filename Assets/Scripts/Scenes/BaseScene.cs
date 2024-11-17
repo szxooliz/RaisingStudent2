@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseScene : MonoBehaviour
+namespace Client
 {
-    private void Awake()
+    public class BaseScene : MonoBehaviour
     {
-        GameManager instance = GameManager.Instance;
+        private void Awake()
+        {
+            GameManager instance = GameManager.Instance;
+        }
+
+        private void Start()
+        {
+            UI_Manager.Instance.ShowSceneUI<UI_BaseScene>();
+            UI_Manager.Instance.ShowSceneUI<UI_BaseSceneTxt>();
+
+        }
     }
 
-    private void Start()
-    {
-        UI_Manager.Instance.ShowSceneUI<UI_BaseSceneBtn>();
-        UI_Manager.Instance.ShowSceneUI<UI_BaseSceneTxt>();
-
-    }
 }

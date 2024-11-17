@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Scene : UI_Base
+namespace Client
 {
-    public override void Init()
+    public class UI_Scene : UI_Base
     {
-        // GameManager.UI_Manager.SetCanavas(gameObject,false);
+        public override void Init()
+        {
+            // GameManager.UI_Manager.SetCanavas(gameObject,false);
+        }
     }
+
 }

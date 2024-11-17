@@ -4,21 +4,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
-public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
+namespace Client
 {
-    public Action<PointerEventData> OnClickHandler = null;
-    public Action<PointerEventData> OnDragHandler = null;
-
-    public void OnDrag(PointerEventData eventData)
+    public class UI_EventHandler : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
-        Debug.Log("eventData");
-        if (OnDragHandler != null)
-            OnDragHandler.Invoke(eventData);
-    }
+        public Action<PointerEventData> OnClickHandler = null;
+        public Action<PointerEventData> OnDragHandler = null;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (OnClickHandler != null)
-            OnClickHandler.Invoke(eventData);
+        public void OnDrag(PointerEventData eventData)
+        {
+            Debug.Log("eventData");
+            if (OnDragHandler != null)
+                OnDragHandler.Invoke(eventData);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (OnClickHandler != null)
+                OnClickHandler.Invoke(eventData);
+        }
     }
 }

@@ -9,13 +9,15 @@ using System.Linq;
 
 namespace Client
 {
-    public partial class Script : SheetData
+    public partial class CharacterFace : SheetData
     {
-public long index; // 스크립트 넘버
+public long index; // 인덱스
 		public string Character; // 캐릭터 고유값
-		public string Line; // 캐릭터의 대사
-		public string Face; // 캐릭터의 감정
-		public bool NameTag; // 이름표 사용 여부
+		public string CharacterName; // 캐릭터 이름
+		public string basic; // 기본
+		public string glad; // 기쁨
+		public string sad; // 슬픔
+		public string angry; // 화남
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -43,7 +45,7 @@ public long index; // 스크립트 넘버
 					if (values[0].Contains("#"))
 						continue;
 
-                    Script data = new Script();
+                    CharacterFace data = new CharacterFace();
 
                     
 					if(values[0] == "")
@@ -57,19 +59,29 @@ public long index; // 스크립트 넘버
 					    data.Character = Convert.ToString(values[1]);
 					
 					if(values[2] == "")
-					    data.Line = default;
+					    data.CharacterName = default;
 					else
-					    data.Line = Convert.ToString(values[2]);
+					    data.CharacterName = Convert.ToString(values[2]);
 					
 					if(values[3] == "")
-					    data.Face = default;
+					    data.basic = default;
 					else
-					    data.Face = Convert.ToString(values[3]);
+					    data.basic = Convert.ToString(values[3]);
 					
 					if(values[4] == "")
-					    data.NameTag = default;
+					    data.glad = default;
 					else
-					    data.NameTag = Convert.ToBoolean(values[4]);
+					    data.glad = Convert.ToString(values[4]);
+					
+					if(values[5] == "")
+					    data.sad = default;
+					else
+					    data.sad = Convert.ToString(values[5]);
+					
+					if(values[6] == "")
+					    data.angry = default;
+					else
+					    data.angry = Convert.ToString(values[6]);
 					
                     
                     dataList[data.index] = data;

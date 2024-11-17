@@ -1,8 +1,8 @@
-﻿스크립트 넘버,캐릭터 고유값,캐릭터의 대사,캐릭터의 감정,이름표 사용 여부
-index,Character,Line,Face,NameTag
-long,string,string,string,bool
-0,Comsoon,안녕하세요! 오늘은 뭘 할까요?,glad,TRUE
-1,Comsoon,어쩐지 힘이 좀 빠지는 것 같은데…,sad,TRUE
+﻿인덱스,캐릭터 고유값,캐릭터 이름,기본,기쁨,슬픔,화남
+index,Character,CharacterName,basic,glad,sad,angry
+long,string,string,string,string,string,string
+0,Comsoon,김컴순,Comsoon_smile,Comsoon_smile,Comsoon_smile,Comsoon_smile
+
 
 
 

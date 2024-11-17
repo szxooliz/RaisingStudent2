@@ -2,43 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : Singleton<ResourceManager>
+namespace Client
 {
-    ResourceManager() { }
-    public T Load<T>(string path) where T : Object
+    public class ResourceManager : Singleton<ResourceManager>
     {
-        if (typeof(T) == typeof(GameObject))
+        ResourceManager() { }
+        public T Load<T>(string path) where T : Object
         {
-            string name = path;
-            int index = name.LastIndexOf('/');
-            if (index >= 0)
-                name = name.Substring(index + 1);
+            if (typeof(T) == typeof(GameObject))
+            {
+                string name = path;
+                int index = name.LastIndexOf('/');
+                if (index >= 0)
+                    name = name.Substring(index + 1);
+            }
+
+            return Resources.Load<T>(path);
         }
 
-        return Resources.Load<T>(path);
-    }
-
-    public GameObject Instantiate(string path, Transform parent = null)
-    {
-        GameObject original = Load<GameObject>($"Prefabs/{path}");
-        if (original == null)
+        public GameObject Instantiate(string path, Transform parent = null)
         {
-            Debug.Log($"Failed to load prefab : {path}");
+            GameObject original = Load<GameObject>($"Prefabs/{path}");
+            if (original == null)
+            {
+                Debug.Log($"Failed to load prefab : {path}");
+            }
+
+
+            GameObject go = Object.Instantiate(original, parent);
+            go.name = original.name;
+
+            return go;
         }
 
-
-        GameObject go = Object.Instantiate(original, parent);
-        go.name = original.name;
-
-        return go;
-    }
-
-    public void Destroy(GameObject go)
-    {
-        if (go == null)
-            return;
+        public void Destroy(GameObject go)
+        {
+            if (go == null)
+                return;
 
 
-        Object.Destroy(go);
+            Object.Destroy(go);
+        }
     }
 }
