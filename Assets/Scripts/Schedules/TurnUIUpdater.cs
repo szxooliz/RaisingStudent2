@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TurnUIUpdater : MonoBehaviour
 {
@@ -20,10 +21,11 @@ public class TurnUIUpdater : MonoBehaviour
     }
     private void EndGame() // 게임 종료
     {
-        // 미구현
+        SceneManager.LoadScene("EndingScene");
     }
     private void UpdateScheduleUI(int turn) // 스케줄 UI 업데이트
     {
+        if (turn >= 24) return;
         switch (turn / 3)
         {
             case 0:
