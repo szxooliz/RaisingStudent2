@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9521b27ad4e2042bb1884fcf41676f, type: 3}
   m_Name: Exercise_ButtonData
   m_EditorClassIdentifier: 
+  buttonName: stamina
   stressValue: 10
   buttonType: 0

@@ -25,5 +25,10 @@ public class ButtonController : MonoBehaviour
         {
             StressManager.instance.decreaseStress(buttonData.stressValue);
         }
+
+        // 자체휴강 버튼이 아니라면 스탯 증가(임의의 증가량 30)
+        if (buttonData.buttonName != "SelfRest") {
+            StatManager.instance.increaseStat(buttonData.buttonName, 30);
+        }
     }
 }
