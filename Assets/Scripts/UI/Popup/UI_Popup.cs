@@ -21,5 +21,8 @@ namespace Client
             //GameManager.Sound.Play(Define.Sound.SmallBTN);
             UI_Manager.Instance.ClosePopupUI();
         }
+
+        public virtual void ReOpenPopupUI() { }
+
     }
 }

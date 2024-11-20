@@ -6,13 +6,27 @@ namespace Client
 {
     public class UI_Manager : Singleton<UI_Manager>
     {
+        /// <summary>
+        /// 팝업 관리용 stack
+        /// </summary>
+        [Header("Pop Up")]
+        Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
+
         int _order = 0;
 
-        Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
-        UI_Scene _scene = null;
+        /// <summary>
+        /// 팝업 재사용을 위한 캐싱
+        /// </summary>
+        Dictionary<System.Type, GameObject> _popupInstances = new Dictionary<System.Type, GameObject>();
+
 
         UI_Manager() { }
 
+        /// <summary>
+        /// UI의 부모
+        /// </summary>
+        [Header("Root")]
+        GameObject _root = null;
         public GameObject Root
         {
             get
@@ -25,6 +39,12 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// canvas 세팅
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="sort">팝업 정렬 방식 true: 차곡차곡</param>
+        /// <param name="order">원하는 방식대로 팝업 놓을 때 순서</param>
         public void SetCanavas(GameObject go, bool sort = true, int order = 0)
         {
             Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
@@ -38,22 +58,12 @@ namespace Client
                 canvas.sortingOrder = order;
         }
 
-        //public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
-        //{
-        //    if (string.IsNullOrEmpty(name))
-        //        name = typeof(T).Name;
-
-
-
-        //    GameObject go = GameManager.Resource.Instantiate($"UI/SubItem/{name}");
-
-        //    if (parent != null)
-        //        go.transform.SetParent(parent);
-
-        //    return Util.GetOrAddComponent<T>(go);
-        //}
-
-
+        /// <summary>
+        /// UI_Scene 상속받는 클래스의 UI 프리팹 중 Scene에 속하는 것 Instantiate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public T ShowSceneUI<T>(string name = null) where T : UI_Scene
         {
             if (string.IsNullOrEmpty(name))
@@ -61,28 +71,52 @@ namespace Client
 
             GameObject go = ResourceManager.Instance.Instantiate($"UI/Scene/{name}");
             T sceneUI = Util.GetOrAddComponent<T>(go);
-            _scene = sceneUI;
 
             go.transform.SetParent(Root.transform);
 
             return sceneUI;
         }
 
+        /// <summary>
+        /// UI_Popup 상속받는 클래스의 UI 프리팹 띄워줌
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public T ShowPopupUI<T>(string name = null) where T : UI_Popup
         {
             if (string.IsNullOrEmpty(name))
                 name = typeof(T).Name;
 
-            GameObject go = ResourceManager.Instance.Instantiate($"UI/Popup/{name}");
-            T popup = Util.GetOrAddComponent<T>(go);
-            _popupStack.Push(popup);
+            GameObject popup;
+            T popupUI;
 
-            go.transform.SetParent(Root.transform);
+            if(_popupInstances.TryGetValue(typeof(T), out popup) == false)
+            {
+                popup = ResourceManager.Instance.Instantiate($"UI/Popup/{name}");
+                _popupInstances.Add(typeof(T), popup);
 
-            return popup;
+                popupUI = Util.GetOrAddComponent<T>(popup);
+            }
+            else
+            {
+                popupUI = Util.GetOrAddComponent<T>(popup);
+                popupUI.ReOpenPopupUI();
+                popupUI.GetComponent<Canvas>().sortingOrder = _order++;
+            }
+
+            _popupStack.Push(popupUI);
+
+            popup.transform.SetParent(Root.transform);
+            popup.SetActive(true);
+
+            return popupUI;
         }
 
-
+        /// <summary>
+        /// 가장 위의 팝업 닫기
+        /// </summary>
+        /// <param name="popup"></param>
         public void ClosePopupUI(UI_Popup popup)
         {
             if (_popupStack.Count == 0)
@@ -97,6 +131,9 @@ namespace Client
             ClosePopupUI();
         }
 
+        /// <summary>
+        /// 가장 위의 팝업 닫기
+        /// </summary>
         public void ClosePopupUI()
         {
             if (_popupStack.Count == 0)
@@ -109,15 +146,22 @@ namespace Client
             _order--;
         }
 
-        public void CloseALlPopupUI()
+        /// <summary>
+        /// 팝업 전부 닫기
+        /// </summary>
+        public void CloseAllPopupUI()
         {
             while (_popupStack.Count > 0)
                 ClosePopupUI();
         }
 
+        /// <summary>
+        /// UI 초기화
+        /// </summary>
         public void Clear()
         {
-            CloseALlPopupUI();
+            CloseAllPopupUI();
+            _popupInstances.Clear();
         }
     }
 }

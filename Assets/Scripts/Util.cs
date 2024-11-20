@@ -6,7 +6,12 @@ namespace Client
 {
     public class Util
     {
-
+        /// <summary>
+        /// T 형식의 컴포넌트를 얻어오고 없으면 추가
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <returns></returns>
         public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
         {
             T component = go.GetComponent<T>();
@@ -15,7 +20,14 @@ namespace Client
             return component;
         }
 
-
+        /// <summary>
+        /// go의 자식 오브젝트로부터 T 형식의 컴포넌트 찾는 함수
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="go"></param>
+        /// <param name="name"></param>
+        /// <param name="recursive">true: 전체 자식에서, false:자식에서 제일 먼저 보이는 컴포넌트만</param>
+        /// <returns></returns>
         public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
         {
             if (go == null)
