@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.U2D;
 
 namespace Client
 {
     public class Conversation : UI_Base, IPointerClickHandler
     {
-        /*
-        1. 기본 세팅: 말풍선 기본으로 항상 떠 있음
-        2. 인터랙션 하면 사라졌다가 재생성
-            - 재생성 시 대사 & 캐릭터 표정 불러오기
-        */
         enum CharImages
         {
             IMG_CharFace, IMG_CharBubble
@@ -23,18 +21,43 @@ namespace Client
             TMP_CharLine
         }
 
-        private Script script;
-        private long maxCount;
-        string spritePath = "Sprites/";
+        // private Script script;
+        private long maxCount; // 임시
 
+        private string spritePath = "Sprites/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
+
+        private Image charFace;
+        private Image charBubble;
+        private TMPro.TMP_Text charLine;
+
+        RectTransform bubbleRect;
+
+        Vector3 originalScale;
+        Vector3 smallScale;
+
+        private Coroutine coroutine = null;
 
         public override void Init()
         {
             Bind<UnityEngine.UI.Image>(typeof(CharImages));
             Bind<TMPro.TMP_Text>(typeof(CharTexts));
 
-            maxCount = 2; // temp value
+            maxCount = 2; // 임시
+        }
+
+        private void Start()
+        {
+            charFace = GetImage((int)CharImages.IMG_CharFace);
+            charBubble = GetImage((int)CharImages.IMG_CharBubble);
+            charLine = GetText((int)CharTexts.TMP_CharLine);
+
+            bubbleRect = charBubble.rectTransform;
+
+            originalScale = bubbleRect.localScale;
+            smallScale = originalScale * 0.1f;
+
+            charFace.alphaHitTestMinimumThreshold = 0.1f;
         }
 
         /// <summary>
@@ -43,14 +66,22 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
-            // TODO: 말풍선 위에도 적용되는지 확인하기
-            ResetBubble(Random.Range(0, (int)maxCount));
+            if (coroutine != null)
+            {
+                Debug.Log("코루틴 이미 실행 중");
+                return;
+            }
+            else
+            {
+                coroutine = StartCoroutine(ResetBubble(Random.Range(0, (int)maxCount)));
+            }
+
         }
 
         /// <summary>
         /// 인터랙션 시 말풍선 새로 고침
         /// </summary>
-        void ResetBubble(int index)
+        IEnumerator ResetBubble(int index)
         {
             index = UnityEngine.Random.Range(0, 2);
             Script script = DataManager.Instance.GetData<Script>(index);
@@ -60,7 +91,7 @@ namespace Client
 
             if (script == null) 
             {
-                return;
+                yield return null;
             }
 
             try
@@ -68,8 +99,8 @@ namespace Client
                 string path = spritePath + charType + "_" + script.Face;
                 Sprite sprite = GetOrLoadSprite(path);
 
-                GetText((int)CharTexts.TMP_CharLine).text = script.Line;
-                GetImage((int)CharImages.IMG_CharFace).sprite = sprite;
+                StartCoroutine(AnimateBubble(script, sprite));
+
 
                 Debug.Log($"Bubble updated: Line = {script.Line}, Face = {script.Face}");
             }
@@ -77,6 +108,8 @@ namespace Client
             {
                 Debug.LogError($"Failed to update bubble: {e.Message}");
             }
+
+            yield return null;
         }
 
         Sprite GetOrLoadSprite(string _path)
@@ -96,6 +129,34 @@ namespace Client
             // 로드된 스프라이트를 캐싱
             spriteCache[_path] = loadedSprite; 
             return loadedSprite;
+        }
+
+        /// <summary>
+        /// 말풍선 애니메이션
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator AnimateBubble(Script _script, Sprite _sprite)
+        {
+            charLine.alpha = 0f;
+
+            Sequence seq = DOTween.Sequence();
+
+            seq
+                .Append(bubbleRect.DOScale(smallScale, 0.3f).SetEase(Ease.InOutQuad))
+                .AppendCallback(()=>
+                {
+                    charFace.sprite = _sprite;
+                })
+                .Append(bubbleRect.DOScale(originalScale, 0.3f).SetEase(Ease.OutBounce))
+                .AppendCallback(() =>
+                {
+                    charLine.alpha = 1f;
+                    charLine.text = _script.Line;
+                });
+
+            // 코루틴 종료 후 상태 초기화
+            yield return seq.WaitForCompletion();
+            coroutine = null;
         }
     }
 }
