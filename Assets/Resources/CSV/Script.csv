@@ -1,8 +1,8 @@
-﻿스크립트 넘버,캐릭터 고유값,캐릭터의 대사,캐릭터의 감정,이름표 사용 여부
-index,Character,Line,Face,NameTag
-long,string,string,string,bool
-0,Comsoon,안녕하세요! 오늘은 뭘 할까요?,glad,TRUE
-1,Comsoon,어쩐지 힘이 좀 빠지는 것 같은데…,sad,TRUE
+﻿스크립트 넘버,캐릭터의 대사,캐릭터의 감정,
+index,Line,Face,
+long,string,string,
+0,안녕하세요! 오늘은 뭘 할까요?,glad,
+1,어쩐지 힘이 좀 빠지는 것 같은데…,sad,
 
 
 

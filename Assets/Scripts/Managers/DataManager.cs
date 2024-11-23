@@ -1,16 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using UnityEditor.Experimental.RestService;
 using UnityEngine;
+using static Client.Define;
 
 namespace Client
 {
     public class DataManager : Singleton<DataManager>
     {
-        /// 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
+        // 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
         Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
+        
+        public PlayerData playerData; // 플레이어 데이터
+        // 추가: PersistentData
 
         #region Singleton
         private DataManager()
@@ -20,8 +27,10 @@ namespace Client
         public override void Init()
         {
             DataLoad();
+            LoadPlayerData();
         }
 
+        #region SheetData Load & Save
         public void DataLoad()
         {
             // 현재 어셈블리 내에서 SheetData를 상속받는 모든 타입을 찾음
@@ -39,7 +48,7 @@ namespace Client
                 {
                     continue;
                 }
-                Debug.Log(type.Name);
+                Debug.Log("SheetData Load : " + type.Name);
                 Dictionary<long, SheetData> sheet = instance.LoadData();
 
                 if (_cache.ContainsKey(type.Name) == false)
@@ -99,5 +108,43 @@ namespace Client
                 _cache[key].Add(id, data);
             }
         }
+        #endregion
+
+        #region JSON Data Load & Save
+        public void LoadPlayerData()
+        {
+            string path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+
+            if (!File.Exists(path))
+            {
+                Debug.LogError("Player Data 없음, 새로 생성");
+                playerData = new PlayerData();
+                SavePlayerData();
+            }
+
+            FileStream fileStream = new FileStream(path, FileMode.Open);
+            byte[] data = new byte[fileStream.Length];
+            fileStream.Read(data, 0, data.Length);
+            fileStream.Close();
+            string jsonData = Encoding.UTF8.GetString(data);
+            playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+
+            Debug.Log("Player Data Load 성공");
+        }
+
+        public void SavePlayerData() 
+        {
+            string path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+
+            string jsonData = JsonUtility.ToJson(playerData, true);
+            FileStream fileStream = new FileStream(path, FileMode.Create);
+            byte[] data = Encoding.UTF8.GetBytes(jsonData);
+            fileStream.Write(data, 0, data.Length);
+            fileStream.Close();
+
+            Debug.Log("Player Data Save 성공");
+
+        }
+        #endregion
     }
 }

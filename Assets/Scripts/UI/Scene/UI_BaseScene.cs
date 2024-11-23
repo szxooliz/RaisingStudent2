@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,35 +16,33 @@ namespace Client
         2. 스트레스 수치
         3. 활동 버튼들 -> 누르면 활동 이벤트 발생
         4. 턴 기록
-        5. 스케줄 확인 버튼 -> 팝업 O
+        5. 스케줄 버튼 -> 팝업 O
         6. 로그 버튼 -> 팝업 O
         7. 현재 상황 표시: 로그버튼 옆에있던거
         8. 메뉴 버튼 -> 팝업 O
-
-        참고: 대화 말풍선은 팝업으로
-
-        버튼 / 텍스트 UI 분리해서 스크립트 만듦
-        버튼 누르고 이벤트 발생하면 액션사용해서 텍스트 쪽으로 변경사항 적용되도록
         */
 
         enum Buttons
         {
-            MenuBtn, ScheduleBtn,
-            LogBtn,
-            RestBtn,
-            ClassBtn, GameBtn, WorkOutBtn, ClubBtn,
-            MaxCount
+            BTN_Menu, BTN_Schedule,
+            BTN_Log,
+            BTN_Rest,
+            BTN_Study, BTN_Game, BTN_WorkOut, BTN_Club,
+            // MaxCount
         }
 
         enum Texts
         {
             // 스탯 이름들
-            InteliNameTMP, OtakuNameTMP, StrengthNameTMP, CharmingNameTMP,
+            TMP_InteliName, TMP_OtakuName, TMP_StrengthName, TMP_CharmingName,
+            
             // 스탯 수치들
-            InteliTMP, OtakuTMP, StrengthTMP, CharmingTMP,
+            TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming,
 
-            MaxCount
+            //MaxCount
         }
+
+        // TODO: UI_Stress Slider Binding
 
         public override void Init()
         {
@@ -55,37 +54,56 @@ namespace Client
 
         void BindButton()
         {
-            BindEvent(GetButton((int)Buttons.MenuBtn).gameObject, OnClickMenuBtn);
-            BindEvent(GetButton((int)Buttons.ScheduleBtn).gameObject, OnClickScheduleBtn);
-            // 아래 더 추가
+            BindEvent(GetButton((int)Buttons.BTN_Menu).gameObject, OnClickMenuBtn);
+            BindEvent(GetButton((int)Buttons.BTN_Schedule).gameObject, OnClickScheduleBtn);
+            BindEvent(GetButton((int)Buttons.BTN_Log).gameObject, OnClickLogBtn);
+
+            BindEvent(GetButton((int)Buttons.BTN_Rest).gameObject, OnClickRestBtn);
+            BindEvent(GetButton((int)Buttons.BTN_Study).gameObject, OnClickStudyBtn);
+            BindEvent(GetButton((int)Buttons.BTN_Game).gameObject, OnClickGameBtn);
+            BindEvent(GetButton((int)Buttons.BTN_WorkOut).gameObject, OnClickWorkOutBtn);
+            BindEvent(GetButton((int)Buttons.BTN_Club).gameObject, OnClickClubBtn);
+
         }
 
         #region 버튼 이벤트
         void OnClickMenuBtn(PointerEventData evt)
         {
-            // 메뉴 버튼 눌렀을 때 작동되어야 하는 함수
+            Debug.Log("메뉴 버튼 클릭");
         }
 
         void OnClickScheduleBtn(PointerEventData evt)
         {
-
+            Debug.Log("학사 일정 버튼 클릭");
         }
 
         void OnClickLogBtn(PointerEventData evt)
         {
-
+            Debug.Log("로그 버튼 클릭");
+            UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
         }
 
         void OnClickRestBtn(PointerEventData evt)
         {
-
+            Debug.Log("자체 휴강 버튼 클릭");
         }
-        void OnClickClassBtn(PointerEventData evt) { }
-        void OnClickGameBtn(PointerEventData evt) { }
-        void OnClickWorkOutBtn(PointerEventData evt) { }
-        void OnClickClubBtn(PointerEventData evt) { }
+        void OnClickStudyBtn(PointerEventData evt) 
+        {
+            Debug.Log("공부 버튼 클릭");
+        }
+        void OnClickGameBtn(PointerEventData evt) 
+        {
+            Debug.Log("게임 버튼 클릭");
+        }
+        void OnClickWorkOutBtn(PointerEventData evt) 
+        {
+            Debug.Log("운동 버튼 클릭");
+        }
+        void OnClickClubBtn(PointerEventData evt) 
+        {
+            Debug.Log("동아리 버튼 클릭");
+        }
         #endregion
-
 
     }
 
