@@ -14,7 +14,7 @@ public class ButtonController : MonoBehaviour
             return;
         }
         // 디버그용 로그 추가
-        Debug.Log($"Button clicked! Type: {buttonData.buttonType}, Value: {buttonData.stressValue}");
+        Debug.Log($"Button clicked! Type: {buttonData.buttonType}, StressValue: {buttonData.stressValue}, StatValue: {buttonData.statValue}");
         
         // 버튼 클릭 시 스트레스 증가 또는 감소
         if (buttonData.buttonType == ButtonType.Increase)
@@ -25,10 +25,9 @@ public class ButtonController : MonoBehaviour
         {
             StressManager.instance.decreaseStress(buttonData.stressValue);
         }
-
-        // 자체휴강 버튼이 아니라면 스탯 증가(임의의 증가량 30)
-        if (buttonData.buttonName != "SelfRest") {
-            StatManager.instance.increaseStat(buttonData.buttonName, 30);
-        }
+        
+        // 스탯 증가
+        StatManager.instance.increaseStat(buttonData.buttonName, buttonData.statValue);
+        
     }
 }

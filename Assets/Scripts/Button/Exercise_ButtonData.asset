@@ -15,3 +15,4 @@ MonoBehaviour:
   buttonName: stamina
   stressValue: 10
   buttonType: 0
+  statValue: 30

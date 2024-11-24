@@ -15,3 +15,4 @@ MonoBehaviour:
   buttonName: intelligence
   stressValue: 30
   buttonType: 0
+  statValue: 30
