@@ -21,8 +21,7 @@ namespace Client
             TMP_CharLine
         }
 
-        // private Script script;
-        private long maxCount; // 임시
+        private long maxCount; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
         private string spritePath = "Sprites/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
@@ -87,7 +86,7 @@ namespace Client
             Script script = DataManager.Instance.GetData<Script>(index);
 
             // 임시: 캐릭터 종류 관련 로직 정해지면 수정
-            string charType = "Comsoon"; 
+            string charType = script.Character; 
 
             if (script == null) 
             {

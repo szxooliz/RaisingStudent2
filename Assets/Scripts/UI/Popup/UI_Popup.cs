@@ -13,12 +13,6 @@ namespace Client
 
         public virtual void ClosePopupUI()
         {
-            UI_Manager.Instance.ClosePopupUI(this);
-        }
-
-        public void CloseBTN()
-        {
-            //GameManager.Sound.Play(Define.Sound.SmallBTN);
             UI_Manager.Instance.ClosePopupUI();
         }
 

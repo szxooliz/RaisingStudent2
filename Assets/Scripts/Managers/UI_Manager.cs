@@ -12,7 +12,7 @@ namespace Client
         [Header("Pop Up")]
         Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
 
-        int _order = 0;
+        int _order = 1;
 
         /// <summary>
         /// 팝업 재사용을 위한 캐싱
@@ -31,11 +31,11 @@ namespace Client
         {
             get
             {
-                GameObject root = GameObject.Find("@UI_Root");
-                if (root == null)
-                    root = new GameObject { name = "@UI_Root" };
+                _root = GameObject.Find("@UI_Root");
+                if (_root == null)
+                    _root = new GameObject { name = "@UI_Root" };
 
-                return root;
+                return _root;
             }
         }
 
@@ -113,41 +113,18 @@ namespace Client
             return popupUI;
         }
 
-        /// <summary>
-        /// 가장 위의 팝업 닫기
-        /// </summary>
-        /// <param name="popup"></param>
-        public void ClosePopupUI(UI_Popup popup)
-        {
-            if (_popupStack.Count == 0)
-                return;
-
-            if (_popupStack.Peek() != popup)
-            {
-                Debug.Log("Close Popup Failed");
-                return;
-            }
-
-            ClosePopupUI();
-        }
-
-        /// <summary>
-        /// 가장 위의 팝업 닫기
-        /// </summary>
         public void ClosePopupUI()
         {
-            if (_popupStack.Count == 0)
-                return;
+            if (_popupStack.Count <= 0) return;
 
             UI_Popup popup = _popupStack.Pop();
-            ResourceManager.Instance.Destroy(popup.gameObject);
-            popup = null;
+            popup.gameObject.SetActive(false);
 
             _order--;
         }
 
         /// <summary>
-        /// 팝업 전부 닫기
+        /// 모든 pop up UI 닫기
         /// </summary>
         public void CloseAllPopupUI()
         {

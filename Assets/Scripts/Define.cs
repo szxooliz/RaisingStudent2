@@ -15,7 +15,7 @@ namespace Client
 
         public enum Sound
         {
-            Effect, Bgm,
+            SFX, BGM,
             MaxCount
         }
 

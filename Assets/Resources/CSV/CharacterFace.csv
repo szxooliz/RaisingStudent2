@@ -1,7 +1,7 @@
-﻿인덱스,캐릭터 고유값,캐릭터 이름,기본,기쁨,슬픔,화남
-index,Character,CharacterName,basic,glad,sad,angry
-long,string,string,string,string,string,string
-0,Comsoon,김컴순,Comsoon_smile,Comsoon_smile,Comsoon_smile,Comsoon_smile
+﻿인덱스,캐릭터 고유값,캐릭터 이름,기본,기쁨,슬픔,
+index,Character,CharacterName,basic,glad,sad,
+long,string,string,string,string,string,
+0,Comsoon,김컴순,Comsoon_smile,Comsoon_smile,Comsoon_smile,
 
 
 

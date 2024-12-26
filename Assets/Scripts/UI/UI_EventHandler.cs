@@ -13,7 +13,6 @@ namespace Client
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("eventData");
             if (OnDragHandler != null)
                 OnDragHandler.Invoke(eventData);
         }

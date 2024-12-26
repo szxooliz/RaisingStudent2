@@ -98,8 +98,6 @@ namespace Client
                     evt.OnDragHandler += action;
                     break;
             }
-
-            evt.OnDragHandler += ((PointerEventData data) => { evt.gameObject.transform.position = data.position; });
         }
 
         public void SetResolution()

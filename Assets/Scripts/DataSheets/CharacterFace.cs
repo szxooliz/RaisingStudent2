@@ -17,7 +17,6 @@ public long index; // 인덱스
 		public string basic; // 기본
 		public string glad; // 기쁨
 		public string sad; // 슬픔
-		public string angry; // 화남
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -77,11 +76,6 @@ public long index; // 인덱스
 					    data.sad = default;
 					else
 					    data.sad = Convert.ToString(values[5]);
-					
-					if(values[6] == "")
-					    data.angry = default;
-					else
-					    data.angry = Convert.ToString(values[6]);
 					
                     
                     dataList[data.index] = data;

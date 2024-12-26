@@ -35,7 +35,7 @@ namespace Client
         {
             // 스탯 이름들
             TMP_InteliName, TMP_OtakuName, TMP_StrengthName, TMP_CharmingName,
-            
+
             // 스탯 수치들
             TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming,
 
@@ -70,6 +70,7 @@ namespace Client
         void OnClickMenuBtn(PointerEventData evt)
         {
             Debug.Log("메뉴 버튼 클릭");
+            UI_Manager.Instance.ShowPopupUI<UI_MenuPopup>();
         }
 
         void OnClickScheduleBtn(PointerEventData evt)
@@ -80,27 +81,26 @@ namespace Client
         void OnClickLogBtn(PointerEventData evt)
         {
             Debug.Log("로그 버튼 클릭");
-            // UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
-            // 갑자기 안되네..
+            UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
         }
 
         void OnClickRestBtn(PointerEventData evt)
         {
             Debug.Log("자체 휴강 버튼 클릭");
         }
-        void OnClickStudyBtn(PointerEventData evt) 
+        void OnClickStudyBtn(PointerEventData evt)
         {
             Debug.Log("공부 버튼 클릭");
         }
-        void OnClickGameBtn(PointerEventData evt) 
+        void OnClickGameBtn(PointerEventData evt)
         {
             Debug.Log("게임 버튼 클릭");
         }
-        void OnClickWorkOutBtn(PointerEventData evt) 
+        void OnClickWorkOutBtn(PointerEventData evt)
         {
             Debug.Log("운동 버튼 클릭");
         }
-        void OnClickClubBtn(PointerEventData evt) 
+        void OnClickClubBtn(PointerEventData evt)
         {
             Debug.Log("동아리 버튼 클릭");
         }

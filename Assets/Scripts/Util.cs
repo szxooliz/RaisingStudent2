@@ -7,17 +7,11 @@ namespace Client
     public class Util
     {
         /// <summary>
-        /// T 형식의 컴포넌트를 얻어오고 없으면 추가
+        /// Game Object에서 해당 Component 얻거나 없으면 추가 (주의 무거움)
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="go"></param>
-        /// <returns></returns>
         public static T GetOrAddComponent<T>(GameObject go) where T : UnityEngine.Component
         {
-            T component = go.GetComponent<T>();
-            if (component == null)
-                component = go.AddComponent<T>();
-            return component;
+            return go.GetComponent<T>() ?? go.AddComponent<T>();
         }
 
         /// <summary>
