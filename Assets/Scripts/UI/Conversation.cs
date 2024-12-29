@@ -23,7 +23,7 @@ namespace Client
 
         private long maxCount; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
-        private string spritePath = "Sprites/";
+        private string spritePath = "Sprites/Character/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         private Image charFace;

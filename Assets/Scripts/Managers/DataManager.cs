@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using UnityEditor.Experimental.RestService;
 using UnityEngine;
 using static Client.Define;
 
@@ -17,7 +16,9 @@ namespace Client
         Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
         
         public PlayerData playerData; // 플레이어 데이터
-        // 추가: PersistentData
+        // 추가: PersistentData(엔딩 목록 등)
+
+        public ActivityData activityData = new ActivityData(); // 활동 하나의 데이터, 결과 전달용
 
         #region Singleton
         private DataManager()
@@ -146,5 +147,47 @@ namespace Client
 
         }
         #endregion
+
+        // 1. 선택한 활동에 대한 정보 설정 - 하드코딩
+        public ActivityData SetNewActivityData(ActivityType activityType)
+        {
+            activityData = new ActivityData();
+
+            switch(activityType)
+            {
+                case ActivityType.Rest:
+                    activityData.activityType = ActivityType.Rest;
+                    activityData.stressValue = -10f; // 임시값
+                    break;
+                case ActivityType.Class:
+                    activityData.activityType = ActivityType.Class;
+                    activityData.statName1 = StatName.Inteli;
+                    activityData.statName2 = StatName.Strength;
+                    activityData.stressValue = 30f; // 임시값
+                    break;
+                case ActivityType.Game:
+                    activityData.activityType = ActivityType.Class;
+                    activityData.statName1 = StatName.Otaku;
+                    activityData.statName2 = StatName.Inteli;
+                    activityData.stressValue = 10f; // 임시값
+                    break;
+                case ActivityType.Workout:
+                    activityData.activityType = ActivityType.Class;
+                    activityData.statName1 = StatName.Strength;
+                    activityData.statName2 = StatName.Charming;
+                    activityData.stressValue = 20f; // 임시값
+                    break;
+                case ActivityType.Club:
+                    activityData.activityType = ActivityType.Class;
+                    activityData.statName1 = StatName.Charming;
+                    activityData.statName2 = StatName.Otaku;
+                    activityData.stressValue = 10f; // 임시값
+                    break;
+            }
+            // 임시값
+            activityData.stat1Value = 10;
+            activityData.stat2Value = 5;
+            return activityData;
+        }
     }
 }

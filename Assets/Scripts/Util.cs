@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Client
@@ -63,5 +65,16 @@ namespace Client
             return transform.gameObject;
         }
 
+        public static Tween TMPDOText(TMP_Text text, float duration)
+        {
+            text.maxVisibleCharacters = 0;
+            Tween t = DOTween.To(x => text.maxVisibleCharacters = (int)x, 0f, text.text.Length, duration);
+            return t;
+        }
+        public static void TMP_DOText(TMP_Text text, float duration)
+        {
+            text.maxVisibleCharacters = 0;
+            DOTween.To(x => text.maxVisibleCharacters = (int)x, 0f, text.text.Length, duration);
+        }
     }
 }
