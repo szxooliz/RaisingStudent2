@@ -19,6 +19,9 @@ public class StatManager : MonoBehaviour
     // 스탯 최대값
     private const int MAX_STAT = 100;
 
+    // 스탯 성공 확률
+    private float statSuccessProb = 0;
+
     void Awake()
     {
         // 싱글톤 패턴 적용
@@ -36,64 +39,79 @@ public class StatManager : MonoBehaviour
     // 버튼 클릭 시 관련 스탯과 랜덤 스탯 증가
     public void increaseStat(string statName, int statValue)
     {
-        int stressValue = StressManager.instance.stressValue; // 스트레스 변수
-        bool isFailure = false; // 실패 여부 변수
+        int stressValue = StressManager.instance.stressValue;
+        statSuccessProb = DetermineSuccess(stressValue);
+        statValue = (int)(statValue * statSuccessProb);
 
-        if (stressValue >= 70) { // 스트레스가 70 이상이라면
-            if (Random.value < 0.5f) { // 10% 확률로 실패
-                isFailure = true;
-            }
-            statValue /= 2; // 스탯 값 상승량 절반
+        List<string> statListRemoved = statList.ToList();
+        statListRemoved.Remove(statName);
+        int increaseIdx = Random.Range(0, statListRemoved.Count);
+        
+        // 관련 스탯 증가
+        switch(statName) {
+            case "stamina":
+                stamina += statValue;
+                // if (stamina > MAX_STAT) stamina = MAX_STAT;
+                break;
+            case "intelligence":
+                intelligence += statValue;
+                // if (intelligence > MAX_STAT) intelligence = MAX_STAT;
+                break;
+            case "charisma":
+                charisma += statValue;
+                // if (charisma > MAX_STAT) charisma = MAX_STAT;
+                break;
+            case "mania":
+                mania += statValue;
+                // if (mania > MAX_STAT) mania = MAX_STAT;
+                break;
         }
+        // 랜덤 스탯 증가
+        switch(statListRemoved[increaseIdx]) {
+            case "stamina":
+                stamina += statValue;
+                // if (stamina > MAX_STAT) stamina = MAX_STAT;
+                break;
+            case "intelligence":
+                intelligence += statValue;
+                // if (intelligence > MAX_STAT) intelligence = MAX_STAT;
+                break;
+            case "charisma":
+                charisma += statValue;
+                // if (charisma > MAX_STAT) charisma = MAX_STAT;
+                break;
+            case "mania":
+                mania += statValue;
+                // if (mania > MAX_STAT) mania = MAX_STAT;
+                break;
+        }
+        Debug.Log($"스탯 - 체력: {stamina}, 지력: {intelligence}, 매력: {charisma}, 덕력: {mania}");
+    }
 
-        if (!isFailure) { // 실패하지 않았다면
-            List<string> statListRemoved = statList.ToList();
+    private float DetermineSuccess(int stressValue){
+        int rand = Random.Range(0, 100);
 
-            statListRemoved.Remove(statName); // 관련 스탯 삭제
-            int increaseIdx = Random.Range(0, statListRemoved.Count); // 증가할 스탯의 인덱스 랜덤으로 구하기
-            
-            // 관련 스탯 증가
-            switch(statName) {
-                case "stamina":
-                    stamina += statValue;
-                    // if (stamina > MAX_STAT) stamina = MAX_STAT;
-                    break;
-                case "intelligence":
-                    intelligence += statValue;
-                    // if (intelligence > MAX_STAT) intelligence = MAX_STAT;
-                    break;
-                case "charisma":
-                    charisma += statValue;
-                    // if (charisma > MAX_STAT) charisma = MAX_STAT;
-                    break;
-                case "mania":
-                    mania += statValue;
-                    // if (mania > MAX_STAT) mania = MAX_STAT;
-                    break;
-            }
-            // 랜덤 스탯 증가
-            switch(statListRemoved[increaseIdx]) {
-                case "stamina":
-                    stamina += statValue;
-                    // if (stamina > MAX_STAT) stamina = MAX_STAT;
-                    break;
-                case "intelligence":
-                    intelligence += statValue;
-                    // if (intelligence > MAX_STAT) intelligence = MAX_STAT;
-                    break;
-                case "charisma":
-                    charisma += statValue;
-                    // if (charisma > MAX_STAT) charisma = MAX_STAT;
-                    break;
-                case "mania":
-                    mania += statValue;
-                    // if (mania > MAX_STAT) mania = MAX_STAT;
-                    break;
-            }
+        if (stressValue >= 70) {
+            if (rand < 50)  // 대실패 50%
+                return 0.5f;
+            else if (rand < 95)  // 성공 45%
+                return 1.0f;
+            else                 // 대성공 5%
+                return 1.5f;
         }
-        else {
-            Debug.Log("실패");
+        else if (stressValue >= 40) {
+            if (rand < 80)  // 성공 80%
+                return 1.0f;
+            else                 // 대성공 20%
+                return 1.5f;
         }
-        Debug.Log($"스탯 - 체력: {stamina}, 지력: {intelligence}, 매력: {charisma}, 덕력: {mania}, failure: {isFailure}");
+        else if (stressValue >= 0) {
+            if (rand < 60)  // 성공 60%
+                return 1.0f;
+            else  // 대성공 40%
+                return 1.5f;
+        }
+        else
+            return 0.0f;
     }
 }
