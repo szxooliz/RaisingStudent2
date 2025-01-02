@@ -57,6 +57,8 @@ namespace Client
             smallScale = originalScale * 0.1f;
 
             charFace.alphaHitTestMinimumThreshold = 0.1f;
+
+            StartCoroutine(ResetBubble(0));
         }
 
         /// <summary>
