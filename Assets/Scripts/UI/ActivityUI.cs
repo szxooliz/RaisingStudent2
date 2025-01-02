@@ -101,7 +101,6 @@ namespace Client
 
             if (coroutine != null)
             {
-                Debug.Log("대사 출력 중단");
                 StopCoroutine(coroutine);
                 coroutine = null;
 
@@ -146,15 +145,35 @@ namespace Client
 
         IEnumerator ShowResult1()
         {
-            Debug.Log("ShowResult1 실행");
-            string str = GameManager.Data.activityData.activityType == ActivityType.Rest
-                ? "임시 - 자체 휴강 캐릭터 대사"
-                : _charLines[(int)GameManager.Data.activityData.resultType];
+            string str = null;
+            string face = null;
+
+            if (GameManager.Data.activityData.activityType == ActivityType.Rest)
+            {
+                str = "대학생의 권리는 자체휴강이다..";
+            }
+            else
+            {
+                str = _charLines[(int)GameManager.Data.activityData.resultType];
+
+                switch (GameManager.Data.activityData.resultType)
+                {
+                    case ResultType.BigSuccess:
+                        face = "glad";
+                        break;
+                    case ResultType.Success:
+                        face = "basic";
+                        break;
+                    case ResultType.Failure:
+                        face = "sad";
+                        break;
+                }
+                string path = spritePath + "Comsoon_" + face;
+                charFace.sprite = GetOrLoadSprite(path);
+            }
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
-
             yield return null;
-            Debug.Log("실행 종료, 코루틴 비우기");
         }
 
 
@@ -163,7 +182,6 @@ namespace Client
             GetGameObject((int)GameObjects.Activity2).SetActive(true);
             GetGameObject((int)GameObjects.Activity1).SetActive(false);
 
-            Debug.Log("ShowResult2 실행");
             string str;
 
             if (GameManager.Data.activityData.activityType == ActivityType.Rest)
@@ -173,6 +191,9 @@ namespace Client
             }
             else
             {
+                GetGameObject((int)GameObjects.Stats).SetActive(true);
+                UpdateStatUIs();
+
                 str = GetResultTypeKor(GameManager.Data.activityData.resultType) + Environment.NewLine
                       + GetStatNameKor(GameManager.Data.activityData.statName1) + "이 " + GameManager.Data.activityData.stat1Value + " 상승했다." + Environment.NewLine
                       + GetStatNameKor(GameManager.Data.activityData.statName2) + "이 " + GameManager.Data.activityData.stat2Value + " 상승했다." + Environment.NewLine;
@@ -182,5 +203,26 @@ namespace Client
 
             yield return null;
         }
+
+        Sprite GetOrLoadSprite(string _path)
+        {
+            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
+            {
+                // 캐싱된 스프라이트 반환
+                return cachedSprite;
+            }
+
+            Sprite loadedSprite = Resources.Load<Sprite>(_path);
+            if (loadedSprite == null)
+            {
+                throw new System.Exception($"Sprite not found at path: {_path}");
+            }
+
+            // 로드된 스프라이트를 캐싱
+            spriteCache[_path] = loadedSprite;
+            return loadedSprite;
+        }
+
+
     }
 }
