@@ -3493,8 +3493,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b9b045af13c2d4da29a6bd95e05454, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charDuration: 10
-  narDuration: 10
+  charDuration: 5
+  narDuration: 5
 --- !u!223 &3956485555595826668
 Canvas:
   m_ObjectHideFlags: 0

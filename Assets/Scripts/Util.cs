@@ -1,13 +1,16 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Client
 {
     public class Util
     {
+        public static bool nowTexting = false;                                                                                                                                                                      
         /// <summary>
         /// Game Object에서 해당 Component 얻거나 없으면 추가 (주의 무거움)
         /// </summary>
@@ -65,16 +68,40 @@ namespace Client
             return transform.gameObject;
         }
 
-        public static Tween TMPDOText(TMP_Text text, float duration)
+        public static IEnumerator LoadTextOneByOne(string inputTextString, TMPro.TMP_Text inputTextUI, float eachTime = 0.05f, bool canClickSkip = true)
         {
-            text.maxVisibleCharacters = 0;
-            Tween t = DOTween.To(x => text.maxVisibleCharacters = (int)x, 0f, text.text.Length, duration);
-            return t;
-        }
-        public static void TMP_DOText(TMP_Text text, float duration)
-        {
-            text.maxVisibleCharacters = 0;
-            DOTween.To(x => text.maxVisibleCharacters = (int)x, 0f, text.text.Length, duration);
+            nowTexting = true;
+            float miniTimer = 0f; //타이머
+            float currentTargetNumber = 0f; // 해당 Time에 출력을 목표로 하는 최소 글자 수
+            int currentNumber = 0; // 해당 Time에 출력중인 글자 수
+            string displayedText = "";
+            StringBuilder builder = new StringBuilder(displayedText);
+            while (currentTargetNumber < inputTextString.Length)
+            {
+                while (currentNumber < currentTargetNumber)
+                { // 목표 글자수까지 출력
+                  //displayedText += inputTextString.Substring(currentNumber,1);
+                    builder.Append(inputTextString.Substring(currentNumber, 1));
+                    currentNumber++;
+                }
+                //inputTextUI.text = displayedText;
+                inputTextUI.text = builder.ToString();
+                yield return null;
+                miniTimer += Time.deltaTime;
+                currentTargetNumber = miniTimer / eachTime;
+                if ((Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space)) && canClickSkip)
+                {
+                    break;
+                }
+            }
+            while (currentNumber < inputTextString.Length)
+            { // 목표 글자수까지 출력
+                builder.Append(inputTextString.Substring(currentNumber, 1));
+                currentNumber++;
+            }
+            inputTextUI.text = builder.ToString();
+            yield return null;
+            nowTexting = false;
         }
     }
 }

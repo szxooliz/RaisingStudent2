@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ namespace Client
 {
     public class ActivityUI : UI_Base, IPointerClickHandler
     {
-        // 캐릭터마다 대사가 다르다면 테이블로 받아와야 할 듯
         private static List<string> _charLines = new List<string>()
         {
             "오늘 집중이 너무 잘 되는데요!",
@@ -45,19 +43,15 @@ namespace Client
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         private Image charFace;
-        private Image charBubble1;
-        private Image charBubble2;
-
         private TMPro.TMP_Text charName;
         private TMPro.TMP_Text charLine;
         private TMPro.TMP_Text line;
 
         private Coroutine coroutine = null;
-        private DG.Tweening.Sequence currentSequence = null;
 
         // 기획 조정 용
-        [SerializeField] float charDuration = 10f;
-        [SerializeField] float narDuration = 10f;
+        [SerializeField] float charDuration = 5f;
+        [SerializeField] float narDuration = 5f;
 
         public override void Init()
         {
@@ -68,33 +62,28 @@ namespace Client
 
         private void OnEnable()
         {
-            // 나중에 생각해보고 필요 없는 것들 지우기
             charFace = GetImage((int)Images.IMG_CharFace);
-            charBubble1 = GetImage((int)Images.IMG_Bubble1); // 리소스 적용하면 말풍선 필요 없을 듯
-            charBubble2 = GetImage((int)Images.IMG_Bubble2);
             charName = GetText((int)Texts.TMP_CharName);
             charLine = GetText((int)Texts.TMP_CharLine);
             line = GetText((int)Texts.TMP_Line);
 
-            //coroutine = StartCoroutine(ShowResult1());
+            GetGameObject((int)GameObjects.Activity1).SetActive(true);
+            GetGameObject((int)GameObjects.Activity2).SetActive(false);
 
-            //charName.text = "컴순";
-
-            //UpdateStatUIs();
+            if (GameManager.Data.playerData.currentStatus == Status.Activity)
+            {
+                coroutine = StartCoroutine(ShowResult1());
+                charName.text = "컴순";
+                UpdateStatUIs();
+            }
         }
 
         private void Start()
         {
             if (GameManager.Data.playerData.currentStatus != Status.Activity) return;
 
-            GetGameObject((int)GameObjects.Activity2).SetActive(false);
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
-
-            coroutine = StartCoroutine(ShowResult1());
-
-            charName.text = "컴순";
-
-            UpdateStatUIs();
+            GetGameObject((int)GameObjects.Activity2).SetActive(false);
         }
 
         /// <summary>
@@ -116,38 +105,15 @@ namespace Client
                 StopCoroutine(coroutine);
                 coroutine = null;
 
-                if (currentSequence != null && currentSequence.IsActive())
-                {
-                    currentSequence.Kill(true);
-                    currentSequence = null;
-                }
-
-                // 텍스트 전체 보여주기 - 텍스트 설정 함수 따로 뺄까
+                // 텍스트 전체 보여주기
                 if (GetGameObject((int)GameObjects.Activity1).activeSelf)
                 {
-                    if (GameManager.Data.activityData.activityType == ActivityType.Rest)
-                    {
-                        charLine.SetText("임시 - 자체 휴강 캐릭터 대사");
-                    }
-                    else
-                    {
-                        charLine.SetText(_charLines[(int)GameManager.Data.activityData.resultType]);
-                    }
+                    charLine.maxVisibleCharacters = charLine.text.Length;
+                    charLine.ForceMeshUpdate();
                 }
-
-                if (GetGameObject((int)GameObjects.Activity2).activeSelf)
+                else if (GetGameObject((int)GameObjects.Activity2).activeSelf)
                 {
-                    if (GameManager.Data.activityData.activityType == ActivityType.Rest)
-                    {
-                        line.SetText("스트레스가 " + -GameManager.Data.activityData.stressValue + " 감소했다!");
-                    }
-                    else
-                    {
-                        line.SetText(
-                            GetResultTypeKor(GameManager.Data.activityData.resultType) + Environment.NewLine +
-                            GetStatNameKor(GameManager.Data.activityData.statName1) + "이 " + GameManager.Data.activityData.stat1Value + " 상승했다." + Environment.NewLine +
-                            GetStatNameKor(GameManager.Data.activityData.statName2) + "이 " + GameManager.Data.activityData.stat2Value + " 상승했다." + Environment.NewLine);
-                    }
+                    line.maxVisibleCharacters = line.text.Length;
                 }
             }
             else
@@ -162,10 +128,7 @@ namespace Client
                 else
                 {
                     GameManager.Event.CheckEvent();
-
                     gameObject.SetActive(false);
-
-                    // 3가지 UI 활성화는 프리팹 스크립트에서 진행됨..
                 }
             }
         }
@@ -180,29 +143,20 @@ namespace Client
                 GetText((int)StatName.Inteli + i).text = GameManager.Data.playerData.statsAmounts[i].ToString();
             }
         }
+
         IEnumerator ShowResult1()
         {
             Debug.Log("ShowResult1 실행");
-            string str;
-            currentSequence = DOTween.Sequence();
+            string str = GameManager.Data.activityData.activityType == ActivityType.Rest
+                ? "임시 - 자체 휴강 캐릭터 대사"
+                : _charLines[(int)GameManager.Data.activityData.resultType];
 
-            if (GameManager.Data.activityData.activityType == ActivityType.Rest)
-            {
-                str = "임시 - 자체 휴강 캐릭터 대사";
-            }
-            else
-            {
-                str = _charLines[(int)GameManager.Data.activityData.resultType];
-            }
+            StartCoroutine(Util.LoadTextOneByOne(str, charLine));
 
-            charLine.text = str;
-            currentSequence.Append(Util.TMPDOText(charLine, charDuration));
-
-            // 코루틴 종료 후 상태 초기화
-            yield return currentSequence.WaitForCompletion();
+            yield return null;
             Debug.Log("실행 종료, 코루틴 비우기");
-            coroutine = null;
         }
+
 
         IEnumerator ShowResult2()
         {
@@ -211,7 +165,6 @@ namespace Client
 
             Debug.Log("ShowResult2 실행");
             string str;
-            currentSequence = DOTween.Sequence();
 
             if (GameManager.Data.activityData.activityType == ActivityType.Rest)
             {
@@ -225,12 +178,9 @@ namespace Client
                       + GetStatNameKor(GameManager.Data.activityData.statName2) + "이 " + GameManager.Data.activityData.stat2Value + " 상승했다." + Environment.NewLine;
             }
 
-            line.text = str;
-            currentSequence.Append(Util.TMPDOText(line, narDuration));
+            StartCoroutine(Util.LoadTextOneByOne(str, line));
 
-            // 코루틴 종료 후 상태 초기화
-            yield return currentSequence.WaitForCompletion();
-            coroutine = null;
+            yield return null;
         }
     }
 }
