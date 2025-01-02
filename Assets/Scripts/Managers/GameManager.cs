@@ -164,7 +164,8 @@ namespace Client
 
             if (Data.playerData.currentThird == 0)
             {
-                Data.playerData.currentMonth++;
+                if (Data.playerData.currentMonth == Months.Jun) Data.playerData.currentMonth = Months.Sep;
+                else Data.playerData.currentMonth++;
             }
             Debug.Log(Data.playerData.currentMonth + "월 " + Data.playerData.currentThird + "순");
         }

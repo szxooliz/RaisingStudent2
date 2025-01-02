@@ -29,13 +29,23 @@ namespace Client
 
         public enum Months
         {
-            Mar, Apr, May, Jun,   
-            Sep, Oct, Nov, Dec
+            Mar = 3, Apr=4, May=5, Jun=6,   
+            Sep=9, Oct=10, Nov=11, Dec=12
         }
 
         public enum Thirds
         {
             First, Second, Third
+        }
+        public enum ThirdsKor
+        {
+            상순, 중순, 하순
+        }
+        public static string GetThirdsKor(Thirds third)
+        {
+            string temp = "";
+            temp += ((ThirdsKor)((int)third)).ToString();
+            return temp;
         }
 
         #region StatName

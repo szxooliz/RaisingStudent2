@@ -191,6 +191,9 @@ namespace Client
             }
             else
             {
+                GetGameObject((int)GameObjects.Stats).SetActive(true);
+                UpdateStatUIs();
+
                 str = GetResultTypeKor(GameManager.Data.activityData.resultType) + Environment.NewLine
                       + GetStatNameKor(GameManager.Data.activityData.statName1) + "이 " + GameManager.Data.activityData.stat1Value + " 상승했다." + Environment.NewLine
                       + GetStatNameKor(GameManager.Data.activityData.statName2) + "이 " + GameManager.Data.activityData.stat2Value + " 상승했다." + Environment.NewLine;
