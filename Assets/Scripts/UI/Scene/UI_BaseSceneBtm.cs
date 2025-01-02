@@ -58,7 +58,6 @@ namespace Client
 
         }
 
-        // TODO :  스탯UI 초기화 함수 만들기
         /// <summary>
         /// 현재 상태에 맞추어 UI 트랜지션
         /// </summary>
@@ -70,7 +69,7 @@ namespace Client
         }
         public void MakeTransition(int index)
         {
-            Debug.Log($"Transition {index}");
+            Debug.Log($"Transition {(Status)index}");
 
             for (int i = 0; i < 3; i++)
             {
@@ -130,9 +129,7 @@ namespace Client
             GameManager.Instance.StartActivity(actType);
             GameManager.Data.playerData.currentStatus = Status.Activity;
 
-            GetGameObject((int)UIs.MainUI).SetActive(false);
-            GetGameObject((int)UIs.ActivityUI).SetActive(true);
-            //MakeTransition((int)UIs.ActivityUI);
+            MakeTransition((int)UIs.ActivityUI);
 
         }
 
