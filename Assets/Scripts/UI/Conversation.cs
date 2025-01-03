@@ -76,7 +76,6 @@ namespace Client
             {
                 coroutine = StartCoroutine(ResetBubble(Random.Range(0, (int)maxCount)));
             }
-
         }
 
         /// <summary>

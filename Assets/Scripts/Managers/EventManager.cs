@@ -15,6 +15,11 @@ public class EventManager : Singleton<EventManager>
     /// </summary>
     public void CheckEvent()
     {
+        switch(GameManager.Data.playerData.currentTurn)
+        {
+            case 0:
+                break;
+        }
         GameManager.Data.playerData.currentStatus = Define.Status.Main;
     }
 
@@ -23,6 +28,7 @@ public class EventManager : Singleton<EventManager>
     /// </summary>
     public void ShowEvent()
     {
+        GameManager.Data.playerData.currentStatus = Define.Status.Event;
 
     }
 }

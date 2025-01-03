@@ -99,7 +99,7 @@ namespace Client
             4. ShowResult2() 종료 후 눌렀을 때 ActivityUI 비활성화
              */
 
-            if (coroutine != null)
+            if (coroutine != null) // 타이핑 애니메이션 중인 경우에
             {
                 StopCoroutine(coroutine);
                 coroutine = null;
@@ -117,6 +117,7 @@ namespace Client
             }
             else
             {
+                // 다음 단계로 넘어가기
                 if (GetGameObject((int)GameObjects.Activity1).activeSelf)
                 {
                     GetGameObject((int)GameObjects.Activity2).SetActive(true);
@@ -124,7 +125,7 @@ namespace Client
 
                     coroutine = StartCoroutine(ShowResult2());
                 }
-                else
+                else // 메인으로 돌아가기
                 {
                     GameManager.Event.CheckEvent();
                     gameObject.SetActive(false);
@@ -143,6 +144,10 @@ namespace Client
             }
         }
 
+        /// <summary>
+        /// 활동 결과 1 화면 - 캐릭터 대사
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ShowResult1()
         {
             string str = null;
@@ -150,7 +155,7 @@ namespace Client
 
             if (GameManager.Data.activityData.activityType == ActivityType.Rest)
             {
-                str = "대학생의 권리는 자체휴강이다..";
+                str = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
             }
             else
             {
@@ -176,7 +181,10 @@ namespace Client
             yield return null;
         }
 
-
+        /// <summary>
+        /// 활동 결과 2 화면 - 나레이션
+        /// </summary>
+        /// <returns></returns>
         IEnumerator ShowResult2()
         {
             GetGameObject((int)GameObjects.Activity2).SetActive(true);
@@ -222,7 +230,5 @@ namespace Client
             spriteCache[_path] = loadedSprite;
             return loadedSprite;
         }
-
-
     }
 }
