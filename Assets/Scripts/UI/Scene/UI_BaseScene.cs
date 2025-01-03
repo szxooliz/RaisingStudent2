@@ -23,6 +23,10 @@ namespace Client
         {
             IMG_Status
         }
+
+        private string spritePath = "Sprites/UI/Status_";
+        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
+
         public override void Init()
         {
             base.Init();
@@ -67,21 +71,43 @@ namespace Client
 
         void OnStatusChanged(object sender, System.EventArgs e)
         {
-            // TODO : 상태 UI 이미지 변경 기능 추가 
+            string path = "";
+
             switch(GameManager.Data.playerData.currentStatus)
             {
                 case Status.Main:
                     UpdateTermUI();
                     UpdateTurnUI();
-
+                    path = spritePath + Status.Main.ToString();
                     break;
                 case Status.Activity:
-
+                    path = spritePath + Status.Activity.ToString();
                     break;
                 case Status.Event:
-
+                    path = spritePath + Status.Event.ToString();
                     break;
             }
+
+            GetImage((int)Images.IMG_Status).sprite = GetOrLoadSprite(path);
+        }
+
+        Sprite GetOrLoadSprite(string _path)
+        {
+            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
+            {
+                // 캐싱된 스프라이트 반환
+                return cachedSprite;
+            }
+
+            Sprite loadedSprite = Resources.Load<Sprite>(_path);
+            if (loadedSprite == null)
+            {
+                throw new System.Exception($"Sprite not found at path: {_path}");
+            }
+
+            // 로드된 스프라이트를 캐싱
+            spriteCache[_path] = loadedSprite;
+            return loadedSprite;
         }
 
 

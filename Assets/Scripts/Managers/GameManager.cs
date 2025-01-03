@@ -78,8 +78,8 @@ namespace Client
             UpdateStress();
             NextTurn();
 
-            // 활동마다 데이터 저장
-            Data.SavePlayerData();
+            // 활동마다 데이터 저장 - 출시 때 주석 해제
+            //Data.SavePlayerData();
         }
 
         /// <summary>

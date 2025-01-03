@@ -101,9 +101,6 @@ namespace Client
                 Sprite sprite = GetOrLoadSprite(path);
 
                 StartCoroutine(AnimateBubble(script, sprite));
-
-
-                Debug.Log($"Bubble updated: Line = {script.Line}, Face = {script.Face}");
             }
             catch (System.Exception e)
             {
