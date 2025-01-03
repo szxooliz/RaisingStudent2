@@ -1,6 +1,6 @@
-﻿스크립트 넘버,이벤트 넘버,캐릭터 고유값,캐릭터의 대사,캐릭터의 감정,이름표 사용 여부,,,,,,,,,,,,,,,,,,,,,
-index,EventNum,Character,Line,Face,NameTag,,,,,,,,,,,,,,,,,,,,,
-long,long,string,string,string,bool,,,,,,,,,,,,,,,,,,,,,
+﻿스크립트 넘버,이벤트 넘버,캐릭터 고유값,캐릭터의 대사,캐릭터의 감정,이름표 사용 여부,선택지 번호,스킵라인,시트설명,,,,,,,,,,,,,,,,,,
+index,EventNum,Character,Line,Face,NameTag,SelectIndex,SkipLine,,,,,,,,,,,,,,,,,,,
+long,long,string,string,string,bool,long,long,,,,,,,,,,,,,,,,,,,
 0,0,Player,"아직 서늘한 2월 말.
 홍익대학교 T동의 한 연구실.",none,FALSE,,,,,,,,,,,,,,,,,,,,,
 1,0,Professor,인재가 없어!!!!!!!!!,none,TRUE,,,,,,,,,,,,,,,,,,,,,

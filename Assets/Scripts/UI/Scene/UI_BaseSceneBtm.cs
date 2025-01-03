@@ -14,14 +14,10 @@ namespace Client
         {
             BTN_Rest,
             BTN_Study, BTN_Game, BTN_WorkOut, BTN_Club,
-            // MaxCount
         }
         enum Texts
         {
-            // 스탯 수치
             TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming,
-
-            //MaxCount
         }
         enum UIs
         {
@@ -34,7 +30,6 @@ namespace Client
 
         private string spritePath = "Sprites/UI/Stress_";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
-
 
         public override void Init()
         {
@@ -55,7 +50,9 @@ namespace Client
             GameManager.Data.playerData.OnStatusChanged += OnStatusChanged;
         }
 
-
+        /// <summary>
+        /// 버튼 바인딩
+        /// </summary>
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.BTN_Rest).gameObject, OnClickRestBtn);
@@ -63,7 +60,6 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Game).gameObject, OnClickGameBtn);
             BindEvent(GetButton((int)Buttons.BTN_WorkOut).gameObject, OnClickWorkOutBtn);
             BindEvent(GetButton((int)Buttons.BTN_Club).gameObject, OnClickClubBtn);
-
         }
 
         /// <summary>
@@ -75,24 +71,31 @@ namespace Client
         {
             MakeTransition((int)GameManager.Data.playerData.currentStatus);
         }
+
+        /// <summary>
+        /// UI 트랜지션
+        /// </summary>
+        /// <param name="index"></param>
         public void MakeTransition(int index)
         {
-            Debug.Log($"Transition {(Status)index}");
-
             for (int i = 0; i < 3; i++)
             {
                 GetGameObject(i).SetActive(false);
             }
-
+            // 현재 상태인 UI 오브젝트만 활성화
             GetGameObject(index).SetActive(true);
 
+            // 육성 상태일 경우 스탯, 스트레스 업데이트
             if (index == (int)UIs.MainUI)
             {
-                Debug.Log("메인 UI 업데이트");
                 UpdateStatUIs();
                 UpdateStressUIs();
             }
         }
+
+        /// <summary>
+        /// 스탯 UI 수치 업데이트
+        /// </summary>
         void UpdateStatUIs()
         {
             for (int i = 0; i < (int)StatName.MaxCount; i++)
@@ -100,6 +103,10 @@ namespace Client
                 GetText((int)StatName.Inteli + i).text = GameManager.Data.playerData.statsAmounts[i].ToString();
             }
         }
+
+        /// <summary>
+        /// 스트레스 UI 바 및 상태 이미지 업데이트
+        /// </summary>
         void UpdateStressUIs()
         {
             string path;
@@ -121,9 +128,14 @@ namespace Client
                 path = spritePath + "calm";
             }
 
+            // 스트레스 바 채우기
             GetImage((int)Images.UI_Stress).fillAmount = GameManager.Data.playerData.stressAmount / 100;
+            
+            // path 경로 통해서 상태 이미지 로드
             GetImage((int)Images.UI_StressStatus).sprite = GetOrLoadSprite(path);
-            GetImage((int)Images.UI_StressStatus).color = Color.black;
+
+            // 상태 그래픽 흰색 이슈로 색상 처리
+            GetImage((int)Images.UI_StressStatus).color = Color.black; 
         }
 
         Sprite GetOrLoadSprite(string _path)
@@ -178,9 +190,15 @@ namespace Client
         }
         #endregion
 
+        /// <summary>
+        /// 활동 실행
+        /// </summary>
+        /// <param name="actType"></param>
         public void StartActivity(int actType)
         {
             GameManager.Instance.StartActivity(actType);
+
+            // 현재 상태를 활동 상태로 변경
             GameManager.Data.playerData.currentStatus = Status.Activity;
 
             MakeTransition((int)UIs.ActivityUI);

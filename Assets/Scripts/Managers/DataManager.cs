@@ -149,12 +149,18 @@ namespace Client
         #endregion
 
         // 1. 선택한 활동에 대한 정보 설정 - 하드코딩
+        /// <summary>
+        /// 활동에 대한 스트레스, 스탯 정보 설정
+        /// </summary>
+        /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
+        /// <returns></returns>
         public ActivityData SetNewActivityData(ActivityType activityType)
         {
             activityData = new ActivityData();
 
             switch(activityType)
             {
+                // 증가 시에는 양수, 감소 시에는 음수로 값 설정
                 case ActivityType.Rest:
                     activityData.activityType = ActivityType.Rest;
                     activityData.stressValue = -10f; // 임시값
@@ -184,7 +190,9 @@ namespace Client
                     activityData.stressValue = 10f; // 임시값
                     break;
             }
+
             // 임시값
+            // 주 스탯, 부 스탯 증가치 설정
             activityData.stat1Value = 10;
             activityData.stat2Value = 5;
             return activityData;

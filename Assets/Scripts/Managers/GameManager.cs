@@ -13,15 +13,14 @@ namespace Client
         public static GameManager Instance { get { Init(); return s_instance; } }
         GameManager() { }
 
-        // ResourceManager _resource = new ResourceManager();
-        //UI_Manager _ui_manager = new UI_Manager();
+        ResourceManager _resource = ResourceManager.Instance;
+        UI_Manager _ui_manager = UI_Manager.Instance;
         //SoundManager _sound = new SoundManager();
         DataManager _data = DataManager.Instance;
         EventManager _event = EventManager.Instance;
 
-        ////REventManager _RE = new REventManager();
-        // public static ResourceManager Resource { get { return Instance._resource; } }
-        //public static UI_Manager UI_Manager { get { return Instance._ui_manager; } }
+        public static ResourceManager Resource { get { return Instance._resource; } }
+        public static UI_Manager UI_Manager { get { return Instance._ui_manager; } }
         //public static SoundManager Sound { get { return Instance._sound; } }
         public static DataManager Data { get { return Instance._data; } }
         public static EventManager Event { get { return Instance._event; } }
@@ -78,6 +77,9 @@ namespace Client
 
             UpdateStress();
             NextTurn();
+
+            // 활동마다 데이터 저장
+            Data.SavePlayerData();
         }
 
         /// <summary>
@@ -86,6 +88,7 @@ namespace Client
         /// <returns></returns>
         public ResultType GetResult()
         {
+            // 이번 활동 결과의 확률을 정함
             int prob = UnityEngine.Random.Range(0, 100);
 
             if (Data.playerData.stressAmount >= 70)
@@ -94,7 +97,7 @@ namespace Client
                 else if (prob <= 95) { return ResultType.Success; }
                 else { return ResultType.BigSuccess; }
             }
-            else if (Data.playerData.stressAmount >= 40 && Data.playerData.stressAmount < 70)
+            else if (Data.playerData.stressAmount >= 40)
             {
                 if (prob <= 80) { return ResultType.Success; }
                 else { return ResultType.BigSuccess; }
@@ -132,17 +135,13 @@ namespace Client
             Data.activityData.resultType = GetResult();
             float multiplier = GetStatMultiplier(Data.activityData.resultType);
 
-            Debug.Log("활동 결과 : " + GetResultTypeKor(Data.activityData.resultType));
-
             // 소수점 올림 처리
             Data.activityData.stat1Value = (int)Math.Ceiling(Data.activityData.stat1Value * multiplier);
             Data.activityData.stat2Value = (int)Math.Ceiling(Data.activityData.stat2Value * multiplier);
 
+            // 스탯 증감 처리
             Data.playerData.statsAmounts[(int)Data.activityData.statName1] += Data.activityData.stat1Value;
             Data.playerData.statsAmounts[(int)Data.activityData.statName2] += Data.activityData.stat2Value;
-
-            Debug.Log(GetStatNameKor(Data.activityData.statName1) + " : " + Data.playerData.statsAmounts[(int)Data.activityData.statName1]);
-            Debug.Log(GetStatNameKor(Data.activityData.statName2) + " : " + Data.playerData.statsAmounts[(int)Data.activityData.statName2]);
         }
 
         /// <summary>
@@ -153,33 +152,30 @@ namespace Client
         {
             Data.playerData.stressAmount += Data.activityData.stressValue;
             Debug.Log("스트레스 : " + DataManager.Instance.playerData.stressAmount);
-            // -> 바텀씬에서 mainUI 재활성화할 때마다 플레이어데이터.스트레스 보고 슬라이드 바 업데이트하도록
         }
 
+        /// <summary>
+        /// 다음 턴으로 넘김 처리
+        /// </summary>
         public void NextTurn()
         {
             Data.playerData.currentTurn++;
 
+            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
             Data.playerData.currentThird = (Thirds)(Data.playerData.currentTurn % 3);
 
+            // 상순이 되면 다음 달로 넘어감
             if (Data.playerData.currentThird == 0)
             {
+                // TODO : 6월과 9월 사이 여름방학 달 추가해야 하므로 수정 필요
                 if (Data.playerData.currentMonth == Months.Jun) Data.playerData.currentMonth = Months.Sep;
                 else Data.playerData.currentMonth++;
             }
-            Debug.Log(Data.playerData.currentMonth + "월 " + Data.playerData.currentThird + "순");
         }
 
         // 5. 목표 스케줄까지 남은 턴 계산
 
-
-        // 7. 마지막 턴 이후에 스탯 계산해서 엔딩 결과 내기
-
-        // 8. 엔딩 보여주기 ShowEnding
-
-
-
-
+        // 6. 마지막 턴 이후에 스탯 계산해서 엔딩 결과 내기
 
         /*
         IEnumerator LoadDatas()
@@ -196,44 +192,6 @@ namespace Client
 
 
         #region UI
-        //public void ShowReceipt()
-        //{
-        //    StartCoroutine(ShowReceiptCor());
-        //}
-        //IEnumerator ShowReceiptCor()
-        //{
-        //    if (UI_Tutorial.instance == null)
-        //        UI_Manager.CloseALlPopupUI();
-
-        //    yield return new WaitForEndOfFrame();
-        //    UI_Manager.ShowPopupUI<UI_Reciept>();
-        //}
-
-        //public void ShowSelectNickName()
-        //{
-        //    StartCoroutine(ShowSelectNickNameCor());
-        //}
-        //IEnumerator ShowSelectNickNameCor()
-        //{
-        //    UI_Manager.ClosePopupUI();
-        //    yield return new WaitForEndOfFrame();
-        //    UI_Manager.ShowPopupUI<UI_SelectNickName>();
-        //}
-
-        //public void CloseTitle()
-        //{
-        //    if (GameManager.Data.PersistentUser.WatchedTutorial == false)
-        //        StartCoroutine(ShowTutorialCor());
-        //    else
-        //        GameManager.UI_Manager.ClosePopupUI();
-        //}
-        //IEnumerator ShowTutorialCor()
-        //{
-        //    UI_Manager.CloseALlPopupUI();
-        //    yield return new WaitForEndOfFrame();
-        //    UI_Manager.ShowPopupUI<UI_Tutorial>();
-        //}
-
         //public void StartSchedule()
         //{
         //    StartCoroutine(ScheduleExecuter.Inst.StartSchedule());

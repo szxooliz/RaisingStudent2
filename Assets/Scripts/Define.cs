@@ -27,6 +27,7 @@ namespace Client
             Drag,
         }
 
+        #region Turns
         public enum Months
         {
             Mar = 3, Apr=4, May=5, Jun=6,   
@@ -47,6 +48,7 @@ namespace Client
             temp += ((ThirdsKor)((int)third)).ToString();
             return temp;
         }
+        #endregion
 
         #region StatName
         public enum StatName
@@ -68,6 +70,12 @@ namespace Client
         }
         #endregion
 
+        #region Activity
+        public enum ActivityType
+        {
+            Rest, Class, Game, Workout, Club, MaxCount
+        }
+
         public enum ResultType
         {
             BigSuccess, Success, Failure, MaxCount
@@ -85,10 +93,7 @@ namespace Client
             temp += ((ResultTypeKor)((int)resultType)).ToString();
             return temp;
         }
-        public enum ActivityType
-        {
-            Rest, Class, Game, Workout, Club, MaxCount
-        }
+        #endregion
 
         public enum EventDataType
         {
@@ -113,7 +118,8 @@ namespace Client
             public Months currentMonth; // n월 3-6/9-12
             public Thirds currentThird; // a순 상중하
 
-            public event EventHandler OnStatusChanged; // 상태 변경에 맞추어 UI 활성화
+            public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
+
             [SerializeField] Status _currentStatus; // 현재 상태 
             public Status currentStatus
             {
@@ -125,8 +131,9 @@ namespace Client
                 }
             }
 
-            public int[] statsAmounts; // 스탯 리스트
-            [SerializeField] float _stressAmount; // 스트레스
+            public int[] statsAmounts; // 스탯 리스트, StatName 열거형 요소와 순서 같음
+
+            [SerializeField] float _stressAmount; // 스트레스 양
             public float stressAmount
             {
                 get => _stressAmount;
@@ -136,7 +143,7 @@ namespace Client
                 }
             }
 
-            public PlayerData()
+            public PlayerData() // 생성자
             {
                 currentTurn = 0;
                 currentMonth = Months.Mar;
@@ -146,26 +153,28 @@ namespace Client
                 statsAmounts = new int[4];
                 for (int i = 0; i < statsAmounts.Length; i++)
                 {
-                    statsAmounts[i] = 0; // 명시적으로 0으로 초기화
+                    statsAmounts[i] = 0; // 0으로 초기화
                 }
-
                 stressAmount = 0;
             }
         }
 
+        /// <summary>
+        /// 활동 하나당 데이터
+        /// </summary>
         [System.Serializable]
         public class ActivityData
         {
-            public ActivityType activityType;
-            public ResultType resultType;
-            public StatName statName1;
-            public StatName statName2;
+            public ActivityType activityType; // 활동 종류
+            public ResultType resultType; // 활동 결과 실패/성공/대성공
+            public StatName statName1; // 주 스탯
+            public StatName statName2; // 부 스탯
 
-            public int stat1Value;
-            public int stat2Value;
-            public float stressValue;
+            public int stat1Value; // 주 스탯 증감량
+            public int stat2Value; // 부 스탯 증감량
+            public float stressValue; // 스트레스 증감량
 
-            public ActivityData()
+            public ActivityData() // 생성자
             {
                 activityType = ActivityType.MaxCount;
                 resultType = ResultType.MaxCount;
