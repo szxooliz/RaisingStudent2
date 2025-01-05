@@ -148,9 +148,8 @@ namespace Client
         }
         #endregion
 
-        // 1. 선택한 활동에 대한 정보 설정 - 하드코딩
         /// <summary>
-        /// 활동에 대한 스트레스, 스탯 정보 설정
+        /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
         /// </summary>
         /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
         /// <returns></returns>
