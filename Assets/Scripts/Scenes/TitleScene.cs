@@ -6,16 +6,15 @@ namespace Client
 {
     public class TitleScene : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
-        
+            GameManager instance = GameManager.Instance;
+            UI_Manager.Instance.Clear();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Start()
         {
-        
+            UI_Manager.Instance.ShowSceneUI<UI_TitleScene>();
         }
     }
 
