@@ -17,7 +17,7 @@ namespace Client
         }
         enum Texts
         {
-            TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming,
+            TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming, TMP_CharName, TMP_CharLine
         }
         enum UIs
         {
@@ -25,12 +25,13 @@ namespace Client
         }
         enum Images
         {
-            UI_Stress, UI_StressStatus
+            UI_Stress, UI_StressStatus, IMG_CharFace, IMG_Bubble
         }
 
         private string spritePath = "Sprites/UI/Stress_";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
+        int index = 4; // 이벤트 대사 index
         public override void Init()
         {
             base.Init();
@@ -48,6 +49,8 @@ namespace Client
             UpdateStatUIs();
             UpdateStressUIs();
             GameManager.Data.playerData.OnStatusChanged += OnStatusChanged;
+            
+            LoadNextDialogue(index);
         }
 
         /// <summary>
@@ -204,6 +207,17 @@ namespace Client
             MakeTransition((int)UIs.ActivityUI);
         }
 
+        /// <summary>
+        /// 다음 이벤트 대사 로드
+        /// </summary>
+        /// <param name="index"></param>
+        void LoadNextDialogue(int index)
+        {
+            EventScript eventScript = DataManager.Instance.GetData<EventScript>(index);
+
+            GetText((int)Texts.TMP_CharLine).text = eventScript.Line;
+            GetText((int)Texts.TMP_CharName).text = eventScript.NameTag ? eventScript.Character : "";
+        }
 
     }
 }

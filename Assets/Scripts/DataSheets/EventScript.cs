@@ -11,7 +11,7 @@ namespace Client
 {
     public partial class EventScript : SheetData
     {
-public long index; // 스크립트 넘버
+		public long index; // 스크립트 넘버
 		public long EventNum; // 이벤트 넘버
 		public string Character; // 캐릭터 고유값
 		public string Line; // 캐릭터의 대사
