@@ -14,7 +14,6 @@ namespace Client
         {
             BTN_Menu, BTN_Schedule, BTN_Log
         }
-
         enum Texts
         {
             TXT_Turn, TXT_Term
@@ -59,6 +58,7 @@ namespace Client
         void OnClickScheduleBtn(PointerEventData evt)
         {
             Debug.Log("학사 일정 버튼 클릭");
+            UI_Manager.Instance.ShowPopupUI<UI_SchedulePopup>();
         }
 
         void OnClickLogBtn(PointerEventData evt)
@@ -114,16 +114,18 @@ namespace Client
         // TODO : 주요 이벤트까지 남은 턴 표시 - 이벤트 상세 기획서 나오면 
         void UpdateTurnUI()
         {
-
+            int turn = GameManager.Data.playerData.currentTurn;
+            GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23-turn) + "턴";
         }
 
         /// <summary>
         /// 시기 표시 UI 업데이트
+        /// 현재 턴을 받아온 후 턴+1
         /// </summary>
         void UpdateTermUI()
         {
             GetText((int)Texts.TXT_Term).text = (int)GameManager.Data.playerData.currentMonth + "월 "
-                                                + Define.GetThirdsKor(GameManager.Data.playerData.currentThird);
+                + Define.GetThirdsKor(GameManager.Data.playerData.currentThird);
         }
     }
 

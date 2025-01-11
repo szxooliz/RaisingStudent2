@@ -30,7 +30,7 @@ namespace Client
         #region Turns
         public enum Months
         {
-            Mar = 3, Apr=4, May=5, Jun=6,   
+            Mar = 3, Apr=4, May=5, Jun=6,
             Sep=9, Oct=10, Nov=11, Dec=12
         }
 
