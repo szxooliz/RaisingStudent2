@@ -1,8 +1,8 @@
-﻿스크립트 넘버,선택지,옮길 라인,
-index,SelectNum,MoveLine,
-long,string,long,
-0,나는 짜장면!,5,
-1,나는 짬뽕!,6,
+﻿스크립트 넘버	선택지	옮길 라인	
+index	SelectNum	MoveLine	
+long	string	long	
+0	나는 짜장면!	5	
+1	나는 짬뽕!	6	
 
 
 

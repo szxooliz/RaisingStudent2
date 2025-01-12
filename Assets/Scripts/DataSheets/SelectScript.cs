@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Client
 {
@@ -26,20 +27,14 @@ public long index; // 스크립트 넘버
             try
 			{            
                 string csvContent = csvFile.text;
-                string[] lines = csvContent.Split('\n');
+                var lines = Regex.Split(csvContent, @"(?<!""[^""]*)\r?\n");
                 for (int i = 3; i < lines.Length; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i]))
                         continue;
 
-                    string[] values = lines[i].Trim().Split(',');
+                    string[] values = lines[i].Trim().Split('\t');
                     line = i;
-
-					if (values.Length <= 0)
-						continue;
-
-					if (values[0].Contains("#"))
-						continue;
 
                     SelectScript data = new SelectScript();
 
@@ -59,7 +54,7 @@ public long index; // 스크립트 넘버
 					else
 					    data.MoveLine = Convert.ToInt64(values[2]);
 					
-                    
+
                     dataList[data.index] = data;
                 }
 

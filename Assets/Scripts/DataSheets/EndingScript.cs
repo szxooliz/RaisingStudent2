@@ -10,16 +10,15 @@ using System.Text.RegularExpressions;
 
 namespace Client
 {
-    public partial class EventScript : SheetData
+    public partial class EndingScript : SheetData
     {
 public long index; // 스크립트 넘버
-		public long EventNum; // 이벤트 넘버
+		public long EndingNum; // 엔딩 넘버
 		public string Character; // 캐릭터 고유값
 		public string Line; // 캐릭터의 대사
 		public string Face; // 캐릭터의 감정
 		public bool NameTag; // 이름표 사용 여부
-		public long SelectIndex; // 선택지 번호
-		public long SkipLine; // 스킵라인
+		public bool HasIllust; // 일러스트 등장 여부
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -41,7 +40,7 @@ public long index; // 스크립트 넘버
                     string[] values = lines[i].Trim().Split('\t');
                     line = i;
 
-                    EventScript data = new EventScript();
+                    EndingScript data = new EndingScript();
 
                     
 					if(values[0] == "")
@@ -50,9 +49,9 @@ public long index; // 스크립트 넘버
 					    data.index = Convert.ToInt64(values[0]);
 					
 					if(values[1] == "")
-					    data.EventNum = default;
+					    data.EndingNum = default;
 					else
-					    data.EventNum = Convert.ToInt64(values[1]);
+					    data.EndingNum = Convert.ToInt64(values[1]);
 					
 					if(values[2] == "")
 					    data.Character = default;
@@ -75,14 +74,9 @@ public long index; // 스크립트 넘버
 					    data.NameTag = Convert.ToBoolean(values[5]);
 					
 					if(values[6] == "")
-					    data.SelectIndex = default;
+					    data.HasIllust = default;
 					else
-					    data.SelectIndex = Convert.ToInt64(values[6]);
-					
-					if(values[7] == "")
-					    data.SkipLine = default;
-					else
-					    data.SkipLine = Convert.ToInt64(values[7]);
+					    data.HasIllust = Convert.ToBoolean(values[6]);
 					
 
                     dataList[data.index] = data;

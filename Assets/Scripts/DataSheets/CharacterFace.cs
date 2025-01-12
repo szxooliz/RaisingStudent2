@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Client
 {
@@ -29,20 +30,14 @@ public long index; // 인덱스
             try
 			{            
                 string csvContent = csvFile.text;
-                string[] lines = csvContent.Split('\n');
+                var lines = Regex.Split(csvContent, @"\r?\n");
                 for (int i = 3; i < lines.Length; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i]))
                         continue;
 
-                    string[] values = lines[i].Trim().Split(',');
+                    string[] values = Regex.Split(lines[i], @",(?=(?:[^""]*""[^""]*"")*[^""]*$)");
                     line = i;
-
-					if (values.Length <= 0)
-						continue;
-
-					if (values[0].Contains("#"))
-						continue;
 
                     CharacterFace data = new CharacterFace();
 
@@ -77,7 +72,7 @@ public long index; // 인덱스
 					else
 					    data.sad = Convert.ToString(values[5]);
 					
-                    
+
                     dataList[data.index] = data;
                 }
 

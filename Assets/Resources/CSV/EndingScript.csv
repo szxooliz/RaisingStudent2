@@ -1,10 +1,13 @@
-﻿스크립트 넘버	캐릭터 고유값	캐릭터의 대사	캐릭터의 감정	
-index	Character	Line	Face	
-long	string	string	string	
-0	Comsoon	안녕하세요! 오늘은 뭘 할까요?	glad	
-1	Comsoon	어쩐지 힘이 좀 빠지는 것 같은데…	sad	
-
-
+﻿스크립트 넘버	엔딩 넘버	캐릭터 고유값	캐릭터의 대사	캐릭터의 감정	이름표 사용 여부	일러스트 등장 여부	시트설명																			
+index	EndingNum	Character	Line	Face	NameTag	HasIllust																				
+long	long	string	string	string	bool	bool																				
+0	0	Player	"어두운 방.
+키보드 두드리는 소리만이 울려 퍼진다."	none	FALSE	FALSE																				
+1	0	Comsoon	"평생 방에만 누워 있어야지...
+헤헤..."	none	TRUE	TRUE																				
+2	0	Player	컴순이는 평생 자택경비원이 되기로 했다고 한다.	none	FALSE	TRUE																				
+3	0	Player	"~ ENDING 01. ~
+홈 프로텍터"	none	FALSE	FALSE																				
 
 
 
