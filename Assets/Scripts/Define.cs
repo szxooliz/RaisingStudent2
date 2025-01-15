@@ -108,7 +108,7 @@ namespace Client
 
         public enum EndingName
         {
-
+            GraduateStudent, CorporateSI, GameCompany, VirtualYoutuber, ProGamer, HomeProtector
         }
 
         [System.Serializable]
@@ -156,6 +156,25 @@ namespace Client
                     statsAmounts[i] = 0; // 0으로 초기화
                 }
                 stressAmount = 0;
+            }
+        }
+
+        [System.Serializable]
+        public class PersistentData
+        {
+            public EndingName endingName;   // 엔딩 이름
+            public bool isUnlocked;         // 해금 여부
+            public string applicationField; // 지원 분야
+            public string grade;            // 게임 성적
+            public string awards;           // 기타 이력
+
+            public PersistentData() // 생성자
+            {
+                endingName = EndingName.HomeProtector;
+                isUnlocked = false;
+                applicationField = "";
+                grade = "";
+                awards = "";
             }
         }
 
