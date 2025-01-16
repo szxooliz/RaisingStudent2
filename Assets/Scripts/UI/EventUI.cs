@@ -30,7 +30,7 @@ public class EventUI : UI_Base
     public void ShowEvent()
     {
         // 미완성
-        GameManager.Data.playerData.currentStatus = Define.Status.Event;
+        DataManager.Instance.playerData.currentStatus = Define.Status.Event;
 
     }
 

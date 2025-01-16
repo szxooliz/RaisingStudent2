@@ -70,7 +70,7 @@ namespace Client
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
 
-            if (GameManager.Data.playerData.currentStatus == Status.Activity)
+            if (DataManager.Instance.playerData.currentStatus == Status.Activity)
             {
                 coroutine = StartCoroutine(ShowResult1());
                 charName.text = "컴순";
@@ -80,7 +80,7 @@ namespace Client
 
         private void Start()
         {
-            if (GameManager.Data.playerData.currentStatus != Status.Activity) return;
+            if (DataManager.Instance.playerData.currentStatus != Status.Activity) return;
 
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
@@ -127,7 +127,7 @@ namespace Client
                 }
                 else // 메인으로 돌아가기
                 {
-                    GameManager.Event.CheckEvent();
+                    EventManager.Instance.CheckEvent();
                     gameObject.SetActive(false);
                 }
             }
@@ -140,7 +140,7 @@ namespace Client
         {
             for (int i = 0; i < (int)StatName.MaxCount; i++)
             {
-                GetText((int)StatName.Inteli + i).text = GameManager.Data.playerData.statsAmounts[i].ToString();
+                GetText((int)StatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
             }
         }
 
@@ -153,15 +153,15 @@ namespace Client
             string str = null;
             string face = null;
 
-            if (GameManager.Data.activityData.activityType == ActivityType.Rest)
+            if (DataManager.Instance.activityData.activityType == ActivityType.Rest)
             {
                 str = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
             }
             else
             {
-                str = _charLines[(int)GameManager.Data.activityData.resultType];
+                str = _charLines[(int)DataManager.Instance.activityData.resultType];
 
-                switch (GameManager.Data.activityData.resultType)
+                switch (DataManager.Instance.activityData.resultType)
                 {
                     case ResultType.BigSuccess:
                         face = "glad";
@@ -192,19 +192,19 @@ namespace Client
 
             string str;
 
-            if (GameManager.Data.activityData.activityType == ActivityType.Rest)
+            if (DataManager.Instance.activityData.activityType == ActivityType.Rest)
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
-                str = "스트레스가 " + -GameManager.Data.activityData.stressValue + " 감소했다!";
+                str = "스트레스가 " + -DataManager.Instance.activityData.stressValue + " 감소했다!";
             }
             else
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
                 UpdateStatUIs();
 
-                str = GetResultTypeKor(GameManager.Data.activityData.resultType) + Environment.NewLine
-                      + GetStatNameKor(GameManager.Data.activityData.statName1) + "이 " + GameManager.Data.activityData.stat1Value + " 상승했다." + Environment.NewLine
-                      + GetStatNameKor(GameManager.Data.activityData.statName2) + "이 " + GameManager.Data.activityData.stat2Value + " 상승했다." + Environment.NewLine;
+                str = GetResultTypeKor(DataManager.Instance.activityData.resultType) + Environment.NewLine
+                      + GetStatNameKor(DataManager.Instance.activityData.statName1) + "이 " + DataManager.Instance.activityData.stat1Value + " 상승했다." + Environment.NewLine
+                      + GetStatNameKor(DataManager.Instance.activityData.statName2) + "이 " + DataManager.Instance.activityData.stat2Value + " 상승했다." + Environment.NewLine;
             }
 
             StartCoroutine(Util.LoadTextOneByOne(str, line));

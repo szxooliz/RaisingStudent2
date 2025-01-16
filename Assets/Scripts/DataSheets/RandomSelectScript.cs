@@ -10,12 +10,11 @@ using System.Text.RegularExpressions;
 
 namespace Client
 {
-    public partial class Script : SheetData
+    public partial class RandomSelectScript : SheetData
     {
 public long index; // 스크립트 넘버
-		public string Character; // 캐릭터 고유값
-		public string Line; // 캐릭터의 대사
-		public string Face; // 캐릭터의 감정
+		public string SelectNum; // 선택지 (랜덤 이벤트)
+		public long MoveLine; // 옮길 라인
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -44,7 +43,7 @@ public long index; // 스크립트 넘버
 
                     line = i;
 
-                    Script data = new Script();
+                    RandomSelectScript data = new RandomSelectScript();
 
                     
 					if(values[0] == "")
@@ -53,19 +52,14 @@ public long index; // 스크립트 넘버
 					    data.index = Convert.ToInt64(values[0]);
 					
 					if(values[1] == "")
-					    data.Character = default;
+					    data.SelectNum = default;
 					else
-					    data.Character = Convert.ToString(values[1]);
+					    data.SelectNum = Convert.ToString(values[1]);
 					
 					if(values[2] == "")
-					    data.Line = default;
+					    data.MoveLine = default;
 					else
-					    data.Line = Convert.ToString(values[2]);
-					
-					if(values[3] == "")
-					    data.Face = default;
-					else
-					    data.Face = Convert.ToString(values[3]);
+					    data.MoveLine = Convert.ToInt64(values[2]);
 					
 
                     dataList[data.index] = data;

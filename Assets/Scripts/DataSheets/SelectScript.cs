@@ -13,7 +13,7 @@ namespace Client
     public partial class SelectScript : SheetData
     {
 public long index; // 스크립트 넘버
-		public string SelectNum; // 선택지
+		public string SelectNum; // 선택지 (확정 이벤트)
 		public long MoveLine; // 옮길 라인
 		
 
@@ -27,13 +27,20 @@ public long index; // 스크립트 넘버
             try
 			{            
                 string csvContent = csvFile.text;
-                var lines = Regex.Split(csvContent, @"(?<!""[^""]*)\r?\n");
+                string[] lines = Regex.Split(csvContent, @"(?!(?<=(?:(,"")[^""]*))\r?\n)\r?\n");
                 for (int i = 3; i < lines.Length; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i]))
                         continue;
 
-                    string[] values = lines[i].Trim().Split('\t');
+                    string[] values = Regex.Split(lines[i].Trim(),
+                                        @"(?!(?<=(?:(,"")[^""]*)),),");
+                    
+                    for (int j = 0; j < values.Length; j++)
+                    {
+                        values[j] = Regex.Replace(values[j], @"^""|""$", "");
+                    }
+
                     line = i;
 
                     SelectScript data = new SelectScript();

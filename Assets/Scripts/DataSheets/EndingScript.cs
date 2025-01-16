@@ -31,13 +31,20 @@ public long index; // 스크립트 넘버
             try
 			{            
                 string csvContent = csvFile.text;
-                var lines = Regex.Split(csvContent, @"(?<!""[^""]*)\r?\n");
+                string[] lines = Regex.Split(csvContent, @"(?!(?<=(?:(,"")[^""]*))\r?\n)\r?\n");
                 for (int i = 3; i < lines.Length; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i]))
                         continue;
 
-                    string[] values = lines[i].Trim().Split('\t');
+                    string[] values = Regex.Split(lines[i].Trim(),
+                                        @"(?!(?<=(?:(,"")[^""]*)),),");
+                    
+                    for (int j = 0; j < values.Length; j++)
+                    {
+                        values[j] = Regex.Replace(values[j], @"^""|""$", "");
+                    }
+
                     line = i;
 
                     EndingScript data = new EndingScript();

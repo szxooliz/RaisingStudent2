@@ -30,13 +30,20 @@ public long index; // 인덱스
             try
 			{            
                 string csvContent = csvFile.text;
-                var lines = Regex.Split(csvContent, @"\r?\n");
+                string[] lines = Regex.Split(csvContent, @"(?!(?<=(?:(,"")[^""]*))\r?\n)\r?\n");
                 for (int i = 3; i < lines.Length; i++)
                 {
                     if (string.IsNullOrWhiteSpace(lines[i]))
                         continue;
 
-                    string[] values = Regex.Split(lines[i], @",(?=(?:[^""]*""[^""]*"")*[^""]*$)");
+                    string[] values = Regex.Split(lines[i].Trim(),
+                                        @"(?!(?<=(?:(,"")[^""]*)),),");
+                    
+                    for (int j = 0; j < values.Length; j++)
+                    {
+                        values[j] = Regex.Replace(values[j], @"^""|""$", "");
+                    }
+
                     line = i;
 
                     CharacterFace data = new CharacterFace();

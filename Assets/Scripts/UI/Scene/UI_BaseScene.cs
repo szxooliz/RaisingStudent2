@@ -39,7 +39,7 @@ namespace Client
             UpdateTermUI();
             UpdateTurnUI();
 
-            GameManager.Data.playerData.OnStatusChanged += OnStatusChanged;
+            DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
         }
 
         void BindButton()
@@ -73,7 +73,7 @@ namespace Client
         {
             string path = "";
 
-            switch(GameManager.Data.playerData.currentStatus)
+            switch(DataManager.Instance.playerData.currentStatus)
             {
                 case Status.Main:
                     UpdateTermUI();
@@ -122,8 +122,8 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TXT_Term).text = (int)GameManager.Data.playerData.currentMonth + "월 " 
-                                                + Define.GetThirdsKor(GameManager.Data.playerData.currentThird);
+            GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
+                                                + Define.GetThirdsKor(DataManager.Instance.playerData.currentThird);
         }
     }
 

@@ -13,19 +13,6 @@ namespace Client
         public static GameManager Instance { get { Init(); return s_instance; } }
         GameManager() { }
 
-        ResourceManager _resource = ResourceManager.Instance;
-        UI_Manager _ui_manager = UI_Manager.Instance;
-        //SoundManager _sound = new SoundManager();
-        DataManager _data = DataManager.Instance;
-        EventManager _event = EventManager.Instance;
-
-        public static ResourceManager Resource { get { return Instance._resource; } }
-        public static UI_Manager UI_Manager { get { return Instance._ui_manager; } }
-        //public static SoundManager Sound { get { return Instance._sound; } }
-        public static DataManager Data { get { return Instance._data; } }
-        public static EventManager Event { get { return Instance._event; } }
-
-
         void Awake()
         {
             Init();
@@ -47,9 +34,7 @@ namespace Client
                 DontDestroyOnLoad(go);
                 s_instance = go.GetComponent<GameManager>();
 
-                //s_instance._sound.Init();
-                Data.Init();
-                //s_instance._scene.Init();
+                DataManager.Instance.Init();
             }
         }
 
@@ -66,7 +51,7 @@ namespace Client
                 return;
             }
             
-            Data.SetNewActivityData((ActivityType)actType);
+            DataManager.Instance.SetNewActivityData((ActivityType)actType);
 
 
             // 자체 휴강일때는 업데이트할 스탯 없음
@@ -91,13 +76,13 @@ namespace Client
             // 이번 활동 결과의 확률을 정함
             int prob = UnityEngine.Random.Range(0, 100);
 
-            if (Data.playerData.stressAmount >= 70)
+            if (DataManager.Instance.playerData.stressAmount >= 70)
             {
                 if (prob <= 50) { return ResultType.Failure; }
                 else if (prob <= 95) { return ResultType.Success; }
                 else { return ResultType.BigSuccess; }
             }
-            else if (Data.playerData.stressAmount >= 40)
+            else if (DataManager.Instance.playerData.stressAmount >= 40)
             {
                 if (prob <= 80) { return ResultType.Success; }
                 else { return ResultType.BigSuccess; }
@@ -132,16 +117,16 @@ namespace Client
         /// </summary>
         public void UpdateStats()
         {
-            Data.activityData.resultType = GetResult();
-            float multiplier = GetStatMultiplier(Data.activityData.resultType);
+            DataManager.Instance.activityData.resultType = GetResult();
+            float multiplier = GetStatMultiplier(DataManager.Instance.activityData.resultType);
 
             // 소수점 올림 처리
-            Data.activityData.stat1Value = (int)Math.Ceiling(Data.activityData.stat1Value * multiplier);
-            Data.activityData.stat2Value = (int)Math.Ceiling(Data.activityData.stat2Value * multiplier);
+            DataManager.Instance.activityData.stat1Value = (int)Math.Ceiling(DataManager.Instance.activityData.stat1Value * multiplier);
+            DataManager.Instance.activityData.stat2Value = (int)Math.Ceiling(DataManager.Instance.activityData.stat2Value * multiplier);
 
             // 스탯 증감 처리
-            Data.playerData.statsAmounts[(int)Data.activityData.statName1] += Data.activityData.stat1Value;
-            Data.playerData.statsAmounts[(int)Data.activityData.statName2] += Data.activityData.stat2Value;
+            DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statName1] += DataManager.Instance.activityData.stat1Value;
+            DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statName2] += DataManager.Instance.activityData.stat2Value;
         }
 
         /// <summary>
@@ -150,7 +135,7 @@ namespace Client
         /// <param name="amount">음수: 감소</param>
         public void UpdateStress()
         {
-            Data.playerData.stressAmount += Data.activityData.stressValue;
+            DataManager.Instance.playerData.stressAmount += DataManager.Instance.activityData.stressValue;
             Debug.Log("스트레스 : " + DataManager.Instance.playerData.stressAmount);
         }
 
@@ -162,17 +147,17 @@ namespace Client
             // TODO : 엔딩으로 넘어가기
             if (DataManager.Instance.playerData.currentTurn == 23) return; // 미구현
 
-            Data.playerData.currentTurn++;
+            DataManager.Instance.playerData.currentTurn++;
 
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            Data.playerData.currentThird = (Thirds)(Data.playerData.currentTurn % 3);
+            DataManager.Instance.playerData.currentThird = (Thirds)(DataManager.Instance.playerData.currentTurn % 3);
 
             // 상순이 되면 다음 달로 넘어감
-            if (Data.playerData.currentThird == 0)
+            if (DataManager.Instance.playerData.currentThird == 0)
             {
                 // TODO : 6월과 9월 사이 여름방학 달 추가해야 하므로 수정 필요
-                if (Data.playerData.currentMonth == Months.Jun) Data.playerData.currentMonth = Months.Sep;
-                else Data.playerData.currentMonth++;
+                if (DataManager.Instance.playerData.currentMonth == Months.Jun) DataManager.Instance.playerData.currentMonth = Months.Sep;
+                else DataManager.Instance.playerData.currentMonth++;
             }
         }
 
