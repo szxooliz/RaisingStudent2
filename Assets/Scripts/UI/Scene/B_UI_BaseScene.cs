@@ -124,8 +124,8 @@ namespace Client
                     GetText((int)Texts.TXT_Turn).text = "이번 턴: " + UI_SchedulePopup.scheduleText[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
                     return;
                 }
-                else GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23 - turn) + "턴";
             }
+            GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23 - turn) + "턴";
         }
 
         /// <summary>
