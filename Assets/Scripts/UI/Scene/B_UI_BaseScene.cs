@@ -38,7 +38,7 @@ namespace Client
             UpdateTermUI();
             UpdateTurnUI();
 
-            GameManager.Data.playerData.OnStatusChanged += OnStatusChanged;
+            DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
         }
 
         void BindButton()
@@ -73,7 +73,7 @@ namespace Client
         {
             string path = "";
 
-            switch (GameManager.Data.playerData.currentStatus)
+            switch (DataManager.Instance.playerData.currentStatus)
             {
                 case Status.Main:
                     UpdateTermUI();
@@ -111,11 +111,21 @@ namespace Client
         }
 
 
-        // TODO : 주요 이벤트까지 남은 턴 표시 - 이벤트 상세 기획서 나오면 
+        /// <summary>
+        /// 주요 이벤트 전 턴에 알림
+        /// </summary>
         void UpdateTurnUI()
         {
-            int turn = GameManager.Data.playerData.currentTurn;
-            GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23-turn) + "턴";
+            int turn = DataManager.Instance.playerData.currentTurn;
+            for(int i = 0; i < 7; i++)
+            {
+                if (turn == UI_SchedulePopup.scheduledTurn[i])
+                { 
+                    GetText((int)Texts.TXT_Turn).text = "이번 턴: " + UI_SchedulePopup.scheduleText[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
+                    return;
+                }
+                else GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23 - turn) + "턴";
+            }
         }
 
         /// <summary>
@@ -124,8 +134,8 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TXT_Term).text = (int)GameManager.Data.playerData.currentMonth + "월 "
-                + Define.GetThirdsKor(GameManager.Data.playerData.currentThird);
+            GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 "
+                + Define.GetThirdsKor(DataManager.Instance.playerData.currentThird);
         }
     }
 

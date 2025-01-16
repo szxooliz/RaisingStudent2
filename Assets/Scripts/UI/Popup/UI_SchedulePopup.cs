@@ -12,7 +12,11 @@ namespace Client
     {
         GameObject[] scheduleList = new GameObject[7];
         int turn;
-        int[] scheduledTurn = {0, 5, 11, 11, 17, 21, 22}; // 턴 0, 5, 11, 11, 17, 21, 22에 이벤트 있음? <- 학사일정UI 업데이트
+
+        // 스케줄 업데이트에 사용하는 리소스
+        public static int[] scheduledTurn = {0, 5, 11, 11, 17, 23};
+        public static string[] scheduleText = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"};
+
         enum Buttons
         {
             Panel,
@@ -28,8 +32,12 @@ namespace Client
             base.Init();
             Bind<Button>(typeof(Buttons));
             BindButton();
-            turn = GameManager.Data.playerData.currentTurn;
-            for (int i = 0; i < 7; i++) scheduleList[i] = transform.GetChild(i+3).gameObject;
+            turn = DataManager.Instance.playerData.currentTurn;
+            for (int i = 0; i < scheduledTurn.Length; i++)
+            { 
+                scheduleList[i] = transform.GetChild(i + 3).gameObject;
+                scheduleList[i].GetComponent<TMP_Text>().text = scheduleText[i];
+            }
 
             SchedulePopupUpdate(turn);
         }
@@ -38,7 +46,7 @@ namespace Client
         /// </summary>
         private void OnEnable()
         {
-            turn = GameManager.Data.playerData.currentTurn;
+            turn = DataManager.Instance.playerData.currentTurn;
             SchedulePopupUpdate(turn);
         }
 
@@ -62,7 +70,7 @@ namespace Client
         void SchedulePopupUpdate(int f_turn)
         {
             int temp;
-            for (temp = 0; f_turn > scheduledTurn[temp]; temp++) ; // 턴 0, 5, 11, 11, 17, 21, 22에 이벤트 있음? <- 학사일정UI 업데이트
+            for (temp = 0; f_turn > scheduledTurn[temp]; temp++) ;
             for (int i = 0; i < temp; i++)
             {
                 scheduleList[i].GetComponent<Image>().color = new Color(106/255f, 106/255f, 106/255f, 1f);
