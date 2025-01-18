@@ -15,12 +15,30 @@ public class EventManager : Singleton<EventManager>
     /// </summary>
     public void CheckEvent()
     {
-        switch(GameManager.Data.playerData.currentTurn)
+        switch(DataManager.Instance.playerData.currentTurn)
         {
-            case 0:
+            case 0: // 개강
+                Debug.Log("CheckEvent");
+                ShowEvent();
+                break;
+            case 2: // 해커톤
+                break;
+            case 5: // 중간고사
+                break;
+            case 6: // 체육대회
+                break;
+            case 11: // 기말고사
+                break;
+            case 13: // 축제
+                break;
+            case 17: // 중간고사
+                break;
+            case 19: // 지스타
+                break;
+            case 23: // 기말고사
                 break;
         }
-        GameManager.Data.playerData.currentStatus = Define.Status.Main;
+        DataManager.Instance.playerData.currentStatus = Define.Status.Main;
     }
 
     /// <summary>
@@ -28,7 +46,17 @@ public class EventManager : Singleton<EventManager>
     /// </summary>
     public void ShowEvent()
     {
-        GameManager.Data.playerData.currentStatus = Define.Status.Event;
+        DataManager.Instance.playerData.currentStatus = Define.Status.Event;
+        Debug.Log("ShowEvent");
 
+        EventUI eventUI = GameObject.FindObjectOfType<EventUI>(true);
+
+        if(eventUI != null)
+        {
+            eventUI.StartDialogue();
+        }
+        else{
+            Debug.LogError("EventUI를 찾을 수 없습니다.");
+        }
     }
 }

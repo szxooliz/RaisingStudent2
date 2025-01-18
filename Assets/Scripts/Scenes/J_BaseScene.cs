@@ -17,6 +17,8 @@ namespace Client
         {
             UI_Manager.Instance.ShowSceneUI<J_UI_BaseScene>();
             UI_Manager.Instance.ShowSceneUI<J_UI_BaseSceneBtm>();
+
+            EventManager.Instance.CheckEvent();
         }
     }
 

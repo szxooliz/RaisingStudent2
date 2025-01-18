@@ -52,4 +52,22 @@ public class EventUI : UI_Base
         spriteCache[_path] = loadedSprite;
         return loadedSprite;
     }
+
+    /// <summary>
+    /// 다음 이벤트 대사 로드
+    /// </summary>
+    /// <param name="index"></param>
+    void LoadNextDialogue(int index)
+    {
+        EventScript eventScript = DataManager.Instance.GetData<EventScript>(index);
+
+        GetText((int)Texts.TMP_CharLine).text = eventScript.Line;
+        GetText((int)Texts.TMP_CharName).text = eventScript.NameTag ? eventScript.Character : "";
+    }
+
+    public void StartDialogue()
+    {
+        Debug.Log("StartDialogue");
+        LoadNextDialogue(0);
+    }
 }
