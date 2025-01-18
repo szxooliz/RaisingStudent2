@@ -19,6 +19,7 @@ namespace Client
             IMG_Illustration,
             IMG_CharFace,
             IMG_Bubble,
+            IMG_Name,
         }
 
         enum Texts
@@ -40,7 +41,8 @@ namespace Client
 
             BindButton();
             CheckEnding();
-            LoadNextDialogue(index);
+
+            LoadNextScript();
         }
 
         void BindButton()
@@ -69,10 +71,8 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
-            Debug.Log("화면 클릭, index: " + index);
-
             index += 1;
-            LoadNextDialogue(index);
+            LoadNextScript();
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Client
 
             for (int i = 0; i < 4; i++)
             {
-                if ((int)GameManager.Data.playerData.statsAmounts[i] >= 85)
+                if ((int)DataManager.Instance.playerData.statsAmounts[i] >= 85)
                 {
                     highStats[i] = true;
                     highStatsCount++;
@@ -122,15 +122,38 @@ namespace Client
         }
 
         /// <summary>
-        /// 다음 엔딩 대사 로드
+        /// 다음 스크립트 로드
         /// </summary>
-        /// <param name="index"></param>
-        void LoadNextDialogue(int index)
+        void LoadNextScript()
         {
             EndingScript endingScript = DataManager.Instance.GetData<EndingScript>(index);
+            if (endingScript == null)
+            {
+                return;
+            }
 
+            LoadNextDialogue(endingScript);
+            LoadIllustration(endingScript);
+        }
+
+        /// <summary>
+        /// 다음 엔딩 대사 로드
+        /// </summary>
+        /// <param name="endingScript"></param>
+        void LoadNextDialogue(EndingScript endingScript)
+        {
             GetText((int)Texts.TMP_CharLine).text = endingScript.Line;
-            GetText((int)Texts.TMP_CharName).text = endingScript.NameTag ? endingScript.Character : "";
+            
+            if (endingScript.NameTag)
+            {
+                GetText((int)Texts.TMP_CharName).text = endingScript.Character;
+                GetImage((int)Images.IMG_Name).gameObject.SetActive(true);
+            }
+            else
+            {
+                GetText((int)Texts.TMP_CharName).text = "";
+                GetImage((int)Images.IMG_Name).gameObject.SetActive(false);
+            }
 
             string path;
             if (endingScript.Face == "none")
@@ -142,7 +165,14 @@ namespace Client
                 path = spritePath + "Comsoon_" + endingScript.Face;
             }
             GetImage((int)Images.IMG_CharFace).sprite = GetOrLoadSprite(path);
+        }
 
+        /// <summary>
+        /// 다음 일러스트 로드
+        /// </summary>
+        /// <param name="endingScript"></param>
+        void LoadIllustration(EndingScript endingScript)
+        {
             if (endingScript.HasIllust)
             {
                 // 컷씬 들어가는 행
