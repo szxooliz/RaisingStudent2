@@ -117,7 +117,7 @@ namespace Client
         void UpdateTurnUI()
         {
             int turn = DataManager.Instance.playerData.currentTurn;
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
             {
                 if (turn == UI_SchedulePopup.scheduledTurn[i])
                 { 

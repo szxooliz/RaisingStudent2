@@ -10,7 +10,7 @@ namespace Client
 {
     public class UI_SchedulePopup : UI_Popup
     {
-        GameObject[] scheduleList = new GameObject[7];
+        GameObject[] scheduleList = new GameObject[6];
         int turn;
 
         // 스케줄 업데이트에 사용하는 리소스
@@ -36,7 +36,7 @@ namespace Client
             for (int i = 0; i < scheduledTurn.Length; i++)
             { 
                 scheduleList[i] = transform.GetChild(i + 3).gameObject;
-                scheduleList[i].GetComponent<TMP_Text>().text = scheduleText[i];
+                scheduleList[i].transform.GetChild((int)Contents.TXT_Event).GetComponent<TMP_Text>().text = scheduleText[i];
             }
 
             SchedulePopupUpdate(turn);
