@@ -8,8 +8,6 @@ namespace Client
 {
     public class Define
     {
-        // 추가: PersistentData(엔딩 목록 등)
-
         public enum Scene
         {
             Base, Title
@@ -106,10 +104,24 @@ namespace Client
             Main, Activity, Event
         }
 
+        #region EndingName
         public enum EndingName
         {
-            GraduateStudent, CorporateSI, GameCompany, VirtualYoutuber, ProGamer, HomeProtector
+            GraduateStudent, CorporateSI, GameCompany, VirtualYoutuber, ProGamer, HomeProtector, MaxCount
         }
+        public enum EndingNameKor
+        {
+            대학원생, 대기업SI, 게임회사, 버튜버, 프로게이머, 홈프로텍터, MaxCount
+        }
+        public static string GetEndingNameKor(EndingName endingName)
+        {
+            if (endingName == EndingName.MaxCount) return null;
+
+            string temp = "";
+            temp += ((EndingNameKor)((int)endingName)).ToString();
+            return temp;
+        }
+        #endregion
 
         [System.Serializable]
         public class PlayerData
@@ -159,8 +171,7 @@ namespace Client
             }
         }
 
-        [System.Serializable]
-        public class PersistentData
+        public class Ending
         {
             public EndingName endingName;   // 엔딩 이름
             public bool isUnlocked;         // 해금 여부
@@ -168,13 +179,28 @@ namespace Client
             public string grade;            // 게임 성적
             public string awards;           // 기타 이력
 
-            public PersistentData() // 생성자
+            public Ending(EndingName name) // 생성자
             {
-                endingName = EndingName.HomeProtector;
+                endingName = name;
                 isUnlocked = false;
                 applicationField = "";
                 grade = "";
                 awards = "";
+            }
+        }
+
+        [System.Serializable]
+        public class PersistentData
+        {
+            public List<Ending> endingList = new List<Ending>();
+
+            public PersistentData() // 생성자
+            {
+                foreach (EndingName endingName in Enum.GetValues(typeof(EndingName)))
+                {
+                    Ending ending = new Ending(endingName);
+                    endingList.Add(ending);
+                }
             }
         }
 
