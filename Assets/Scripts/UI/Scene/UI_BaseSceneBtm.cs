@@ -69,6 +69,8 @@ namespace Client
         /// <param name="e"></param>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
+            Debug.Log($"현재 상태: {DataManager.Instance.playerData.currentStatus}");
+
             MakeTransition((int)DataManager.Instance.playerData.currentStatus);
         }
 
@@ -200,8 +202,6 @@ namespace Client
 
             // 현재 상태를 활동 상태로 변경
             DataManager.Instance.playerData.currentStatus = Status.Activity;
-
-            MakeTransition((int)UIs.ActivityUI);
         }
 
 

@@ -70,6 +70,8 @@ namespace Client
         /// <param name="e"></param>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
+            Debug.Log($"현재 상태: {DataManager.Instance.playerData.currentStatus}");
+
             MakeTransition((int)DataManager.Instance.playerData.currentStatus);
         }
 
@@ -79,7 +81,6 @@ namespace Client
         /// <param name="index"></param>
         public void MakeTransition(int index)
         {
-            Debug.Log("MakeTransition");
             for (int i = 0; i < 3; i++)
             {
                 GetGameObject(i).SetActive(false);
@@ -203,7 +204,7 @@ namespace Client
             // 현재 상태를 활동 상태로 변경
             DataManager.Instance.playerData.currentStatus = Status.Activity;
 
-            MakeTransition((int)UIs.ActivityUI);
+            //MakeTransition((int)UIs.ActivityUI);
         }
     }
 }

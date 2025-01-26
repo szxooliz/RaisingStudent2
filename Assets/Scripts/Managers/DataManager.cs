@@ -116,6 +116,10 @@ namespace Client
         {
             string path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
 
+#if UNITY_EDITOR
+            // 에디터 내부 테스트용 
+            DeleteSaveFile();
+#endif
             if (!File.Exists(path))
             {
                 Debug.LogError("Player Data 없음, 새로 생성");
@@ -146,14 +150,29 @@ namespace Client
             Debug.Log("Player Data Save 성공");
 
         }
-        #endregion
 
-        /// <summary>
-        /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
-        /// </summary>
-        /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
-        /// <returns></returns>
-        public ActivityData SetNewActivityData(ActivityType activityType)
+        void DeleteSaveFile()
+        {
+            string filePath = Path.Combine(Application.persistentDataPath, "PlayerData.json"); // 저장된 파일 이름
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                Debug.Log("Save file deleted.");
+            }
+            else
+            {
+                Debug.Log("Save file does not exist.");
+            }
+        }
+
+    #endregion
+
+    /// <summary>
+    /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
+    /// </summary>
+    /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
+    /// <returns></returns>
+    public ActivityData SetNewActivityData(ActivityType activityType)
         {
             activityData = new ActivityData();
 

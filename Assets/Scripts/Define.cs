@@ -25,6 +25,11 @@ namespace Client
             Drag,
         }
 
+        public enum Status
+        {
+            Main, Activity, Event
+        }
+
         #region Turns
         public enum Months
         {
@@ -98,10 +103,11 @@ namespace Client
             Main, Sub, Conditioned
         }
 
-
-        public enum Status
+        public enum MainEventName
         {
-            Main, Activity, Event
+            Intro, Hackerton, MidTest_1, SportsDay, FinTest_1, 
+            SummerVac, 
+            Festival, MidTest_2, Gstar, FinTest_2
         }
 
         #region EndingName

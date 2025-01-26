@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class EventManager : Singleton<EventManager>
 {
+    #region Singleton
     EventManager() { }
+    #endregion
 
-
-    // TODO : 세부 구현 필요
+    public long currentEventID = 0;
 
     /// <summary>
     /// 활동 이후 이벤트 여부 체크
@@ -17,8 +18,7 @@ public class EventManager : Singleton<EventManager>
     {
         switch(DataManager.Instance.playerData.currentTurn)
         {
-            case 0: // 개강
-                Debug.Log("CheckEvent");
+            case 1: // 개강 - 현재 씬에서만 테스트용
                 ShowEvent();
                 break;
             case 2: // 해커톤
@@ -37,8 +37,11 @@ public class EventManager : Singleton<EventManager>
                 break;
             case 23: // 기말고사
                 break;
+            default:
+                // 해당 없을 시 다시 메인 화면으로 전환
+                DataManager.Instance.playerData.currentStatus = Define.Status.Main;
+                break;
         }
-        DataManager.Instance.playerData.currentStatus = Define.Status.Main;
     }
 
     /// <summary>
@@ -47,16 +50,5 @@ public class EventManager : Singleton<EventManager>
     public void ShowEvent()
     {
         DataManager.Instance.playerData.currentStatus = Define.Status.Event;
-        Debug.Log("ShowEvent");
-
-        EventUI eventUI = GameObject.FindObjectOfType<EventUI>(true);
-
-        if(eventUI != null)
-        {
-            eventUI.StartDialogue();
-        }
-        else{
-            Debug.LogError("EventUI를 찾을 수 없습니다.");
-        }
     }
 }

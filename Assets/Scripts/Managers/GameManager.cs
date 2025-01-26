@@ -136,7 +136,6 @@ namespace Client
         public void UpdateStress()
         {
             DataManager.Instance.playerData.stressAmount += DataManager.Instance.activityData.stressValue;
-            Debug.Log("스트레스 : " + DataManager.Instance.playerData.stressAmount);
         }
 
         /// <summary>

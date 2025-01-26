@@ -128,7 +128,7 @@ namespace Client
                 else // 메인으로 돌아가기
                 {
                     EventManager.Instance.CheckEvent();
-                    gameObject.SetActive(false);
+                    //gameObject.SetActive(false);
                 }
             }
         }
