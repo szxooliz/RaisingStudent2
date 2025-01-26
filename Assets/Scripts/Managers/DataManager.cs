@@ -19,6 +19,7 @@ namespace Client
 
         public PersistentData persistentData = new PersistentData(); // 엔딩 목록
         public ActivityData activityData = new ActivityData(); // 활동 하나의 데이터, 결과 전달용
+        public List<ActivityData> activityList = new List<ActivityData>();
 
         #region Singleton
         private DataManager()
