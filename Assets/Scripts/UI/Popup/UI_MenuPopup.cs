@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Client
@@ -58,15 +59,40 @@ namespace Client
         void OnClickContinueBtn(PointerEventData evt)
         {
             Debug.Log("이어하기 버튼 클릭");
+            ClosePopupUI();
         }
         void OnClickRenewBtn(PointerEventData evt)
         {
             Debug.Log("새로하기 버튼 클릭");
+
+            // 플레이어 데이터 초기화하고 타이틀로 돌아가기
+
+            DataManager.Instance.playerData = new Define.PlayerData();
+
+            // LoadTitleScreen();
+
+            ClosePopupUI();
+            SceneManager.LoadScene("TitleScene");
         }
+
         void OnClickTitleBtn(PointerEventData evt)
         {
             Debug.Log("타이틀로 버튼 클릭");
+
+            // 타이틀로 돌아가기
+            // LoadTitleScreen();
+
+            ClosePopupUI();
+            SceneManager.LoadScene("TitleScene");
         }
+
+        /*
+        void LoadTitleScreen(){
+            ClosePopupUI();
+            SceneManager.LoadScene("TitleScene");
+        }
+         */
+
 
         void ChangeBGM(float value)
         {

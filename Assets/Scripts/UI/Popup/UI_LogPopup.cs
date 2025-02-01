@@ -12,6 +12,7 @@ namespace Client
 
         enum Buttons
         {
+            Panel,
             BTN_Close
         }
 
@@ -24,10 +25,15 @@ namespace Client
 
         void BindButton()
         {
+            BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
             BindEvent(GetButton((int)Buttons.BTN_Close).gameObject, OnClickCloseBtn);
         }
 
         void OnClickCloseBtn(PointerEventData evt)
+        {
+            ClosePopupUI();
+        }
+        void OnClickPanel(PointerEventData evt)
         {
             ClosePopupUI();
         }
