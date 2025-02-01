@@ -22,6 +22,7 @@ public class EventUI : UI_Base, IPointerClickHandler
 
     int index = 0;
     Coroutine coroutine = null;
+    int currentEventID;
 
 
     public override void Init()
@@ -39,6 +40,7 @@ public class EventUI : UI_Base, IPointerClickHandler
     public void ShowEvent()
     {
         index = 0;
+        currentEventID = EventManager.Instance.currentEventID;
         coroutine = StartCoroutine(LoadNextDialogue(index++));
     }
 
@@ -81,9 +83,9 @@ public class EventUI : UI_Base, IPointerClickHandler
         }
 
         // 현재 해당하는 이벤트 끝날 시 메인으로 전환
-        if (EventManager.Instance.currentEventID != eventScript.EventNum)
+        if (currentEventID != eventScript.EventNum)
         {
-            Debug.Log($"current Event ID : {EventManager.Instance.currentEventID}, evntScript : {eventScript.EventNum}");
+            Debug.Log($"current Event ID : {currentEventID}, evntScript : {eventScript.EventNum}");
 
             DataManager.Instance.playerData.currentStatus = Define.Status.Main;
             coroutine = null;
