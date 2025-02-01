@@ -35,6 +35,7 @@ namespace Client
                 s_instance = go.GetComponent<GameManager>();
 
                 DataManager.Instance.Init();
+                SoundManager.Instance.Init();
             }
         }
 
