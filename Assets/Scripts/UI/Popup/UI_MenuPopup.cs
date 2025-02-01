@@ -17,28 +17,20 @@ namespace Client
             BTN_Continue, BTN_Renew, BTN_Title
         }
 
-        public Slider BGMslider;
-        public Slider SFXslider;
+        enum Sliders
+        {
+            Slider_BGM,
+            Slider_SFX,
+        }
 
         public override void Init()
         {
             base.Init();
             Bind<Button>(typeof(Buttons));
+            Bind<Slider>(typeof(Sliders));
+
             BindButton();
-
-            BGMslider = GameObject.Find("Slider_BGM").GetComponent<Slider>();
-            SFXslider = GameObject.Find("Slider_SFX").GetComponent<Slider>();
-
-            if (BGMslider == null)
-            {
-                Debug.LogError("BGM 슬라이더를 찾을 수 없습니다!");
-            }
-            if (SFXslider == null)
-            {
-                Debug.LogError("SFX 슬라이더를 찾을 수 없습니다!");
-            }
-
-            //BindSlider();
+            BindSlider();
         }
 
         void BindButton()
@@ -51,10 +43,10 @@ namespace Client
 
         void BindSlider()
         {
-            BGMslider.onValueChanged.AddListener(ChangeBGM);
-            SFXslider.onValueChanged.AddListener(ChangeSFX);
-            BGMslider.value = LoadBGMVolume();
-            SFXslider.value = LoadSFXVolume();
+            Get<Slider>((int)Sliders.Slider_BGM).onValueChanged.AddListener(ChangeBGM);
+            Get<Slider>((int)Sliders.Slider_SFX).onValueChanged.AddListener(ChangeSFX);
+            Get<Slider>((int)Sliders.Slider_BGM).value = LoadBGMVolume();
+            Get<Slider>((int)Sliders.Slider_SFX).value = LoadSFXVolume();
 
         }
 
@@ -63,7 +55,6 @@ namespace Client
             Debug.Log("판넬 누름..");
             ClosePopupUI();
         }
-
         void OnClickContinueBtn(PointerEventData evt)
         {
             Debug.Log("이어하기 버튼 클릭");
@@ -72,7 +63,6 @@ namespace Client
         {
             Debug.Log("새로하기 버튼 클릭");
         }
-
         void OnClickTitleBtn(PointerEventData evt)
         {
             Debug.Log("타이틀로 버튼 클릭");
