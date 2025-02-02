@@ -16,12 +16,12 @@ namespace Client
 
         enum Texts
         {
-            TMP_Title, TMP_Name, TMP_Contents,
+            TMP_Title, TMP_Name, TMP_Awards, TMP_Contents,
         }
 
         enum Images
         {
-            IMG_Illustration,
+            IMG_Illustraion,
         }
 
         public override void Init()
@@ -55,7 +55,7 @@ namespace Client
             if (ending != null) {
                 GetText((int)Texts.TMP_Title).text = GetEndingNameKor(ending.endingName) + " - 열람 중";
                 GetText((int)Texts.TMP_Name).text = GetEndingNameKor(ending.endingName);
-                // GetText((int)Texts.TMP_Contents).text = ending.awards;
+                GetText((int)Texts.TMP_Awards).text = string.Join(" ", ending.awards);
             }
         }
     }

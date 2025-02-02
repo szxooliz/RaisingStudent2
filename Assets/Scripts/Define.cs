@@ -183,7 +183,7 @@ namespace Client
             public bool isUnlocked;         // 해금 여부
             public string applicationField; // 지원 분야
             public string grade;            // 게임 성적
-            public string awards;           // 기타 이력
+            public List<string> awards;           // 기타 이력
 
             public Ending(EndingName name) // 생성자
             {
@@ -191,7 +191,7 @@ namespace Client
                 isUnlocked = false;
                 applicationField = "";
                 grade = "";
-                awards = "";
+                awards = new List<string>();
             }
         }
 
@@ -205,6 +205,14 @@ namespace Client
                 foreach (EndingName endingName in Enum.GetValues(typeof(EndingName)))
                 {
                     Ending ending = new Ending(endingName);
+
+                    // *****더미데이터*****
+                    ending.awards.Add("A");
+                    ending.awards.Add("B");
+                    ending.awards.Add("C");
+                    ending.awards.Add("D");
+                    // *****더미데이터*****
+
                     endingList.Add(ending);
                 }
             }
