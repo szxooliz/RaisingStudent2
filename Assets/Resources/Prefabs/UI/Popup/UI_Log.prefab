@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 4916456751695326870}
   - component: {fileID: 3586785970147643868}
   - component: {fileID: 4322173111688086359}
+  - component: {fileID: 7611586276813059034}
   m_Layer: 5
   m_Name: Log_BODY
   m_TagString: Untagged
@@ -154,8 +155,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 1200, y: 179.01}
+  m_AnchoredPosition: {x: 50, y: -200}
+  m_SizeDelta: {x: 1100, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3586785970147643868
 CanvasRenderer:
@@ -185,11 +186,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "A : \uAC00\uB098\uB2E4\uB77C\uB9C8\uBC14\uC0AC\nB : \uC544\uC790\uCC28\uCE74\uD0C0\uD30C\uD558\nA
-    : \uAC00\uB098\uB2E4\uB77C\uB9C8\uBC14\uC0AC"
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fd9850b7db7619843adf2c68dbb710e1, type: 2}
-  m_sharedMaterial: {fileID: -699933248642814735, guid: fd9850b7db7619843adf2c68dbb710e1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -255,6 +255,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7611586276813059034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197376736504667903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2
 --- !u!1 &7227294060361370712
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +412,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 971842394533985460}
-  - component: {fileID: 90693458044387163}
   - component: {fileID: 6675786107148208989}
   - component: {fileID: 4918118863174890870}
   m_Layer: 5
@@ -430,18 +443,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &90693458044387163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8664100695261386456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37ba11e3839ca8243a861626a25ec496, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &6675786107148208989
 CanvasRenderer:
   m_ObjectHideFlags: 0
