@@ -30,7 +30,10 @@ namespace Client
         private string spritePath = "Sprites/Character/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
-        int index = 0; // 엔딩 대사 index
+        int scriptIndex = 0; // 엔딩 대사 index
+        int currentEndingNum = 0; // 현재 엔딩을 나타내는 숫자
+        List<EndingScript> newEndingScripts = new List<EndingScript>(); // 현재 엔딩에 맞는 스크립트만을 저장
+        private bool hasIllustrationAppeared = false; // 현재 일러스트가 표시되어있는지
 
         public override void Init()
         {
@@ -42,6 +45,7 @@ namespace Client
             BindButton();
             CheckEnding();
 
+            LoadScript();
             LoadNextScript();
         }
 
@@ -71,7 +75,6 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
-            index += 1;
             LoadNextScript();
         }
 
@@ -95,29 +98,54 @@ namespace Client
             if (highStatsCount == 4)
             {
                 Debug.Log("대학원 엔딩");
+                currentEndingNum = 5; // 임시 숫자
             }
             else if (highStatsCount >= 2)
             {
                 if (highStats[0] && highStats[3])
                 {
                     Debug.Log("대기업 SI 취업 엔딩");
+                    currentEndingNum = 4;
                 }
                 else if (highStats[0] && highStats[1])
                 {
                     Debug.Log("게임회사 취업 엔딩");
+                    currentEndingNum = 3;
                 }
                 else if (highStats[3] && highStats[1])
                 {
                     Debug.Log("버튜버 엔딩");
+                    currentEndingNum = 2;
                 }
                 else if (highStats[2] && highStats[1])
                 {
                     Debug.Log("프로게이머 엔딩");
+                    currentEndingNum = 1;
                 }
             }
             else
             {
                 Debug.Log("홈프로텍터 엔딩");
+                currentEndingNum = 0;
+            }
+        }
+
+        /// <summary>
+        /// 엔딩에 맞는 스크립트만을 저장
+        /// </summary>
+        void LoadScript()
+        {
+            int tempIndex = 0;
+            while (true)
+            {
+                EndingScript script = DataManager.Instance.GetData<EndingScript>(tempIndex++);
+
+                if (script == null)
+                    break;
+
+                if (script.EndingNum == currentEndingNum) { 
+                    newEndingScripts.Add(script);
+                }
             }
         }
 
@@ -126,14 +154,17 @@ namespace Client
         /// </summary>
         void LoadNextScript()
         {
-            EndingScript endingScript = DataManager.Instance.GetData<EndingScript>(index);
-            if (endingScript == null)
-            {
+            //TODO: (scriptIndex == newEndingScripts.Count) 인 경우 게임 종료 나타내기
+            if (scriptIndex >= newEndingScripts.Count)
                 return;
-            }
 
+            EndingScript endingScript = newEndingScripts[scriptIndex++];
             LoadNextDialogue(endingScript);
-            LoadIllustration(endingScript);
+
+            if (!hasIllustrationAppeared)
+            {
+                LoadIllustration(endingScript);
+            }
         }
 
         /// <summary>
@@ -143,7 +174,7 @@ namespace Client
         void LoadNextDialogue(EndingScript endingScript)
         {
             GetText((int)Texts.TMP_CharLine).text = endingScript.Line;
-            
+
             if (endingScript.NameTag)
             {
                 GetText((int)Texts.TMP_CharName).text = endingScript.Character;
@@ -173,15 +204,11 @@ namespace Client
         /// <param name="endingScript"></param>
         void LoadIllustration(EndingScript endingScript)
         {
+            // 처음으로 일러스트가 등장한 경우 상태 업데이트
             if (endingScript.HasIllust)
             {
-                // 컷씬 들어가는 행
+                hasIllustrationAppeared = true;
                 GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);
-            }
-            else
-            {
-                // 일러스트 다시 돌림
-                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(0);
             }
         }
 
