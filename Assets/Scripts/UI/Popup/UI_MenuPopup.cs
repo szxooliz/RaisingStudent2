@@ -61,11 +61,13 @@ namespace Client
             Debug.Log("이어하기 버튼 클릭");
             ClosePopupUI();
         }
+        /// <summary>
+        /// 새로하기하면 데이터 초기화하고 타이틀로 돌아감
+        /// </summary>
+        /// <param name="evt"></param>
         void OnClickRenewBtn(PointerEventData evt)
         {
             Debug.Log("새로하기 버튼 클릭");
-
-            // 플레이어 데이터 초기화하고 타이틀로 돌아가기
 
             DataManager.Instance.playerData = new Define.PlayerData();
 
@@ -74,7 +76,10 @@ namespace Client
             ClosePopupUI();
             SceneManager.LoadScene("TitleScene");
         }
-
+        /// <summary>
+        /// 바로 타이틀로 돌아감
+        /// </summary>
+        /// <param name="evt"></param>
         void OnClickTitleBtn(PointerEventData evt)
         {
             Debug.Log("타이틀로 버튼 클릭");

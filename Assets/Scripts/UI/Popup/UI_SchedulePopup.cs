@@ -10,12 +10,12 @@ namespace Client
 {
     public class UI_SchedulePopup : UI_Popup
     {
-        GameObject[] scheduleList = new GameObject[6];
-        int turn;
+        GameObject[] scheduleList = new GameObject[6]; // 스케줄 팝업 구성 요소 게임오브젝트 배열
+        int turn; // 현재 몇턴인지 받아올 인자
 
-        // 스케줄 업데이트에 사용하는 리소스
-        public static int[] scheduledTurn = {0, 5, 11, 11, 17, 23};
-        public static string[] scheduleText = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"};
+        // 스케줄 업데이트에 사용하는 리소스 - 일단 하드코딩
+        public static int[] scheduledTurn = {0, 5, 11, 11, 17, 23}; // 고정이벤트가 일어나는 턴
+        public static string[] scheduleText = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"}; // 고정이벤트 내용
 
         enum Buttons
         {
@@ -32,11 +32,15 @@ namespace Client
             base.Init();
             Bind<Button>(typeof(Buttons));
             BindButton();
-            turn = DataManager.Instance.playerData.currentTurn;
+
+            turn = DataManager.Instance.playerData.currentTurn; // 턴을 받아옴
+
             for (int i = 0; i < scheduledTurn.Length; i++)
-            { 
+            {
+                // scheduleList에 게임 오브젝트 받아오기
                 scheduleList[i] = transform.GetChild(i + 3).gameObject;
-                scheduleList[i].transform.GetChild((int)Contents.TXT_Event).GetComponent<TMP_Text>().text = scheduleText[i];
+                // 스케줄 팝업창 요소별 텍스트를 scheduleText로 넣어줌
+                scheduleList[i].transform.GetChild((int)Contents.TXT_Event).GetComponent<TMP_Text>().text = scheduleText[i]; 
             }
 
             SchedulePopupUpdate(turn);

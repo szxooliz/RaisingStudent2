@@ -64,6 +64,10 @@ namespace Client
                     = DataManager.Instance.activityList[i].activityType.ToString(); // activityList에 string이 없어서 일단 활동 이름 string으로 변환
             }
         }
+        /// <summary>
+        /// 로그 팝업 요소 크기 맞추기 -> child 좌표 받아서 부모 크기 바꾸기
+        /// 따로 파일로 만들어서 프리팹에 넣어주면 잘 작동하는데 지금은 크기가 안맞는 문제가 있음
+        /// </summary>
         void ResizeLog()
         {
             RectTransform logTransform = Content.transform.GetComponent<RectTransform>();
