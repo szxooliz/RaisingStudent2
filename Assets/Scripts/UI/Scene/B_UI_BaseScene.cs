@@ -112,20 +112,25 @@ namespace Client
 
 
         /// <summary>
-        /// 주요 이벤트 전 턴에 알림
+        /// 주요 이벤트 전에 남은 턴 알림
+        /// 이벤트 발생 시에 제목 디스플레이
         /// </summary>
         void UpdateTurnUI()
         {
             int turn = DataManager.Instance.playerData.currentTurn;
+
             for(int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
             {
                 if (turn == UI_SchedulePopup.scheduledTurn[i])
-                { 
-                    GetText((int)Texts.TXT_Turn).text = "이번 턴: " + UI_SchedulePopup.scheduleText[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
+                {
+                    GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
                     return;
                 }
+                else
+                {
+                    GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
+                }
             }
-            GetText((int)Texts.TXT_Turn).text = "앞으로 " + (23 - turn) + "턴";
         }
 
         /// <summary>

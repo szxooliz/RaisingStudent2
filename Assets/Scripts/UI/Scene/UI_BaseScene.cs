@@ -59,6 +59,7 @@ namespace Client
         void OnClickScheduleBtn(PointerEventData evt)
         {
             Debug.Log("학사 일정 버튼 클릭");
+            UI_Manager.Instance.ShowPopupUI<UI_SchedulePopup>();
         }
 
         void OnClickLogBtn(PointerEventData evt)
@@ -111,16 +112,31 @@ namespace Client
         }
 
 
-        // TODO : 주요 이벤트까지 남은 턴 표시 - 이벤트 상세 기획서 나오면 
+        /// <summary>
+        /// 학사 일정 표시된 주요 이벤트까지 남은 턴 표시
+        /// </summary>
         void UpdateTurnUI()
         {
+            int turn = DataManager.Instance.playerData.currentTurn;
 
+            for (int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
+            {
+                if (turn == UI_SchedulePopup.scheduledTurn[i])
+                {
+                    GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
+                    return;
+                }
+                else
+                {
+                    GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
+                }
+            }
         }
 
-        /// <summary>
-        /// 시기 표시 UI 업데이트
-        /// </summary>
-        void UpdateTermUI()
+            /// <summary>
+            /// 시기 표시 UI 업데이트
+            /// </summary>
+            void UpdateTermUI()
         {
             GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
                                                 + Define.GetThirdsKor(DataManager.Instance.playerData.currentThird);

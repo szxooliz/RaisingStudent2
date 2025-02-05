@@ -15,7 +15,7 @@ namespace Client
 
         // 스케줄 업데이트에 사용하는 리소스 - 일단 하드코딩
         public static int[] scheduledTurn = {0, 5, 11, 11, 17, 23}; // 고정이벤트가 일어나는 턴
-        public static string[] scheduleText = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"}; // 고정이벤트 내용
+        public static string[] scheduleTitle = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"}; // 고정이벤트 내용
 
         enum Buttons
         {
@@ -40,7 +40,7 @@ namespace Client
                 // scheduleList에 게임 오브젝트 받아오기
                 scheduleList[i] = transform.GetChild(i + 3).gameObject;
                 // 스케줄 팝업창 요소별 텍스트를 scheduleText로 넣어줌
-                scheduleList[i].transform.GetChild((int)Contents.TXT_Event).GetComponent<TMP_Text>().text = scheduleText[i]; 
+                scheduleList[i].transform.GetChild((int)Contents.TXT_Event).GetComponent<TMP_Text>().text = scheduleTitle[i]; 
             }
 
             SchedulePopupUpdate(turn);

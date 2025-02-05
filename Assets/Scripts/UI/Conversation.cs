@@ -83,7 +83,7 @@ namespace Client
         /// </summary>
         IEnumerator ResetBubble(int index)
         {
-            index = UnityEngine.Random.Range(0, 2);
+            index = UnityEngine.Random.Range(0, 33); // 전체 개수 가져오고 싶은데
             Script script = DataManager.Instance.GetData<Script>(index);
 
             // 임시: 캐릭터 종류 관련 로직 정해지면 수정
@@ -104,6 +104,7 @@ namespace Client
             catch (System.Exception e)
             {
                 Debug.LogError($"Failed to update bubble: {e.Message}");
+                coroutine = null;
             }
 
             yield return null;
@@ -121,6 +122,7 @@ namespace Client
             if (loadedSprite == null)
             {
                 throw new System.Exception($"Sprite not found at path: {_path}");
+                coroutine = null;
             }
 
             // 로드된 스프라이트를 캐싱
