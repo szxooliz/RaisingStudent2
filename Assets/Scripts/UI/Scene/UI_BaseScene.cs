@@ -128,15 +128,15 @@ namespace Client
                 }
                 else
                 {
-                    GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
+                    //GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
                 }
             }
         }
 
-            /// <summary>
-            /// 시기 표시 UI 업데이트
-            /// </summary>
-            void UpdateTermUI()
+        /// <summary>
+        /// 시기 표시 UI 업데이트
+        /// </summary>
+        void UpdateTermUI()
         {
             GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
                                                 + Define.GetThirdsKor(DataManager.Instance.playerData.currentThird);

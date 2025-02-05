@@ -74,10 +74,10 @@ public class EventUI : UI_Base, IPointerClickHandler
         // 이벤트 스크립트 없으면 메인으로 전환
         if (eventScript == null)
         {
-            Debug.Log("eventScript is null");
+            Debug.LogError("eventScript is null");
 
+            //coroutine = null;
             DataManager.Instance.playerData.currentStatus = Define.Status.Main;
-            coroutine = null;
 
             yield break;
         }
@@ -87,8 +87,8 @@ public class EventUI : UI_Base, IPointerClickHandler
         {
             Debug.Log($"current Event ID : {currentEventID}, evntScript : {eventScript.EventNum}");
 
-            DataManager.Instance.playerData.currentStatus = Define.Status.Main;
             coroutine = null;
+            DataManager.Instance.playerData.currentStatus = Define.Status.Main;
 
             yield break;
         }

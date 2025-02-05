@@ -16,6 +16,8 @@ namespace Client
         {
             UI_Manager.Instance.ShowSceneUI<UI_BaseScene>();
             UI_Manager.Instance.ShowSceneUI<UI_BaseSceneBtm>();
+
+            EventManager.Instance.CheckEvent();
         }
     }
 
