@@ -79,6 +79,20 @@ namespace Client
             Rest, Class, Game, Workout, Club, MaxCount
         }
 
+        public enum ActivityTypeKor
+        {
+            Rest, Class, Game, Workout, Club, MaxCount
+        }
+
+        public static string GetActivityTypeKor(ActivityType activityType)
+        {
+            if (activityType == ActivityType.MaxCount) return null;
+
+            string temp = "";
+            temp += ((ActivityTypeKor)((int)activityType)).ToString();
+            return temp;
+        }
+
         public enum ResultType
         {
             BigSuccess, Success, Failure, MaxCount
@@ -100,12 +114,12 @@ namespace Client
 
         public enum EventDataType
         {
-            Main, Sub, Conditioned
+            Main, Conditioned
         }
 
-        public enum MainEventName
+        public enum MainEvents
         {
-            Intro, Hackerton, MidTest_1, SportsDay, FinTest_1, 
+            Intro, ApplyToHackerton, Hackerton, MidTest_1, SportsDay, FinTest_1, 
             SummerVac, 
             Festival, MidTest_2, Gstar, FinTest_2
         }
@@ -135,6 +149,8 @@ namespace Client
             public int currentTurn; // 턴 0~23
             public Months currentMonth; // n월 3-6/9-12
             public Thirds currentThird; // a순 상중하
+            public List<ProcessData> watchedProcess; // 로그용 - 이미 진행한 활동, 이벤트 순서대로 저장
+            public List<EventData> watchedEvents; // 이벤트 중복 실행 방지용 - 리스트에 있으면 이미 본 이벤트
 
             public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
 
@@ -222,29 +238,43 @@ namespace Client
         /// 활동 하나당 데이터
         /// </summary>
         [System.Serializable]
-        public class ActivityData
+        public class ActivityData : ProcessData
         {
             public ActivityType activityType; // 활동 종류
             public ResultType resultType; // 활동 결과 실패/성공/대성공
-            public StatName statName1; // 주 스탯
-            public StatName statName2; // 부 스탯
 
-            public int stat1Value; // 주 스탯 증감량
-            public int stat2Value; // 부 스탯 증감량
+            public List<StatName> statNames; // 변경될 스탯 종류
+            public List<int> statValues; // 스탯 증감량
+
             public float stressValue; // 스트레스 증감량
 
             public ActivityData() // 생성자
             {
+                hasChange = true;
+
                 activityType = ActivityType.MaxCount;
                 resultType = ResultType.MaxCount;
-                statName1 = StatName.MaxCount;
-                statName2 = StatName.MaxCount;
 
-                stat1Value= 0;
-                stat2Value= 0;
+                statNames = new List<StatName>();
+                statValues = new List<int>();
                 stressValue = 0;
             }
         }
 
+        public class EventData : ProcessData
+        {
+
+        }
+
+        /// <summary>
+        /// 활동, 이벤트의 기본 구조
+        /// </summary>
+        public class ProcessData
+        {
+            public string title; // 제목
+            public bool hasChange; // 결과에 스탯 변화가 포함되는지
+            public List<(string name, string line)> processLines; // 현재 프로세스에서 사용된 대사 정보 (캐릭터 이름, 대사)
+
+        }
     }
 }

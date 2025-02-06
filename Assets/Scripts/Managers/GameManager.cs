@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using static Client.Define;
@@ -54,8 +55,7 @@ namespace Client
             
             DataManager.Instance.SetNewActivityData((ActivityType)actType);
 
-
-            // 자체 휴강일때는 업데이트할 스탯 없음
+            // 자체 휴강일 때는 업데이트할 스탯 없음
             if (actType != (int)ActivityType.Rest) 
             { 
                 UpdateStats(); 
@@ -64,7 +64,7 @@ namespace Client
             UpdateStress();
             NextTurn();
 
-            // 활동마다 데이터 저장 - 출시 때 주석 해제
+            // 활동마다 데이터 저장 - TODO : 출시 때 주석 해제
             //Data.SavePlayerData();
         }
 
@@ -121,13 +121,15 @@ namespace Client
             DataManager.Instance.activityData.resultType = GetResult();
             float multiplier = GetStatMultiplier(DataManager.Instance.activityData.resultType);
 
-            // 소수점 올림 처리
-            DataManager.Instance.activityData.stat1Value = (int)Math.Ceiling(DataManager.Instance.activityData.stat1Value * multiplier);
-            DataManager.Instance.activityData.stat2Value = (int)Math.Ceiling(DataManager.Instance.activityData.stat2Value * multiplier);
+            for (int i = 0; i < DataManager.Instance.activityData.statNames.Count; i++)
+            {
+                // 소수점 올림 처리
+                int value = (int)Math.Ceiling(DataManager.Instance.activityData.statValues[i] * multiplier);
+                DataManager.Instance.activityData.statValues[i] = value;
 
-            // 스탯 증감 처리
-            DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statName1] += DataManager.Instance.activityData.stat1Value;
-            DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statName2] += DataManager.Instance.activityData.stat2Value;
+                // 스탯 증감 처리
+                DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statNames[i]] += value;
+            }
         }
 
         /// <summary>
@@ -161,10 +163,6 @@ namespace Client
             }
         }
 
-        // 5. 목표 스케줄까지 남은 턴 계산
-
-        // 6. 마지막 턴 이후에 스탯 계산해서 엔딩 결과 내기
-
         /*
         IEnumerator LoadDatas()
         {
@@ -177,7 +175,6 @@ namespace Client
             yield return cor3;
 
         }*/
-
 
         #region UI
         //public void StartSchedule()

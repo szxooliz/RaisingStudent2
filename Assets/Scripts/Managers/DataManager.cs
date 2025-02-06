@@ -176,6 +176,7 @@ namespace Client
     public ActivityData SetNewActivityData(ActivityType activityType)
         {
             activityData = new ActivityData();
+            activityData.statValues = new List<int>() { 10, 5 }; // 임시값
 
             switch(activityType)
             {
@@ -186,34 +187,30 @@ namespace Client
                     break;
                 case ActivityType.Class:
                     activityData.activityType = ActivityType.Class;
-                    activityData.statName1 = StatName.Inteli;
-                    activityData.statName2 = StatName.Strength;
+                    activityData.statNames.Add(StatName.Inteli);
+                    activityData.statNames.Add(StatName.Strength);
                     activityData.stressValue = 30f; // 임시값
                     break;
                 case ActivityType.Game:
                     activityData.activityType = ActivityType.Class;
-                    activityData.statName1 = StatName.Otaku;
-                    activityData.statName2 = StatName.Inteli;
+                    activityData.statNames.Add(StatName.Otaku);
+                    activityData.statNames.Add(StatName.Inteli);
                     activityData.stressValue = 10f; // 임시값
                     break;
                 case ActivityType.Workout:
                     activityData.activityType = ActivityType.Class;
-                    activityData.statName1 = StatName.Strength;
-                    activityData.statName2 = StatName.Charming;
+                    activityData.statNames.Add(StatName.Strength);
+                    activityData.statNames.Add(StatName.Charming);
                     activityData.stressValue = 20f; // 임시값
                     break;
                 case ActivityType.Club:
                     activityData.activityType = ActivityType.Class;
-                    activityData.statName1 = StatName.Charming;
-                    activityData.statName2 = StatName.Otaku;
+                    activityData.statNames.Add(StatName.Charming);
+                    activityData.statNames.Add(StatName.Otaku);
                     activityData.stressValue = 10f; // 임시값
                     break;
             }
-
-            // 임시값
-            // 주 스탯, 부 스탯 증가치 설정
-            activityData.stat1Value = 10;
-            activityData.stat2Value = 5;
+            
             return activityData;
         }
     }

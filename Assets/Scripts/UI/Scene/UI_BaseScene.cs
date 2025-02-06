@@ -82,6 +82,7 @@ namespace Client
                     path = spritePath + Status.Main.ToString();
                     break;
                 case Status.Activity:
+                    // TODO : 로그 버튼 비활성화 - 반투명 이미지 위에 붙여서 활성화
                     path = spritePath + Status.Activity.ToString();
                     break;
                 case Status.Event:
@@ -126,10 +127,8 @@ namespace Client
                     GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
                     return;
                 }
-                else
-                {
-                    //GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
-                }
+                // TODO : 다음 스케줄에 맞춰 남은 턴 표시 로직 더 추가
+                GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
             }
         }
 

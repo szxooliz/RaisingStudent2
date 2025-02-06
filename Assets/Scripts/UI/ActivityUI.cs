@@ -205,8 +205,8 @@ namespace Client
                 UpdateStatUIs();
 
                 str = GetResultTypeKor(DataManager.Instance.activityData.resultType) + Environment.NewLine
-                      + GetStatNameKor(DataManager.Instance.activityData.statName1) + "이 " + DataManager.Instance.activityData.stat1Value + " 상승했다." + Environment.NewLine
-                      + GetStatNameKor(DataManager.Instance.activityData.statName2) + "이 " + DataManager.Instance.activityData.stat2Value + " 상승했다." + Environment.NewLine;
+                      + GetStatNameKor(DataManager.Instance.activityData.statNames[0]) + "이 " + DataManager.Instance.activityData.statValues[0] + " 상승했다." + Environment.NewLine
+                      + GetStatNameKor(DataManager.Instance.activityData.statNames[1]) + "이 " + DataManager.Instance.activityData.statValues[1] + " 상승했다." + Environment.NewLine;
             }
 
             StartCoroutine(Util.LoadTextOneByOne(str, line));
