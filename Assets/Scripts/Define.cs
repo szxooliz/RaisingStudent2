@@ -114,7 +114,7 @@ namespace Client
 
         public enum EventDataType
         {
-            Main, Conditioned
+            Main, Random
         }
 
         public enum MainEvents
@@ -143,13 +143,15 @@ namespace Client
         }
         #endregion
 
+
+        #region UserData
         [System.Serializable]
         public class PlayerData
         {
             public int currentTurn; // 턴 0~23
             public Months currentMonth; // n월 3-6/9-12
             public Thirds currentThird; // a순 상중하
-            public List<ProcessData> watchedProcess; // 로그용 - 이미 진행한 활동, 이벤트 순서대로 저장
+            public List<ProcessData> watchedProcess; // 로그용 - 이미 진행한 or 진행 중인 활동, 이벤트 순서대로 저장
             public List<EventData> watchedEvents; // 이벤트 중복 실행 방지용 - 리스트에 있으면 이미 본 이벤트
 
             public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
@@ -193,23 +195,6 @@ namespace Client
             }
         }
 
-        public class Ending
-        {
-            public EndingName endingName;   // 엔딩 이름
-            public bool isUnlocked;         // 해금 여부
-            public string applicationField; // 지원 분야
-            public string grade;            // 게임 성적
-            public List<string> awards;           // 기타 이력
-
-            public Ending(EndingName name) // 생성자
-            {
-                endingName = name;
-                isUnlocked = false;
-                applicationField = "";
-                grade = "";
-                awards = new List<string>();
-            }
-        }
 
         [System.Serializable]
         public class PersistentData
@@ -233,6 +218,25 @@ namespace Client
                 }
             }
         }
+        #endregion
+
+        public class Ending
+        {
+            public EndingName endingName;   // 엔딩 이름
+            public bool isUnlocked;         // 해금 여부
+            public string applicationField; // 지원 분야
+            public string grade;            // 게임 성적
+            public List<string> awards;     // 기타 이력
+
+            public Ending(EndingName name) // 생성자
+            {
+                endingName = name;
+                isUnlocked = false;
+                applicationField = "";
+                grade = "";
+                awards = new List<string>();
+            }
+        }
 
         /// <summary>
         /// 활동 하나당 데이터
@@ -241,17 +245,15 @@ namespace Client
         public class ActivityData : ProcessData
         {
             public ActivityType activityType; // 활동 종류
-            public ResultType resultType; // 활동 결과 실패/성공/대성공
+            public ResultType resultType;     // 활동 결과 실패/성공/대성공
 
-            public List<StatName> statNames; // 변경될 스탯 종류
-            public List<int> statValues; // 스탯 증감량
+            public List<StatName> statNames;  // 변경될 스탯 종류
+            public List<int> statValues;      // 스탯 증감량
 
             public float stressValue; // 스트레스 증감량
 
             public ActivityData() // 생성자
             {
-                hasChange = true;
-
                 activityType = ActivityType.MaxCount;
                 resultType = ResultType.MaxCount;
 
@@ -263,7 +265,14 @@ namespace Client
 
         public class EventData : ProcessData
         {
+            public long eventIndex;
+            public EventDataType eventType; // 필요한가?
 
+            public EventData()
+            {
+                eventIndex = 0;
+                eventType = EventDataType.Main;
+            }
         }
 
         /// <summary>
@@ -272,9 +281,15 @@ namespace Client
         public class ProcessData
         {
             public string title; // 제목
-            public bool hasChange; // 결과에 스탯 변화가 포함되는지
-            public List<(string name, string line)> processLines; // 현재 프로세스에서 사용된 대사 정보 (캐릭터 이름, 대사)
+            public bool hasChange; // 결과에 스탯 변화가 포함되는지 - 활동/이벤트 마지막에 값 변경해야 할 듯
+            public List<(string name, string line)> processLines; // 현재 프로세스에서 사용된 대사 정보 - 불변값 (캐릭터 이름, 대사)
 
+            public ProcessData()
+            {
+                title = "";
+                hasChange = true;
+                processLines = new List<(string name, string line)>();
+            }
         }
     }
 }

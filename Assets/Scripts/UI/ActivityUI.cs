@@ -161,7 +161,6 @@ namespace Client
             else
             {
                 str = _charLines[(int)DataManager.Instance.activityData.resultType];
-                DataManager.Instance.activityList.Add(DataManager.Instance.activityData); // 2월 2일 업데이트에서 장범규가 추가함
 
                 switch (DataManager.Instance.activityData.resultType)
                 {
