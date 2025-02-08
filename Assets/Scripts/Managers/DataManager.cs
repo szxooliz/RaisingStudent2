@@ -14,7 +14,9 @@ namespace Client
     {
         // 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
         Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
-        
+        // 로드한 적 있는 Sprite
+        Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
+
         public PlayerData playerData; // 플레이어 데이터
         public PersistentData persistentData = new PersistentData(); // 엔딩 목록
 
@@ -167,12 +169,12 @@ namespace Client
 
     #endregion
 
-    /// <summary>
-    /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
-    /// </summary>
-    /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
-    /// <returns></returns>
-    public ActivityData SetNewActivityData(ActivityType activityType)
+        /// <summary>
+        /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
+        /// </summary>
+        /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
+        /// <returns></returns>
+        public ActivityData SetNewActivityData(ActivityType activityType)
         {
             activityData = new ActivityData();
             activityData.statValues = new List<int>() { 10, 5 }; // 임시값
@@ -209,8 +211,34 @@ namespace Client
                     activityData.stressValue = 10f; // 임시값
                     break;
             }
-            
+        
             return activityData;
         }
+
+        /// <summary>
+        /// 캐싱된 스프라이트 로드 / 반환
+        /// </summary>
+        /// <param name="_path"></param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public Sprite GetOrLoadSprite(string _path)
+        {
+            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
+            {
+                // 캐싱된 스프라이트 반환
+                return cachedSprite;
+            }
+
+            Sprite loadedSprite = Resources.Load<Sprite>(_path);
+            if (loadedSprite == null)
+            {
+                throw new System.Exception($"Sprite not found at path: {_path}");
+            }
+
+            // 로드된 스프라이트를 캐싱
+            spriteCache[_path] = loadedSprite;
+            return loadedSprite;
+        }
+
     }
 }

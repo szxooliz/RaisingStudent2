@@ -23,9 +23,6 @@ namespace Client
 
         private long maxCount; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
-        private string spritePath = "Sprites/Character/";
-        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
-
         private Image charFace;
         private Image charBubble;
         private TMPro.TMP_Text charLine;
@@ -87,7 +84,7 @@ namespace Client
             Script script = DataManager.Instance.GetData<Script>(index);
 
             // 임시: 캐릭터 종류 관련 로직 정해지면 수정
-            string charType = script.Character; 
+            //string charType = script.Character; 
 
             if (script == null) 
             {
@@ -96,8 +93,8 @@ namespace Client
 
             try
             {
-                string path = spritePath + charType + "_" + script.Face;
-                Sprite sprite = GetOrLoadSprite(path);
+                string path = Util.GetSeasonIllustPath(script);
+                Sprite sprite = DataManager.Instance.GetOrLoadSprite(path);
 
                 StartCoroutine(AnimateBubble(script, sprite));
             }
@@ -108,26 +105,6 @@ namespace Client
             }
 
             yield return null;
-        }
-
-        Sprite GetOrLoadSprite(string _path)
-        {
-            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-            {
-                // 캐싱된 스프라이트 반환
-                return cachedSprite; 
-            }
-
-            Sprite loadedSprite = Resources.Load<Sprite>(_path);
-            if (loadedSprite == null)
-            {
-                throw new System.Exception($"Sprite not found at path: {_path}");
-                coroutine = null;
-            }
-
-            // 로드된 스프라이트를 캐싱
-            spriteCache[_path] = loadedSprite; 
-            return loadedSprite;
         }
 
         /// <summary>

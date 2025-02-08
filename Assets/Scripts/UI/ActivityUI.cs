@@ -12,12 +12,14 @@ namespace Client
 {
     public class ActivityUI : UI_Base, IPointerClickHandler
     {
-        private static List<string> _charLines = new List<string>()
+        [SerializeField]
+        private List<string> _charLines = new List<string>()
         {
             "오늘 집중이 너무 잘 되는데요!",
             "오예 굿굿 저녁으로 맛잇는거 먹어야지",
             "차라리 쿨쿨따 하는게 더 나았겠다"
         };
+        [SerializeField] private string _restLine = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
 
 
         enum GameObjects
@@ -40,13 +42,10 @@ namespace Client
             IMG_Bubble1, IMG_Bubble2
         }
 
-        private string spritePath = "Sprites/Character/";
-        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
-
-        private Image charFace;
-        private TMPro.TMP_Text charName;
-        private TMPro.TMP_Text charLine;
-        private TMPro.TMP_Text line;
+        private Image charFace;          // 캐릭터 이미지
+        private TMPro.TMP_Text charName; // 캐릭터 이름표
+        private TMPro.TMP_Text charLine; // 캐릭터 대사
+        private TMPro.TMP_Text line;     // 결과 나레이션
 
         private Coroutine coroutine = null;
 
@@ -129,7 +128,6 @@ namespace Client
                 else // 메인으로 돌아가기
                 {
                     EventManager.Instance.CheckEvent();
-                    //gameObject.SetActive(false);
                 }
             }
         }
@@ -156,7 +154,7 @@ namespace Client
 
             if (DataManager.Instance.activityData.activityType == ActivityType.Rest)
             {
-                str = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
+                str = _restLine;
             }
             else
             {
@@ -174,8 +172,8 @@ namespace Client
                         face = "sad";
                         break;
                 }
-                string path = spritePath + "Comsoon_" + face;
-                charFace.sprite = GetOrLoadSprite(path);
+                string path = Util.GetSeasonIllustPath(face);
+                charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
@@ -211,25 +209,6 @@ namespace Client
             StartCoroutine(Util.LoadTextOneByOne(str, line));
 
             yield return null;
-        }
-
-        Sprite GetOrLoadSprite(string _path)
-        {
-            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-            {
-                // 캐싱된 스프라이트 반환
-                return cachedSprite;
-            }
-
-            Sprite loadedSprite = Resources.Load<Sprite>(_path);
-            if (loadedSprite == null)
-            {
-                throw new System.Exception($"Sprite not found at path: {_path}");
-            }
-
-            // 로드된 스프라이트를 캐싱
-            spriteCache[_path] = loadedSprite;
-            return loadedSprite;
         }
     }
 }

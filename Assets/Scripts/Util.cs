@@ -103,5 +103,121 @@ namespace Client
             yield return null;
             nowTexting = false;
         }
+
+        #region 일러스트 경로 반환 함수 오버로드
+        /// <summary>
+        /// 계절에 맞는 옷 일러스트 경로 반환 - 활동 결과
+        /// </summary>
+        /// <param name="face"></param>
+        /// <returns></returns>
+        public static string GetSeasonIllustPath(string face)
+        {
+            string str = "";
+
+            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            {
+                str = $"Sprites/Character/{DataManager.Instance.playerData.charName}_Summer_{face}";
+            }
+            else
+            {
+                str = $"Sprites/Character/{DataManager.Instance.playerData.charName}_{face}";
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// 계절에 맞는 옷 일러스트 경로 반환
+        /// </summary>
+        /// <param name="script">대화 인터랙션 스크립트</param>
+        /// <returns></returns>
+        public static string GetSeasonIllustPath(Script script)
+        {
+            string str = "";
+            
+            // 계절 이미지가 없는 캐릭터의 경우
+            if (script.Character != DataManager.Instance.playerData.charName)
+            {
+                str = $"Sprites/Character/{script.Character}";
+                return str;
+            }
+
+            // 계절 이미지가 있는 플레이어블 캐릭터의 경우
+            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            {
+                str = $"Sprites/Character/{script.Character}_Summer_{script.Face}";
+            }
+            else
+            {
+                str = $"Sprites/Character/{script.Character}_{script.Face}";
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// 계절에 맞는 옷 일러스트 경로 반환
+        /// </summary>
+        /// <param name="eventScript">메인 이벤트 스크립트</param>
+        /// <returns></returns>
+        public static string GetSeasonIllustPath(EventScript eventScript)
+        {
+            string str = "";
+
+            // 계절 이미지가 없는 캐릭터의 경우
+            if (eventScript.Character != DataManager.Instance.playerData.charName)
+            {
+                str = $"Sprites/Character/{eventScript.Character}";
+                return str;
+            }
+
+            // 계절 이미지가 있는 플레이어블 캐릭터의 경우
+            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            {
+                str = $"Sprites/Character/{eventScript.Character}_Summer_{eventScript.Face}";
+            }
+            else
+            {
+                str = $"Sprites/Character/{eventScript.Character}_{eventScript.Face}";
+            }
+
+            return str;
+        }
+
+
+        /// <summary>
+        /// 계절에 맞는 옷 일러스트 경로 반환
+        /// </summary>
+        /// <param name="randomEventScript">랜덤 이벤트 스크립트</param>
+        /// <returns></returns>
+        public static string GetSeasonIllustPath(RandomEventScript randomEventScript)
+        {
+            string str = "";
+
+            // 계절 이미지가 없는 캐릭터의 경우
+            if (randomEventScript.Character != DataManager.Instance.playerData.charName)
+            {
+                str = $"Sprites/Character/{randomEventScript.Character}";
+                return str;
+            }
+
+            // 계절 이미지가 있는 플레이어블 캐릭터의 경우
+            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            {
+                str = $"Sprites/Character/{randomEventScript.Character}_Summer_{randomEventScript.Face}";
+            }
+            else
+            {
+                str = $"Sprites/Character/{randomEventScript.Character}_{randomEventScript.Face}";
+            }
+
+            return str;
+        }
+
+        #endregion
     }
 }

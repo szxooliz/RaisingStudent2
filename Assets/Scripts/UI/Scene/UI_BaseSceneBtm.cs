@@ -29,7 +29,6 @@ namespace Client
         }
 
         private string spritePath = "Sprites/UI/Stress_";
-        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         public override void Init()
         {
@@ -95,6 +94,7 @@ namespace Client
             }
         }
 
+        #region 스탯, 스트레스 UI 업데이트
         /// <summary>
         /// 스탯 UI 수치 업데이트
         /// </summary>
@@ -111,53 +111,37 @@ namespace Client
         /// </summary>
         void UpdateStressUIs()
         {
-            string path;
-
+            string status;
             // 상태 따라 색, 상태 이미지 정하기 
             if (DataManager.Instance.playerData.stressAmount >= 70)
             {
                 GetImage((int)Images.UI_Stress).color = new Color32(255, 68, 51, 255);
-                path = spritePath + "danger";
+                status = "danger";
             }
             else if(DataManager.Instance.playerData.stressAmount >= 40)
             {
                 GetImage((int)Images.UI_Stress).color = new Color32(243, 230, 0, 255);
-                path = spritePath + "normal";
+                status = "normal";
             }
             else
             {
                 GetImage((int)Images.UI_Stress).color = new Color32(34, 217, 121, 255);
-                path = spritePath + "calm";
+                status = "calm";
             }
+
+            string path = $"Sprites/UI/Stress_{status}";
 
             // 스트레스 바 채우기
             GetImage((int)Images.UI_Stress).fillAmount = DataManager.Instance.playerData.stressAmount / 100;
             
             // path 경로 통해서 상태 이미지 로드
-            GetImage((int)Images.UI_StressStatus).sprite = GetOrLoadSprite(path);
+            GetImage((int)Images.UI_StressStatus).sprite = DataManager.Instance.GetOrLoadSprite(path);
 
             // 상태 그래픽 흰색 이슈로 색상 처리
             GetImage((int)Images.UI_StressStatus).color = Color.black; 
         }
 
-        Sprite GetOrLoadSprite(string _path)
-        {
-            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-            {
-                // 캐싱된 스프라이트 반환
-                return cachedSprite;
-            }
-
-            Sprite loadedSprite = Resources.Load<Sprite>(_path);
-            if (loadedSprite == null)
-            {
-                throw new System.Exception($"Sprite not found at path: {_path}");
-            }
-
-            // 로드된 스프라이트를 캐싱
-            spriteCache[_path] = loadedSprite;
-            return loadedSprite;
-        }
+        #endregion
 
         #region MainUI 버튼 이벤트
         void OnClickRestBtn(PointerEventData evt)

@@ -148,6 +148,7 @@ namespace Client
         [System.Serializable]
         public class PlayerData
         {
+            public string charName; // 현재 플레이 중인 캐릭터 이름
             public int currentTurn; // 턴 0~23
             public Months currentMonth; // n월 3-6/9-12
             public Thirds currentThird; // a순 상중하
@@ -181,6 +182,7 @@ namespace Client
 
             public PlayerData() // 생성자
             {
+                charName = "Comsoon"; // 프로토타입
                 currentTurn = 0;
                 currentMonth = Months.Mar;
                 currentThird = Thirds.First;
