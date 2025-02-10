@@ -17,9 +17,6 @@ public class EventUI : UI_Base, IPointerClickHandler
         IMG_CharFace //, IMG_Bubble 딱히 필요 없을듯
     }
 
-    private string charSpritePath = "Sprites/Character/";
-    private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
-
     int index = 0;
     Coroutine coroutine = null;
     int currentEventID;
@@ -100,7 +97,7 @@ public class EventUI : UI_Base, IPointerClickHandler
         if (eventScript.NameTag)
         {
             GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 1);
-            GetImage((int)Images.IMG_CharFace).sprite = GetOrLoadSprite($"{charSpritePath}{eventScript.Character}_{eventScript.Face}");
+            GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(Util.GetSeasonIllustPath(eventScript));
         }
         else
         {
@@ -113,24 +110,5 @@ public class EventUI : UI_Base, IPointerClickHandler
 
         yield return null;
         //coroutine = null;
-    }
-    
-    Sprite GetOrLoadSprite(string _path) 
-    {
-        if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-        {
-            // 캐싱된 스프라이트 반환
-            return cachedSprite;
-        }
-
-        Sprite loadedSprite = Resources.Load<Sprite>(_path);
-        if (loadedSprite == null)
-        {
-            throw new System.Exception($"Sprite not found at path: {_path}");
-        }
-
-        // 로드된 스프라이트를 캐싱
-        spriteCache[_path] = loadedSprite;
-        return loadedSprite;
     }
 }

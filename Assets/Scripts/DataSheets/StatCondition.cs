@@ -10,11 +10,16 @@ using System.Text.RegularExpressions;
 
 namespace Client
 {
-    public partial class RandomSelectScript : SheetData
+    public partial class StatCondition : SheetData
     {
-public long index; // 선택지 번호
-		public string SelectNum; // 선택지 (랜덤 이벤트)
-		public long MoveLine; // 옮길 라인
+public long index; // 인덱스
+		public long ScriptIndex; // 스크립트 넘버
+		public long Inteli; // 지력
+		public long Otaku; // 덕력
+		public long Strength; // 체력
+		public long Charming; // 매력
+		public long TrueIndex; // 참일 때 인덱스
+		public long FalseIndex; // 거짓일 때 인덱스
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -43,7 +48,7 @@ public long index; // 선택지 번호
 
                     line = i;
 
-                    RandomSelectScript data = new RandomSelectScript();
+                    StatCondition data = new StatCondition();
 
                     
 					if(values[0] == "")
@@ -52,14 +57,39 @@ public long index; // 선택지 번호
 					    data.index = Convert.ToInt64(values[0]);
 					
 					if(values[1] == "")
-					    data.SelectNum = default;
+					    data.ScriptIndex = default;
 					else
-					    data.SelectNum = Convert.ToString(values[1]);
+					    data.ScriptIndex = Convert.ToInt64(values[1]);
 					
 					if(values[2] == "")
-					    data.MoveLine = default;
+					    data.Inteli = default;
 					else
-					    data.MoveLine = Convert.ToInt64(values[2]);
+					    data.Inteli = Convert.ToInt64(values[2]);
+					
+					if(values[3] == "")
+					    data.Otaku = default;
+					else
+					    data.Otaku = Convert.ToInt64(values[3]);
+					
+					if(values[4] == "")
+					    data.Strength = default;
+					else
+					    data.Strength = Convert.ToInt64(values[4]);
+					
+					if(values[5] == "")
+					    data.Charming = default;
+					else
+					    data.Charming = Convert.ToInt64(values[5]);
+					
+					if(values[6] == "")
+					    data.TrueIndex = default;
+					else
+					    data.TrueIndex = Convert.ToInt64(values[6]);
+					
+					if(values[7] == "")
+					    data.FalseIndex = default;
+					else
+					    data.FalseIndex = Convert.ToInt64(values[7]);
 					
 
                     dataList[data.index] = data;

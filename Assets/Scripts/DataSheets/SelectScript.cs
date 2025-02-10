@@ -12,8 +12,8 @@ namespace Client
 {
     public partial class SelectScript : SheetData
     {
-public long index; // 스크립트 넘버
-		public string SelectNum; // 선택지 (확정 이벤트)
+public long index; // 선택지 번호
+		public string SelectNum; // 선택지 (랜덤 이벤트)
 		public long MoveLine; // 옮길 라인
 		
 

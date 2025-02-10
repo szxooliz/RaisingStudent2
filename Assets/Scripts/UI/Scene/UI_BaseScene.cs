@@ -82,7 +82,6 @@ namespace Client
                     path = spritePath + Status.Main.ToString();
                     break;
                 case Status.Activity:
-                    // TODO : 로그 버튼 비활성화 - 반투명 이미지 위에 붙여서 활성화
                     path = spritePath + Status.Activity.ToString();
                     break;
                 case Status.Event:
@@ -90,34 +89,18 @@ namespace Client
                     break;
             }
 
-            GetImage((int)Images.IMG_Status).sprite = GetOrLoadSprite(path);
+            GetImage((int)Images.IMG_Status).sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
 
-        Sprite GetOrLoadSprite(string _path)
-        {
-            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-            {
-                // 캐싱된 스프라이트 반환
-                return cachedSprite;
-            }
-
-            Sprite loadedSprite = Resources.Load<Sprite>(_path);
-            if (loadedSprite == null)
-            {
-                throw new System.Exception($"Sprite not found at path: {_path}");
-            }
-
-            // 로드된 스프라이트를 캐싱
-            spriteCache[_path] = loadedSprite;
-            return loadedSprite;
-        }
-
+        // TODO : 상황에 따른 로그 버튼 활성/비활성 함수 만들기 - 반투명 이미지를 위에 붙여서 활성화
+        // 활동 때, 이벤트 마지막에 스탯 변경될 때 비활성화
 
         /// <summary>
         /// 학사 일정 표시된 주요 이벤트까지 남은 턴 표시
         /// </summary>
         void UpdateTurnUI()
         {
+            // TODO : static 배열 없애고 다른 방식으로 수정
             int turn = DataManager.Instance.playerData.currentTurn;
 
             for (int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
@@ -128,7 +111,7 @@ namespace Client
                     return;
                 }
                 // TODO : 다음 스케줄에 맞춰 남은 턴 표시 로직 더 추가
-                GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
+                // GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
             }
         }
 

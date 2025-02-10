@@ -18,8 +18,8 @@ public long index; // 스크립트 넘버
 		public string Line; // 캐릭터의 대사
 		public string Face; // 캐릭터의 감정
 		public bool NameTag; // 이름표 사용 여부
-		public long SelectIndex; // 선택지 번호
-		public long SkipLine; // 스킵라인
+		public long BranchType; // 분기타입
+		public long BranchIndex; // 분기인덱스
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -82,14 +82,14 @@ public long index; // 스크립트 넘버
 					    data.NameTag = Convert.ToBoolean(values[5]);
 					
 					if(values[6] == "")
-					    data.SelectIndex = default;
+					    data.BranchType = default;
 					else
-					    data.SelectIndex = Convert.ToInt64(values[6]);
+					    data.BranchType = Convert.ToInt64(values[6]);
 					
 					if(values[7] == "")
-					    data.SkipLine = default;
+					    data.BranchIndex = default;
 					else
-					    data.SkipLine = Convert.ToInt64(values[7]);
+					    data.BranchIndex = Convert.ToInt64(values[7]);
 					
 
                     dataList[data.index] = data;

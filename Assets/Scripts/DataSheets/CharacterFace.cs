@@ -12,12 +12,10 @@ namespace Client
 {
     public partial class CharacterFace : SheetData
     {
-public long index; // 인덱스
+public long index; //  
 		public string Character; // 캐릭터 고유값
 		public string CharacterName; // 캐릭터 이름
 		public string basic; // 기본
-		public string glad; // 기쁨
-		public string sad; // 슬픔
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -68,16 +66,6 @@ public long index; // 인덱스
 					    data.basic = default;
 					else
 					    data.basic = Convert.ToString(values[3]);
-					
-					if(values[4] == "")
-					    data.glad = default;
-					else
-					    data.glad = Convert.ToString(values[4]);
-					
-					if(values[5] == "")
-					    data.sad = default;
-					else
-					    data.sad = Convert.ToString(values[5]);
 					
 
                     dataList[data.index] = data;

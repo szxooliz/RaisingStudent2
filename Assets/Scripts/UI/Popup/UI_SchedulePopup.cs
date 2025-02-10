@@ -52,9 +52,7 @@ namespace Client
 
             SchedulePopupUpdate(turn);
         }
-        /// <summary>
-        /// 학사일정 켜질때 업데이트
-        /// </summary>
+
         private void OnEnable()
         {
             turn = DataManager.Instance.playerData.currentTurn;
@@ -75,6 +73,7 @@ namespace Client
         {
             ClosePopupUI();
         }
+
         /// <summary>
         /// 학사일정 지나가면 취소표 그려주는 함수
         /// </summary>

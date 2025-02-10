@@ -1,12 +1,12 @@
-﻿ ,캐릭터 고유값,캐릭터 이름,기본,,,,,,,,,,,,,,,,,,,,,,
-index,Character,CharacterName,basic,,,,,,,,,,,,,,,,,,,,,,
-long,string,string,string,,,,,,,,,,,,,,,,,,,,,,
-0,Comsoon,김컴순,Comsoon_basic,,,,,,,,,,,,,,,,,,,,,,
-1,Professor,교수님,Professor_basic,,,,,,,,,,,,,,,,,,,,,,
-2,StudentA,학생 A,,,,,,,,,,,,,,,,,,,,,,,
-3,StudentB,학생 B,,,,,,,,,,,,,,,,,,,,,,,
-4,Employee,직원,,,,,,,,,,,,,,,,,,,,,,,
-5,Announce,,,,,,,,,,,,,,,,,,,,,,,,
+﻿인덱스,스크립트 넘버,지력,덕력,체력,매력,참일 때 인덱스,거짓일 때 인덱스,,,,,,,,,,,,,,,,,,
+index,ScriptIndex,Inteli,Otaku,Strength,Charming,TrueIndex,FalseIndex,,,,,,,,,,,,,,,,,,
+long,long,long,long,long,long,long,long,,,,,,,,,,,,,,,,,,
+0,1015,30,0,0,0,56,58,,,,,,,,,,,,,,,,,,
+
+
+
+
+
 
 
 
