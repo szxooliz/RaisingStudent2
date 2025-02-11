@@ -33,7 +33,11 @@ namespace Client
         int scriptIndex = 0; // 엔딩 대사 index
         int currentEndingNum = 0; // 현재 엔딩을 나타내는 숫자
         List<EndingScript> newEndingScripts = new List<EndingScript>(); // 현재 엔딩에 맞는 스크립트만을 저장
-        private bool hasIllustrationAppeared = false; // 현재 일러스트가 표시되어있는지
+
+        private bool hasIllustrationAppeared = false; // 처음 일러스트 등장 여부
+        private bool isIllustrationDisplayed = false; // 현재 일러스트가 표시된 상태인지 확인
+
+        private Coroutine coroutine = null;
 
         public override void Init()
         {
@@ -98,35 +102,35 @@ namespace Client
             if (highStatsCount == 4)
             {
                 Debug.Log("대학원 엔딩");
-                currentEndingNum = 5; // 임시 숫자
+                currentEndingNum = (int)EndingName.GraduateStudent;
             }
             else if (highStatsCount >= 2)
             {
                 if (highStats[0] && highStats[3])
                 {
                     Debug.Log("대기업 SI 취업 엔딩");
-                    currentEndingNum = 4;
+                    currentEndingNum = (int)EndingName.CorporateSI;
                 }
                 else if (highStats[0] && highStats[1])
                 {
                     Debug.Log("게임회사 취업 엔딩");
-                    currentEndingNum = 3;
+                    currentEndingNum = (int)EndingName.GameCompany;
                 }
                 else if (highStats[3] && highStats[1])
                 {
                     Debug.Log("버튜버 엔딩");
-                    currentEndingNum = 2;
+                    currentEndingNum = (int)EndingName.VirtualYoutuber;
                 }
                 else if (highStats[2] && highStats[1])
                 {
                     Debug.Log("프로게이머 엔딩");
-                    currentEndingNum = 1;
+                    currentEndingNum = (int)EndingName.ProGamer;
                 }
             }
             else
             {
                 Debug.Log("홈프로텍터 엔딩");
-                currentEndingNum = 0;
+                currentEndingNum = (int)EndingName.HomeProtector;
             }
         }
 
@@ -154,26 +158,47 @@ namespace Client
         /// </summary>
         void LoadNextScript()
         {
+            if (coroutine != null)  // 텍스트 애니메이션이 진행 중이라면
+            {
+                coroutine = null;
+                return;
+            }
+
             //TODO: (scriptIndex == newEndingScripts.Count) 인 경우 게임 종료 나타내기
             if (scriptIndex >= newEndingScripts.Count)
                 return;
 
-            EndingScript endingScript = newEndingScripts[scriptIndex++];
-            LoadNextDialogue(endingScript);
+            // 일러스트가 표시된 상태
+            if (isIllustrationDisplayed)
+            {
+                isIllustrationDisplayed = false;
+                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);  // 일러스트 인덱스 초기화
+            }
 
-            if (!hasIllustrationAppeared)
+            EndingScript endingScript = newEndingScripts[scriptIndex];
+
+            // 처음으로 일러스트가 등장한 경우
+            if (!hasIllustrationAppeared && endingScript.HasIllust)
             {
                 LoadIllustration(endingScript);
+                isIllustrationDisplayed = true;  // 일러스트가 표시되었음을 기록
+                return;
             }
+
+            // 새로운 대사 출력 시작
+            coroutine = StartCoroutine(LoadNextDialogue(endingScript));
+
+            scriptIndex++;
         }
 
         /// <summary>
         /// 다음 엔딩 대사 로드
         /// </summary>
         /// <param name="endingScript"></param>
-        void LoadNextDialogue(EndingScript endingScript)
+        IEnumerator LoadNextDialogue(EndingScript endingScript)
         {
-            GetText((int)Texts.TMP_CharLine).text = endingScript.Line;
+            TMPro.TMP_Text charLine = GetText((int)Texts.TMP_CharLine);
+            string str = endingScript.Line;
 
             if (endingScript.NameTag)
             {
@@ -195,7 +220,11 @@ namespace Client
             {
                 path = spritePath + "Comsoon_" + endingScript.Face;
             }
-            GetImage((int)Images.IMG_CharFace).sprite = GetOrLoadSprite(path);
+
+            GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
+            StartCoroutine(Util.LoadTextOneByOne(str, charLine));
+
+            yield return null;
         }
 
         /// <summary>
@@ -208,27 +237,8 @@ namespace Client
             if (endingScript.HasIllust)
             {
                 hasIllustrationAppeared = true;
-                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);
+                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(4);
             }
-        }
-
-        Sprite GetOrLoadSprite(string _path)
-        {
-            if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))
-            {
-                // 캐싱된 스프라이트 반환
-                return cachedSprite;
-            }
-
-            Sprite loadedSprite = Resources.Load<Sprite>(_path);
-            if (loadedSprite == null)
-            {
-                throw new System.Exception($"Sprite not found at path: {_path}");
-            }
-
-            // 로드된 스프라이트를 캐싱
-            spriteCache[_path] = loadedSprite;
-            return loadedSprite;
         }
     }
 }
