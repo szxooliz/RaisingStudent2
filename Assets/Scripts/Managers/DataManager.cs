@@ -174,7 +174,7 @@ namespace Client
         /// </summary>
         /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
         /// <returns></returns>
-        public ActivityData SetNewActivityData(ActivityType activityType)
+        public ActivityData SetNewActivityData(eActivityType activityType)
         {
             activityData = new ActivityData();
             activityData.statValues = new List<int>() { 10, 5 }; // 임시값
@@ -182,32 +182,32 @@ namespace Client
             switch(activityType)
             {
                 // 증가 시에는 양수, 감소 시에는 음수로 값 설정
-                case ActivityType.Rest:
-                    activityData.activityType = ActivityType.Rest;
+                case eActivityType.Rest:
+                    activityData.activityType = eActivityType.Rest;
                     activityData.stressValue = -10f; // 임시값
                     break;
-                case ActivityType.Class:
-                    activityData.activityType = ActivityType.Class;
-                    activityData.statNames.Add(StatName.Inteli);
-                    activityData.statNames.Add(StatName.Strength);
+                case eActivityType.Class:
+                    activityData.activityType = eActivityType.Class;
+                    activityData.statNames.Add(eStatName.Inteli);
+                    activityData.statNames.Add(eStatName.Strength);
                     activityData.stressValue = 30f; // 임시값
                     break;
-                case ActivityType.Game:
-                    activityData.activityType = ActivityType.Class;
-                    activityData.statNames.Add(StatName.Otaku);
-                    activityData.statNames.Add(StatName.Inteli);
+                case eActivityType.Game:
+                    activityData.activityType = eActivityType.Class;
+                    activityData.statNames.Add(eStatName.Otaku);
+                    activityData.statNames.Add(eStatName.Inteli);
                     activityData.stressValue = 10f; // 임시값
                     break;
-                case ActivityType.Workout:
-                    activityData.activityType = ActivityType.Class;
-                    activityData.statNames.Add(StatName.Strength);
-                    activityData.statNames.Add(StatName.Charming);
+                case eActivityType.Workout:
+                    activityData.activityType = eActivityType.Class;
+                    activityData.statNames.Add(eStatName.Strength);
+                    activityData.statNames.Add(eStatName.Charming);
                     activityData.stressValue = 20f; // 임시값
                     break;
-                case ActivityType.Club:
-                    activityData.activityType = ActivityType.Class;
-                    activityData.statNames.Add(StatName.Charming);
-                    activityData.statNames.Add(StatName.Otaku);
+                case eActivityType.Club:
+                    activityData.activityType = eActivityType.Class;
+                    activityData.statNames.Add(eStatName.Charming);
+                    activityData.statNames.Add(eStatName.Otaku);
                     activityData.stressValue = 10f; // 임시값
                     break;
             }

@@ -100,9 +100,9 @@ namespace Client
         /// </summary>
         void UpdateStatUIs()
         {
-            for (int i = 0; i < (int)StatName.MaxCount; i++)
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)StatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
             }
         }
 
@@ -148,31 +148,31 @@ namespace Client
         {
             Debug.Log("자체 휴강 버튼 클릭");
 
-            StartActivity((int)ActivityType.Rest);
+            StartActivity((int)eActivityType.Rest);
         }
         void OnClickStudyBtn(PointerEventData evt)
         {
             Debug.Log("공부 버튼 클릭");
 
-            StartActivity((int)ActivityType.Class);
+            StartActivity((int)eActivityType.Class);
         }
         void OnClickGameBtn(PointerEventData evt)
         {
             Debug.Log("게임 버튼 클릭"); 
 
-            StartActivity((int)ActivityType.Game);
+            StartActivity((int)eActivityType.Game);
         }
         void OnClickWorkOutBtn(PointerEventData evt)
         {
             Debug.Log("운동 버튼 클릭");
 
-            StartActivity((int)ActivityType.Workout);
+            StartActivity((int)eActivityType.Workout);
         }
         void OnClickClubBtn(PointerEventData evt)
         {
             Debug.Log("동아리 버튼 클릭");
 
-            StartActivity((int)ActivityType.Club);
+            StartActivity((int)eActivityType.Club);
         }
         #endregion
 
@@ -185,7 +185,7 @@ namespace Client
             GameManager.Instance.StartActivity(actType);
 
             // 현재 상태를 활동 상태로 변경
-            DataManager.Instance.playerData.currentStatus = Status.Activity;
+            DataManager.Instance.playerData.currentStatus = eStatus.Activity;
         }
 
 

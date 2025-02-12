@@ -14,7 +14,7 @@ namespace Client
         public static GameManager Instance { get { Init(); return s_instance; } }
         GameManager() { }
 
-        void Awake()
+        void Start()
         {
             Init();
         }
@@ -47,22 +47,21 @@ namespace Client
         /// <returns></returns>
         public void StartActivity(int actType)
         {
-            if (actType == (int)ActivityType.MaxCount) 
+            if (actType == (int)eActivityType.MaxCount) 
             { 
                 Debug.LogError("유효한 활동이 아닙니다");
                 return;
             }
             
-            DataManager.Instance.SetNewActivityData((ActivityType)actType);
+            DataManager.Instance.SetNewActivityData((eActivityType)actType);
 
             // 자체 휴강일 때는 업데이트할 스탯 없음
-            if (actType != (int)ActivityType.Rest) 
+            if (actType != (int)eActivityType.Rest) 
             { 
                 UpdateStats(); 
             }
 
             UpdateStress();
-            NextTurn();
 
             // 활동마다 데이터 저장 - TODO : 출시 때 주석 해제
             //Data.SavePlayerData();
@@ -72,26 +71,26 @@ namespace Client
         /// 스트레스에 따른 활동 결과 리턴
         /// </summary>
         /// <returns></returns>
-        public ResultType GetResult()
+        public eResultType GetResult()
         {
             // 이번 활동 결과의 확률을 정함
             int prob = UnityEngine.Random.Range(0, 100);
 
             if (DataManager.Instance.playerData.stressAmount >= 70)
             {
-                if (prob <= 50) { return ResultType.Failure; }
-                else if (prob <= 95) { return ResultType.Success; }
-                else { return ResultType.BigSuccess; }
+                if (prob <= 50) { return eResultType.Failure; }
+                else if (prob <= 95) { return eResultType.Success; }
+                else { return eResultType.BigSuccess; }
             }
             else if (DataManager.Instance.playerData.stressAmount >= 40)
             {
-                if (prob <= 80) { return ResultType.Success; }
-                else { return ResultType.BigSuccess; }
+                if (prob <= 80) { return eResultType.Success; }
+                else { return eResultType.BigSuccess; }
             }
             else
             {
-                if (prob <= 60) { return ResultType.Success; }
-                else { return ResultType.BigSuccess; }
+                if (prob <= 60) { return eResultType.Success; }
+                else { return eResultType.BigSuccess; }
             }
         }
 
@@ -100,13 +99,13 @@ namespace Client
         /// </summary>
         /// <param name="resultType"></param>
         /// <returns></returns>
-        public float GetStatMultiplier(ResultType resultType)
+        public float GetStatMultiplier(eResultType resultType)
         {
             switch(resultType)
             {
-                case ResultType.Failure:
+                case eResultType.Failure:
                     return 0.5f;
-                case ResultType.Success:
+                case eResultType.Success:
                     return 1f;
                 default:
                     return 1.5f;
@@ -149,16 +148,17 @@ namespace Client
             // TODO : 엔딩으로 넘어가기
             if (DataManager.Instance.playerData.currentTurn == 23) return; // 미구현
 
+            Debug.Log($"증가하기 전 턴 : {DataManager.Instance.playerData.currentTurn}");
             DataManager.Instance.playerData.currentTurn++;
 
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            DataManager.Instance.playerData.currentThird = (Thirds)(DataManager.Instance.playerData.currentTurn % 3);
+            DataManager.Instance.playerData.currentThird = (eThirds)(DataManager.Instance.playerData.currentTurn % 3);
 
             // 상순이 되면 다음 달로 넘어감
             if (DataManager.Instance.playerData.currentThird == 0)
             {
                 // TODO : 6월과 9월 사이 여름방학 달 추가해야 하므로 수정 필요
-                if (DataManager.Instance.playerData.currentMonth == Months.Jun) DataManager.Instance.playerData.currentMonth = Months.Sep;
+                if (DataManager.Instance.playerData.currentMonth == eMonths.Jun) DataManager.Instance.playerData.currentMonth = eMonths.Sep;
                 else DataManager.Instance.playerData.currentMonth++;
             }
         }

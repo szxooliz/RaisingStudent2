@@ -82,18 +82,18 @@ namespace Client
             return Get<Image>(idx);
         }
 
-        public static void BindEvent(GameObject go, Action<UnityEngine.EventSystems.PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+        public static void BindEvent(GameObject go, Action<UnityEngine.EventSystems.PointerEventData> action, Define.eUIEvent type = Define.eUIEvent.Click)
         {
             UI_EventHandler evt = Util.GetOrAddComponent<UI_EventHandler>(go);
 
             switch (type)
             {
-                case Define.UIEvent.Click:
+                case Define.eUIEvent.Click:
                     evt.OnClickHandler -= action;
                     evt.OnClickHandler += action;
                     break;
 
-                case Define.UIEvent.Drag:
+                case Define.eUIEvent.Drag:
                     evt.OnDragHandler -= action;
                     evt.OnDragHandler += action;
                     break;

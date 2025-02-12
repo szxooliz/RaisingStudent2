@@ -75,16 +75,16 @@ namespace Client
 
             switch (DataManager.Instance.playerData.currentStatus)
             {
-                case Status.Main:
+                case eStatus.Main:
                     UpdateTermUI();
                     UpdateTurnUI();
-                    path = spritePath + Status.Main.ToString();
+                    path = spritePath + eStatus.Main.ToString();
                     break;
-                case Status.Activity:
-                    path = spritePath + Status.Activity.ToString();
+                case eStatus.Activity:
+                    path = spritePath + eStatus.Activity.ToString();
                     break;
-                case Status.Event:
-                    path = spritePath + Status.Event.ToString();
+                case eStatus.Event:
+                    path = spritePath + eStatus.Event.ToString();
                     break;
             }
 

@@ -187,37 +187,6 @@ namespace Client
             return str;
         }
 
-
-        /// <summary>
-        /// 계절에 맞는 옷 일러스트 경로 반환
-        /// </summary>
-        /// <param name="randomEventScript">랜덤 이벤트 스크립트</param>
-        /// <returns></returns>
-        public static string GetSeasonIllustPath(RandomEventScript randomEventScript)
-        {
-            string str = "";
-
-            // 계절 이미지가 없는 캐릭터의 경우
-            if (randomEventScript.Character != DataManager.Instance.playerData.charName)
-            {
-                str = $"Sprites/Character/{randomEventScript.Character}";
-                return str;
-            }
-
-            // 계절 이미지가 있는 플레이어블 캐릭터의 경우
-            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
-            {
-                str = $"Sprites/Character/{randomEventScript.Character}_Summer_{randomEventScript.Face}";
-            }
-            else
-            {
-                str = $"Sprites/Character/{randomEventScript.Character}_{randomEventScript.Face}";
-            }
-
-            return str;
-        }
-
         #endregion
     }
 }

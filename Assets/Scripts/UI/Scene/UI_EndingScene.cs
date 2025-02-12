@@ -102,35 +102,35 @@ namespace Client
             if (highStatsCount == 4)
             {
                 Debug.Log("대학원 엔딩");
-                currentEndingNum = (int)EndingName.GraduateStudent;
+                currentEndingNum = (int)eEndingName.GraduateStudent;
             }
             else if (highStatsCount >= 2)
             {
                 if (highStats[0] && highStats[3])
                 {
                     Debug.Log("대기업 SI 취업 엔딩");
-                    currentEndingNum = (int)EndingName.CorporateSI;
+                    currentEndingNum = (int)eEndingName.CorporateSI;
                 }
                 else if (highStats[0] && highStats[1])
                 {
                     Debug.Log("게임회사 취업 엔딩");
-                    currentEndingNum = (int)EndingName.GameCompany;
+                    currentEndingNum = (int)eEndingName.GameCompany;
                 }
                 else if (highStats[3] && highStats[1])
                 {
                     Debug.Log("버튜버 엔딩");
-                    currentEndingNum = (int)EndingName.VirtualYoutuber;
+                    currentEndingNum = (int)eEndingName.VirtualYoutuber;
                 }
                 else if (highStats[2] && highStats[1])
                 {
                     Debug.Log("프로게이머 엔딩");
-                    currentEndingNum = (int)EndingName.ProGamer;
+                    currentEndingNum = (int)eEndingName.ProGamer;
                 }
             }
             else
             {
                 Debug.Log("홈프로텍터 엔딩");
-                currentEndingNum = (int)EndingName.HomeProtector;
+                currentEndingNum = (int)eEndingName.HomeProtector;
             }
         }
 

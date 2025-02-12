@@ -101,13 +101,13 @@ namespace Client
 
         void ChangeBGM(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.Sound.BGM, value);
+            SoundManager.Instance.ChangeVolume(Define.eSound.BGM, value);
             PlayerPrefs.SetFloat(BGMvolKey, value);
             PlayerPrefs.Save();
         }
         void ChangeSFX(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.Sound.SFX, value);
+            SoundManager.Instance.ChangeVolume(Define.eSound.SFX, value);
             PlayerPrefs.SetFloat(SFXvolKey, value);
             PlayerPrefs.Save();
         }

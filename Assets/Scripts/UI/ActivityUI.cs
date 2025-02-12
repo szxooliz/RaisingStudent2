@@ -70,7 +70,7 @@ namespace Client
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
 
-            if (DataManager.Instance.playerData.currentStatus == Status.Activity)
+            if (DataManager.Instance.playerData.currentStatus == eStatus.Activity)
             {
                 coroutine = StartCoroutine(ShowResult1());
                 charName.text = "컴순";
@@ -80,7 +80,7 @@ namespace Client
 
         private void Start()
         {
-            if (DataManager.Instance.playerData.currentStatus != Status.Activity) return;
+            if (DataManager.Instance.playerData.currentStatus != eStatus.Activity) return;
 
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
@@ -127,7 +127,7 @@ namespace Client
                 }
                 else // 메인으로 돌아가기
                 {
-                    EventManager.Instance.CheckEvent();
+                    EventManager.Instance.CheckAbleEvent();
                 }
             }
         }
@@ -137,9 +137,9 @@ namespace Client
         /// </summary>
         void UpdateStatUIs()
         {
-            for (int i = 0; i < (int)StatName.MaxCount; i++)
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)StatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
             }
         }
 
@@ -152,7 +152,7 @@ namespace Client
             string str = null;
             string face = null;
 
-            if (DataManager.Instance.activityData.activityType == ActivityType.Rest)
+            if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
             {
                 str = _restLine;
             }
@@ -162,13 +162,13 @@ namespace Client
 
                 switch (DataManager.Instance.activityData.resultType)
                 {
-                    case ResultType.BigSuccess:
+                    case eResultType.BigSuccess:
                         face = "glad";
                         break;
-                    case ResultType.Success:
+                    case eResultType.Success:
                         face = "basic";
                         break;
-                    case ResultType.Failure:
+                    case eResultType.Failure:
                         face = "sad";
                         break;
                 }
@@ -191,7 +191,7 @@ namespace Client
 
             string str;
 
-            if (DataManager.Instance.activityData.activityType == ActivityType.Rest)
+            if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
                 str = "스트레스가 " + -DataManager.Instance.activityData.stressValue + " 감소했다!";

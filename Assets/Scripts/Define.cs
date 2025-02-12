@@ -8,116 +8,115 @@ namespace Client
 {
     public class Define
     {
-        public enum Scene
+        public enum eScene
         {
             Base, Title
         }
 
-        public enum Sound
+        public enum eSound
         {
             SFX, BGM,
             MaxCount
         }
 
-        public enum UIEvent
+        public enum eUIEvent
         {
             Click,
             Drag,
         }
 
-        public enum Status
+        public enum eStatus
         {
             Main, Activity, Event
         }
 
         #region Turns
-        public enum Months
+        public enum eMonths
         {
             Mar = 3, Apr=4, May=5, Jun=6,
             Sep=9, Oct=10, Nov=11, Dec=12
         }
 
-        public enum Thirds
+        public enum eThirds
         {
             First, Second, Third
         }
-        public enum ThirdsKor
+        public enum eThirdsKor
         {
             상순, 중순, 하순
         }
-        public static string GetThirdsKor(Thirds third)
+        public static string GetThirdsKor(eThirds third)
         {
             string temp = "";
-            temp += ((ThirdsKor)((int)third)).ToString();
+            temp += ((eThirdsKor)((int)third)).ToString();
             return temp;
         }
         #endregion
 
         #region StatName
-        public enum StatName
+        public enum eStatName
         {
             Inteli, Otaku, Strength, Charming, MaxCount
         }
-        public enum StatNameKor
+        public enum eStatNameKor
         {
             지력, 덕력, 체력, 매력
         }
-
-        public static string GetStatNameKor(StatName statName)
+        public static string GetStatNameKor(eStatName statName)
         {
-            if (statName == StatName.MaxCount) return null;
+            if (statName == eStatName.MaxCount) return null;
 
             string temp = "";
-            temp += ((StatNameKor)((int)statName)).ToString();
+            temp += ((eStatNameKor)((int)statName)).ToString();
             return temp;
         }
         #endregion
 
         #region Activity
-        public enum ActivityType
+        public enum eActivityType
         {
             Rest, Class, Game, Workout, Club, MaxCount
         }
 
-        public enum ActivityTypeKor
+        public enum eActivityTypeKor
         {
             Rest, Class, Game, Workout, Club, MaxCount
         }
 
-        public static string GetActivityTypeKor(ActivityType activityType)
+        public static string GetActivityTypeKor(eActivityType activityType)
         {
-            if (activityType == ActivityType.MaxCount) return null;
+            if (activityType == eActivityType.MaxCount) return null;
 
             string temp = "";
-            temp += ((ActivityTypeKor)((int)activityType)).ToString();
+            temp += ((eActivityTypeKor)((int)activityType)).ToString();
             return temp;
         }
 
-        public enum ResultType
+        public enum eResultType
         {
             BigSuccess, Success, Failure, MaxCount
         }
-        public enum ResultTypeKor
+        public enum eResultTypeKor
         {
             대성공, 성공, 실패
         }
 
-        public static string GetResultTypeKor(ResultType resultType)
+        public static string GetResultTypeKor(eResultType resultType)
         {
-            if (resultType == ResultType.MaxCount) return null;
+            if (resultType == eResultType.MaxCount) return null;
 
             string temp = "";
-            temp += ((ResultTypeKor)((int)resultType)).ToString();
+            temp += ((eResultTypeKor)((int)resultType)).ToString();
             return temp;
         }
         #endregion
 
-        public enum EventDataType
+        public enum eEventType
         {
             Main, Random
         }
 
-        public enum MainEvents
+        public enum eMainEvents
         {
             Intro, ApplyToHackerton, Hackerton, MidTest_1, SportsDay, FinTest_1, 
             SummerVac, 
@@ -125,20 +124,20 @@ namespace Client
         }
 
         #region EndingName
-        public enum EndingName
+        public enum eEndingName
         {
             HomeProtector, ProGamer, VirtualYoutuber, GameCompany, CorporateSI, GraduateStudent, MaxCount
         }
-        public enum EndingNameKor
+        public enum eEndingNameKor
         {
             홈프로텍터, 프로게이머, 버튜버, 게임회사, 대기업SI, 대학원생, MaxCount
         }
-        public static string GetEndingNameKor(EndingName endingName)
+        public static string GetEndingNameKor(eEndingName endingName)
         {
-            if (endingName == EndingName.MaxCount) return null;
+            if (endingName == eEndingName.MaxCount) return null;
 
             string temp = "";
-            temp += ((EndingNameKor)((int)endingName)).ToString();
+            temp += ((eEndingNameKor)((int)endingName)).ToString();
             return temp;
         }
         #endregion
@@ -150,15 +149,15 @@ namespace Client
         {
             public string charName; // 현재 플레이 중인 캐릭터 이름
             public int currentTurn; // 턴 0~23
-            public Months currentMonth; // n월 3-6/9-12
-            public Thirds currentThird; // a순 상중하
+            public eMonths currentMonth; // n월 3-6/9-12
+            public eThirds currentThird; // a순 상중하
             public List<ProcessData> watchedProcess; // 로그용 - 이미 진행한 or 진행 중인 활동, 이벤트 순서대로 저장
             public List<EventData> watchedEvents; // 이벤트 중복 실행 방지용 - 리스트에 있으면 이미 본 이벤트
 
             public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
 
-            [SerializeField] Status _currentStatus; // 현재 상태 
-            public Status currentStatus
+            [SerializeField] eStatus _currentStatus; // 현재 상태 
+            public eStatus currentStatus
             {
                 get => _currentStatus;
                 set
@@ -184,9 +183,9 @@ namespace Client
             {
                 charName = "Comsoon"; // 프로토타입
                 currentTurn = 0;
-                currentMonth = Months.Mar;
-                currentThird = Thirds.First;
-                currentStatus = Status.Main;
+                currentMonth = eMonths.Mar;
+                currentThird = eThirds.First;
+                currentStatus = eStatus.Main;
 
                 statsAmounts = new int[4];
                 for (int i = 0; i < statsAmounts.Length; i++)
@@ -205,7 +204,7 @@ namespace Client
 
             public PersistentData() // 생성자
             {
-                foreach (EndingName endingName in Enum.GetValues(typeof(EndingName)))
+                foreach (eEndingName endingName in Enum.GetValues(typeof(eEndingName)))
                 {
                     Ending ending = new Ending(endingName);
 
@@ -224,73 +223,19 @@ namespace Client
 
         public class Ending
         {
-            public EndingName endingName;   // 엔딩 이름
+            public eEndingName endingName;   // 엔딩 이름
             public bool isUnlocked;         // 해금 여부
             public string applicationField; // 지원 분야
             public string grade;            // 게임 성적
             public List<string> awards;     // 기타 이력
 
-            public Ending(EndingName name) // 생성자
+            public Ending(eEndingName name) // 생성자
             {
                 endingName = name;
                 isUnlocked = false;
                 applicationField = "";
                 grade = "";
                 awards = new List<string>();
-            }
-        }
-
-        /// <summary>
-        /// 활동 하나당 데이터
-        /// </summary>
-        [System.Serializable]
-        public class ActivityData : ProcessData
-        {
-            public ActivityType activityType; // 활동 종류
-            public ResultType resultType;     // 활동 결과 실패/성공/대성공
-
-            public List<StatName> statNames;  // 변경될 스탯 종류
-            public List<int> statValues;      // 스탯 증감량
-
-            public float stressValue; // 스트레스 증감량
-
-            public ActivityData() // 생성자
-            {
-                activityType = ActivityType.MaxCount;
-                resultType = ResultType.MaxCount;
-
-                statNames = new List<StatName>();
-                statValues = new List<int>();
-                stressValue = 0;
-            }
-        }
-
-        public class EventData : ProcessData
-        {
-            public long eventIndex;
-            public EventDataType eventType; // 필요한가?
-
-            public EventData()
-            {
-                eventIndex = 0;
-                eventType = EventDataType.Main;
-            }
-        }
-
-        /// <summary>
-        /// 활동, 이벤트의 기본 구조
-        /// </summary>
-        public class ProcessData
-        {
-            public string title; // 제목
-            public bool hasChange; // 결과에 스탯 변화가 포함되는지 - 활동/이벤트 마지막에 값 변경해야 할 듯
-            public List<(string name, string line)> processLines; // 현재 프로세스에서 사용된 대사 정보 - 불변값 (캐릭터 이름, 대사)
-
-            public ProcessData()
-            {
-                title = "";
-                hasChange = true;
-                processLines = new List<(string name, string line)>();
             }
         }
     }

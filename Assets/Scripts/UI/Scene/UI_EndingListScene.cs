@@ -45,7 +45,7 @@ namespace Client
             // DataManager에서 엔딩 리스트 가져오기
             foreach (var ending in DataManager.Instance.persistentData.endingList)
             {
-                if (ending.endingName == EndingName.MaxCount)
+                if (ending.endingName == eEndingName.MaxCount)
                 {
                     return;
                 }
