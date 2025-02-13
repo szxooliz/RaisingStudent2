@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Client.Define;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -121,7 +121,7 @@ namespace Client
         void UpdateTermUI()
         {
             GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
-                                                + Define.GetThirdsKor(DataManager.Instance.playerData.currentThird);
+                                                + SystemEnum.GetThirdsKor(DataManager.Instance.playerData.currentThird);
         }
 
         // 이벤트 실행 시에 턴 대신 이벤트 이름 표시 함수

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using static Client.Define;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -240,5 +240,23 @@ namespace Client
             return loadedSprite;
         }
 
+        public string GetCharNameKor(string _charName)
+        {
+            // 이벤트 스크립트의 캐릭터 이름을 받아서
+            // 캐릭터 페이스 스크립트에 표시된 캐릭터 한국어 이름으로 뜨도록
+            string str = null;
+            // 임시로 5 해둠
+            for (int i = 0; i < 5; i++)
+            {
+                CharacterFace charFace = GetData<CharacterFace>(i);
+
+                if (charFace.Character == _charName)
+                {
+                    str = charFace.CharacterName;
+                    break;
+                }
+            }
+            return str;
+        }
     }
 }

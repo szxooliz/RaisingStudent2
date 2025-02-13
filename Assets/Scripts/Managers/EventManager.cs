@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using static Client.Define;
+using static Client.SystemEnum;
 
 namespace Client
 {
     public class EventManager : Singleton<EventManager>
     {
         int eventProb = 50; // 랜덤 이벤트 등장 확률
+        int mainEventEndID = 59; // 임시: 메인 -> 랜덤 인덱스 넘어갈 때
 
         public Queue<(long ID, string title)> eventIDQueue = new Queue<(long, string)>();
         public Queue<EventData> eventQueue = new Queue<EventData>();
@@ -81,8 +82,6 @@ namespace Client
         /// </summary>
         void GetCurrentEventID()
         {
-            Debug.Log($"현재 턴 : {DataManager.Instance.playerData.currentTurn}");
-
             // 메인 이벤트 가져오기
             for (int i = 0; i <= 10; i++)
             {
@@ -90,7 +89,6 @@ namespace Client
 
                 if (DataManager.Instance.playerData.currentTurn == eventTitle.AppearStart)
                 {
-                    Debug.Log($"Queue에 추가된 이벤트 : {eventTitle.EventName}");
                     eventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
                 }
             }
@@ -109,7 +107,6 @@ namespace Client
                     int prob = UnityEngine.Random.Range(0, 100);
                     if (prob <= eventProb)
                     {
-                        Debug.Log($"Queue에 추가된 이벤트 : {eventTitle.EventName}");
                         eventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
                         return; // 일단 한번에 랜덤 이벤트 하나만 추가
                     }
@@ -122,25 +119,33 @@ namespace Client
         /// </summary>
         void GetEventData()
         {
+            Debug.Log($"eventIDQueue에서 전달받아야 할 이벤트 개수 : {eventIDQueue.Count}");
+            int eventCount = eventIDQueue.Count;
+
             if (eventIDQueue.Count == 0) return;
 
-            (long ID, string title) standByEvent = eventIDQueue.Dequeue();
-            long eventID = standByEvent.ID;
-            string eventTitle = standByEvent.title;
+            for (int i = 0; i < eventCount; i++)
+            {
+                (long ID, string title) standByEvent = eventIDQueue.Dequeue();
+                long eventID = standByEvent.ID;
+                string eventTitle = standByEvent.title;
 
-            eEventType eventType = eEventType.Main;
-            List<EventScript> eventScripts = new List<EventScript>();
+                eEventType eventType = eEventType.Main;
+                List<EventScript> eventScripts = new List<EventScript>();
 
-            // 인덱스 수치에 따라 이벤트 타입 설정
-            if (eventID > 100) eventType = eEventType.Random;
+                // 인덱스 수치에 따라 이벤트 타입 설정
+                if (eventID > 100) eventType = eEventType.Random;
 
-            // 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
-            LoadScript(eventID, eventScripts);
+                // 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
+                LoadScript(eventID, eventScripts);
 
-            // EventData 구조로 정보 연결해서 Queue에 저장
-            EventData eventData = new EventData(eventID, eventType, eventScripts);
-            eventData.title = eventTitle;
-            eventQueue.Enqueue(eventData);
+                // EventData 구조로 정보 연결해서 Queue에 저장
+                EventData eventData = new EventData(eventID, eventType, eventScripts);
+                eventData.title = eventTitle;
+
+                Debug.Log($"eventQueue에 넣을 이벤트 : {eventData.title}");
+                eventQueue.Enqueue(eventData);
+            }
         }
 
         /// <summary>
@@ -171,7 +176,10 @@ namespace Client
 
             while (true)
             {
-                EventScript eventScript = DataManager.Instance.GetData<EventScript>(tempIndex++);
+                if (tempIndex > mainEventEndID)
+                    tempIndex = 1000 + tempIndex - mainEventEndID - 1;
+
+                EventScript eventScript = DataManager.Instance.GetData<EventScript>(tempIndex);
 
                 if (eventScript == null)
                     break;
@@ -180,6 +188,8 @@ namespace Client
                 {
                     _eventScriptList.Add(eventScript);
                 }
+
+                tempIndex++;
             }
         }
     }

@@ -53,7 +53,6 @@ namespace Client
 
         void OnClickPanel(PointerEventData evt)
         {
-            Debug.Log("판넬 누름..");
             ClosePopupUI();
         }
         void OnClickContinueBtn(PointerEventData evt)
@@ -69,7 +68,7 @@ namespace Client
         {
             Debug.Log("새로하기 버튼 클릭");
 
-            DataManager.Instance.playerData = new Define.PlayerData();
+            DataManager.Instance.playerData = new PlayerData();
 
             // LoadTitleScreen();
 
@@ -101,13 +100,13 @@ namespace Client
 
         void ChangeBGM(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.eSound.BGM, value);
+            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.BGM, value);
             PlayerPrefs.SetFloat(BGMvolKey, value);
             PlayerPrefs.Save();
         }
         void ChangeSFX(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.eSound.SFX, value);
+            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.SFX, value);
             PlayerPrefs.SetFloat(SFXvolKey, value);
             PlayerPrefs.Save();
         }

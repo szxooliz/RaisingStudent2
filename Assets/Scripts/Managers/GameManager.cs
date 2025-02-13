@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
-using static Client.Define;
+using static Client.SystemEnum;
 
 namespace Client
 {

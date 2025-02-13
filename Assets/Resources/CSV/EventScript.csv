@@ -1,6 +1,6 @@
 ﻿스크립트 넘버,랜덤 이벤트 넘버,캐릭터 고유값,캐릭터의 대사,캐릭터의 감정,이름표 사용 여부,분기타입,분기인덱스,시트설명,,,,,,,,,,,,,,,,,,
 index,EventNum,Character,Line,Face,NameTag,BranchType,BranchIndex,,,,,,,,,,,,,,,,,,,
-long,long,string,string,string,bool,long,long,,,,,,,,,,,,,,,,,,,
+long,long,string,string,string,bool,eBranchType,long,,,,,,,,,,,,,,,,,,,
 0,0,Player,"아직 서늘한 2월 말.
 홍익대학교 T동의 한 연구실.",none,FALSE,,,,,,,,,,,,,,,,,,,,,
 1,0,Professor,인재가 없어!!!!!!!!!,none,TRUE,,,,,,,,,,,,,,,,,,,,,

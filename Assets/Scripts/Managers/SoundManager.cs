@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Client.Define;
+using static Client.SystemEnum;
 
 
 namespace Client
 {
     public class SoundManager : Singleton<SoundManager>
     {
-        AudioSource[] _audioSources = new AudioSource[(int)Define.eSound.MaxCount];
+        AudioSource[] _audioSources = new AudioSource[(int)SystemEnum.eSound.MaxCount];
 
         private float[] _volume = new float[(int)eSound.MaxCount];
 
@@ -32,7 +32,7 @@ namespace Client
                 go = new GameObject { name = "@Sound" };
                 Object.DontDestroyOnLoad(go);
 
-                string[] _soundNames = System.Enum.GetNames(typeof(Define.eSound));
+                string[] _soundNames = System.Enum.GetNames(typeof(SystemEnum.eSound));
                 for (int i = 0; i < _soundNames.Length - 1; i++)
                 {
                     GameObject go2 = new GameObject { name = _soundNames[i] };
@@ -41,7 +41,7 @@ namespace Client
                 }
 
 
-                _audioSources[(int)Define.eSound.BGM].loop = true;
+                _audioSources[(int)SystemEnum.eSound.BGM].loop = true;
             }
         }
 
@@ -55,27 +55,27 @@ namespace Client
             _audioclips.Clear();
         }
 
-        public void Play(Define.eSound type)
+        public void Play(SystemEnum.eSound type)
         {
-            Play(type.ToString(), Define.eSound.SFX);
+            Play(type.ToString(), SystemEnum.eSound.SFX);
         }
 
-        public void Play(string path, Define.eSound type = Define.eSound.SFX, float pitch = 1.0f)
+        public void Play(string path, SystemEnum.eSound type = SystemEnum.eSound.SFX, float pitch = 1.0f)
         {
             AudioClip audioClip = GetOrAddAudioClip(path, type);
             Play(audioClip, type, pitch);
         }
 
-        public void Play(AudioClip audioClip, Define.eSound type = Define.eSound.SFX, float pitch = 1.0f)
+        public void Play(AudioClip audioClip, SystemEnum.eSound type = SystemEnum.eSound.SFX, float pitch = 1.0f)
         {
             if (audioClip == null)
             {
                 Debug.Log("No Clip");
                 return;
             }
-            if (type == Define.eSound.BGM)
+            if (type == SystemEnum.eSound.BGM)
             {
-                AudioSource audioSource = _audioSources[(int)Define.eSound.BGM];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM];
                 if (audioSource.isPlaying)
                     audioSource.Stop();
 
@@ -85,21 +85,21 @@ namespace Client
             }
             else
             {
-                AudioSource audioSource = _audioSources[(int)Define.eSound.SFX];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.SFX];
                 audioSource.pitch = pitch;
                 audioSource.PlayOneShot(audioClip);
             }
 
         }
 
-        AudioClip GetOrAddAudioClip(string path, Define.eSound type = Define.eSound.SFX)
+        AudioClip GetOrAddAudioClip(string path, SystemEnum.eSound type = SystemEnum.eSound.SFX)
         {
             if (path.Contains("Sounds/") == false)
                 path = $"Sounds/{path}";
 
             AudioClip audioClip = null;
 
-            if (type == Define.eSound.BGM)
+            if (type == SystemEnum.eSound.BGM)
             {
                 audioClip = ResourceManager.Instance.Load<AudioClip>(path);
             }
@@ -119,16 +119,16 @@ namespace Client
             return audioClip;
         }
 
-        public void ChangeVolume(Define.eSound type, float value)
+        public void ChangeVolume(SystemEnum.eSound type, float value)
         {
-            if (type == Define.eSound.BGM)
+            if (type == SystemEnum.eSound.BGM)
             {
-                AudioSource audioSource = _audioSources[(int)Define.eSound.BGM];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM];
                 audioSource.volume = value;
             }
             else
             {
-                AudioSource audioSource = _audioSources[(int)Define.eSound.SFX];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.SFX];
                 audioSource.volume = value;
             }
         }

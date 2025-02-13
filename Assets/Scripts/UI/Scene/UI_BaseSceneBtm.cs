@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static Client.Define;
+using static Client.SystemEnum;
 
 namespace Client
 { 

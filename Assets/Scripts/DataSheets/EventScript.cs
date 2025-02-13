@@ -18,7 +18,8 @@ public long index; // 스크립트 넘버
 		public string Line; // 캐릭터의 대사
 		public string Face; // 캐릭터의 감정
 		public bool NameTag; // 이름표 사용 여부
-		public long BranchType; // 분기타입
+		
+		public SystemEnum.eBranchType BranchType; // 분기타입
 		public long BranchIndex; // 분기인덱스
 		
 
@@ -84,7 +85,7 @@ public long index; // 스크립트 넘버
 					if(values[6] == "")
 					    data.BranchType = default;
 					else
-					    data.BranchType = Convert.ToInt64(values[6]);
+					    data.BranchType = (SystemEnum.eBranchType)Enum.Parse(typeof(SystemEnum.eBranchType), values[6]);
 					
 					if(values[7] == "")
 					    data.BranchIndex = default;

@@ -65,13 +65,13 @@ namespace Client
         #region 볼륨 설정
         void ChangeBGM(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.eSound.BGM, value);
+            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.BGM, value);
             PlayerPrefs.SetFloat(BGMvolKey, value);
             PlayerPrefs.Save();
         }
         void ChangeSFX(float value)
         {
-            SoundManager.Instance.ChangeVolume(Define.eSound.SFX, value);
+            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.SFX, value);
             PlayerPrefs.SetFloat(SFXvolKey, value);
             PlayerPrefs.Save();
         }
