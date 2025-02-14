@@ -14,8 +14,8 @@ namespace Client
 
         public EventData(long _eventIndex, eEventType _eventType, List<EventScript> _eventScripts)
         {
-            eventIndex = 0;
-            eventType = eEventType.Main;
+            eventIndex = _eventIndex;
+            eventType = _eventType;
             eventScripts = _eventScripts;
         }
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Client.SystemEnum;
+using System.Linq;
 
 namespace Client
 {
@@ -22,7 +23,7 @@ namespace Client
         public Queue<EventData> EventQueue { get; } = new Queue<EventData>();
 
         #region Singleton
-        EventManager() { }
+EventManager() { }
         #endregion
 
         /// <summary>
@@ -41,6 +42,8 @@ namespace Client
                 }
             }
 
+            List<EventTitle> randomList = new List<EventTitle>();
+
             // 랜덤 이벤트 가져오기
             for (int i = RANDOM_THRESHOLD; i <= RANDOM_THRESHOLD + RANDOM_COUNT; i++)
             {
@@ -48,12 +51,70 @@ namespace Client
 
                 if (IsInTurnRange(eventTitle) && TriggerRandomEvent())
                 {
-                    EventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
-                    break; // 한 턴에 하나의 랜덤 이벤트만 추가
+                    randomList.Add(eventTitle);
                 }
+            }
+
+            // 랜덤 이벤트 한 개만 추가
+            EventTitle randomEventTitle = GetOneRandomEvent(randomList);
+
+            if (randomEventTitle != null)
+            {
+                EventIDQueue.Enqueue((randomEventTitle.index, randomEventTitle.EventName));
+            }
+                
+        }
+
+        /// <summary>
+        /// 한 턴에 랜덤 이벤트 최대 1개, 재등장 불가
+        /// </summary>
+        /// <param name="randomList"></param>
+        /// <returns></returns>
+        private EventTitle GetOneRandomEvent(List<EventTitle> randomList)
+        {
+            try
+            {
+                DeleteWatchedEvent(randomList);
+                return randomList[UnityEngine.Random.Range(0, randomList.Count)];
+            }
+            catch
+            {
+                return null;
             }
         }
 
+        /// <summary>
+        /// 봤던 이벤트로 기록
+        /// </summary>
+        /// <param name="eventData"></param>
+        private void AddWatchedEvent(EventData eventData)
+        {
+            try
+            {
+                Debug.Log($"{eventData.title}은 봤던 이벤트로 추가");
+                DataManager.Instance.playerData.watchedEvents.Add(eventData.eventIndex, eventData);
+            }
+            catch
+            {
+                Debug.LogError($"{eventData.title} : {eventData.eventIndex}는 이미 등록된 이벤트 인덱스입니다");
+            }
+        }
+
+        /// <summary>
+        /// 후보 랜덤 이벤트 중에서 이미 봤던 이벤트는 제외
+        /// </summary>
+        /// <param name="randomList"></param>
+        private void DeleteWatchedEvent(List<EventTitle> randomList)
+        {
+            // 역 for문 사용
+            for (int i = randomList.Count - 1; i >= 0; i--)
+            {
+                if (DataManager.Instance.playerData.watchedEvents.ContainsKey(randomList[i].index))
+                {
+                    randomList.RemoveAt(i);
+                }
+            }
+        }
         /// <summary>
         /// 등장 가능 범위 내의 이벤트인지 확인
         /// </summary>
@@ -71,7 +132,7 @@ namespace Client
         /// <returns></returns>
         private bool TriggerRandomEvent()
         {
-            return UnityEngine.Random.Range(0, 100) <= RANDOM_PROB;
+            return UnityEngine.Random.Range(0, 101) <= RANDOM_PROB;
         }
 
         /// <summary>
@@ -92,6 +153,7 @@ namespace Client
                 EventData eventData = new EventData(eventID, eventType, eventScripts) { title = eventTitle };
                 Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title}");
                 EventQueue.Enqueue(eventData);
+                AddWatchedEvent(eventData);
             }
         }
 
@@ -100,6 +162,7 @@ namespace Client
         /// </summary>
         public void CheckEvent()
         {
+            Debug.Log($"이벤트 체크 할 때 턴: {DataManager.Instance.playerData.currentTurn}");
             EnqueueEventID();
             LoadEventData();
 
@@ -131,10 +194,6 @@ namespace Client
                     if (eventScript.EventNum == eventID)
                     {
                         eventScripts.Add(eventScript);
-                    }
-                    else
-                    {
-                        Debug.Log($"이벤트 {eventID}의 스크립트가 아니라 로드 안함");
                     }
                 }
                 catch

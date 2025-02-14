@@ -104,7 +104,8 @@ namespace Client
             yield return new WaitForSeconds(0.5f); // 최종 스크립트 표시 시간 확보
 
             // 이벤트, 활동, 전부 상관없이 턴 안에 하는 "모든 프로세스 종료 후" 메인으로 돌아오면 턴 증가
-            GameManager.Instance.NextTurn();
+            // 여기서 하면 0턴에 인트로격 이벤트 이후에 턴이 증가해버림..
+            //GameManager.Instance.NextTurn();
             DataManager.Instance.playerData.currentStatus = eStatus.Main;
         }
 
@@ -130,8 +131,6 @@ namespace Client
         /// <param name="_eventScripts"></param>
         public EventScript TryGetNextScript(long _index, List<EventScript> _eventScripts)
         {
-            // 인덱스가 이벤트 스크립트 길이보다 크면 멈추게 -> 이러면 인덱스가 겁나 큰것들은 진행을 할 수가 없어요
-
             if (_index - startingID >= _eventScripts.Count)
             {
                 Debug.Log($"현재 이벤트 - {nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");

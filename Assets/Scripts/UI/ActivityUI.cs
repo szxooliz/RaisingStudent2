@@ -127,7 +127,9 @@ namespace Client
                 }
                 else // 메인으로 돌아가기
                 {
+                    GameManager.Instance.NextTurn();
                     EventManager.Instance.CheckEvent();
+                    Debug.Log($"활동 후 NextTurn() 실행 후 CurrentTurn : {DataManager.Instance.playerData.currentTurn}");
                 }
             }
         }

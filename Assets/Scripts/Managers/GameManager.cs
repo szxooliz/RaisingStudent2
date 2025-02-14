@@ -146,9 +146,8 @@ namespace Client
         public void NextTurn()
         {
             // TODO : 엔딩으로 넘어가기
-            if (DataManager.Instance.playerData.currentTurn == 23) return; // 미구현
+            if (DataManager.Instance.playerData.currentTurn == 24) return; // 미구현
 
-            Debug.Log($"증가하기 전 턴 : {DataManager.Instance.playerData.currentTurn}");
             DataManager.Instance.playerData.currentTurn++;
 
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정

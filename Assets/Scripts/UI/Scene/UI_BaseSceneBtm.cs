@@ -28,8 +28,6 @@ namespace Client
             UI_Stress, UI_StressStatus
         }
 
-        private string spritePath = "Sprites/UI/Stress_";
-
         public override void Init()
         {
             base.Init();
