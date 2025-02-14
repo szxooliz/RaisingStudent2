@@ -120,38 +120,33 @@ namespace Client
         private List<EventScript> LoadScript(long eventID, eEventType eventType)
         {
             List<EventScript> eventScripts = new List<EventScript>();
-            int startIndex = eventType == eEventType.Random ? RANDOM_SCRIPT_THRESHOLD : 0;
+            int tempIndex = eventType == eEventType.Random ? RANDOM_SCRIPT_THRESHOLD : 0;
 
-            for (int i = startIndex; ; i++)
+            while (true)
             {
-                if (!TryGetScript(i, eventID, out EventScript eventScript))
+                try
+                {
+                    EventScript eventScript = DataManager.Instance.GetData<EventScript>(tempIndex);
+
+                    if (eventScript.EventNum == eventID)
+                    {
+                        eventScripts.Add(eventScript);
+                    }
+                    else
+                    {
+                        Debug.Log($"이벤트 {eventID}의 스크립트가 아니라 로드 안함");
+                    }
+                }
+                catch
+                {
+                    Debug.Log($"이벤트 {eventID}의 스크립트 총 {eventScripts.Count}개");
                     break;
-                eventScripts.Add(eventScript);
+                }
+
+                tempIndex++;
             }
 
-            Debug.Log($"이벤트 {eventID}의 스크립트 개수: {eventScripts.Count}");
             return eventScripts;
-        }
-
-        /// <summary>
-        /// 스크립트 로드
-        /// </summary>
-        /// <param name="index"></param>
-        /// <param name="eventID"></param>
-        /// <param name="eventScript"></param>
-        /// <returns></returns>
-        private bool TryGetScript(int index, long eventID, out EventScript eventScript)
-        {
-            try
-            {
-                eventScript = DataManager.Instance.GetData<EventScript>(index);
-                return eventScript.EventNum == eventID;
-            }
-            catch
-            {
-                eventScript = null;
-                return false;
-            }
         }
     }
 }
