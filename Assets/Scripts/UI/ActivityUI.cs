@@ -127,7 +127,7 @@ namespace Client
                 }
                 else // 메인으로 돌아가기
                 {
-                    EventManager.Instance.CheckAbleEvent();
+                    EventManager.Instance.CheckEvent();
                 }
             }
         }

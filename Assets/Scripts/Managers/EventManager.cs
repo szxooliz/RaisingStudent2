@@ -9,160 +9,107 @@ namespace Client
 {
     public class EventManager : Singleton<EventManager>
     {
-        int eventProb = 50; // 랜덤 이벤트 등장 확률
-        int mainEventEndID = 59; // 임시: 메인 -> 랜덤 인덱스 넘어갈 때
+        #region constant
+        private const int MAIN_COUNT = 10; // 메인 이벤트 개수
 
-        public Queue<(long ID, string title)> eventIDQueue = new Queue<(long, string)>();
-        public Queue<EventData> eventQueue = new Queue<EventData>();
+        private const int RANDOM_THRESHOLD = 100;         // 랜덤 이벤트 ID 시작 인덱스
+        private const int RANDOM_SCRIPT_THRESHOLD = 1000; // 랜덤 이벤트 스크립트 시작 인덱스
+        private const int RANDOM_COUNT = 26;              // 랜덤 이벤트 개수
+        private const int RANDOM_PROB = 50;               // 랜덤 이벤트 등장 확률
+        #endregion
+
+        public Queue<(long ID, string title)> EventIDQueue { get; } = new Queue<(long, string)>();
+        public Queue<EventData> EventQueue { get; } = new Queue<EventData>();
 
         #region Singleton
         EventManager() { }
         #endregion
 
-        /*
-        /// <summary>
-        /// 활동 이후 이벤트 여부 체크
-        /// </summary>
-        public void CheckEvent()
-        {
-            switch (DataManager.Instance.playerData.currentTurn)
-            {
-                case 0: // 개강 - 현재 씬에서만 테스트용
-                    // currentEventID = (int)Define.Instance.MainEventName.Intro;
-                    // ShowEvent(currentEventID);
-                    Debug.Log((int)Define.MainEvents.Intro);
-                    break;
-                case 1: // 테스트용
-                    currentEventID = (int)Define.MainEvents.Intro;
-                    ShowEvent();
-                    break;
-                case 2: // 해커톤
-                    currentEventID = (int)Define.MainEvents.Hackerton;
-                    ShowEvent();
-                    break;
-                case 5: // 중간고사
-                    currentEventID = (int)Define.MainEvents.MidTest_1;
-                    ShowEvent();
-                    break;
-                case 6: // 체육대회
-                    currentEventID = (int)Define.MainEvents.SportsDay;
-                    ShowEvent();
-                    break;
-                case 11: // 기말고사
-                    currentEventID = (int)Define.MainEvents.FinTest_1;
-                    ShowEvent();
-                    break;
-                case 13: // 축제
-                    currentEventID = (int)Define.MainEvents.Festival;
-                    ShowEvent();
-                    break;
-                case 17: // 중간고사
-                    currentEventID = (int)Define.MainEvents.MidTest_2;
-                    ShowEvent();
-                    break;
-                case 19: // 지스타
-                    currentEventID = (int)Define.MainEvents.Gstar;
-                    ShowEvent();
-                    break;
-                case 23: // 기말고사
-                    currentEventID = (int)Define.MainEvents.FinTest_2;
-                    ShowEvent();
-                    break;
-                default:
-                    // 해당 없을 시 다시 메인 화면으로 전환
-                    DataManager.Instance.playerData.currentStatus = Define.Status.Main;
-                    break;
-            }
-
-        }*/
-
-
         /// <summary>
         /// 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기
         /// </summary>
-        void GetCurrentEventID()
+        private void EnqueueEventID()
         {
             // 메인 이벤트 가져오기
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= MAIN_COUNT; i++)
             {
                 EventTitle eventTitle = DataManager.Instance.GetData<EventTitle>(i);
 
                 if (DataManager.Instance.playerData.currentTurn == eventTitle.AppearStart)
                 {
-                    eventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
+                    EventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
                 }
             }
 
-            // 여기서 랜덤 이벤트 유무가 50퍼 확률로 정해지는건지?
             // 랜덤 이벤트 가져오기
-            for (int i = 100; i <= 126; i++)
+            for (int i = RANDOM_THRESHOLD; i <= RANDOM_THRESHOLD + RANDOM_COUNT; i++)
             {
                 EventTitle eventTitle = DataManager.Instance.GetData<EventTitle>(i);
 
-                // 등장 가능 턴이면 랜덤 확률 돌리기?
-                if (DataManager.Instance.playerData.currentTurn >= eventTitle.AppearStart 
-                    && DataManager.Instance.playerData.currentTurn <= eventTitle.AppearEnd)
+                if (IsInTurnRange(eventTitle) && TriggerRandomEvent())
                 {
-                    // 임시 : 랜덤 이벤트 등장 확률 50%
-                    int prob = UnityEngine.Random.Range(0, 100);
-                    if (prob <= eventProb)
-                    {
-                        eventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
-                        return; // 일단 한번에 랜덤 이벤트 하나만 추가
-                    }
+                    EventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
+                    break; // 한 턴에 하나의 랜덤 이벤트만 추가
                 }
             }
         }
 
         /// <summary>
-        /// 이벤트 스크립트 세트로 가져오기
+        /// 등장 가능 범위 내의 이벤트인지 확인
         /// </summary>
-        void GetEventData()
+        /// <param name="eventTitle"></param>
+        /// <returns></returns>
+        private bool IsInTurnRange(EventTitle eventTitle)
         {
-            Debug.Log($"eventIDQueue에서 전달받아야 할 이벤트 개수 : {eventIDQueue.Count}");
-            int eventCount = eventIDQueue.Count;
+            int currentTurn = DataManager.Instance.playerData.currentTurn;
+            return currentTurn >= eventTitle.AppearStart && currentTurn <= eventTitle.AppearEnd;
+        }
 
-            if (eventIDQueue.Count == 0) return;
+        /// <summary>
+        /// 랜덤 이벤트 자체 발생 확률 계산
+        /// </summary>
+        /// <returns></returns>
+        private bool TriggerRandomEvent()
+        {
+            return UnityEngine.Random.Range(0, 100) <= RANDOM_PROB;
+        }
 
-            for (int i = 0; i < eventCount; i++)
+        /// <summary>
+        /// 이벤트 데이터를 로드해서 대기열에 추가
+        /// </summary>
+        private void LoadEventData()
+        {
+            Debug.Log($"eventIDQueue에서 전달받아야 할 이벤트 개수 : {EventIDQueue.Count}");
+
+            if (EventIDQueue.Count == 0) return;
+
+            while (EventIDQueue.Count > 0)
             {
-                (long ID, string title) standByEvent = eventIDQueue.Dequeue();
-                long eventID = standByEvent.ID;
-                string eventTitle = standByEvent.title;
+                var (eventID, eventTitle) = EventIDQueue.Dequeue();
+                eEventType eventType = (eventID > RANDOM_THRESHOLD) ? eEventType.Random : eEventType.Main;
+                List<EventScript> eventScripts = LoadScript(eventID, eventType);
 
-                eEventType eventType = eEventType.Main;
-                List<EventScript> eventScripts = new List<EventScript>();
-
-                // 인덱스 수치에 따라 이벤트 타입 설정
-                if (eventID > 100) eventType = eEventType.Random;
-
-                // 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
-                LoadScript(eventID, eventScripts);
-
-                // EventData 구조로 정보 연결해서 Queue에 저장
-                EventData eventData = new EventData(eventID, eventType, eventScripts);
-                eventData.title = eventTitle;
-
-                Debug.Log($"eventQueue에 넣을 이벤트 : {eventData.title}");
-                eventQueue.Enqueue(eventData);
+                EventData eventData = new EventData(eventID, eventType, eventScripts) { title = eventTitle };
+                Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title}");
+                EventQueue.Enqueue(eventData);
             }
         }
 
         /// <summary>
-        /// 현재 턴에 해당되는 이벤트 로드 - 외부에서 이벤트 체크 시 호출
+        /// 외부에서 이벤트 확인하고 로드할 때 호출
         /// </summary>
-        public void CheckAbleEvent()
+        public void CheckEvent()
         {
-            GetCurrentEventID();
-            GetEventData();
+            EnqueueEventID();
+            LoadEventData();
 
-            if (eventQueue.Count > 0) ShowEvent();
+            if (EventQueue.Count > 0) StartEventPhase();
         }
 
         /// <summary>
         /// 이벤트 페이즈로 넘어감
         /// </summary>
-        public void ShowEvent()
+        private void StartEventPhase()
         {
             DataManager.Instance.playerData.currentStatus = eStatus.Event;
         }
@@ -170,26 +117,40 @@ namespace Client
         /// <summary>
         /// 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
         /// </summary>
-        void LoadScript(long _eventID, List<EventScript> _eventScriptList)
+        private List<EventScript> LoadScript(long eventID, eEventType eventType)
         {
-            int tempIndex = 0;
+            List<EventScript> eventScripts = new List<EventScript>();
+            int startIndex = eventType == eEventType.Random ? RANDOM_SCRIPT_THRESHOLD : 0;
 
-            while (true)
+            for (int i = startIndex; ; i++)
             {
-                if (tempIndex > mainEventEndID)
-                    tempIndex = 1000 + tempIndex - mainEventEndID - 1;
-
-                EventScript eventScript = DataManager.Instance.GetData<EventScript>(tempIndex);
-
-                if (eventScript == null)
+                if (!TryGetScript(i, eventID, out EventScript eventScript))
                     break;
+                eventScripts.Add(eventScript);
+            }
 
-                if (eventScript.EventNum == _eventID)
-                {
-                    _eventScriptList.Add(eventScript);
-                }
+            Debug.Log($"이벤트 {eventID}의 스크립트 개수: {eventScripts.Count}");
+            return eventScripts;
+        }
 
-                tempIndex++;
+        /// <summary>
+        /// 스크립트 로드
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="eventID"></param>
+        /// <param name="eventScript"></param>
+        /// <returns></returns>
+        private bool TryGetScript(int index, long eventID, out EventScript eventScript)
+        {
+            try
+            {
+                eventScript = DataManager.Instance.GetData<EventScript>(index);
+                return eventScript.EventNum == eventID;
+            }
+            catch
+            {
+                eventScript = null;
+                return false;
             }
         }
     }

@@ -83,7 +83,7 @@ public class EventUI : UI_Base, IPointerClickHandler
     public void CheckAndShowEvent()
     {
         // 실행할 이벤트 없으면 메인으로 돌아감
-        if (EventManager.Instance.eventQueue.Count <= 0)
+        if (EventManager.Instance.EventQueue.Count <= 0)
         {
             Debug.Log("대기 중인 이벤트 없음, 메인으로 돌아갑니다");
 
@@ -114,11 +114,11 @@ public class EventUI : UI_Base, IPointerClickHandler
         // 보여줄 이벤트 데이터 설정
         // 첫 대사 인덱스를 위해 위 이벤트 데이터의 이벤트 스크립트 맨 앞 인덱스로 설정
 
-        nowEventData = EventManager.Instance.eventQueue.Dequeue();
+        nowEventData = EventManager.Instance.EventQueue.Dequeue();
         nowEventScriptID = nowEventData.eventScripts[0].index; // 스크립트 인덱스 초기화
         startingID = nowEventData.eventScripts[0].index;
 
-        Debug.Log($"실행할 이벤트 : {nowEventData.title}, 시작 스크립트 인덱스 : {nowEventScriptID}, 앞으로 남은 이벤트 : {EventManager.Instance.eventQueue.Count}개");
+        Debug.Log($"실행할 이벤트 : {nowEventData.title}, 시작 스크립트 인덱스 : {nowEventScriptID}, 앞으로 남은 이벤트 : {EventManager.Instance.EventQueue.Count}개");
     }
 
 
