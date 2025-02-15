@@ -193,6 +193,12 @@ EventManager() { }
 
                     if (eventScript.EventNum == eventID)
                     {
+                        if (string.Equals(eventScript.BranchType, "Choice")) //eventScript.BranchType == "Choice")
+                        {
+                            int nextLineIndex = GetNextEventScriptIndex((int)eventScript.BranchIndex);
+                            eventScript = DataManager.Instance.GetData<EventScript>(nextLineIndex);
+                        }
+
                         eventScripts.Add(eventScript);
                     }
                 }
@@ -206,6 +212,22 @@ EventManager() { }
             }
 
             return eventScripts;
+        }
+
+
+        private int GetNextEventScriptIndex(int branchIndex)
+        {
+            // SelectScript.csv에서 branchIndex에 맞는 C열의 옮길 라인 값을 가져옴
+            try
+            {
+                SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(branchIndex);
+                return (int)selectScript.MoveLine;
+            }
+            catch
+            {
+                Debug.LogError("SelectScript에서 다음 이벤트 스크립트 인덱스를 찾을 수 없습니다.");
+                return -1; // 예외 처리, 잘못된 인덱스일 경우
+            }
         }
     }
 }
