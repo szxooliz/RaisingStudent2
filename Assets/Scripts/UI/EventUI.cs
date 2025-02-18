@@ -20,7 +20,6 @@ namespace Client
             IMG_CharFace
         }
 
-        EventData nowEventData;
         long startingID;
         long nowEventScriptID;
 
@@ -60,10 +59,10 @@ namespace Client
         /// <param name="_index"></param>
         IEnumerator LoadNextDialogue()
         {
-            // 클릭할 때 다음 스크립트 띄우기 -> 스크립트 인덱스 증가를 어디서 해야할지.. 여기 안에서 하는게 안전할 듯
+            // 클릭할 때 다음 스크립트 띄우기 -> 스크립트 인덱스 증가를 여기 안에서 하는게 안전할 듯
             // 가져온 이벤트 스크립트가 null이면 CheckAndShowEvent 실행해서 새 이벤트 있는지 체크하고 바로 세팅
 
-            EventScript eventScript = TryGetNextScript(nowEventScriptID, nowEventData.eventScripts);
+            EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
 
             if (eventScript != null)
             {
@@ -103,9 +102,6 @@ namespace Client
         {
             yield return new WaitForSeconds(0.5f); // 최종 스크립트 표시 시간 확보
 
-            // 이벤트, 활동, 전부 상관없이 턴 안에 하는 "모든 프로세스 종료 후" 메인으로 돌아오면 턴 증가
-            // 여기서 하면 0턴에 인트로격 이벤트 이후에 턴이 증가해버림..
-            //GameManager.Instance.NextTurn();
             DataManager.Instance.playerData.currentStatus = eStatus.Main;
         }
 
@@ -114,14 +110,13 @@ namespace Client
         /// </summary>
         public void RenewEvent()
         {
-            // 보여줄 이벤트 데이터 설정
-            // 첫 대사 인덱스를 위해 위 이벤트 데이터의 이벤트 스크립트 맨 앞 인덱스로 설정
+            EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
 
-            nowEventData = EventManager.Instance.EventQueue.Dequeue();
-            nowEventScriptID = nowEventData.eventScripts[0].index; // 스크립트 인덱스 초기화
-            startingID = nowEventData.eventScripts[0].index;
+            // 스크립트 첫 대사 인덱스 초기화
+            nowEventScriptID = EventManager.Instance.nowEventData.eventScripts[0].index; 
+            startingID = EventManager.Instance.nowEventData.eventScripts[0].index;
 
-            Debug.Log($"실행할 이벤트 : {nowEventData.title}, 시작 스크립트 인덱스 : {nowEventScriptID}, 앞으로 남은 이벤트 : {EventManager.Instance.EventQueue.Count}개");
+            Debug.Log($"실행할 이벤트 : {EventManager.Instance.nowEventData.title}, 시작 스크립트 인덱스 : {nowEventScriptID}, 앞으로 남은 이벤트 : {EventManager.Instance.EventQueue.Count}개");
         }
 
 
@@ -133,19 +128,18 @@ namespace Client
         {
             if (_index - startingID >= _eventScripts.Count)
             {
-                Debug.Log($"현재 이벤트 - {nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");
+                Debug.Log($"현재 이벤트 - {EventManager.Instance.nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");
                 return null;
             }
             else
             {
                 try
                 {
-                    // 이러면 인덱스가 안되겠죠..
                     return _eventScripts[(int)(_index - startingID)];
                 }
                 catch
                 {
-                    Debug.Log($"현재 이벤트 - {nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");
+                    Debug.Log($"현재 이벤트 - {EventManager.Instance.nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");
                     return null;
                 }
             }

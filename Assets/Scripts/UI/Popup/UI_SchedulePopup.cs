@@ -5,65 +5,48 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Linq;
+using static Client.SystemEnum;
+using System;
 
 namespace Client
 {
     public class UI_SchedulePopup : UI_Popup
     {
+        // 이벤트 인덱스, 진행 여부
+        Dictionary<int, bool> scheduleEvent = new Dictionary<int, bool>();
 
-        [SerializeField] GameObject[] scheduleContents = new GameObject[7];
-        int turn; // 현재 몇턴인지 받아올 인자
-
-        public List<(int, string)> scheduleList = new List<(int, string)>()
-        {
-            (0, "개강"),
-            (5, "1학기 중간고사"),
-            //(),
-        };
-
-        public static int[] scheduledTurn = {0, 5, 11, 11, 17, 23}; // 고정이벤트가 일어나는 턴
-        public static string[] scheduleTitle = {"개강", "1학기 중간고사", "1학기 기말고사", "여름방학", "2학기 중간고사", "2학기 기말고사"}; // 고정이벤트 내용
+        // 학사일정 컨텐츠 박스들
+        Dictionary<int, ScheduleContent> scheduleContentMap = new Dictionary<int, ScheduleContent>();
+        [SerializeField] List<ScheduleContent> scheduleContents = new List<ScheduleContent>();
 
         enum Buttons
         {
             Panel,
             BTN_Close
         }
-        enum Contents
-        {
-            TMP_Month, TMP_Event,
-            IMG_Cancel
-        }
         public override void Init()
         {
             base.Init();
             Bind<Button>(typeof(Buttons));
+
             BindButton();
-
-            turn = DataManager.Instance.playerData.currentTurn; // 턴을 받아옴
-
-            for (int i = 0; i < scheduledTurn.Length; i++)
-            {
-                // scheduleList에 게임 오브젝트 받아오기
-                scheduleContents[i] = transform.GetChild(i + 3).gameObject;
-                // 스케줄 팝업창 요소별 텍스트를 scheduleText로 넣어줌
-                scheduleContents[i].transform.GetChild((int)Contents.TMP_Event).GetComponent<TMP_Text>().text = scheduleTitle[i]; 
-            }
-
-            SchedulePopupUpdate(turn);
+            InitSchedule();
         }
 
         private void OnEnable()
         {
-            turn = DataManager.Instance.playerData.currentTurn;
-            SchedulePopupUpdate(turn);
+            UpdateSchedule();
+            UpdateScheduleUI();
         }
 
+        #region Button
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
             BindEvent(GetButton((int)Buttons.BTN_Close).gameObject, OnClickCloseBtn);
         }
+
         void OnClickPanel(PointerEventData evt)
         {
             ClosePopupUI();
@@ -73,19 +56,75 @@ namespace Client
         {
             ClosePopupUI();
         }
+        #endregion
 
         /// <summary>
-        /// 학사일정 지나가면 취소표 그려주는 함수
+        /// 스케줄 기록 초기화
         /// </summary>
-        void SchedulePopupUpdate(int f_turn)
+        public void InitSchedule()
         {
-            int temp;
-            for (temp = 0; f_turn > scheduledTurn[temp]; temp++) ;
-            for (int i = 0; i < temp; i++)
+            List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
+
+            // 1. 이벤트 진행여부 딕셔너리 초기화
+            scheduleEvent.Clear();
+            foreach (eScheduleEvent eSchedule in scheduleList)
             {
-                scheduleContents[i].GetComponent<Image>().color = new Color(106/255f, 106/255f, 106/255f, 1f);
-                scheduleContents[i].transform.GetChild((int)Contents.IMG_Cancel).gameObject.SetActive(true);
+                scheduleEvent.Add((int)eSchedule, false);
+            }
+
+            // 2. 스케줄 컨텐츠 박스 UI 리스트로 가져오기
+            scheduleContents.Clear();
+            scheduleContents = new List<ScheduleContent>(GetComponentsInChildren<ScheduleContent>(true));
+
+            // 3. 스케줄 컨텐츠 박스 UI 상태 초기화
+            scheduleContentMap.Clear();
+
+            if (scheduleContents.Count != scheduleList.Count)
+            {
+                Debug.LogError($"⚠️ scheduleContents {scheduleContents.Count} != scheduleList {scheduleList.Count}");
+                return;
+            }
+
+            for (int i = 0; i < scheduleContents.Count; i++)
+            {
+                int eventIndex = (int)scheduleList[i];                // Enum의 int 값 가져오기
+                scheduleContents[i].Initialize(eventIndex);           // ScheduleContent에 Index 설정
+                scheduleContentMap[eventIndex] = scheduleContents[i]; // Dictionary에 저장
             }
         }
+
+        public void UpdateSchedule()
+        {
+            // 지나간 이벤트, 진행중인 이벤트를 딕셔너리에 기록하도록            
+            // nowEventData.eventIndex를 기준으로, 이 값보다 작은 key 값의 value는 true로 설정
+            // 값이 같은 경우에는 동그라미를 쳐야 하니까..
+            int nowEvtIndex = (int)EventManager.Instance.nowEventData.eventIndex;
+
+            foreach (int key in new List<int>(scheduleEvent.Keys))
+            {
+                scheduleEvent[key] = key < nowEvtIndex;
+            }
+        }
+
+        /// <summary>
+        /// 현재 이벤트 진행사항 UI 표시 적용 함수
+        /// </summary>
+        public void UpdateScheduleUI()
+        {
+            // 취소선의 경우 딕셔너리 value == true 인 경우에 활성화
+            // 동그라미의 경우 이벤트매니저의 nowEventData.eventIndex의 값이 딕셔너리의 키 값이 같으면 활성화 
+
+            int nowEvtIndex = (int)EventManager.Instance.nowEventData.eventIndex;
+
+            foreach (var kvp in scheduleEvent)
+            {
+                if (scheduleContentMap.TryGetValue(kvp.Key, out var content))
+                {
+                    content.ToggleLine(kvp.Value);
+                    content.ToggleCircle(kvp.Key == nowEvtIndex);
+                }
+            }
+        }
+
     }
 }

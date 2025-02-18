@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.U2D;
+using System;
 
 namespace Client
 {
@@ -21,7 +22,7 @@ namespace Client
             TMP_CharLine
         }
 
-        private long maxCount; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
+        private long maxCount = 33; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
         private Image charFace;
         private Image charBubble;
@@ -38,8 +39,6 @@ namespace Client
         {
             Bind<UnityEngine.UI.Image>(typeof(CharImages));
             Bind<TMPro.TMP_Text>(typeof(CharTexts));
-
-            maxCount = 2; // 임시
         }
 
         private void Start()
@@ -55,7 +54,7 @@ namespace Client
 
             charFace.alphaHitTestMinimumThreshold = 0.1f;
 
-            StartCoroutine(ResetBubble(0));
+            StartCoroutine(ResetBubble());
         }
 
         /// <summary>
@@ -71,16 +70,16 @@ namespace Client
             }
             else
             {
-                coroutine = StartCoroutine(ResetBubble(Random.Range(0, (int)maxCount)));
+                coroutine = StartCoroutine(ResetBubble());
             }
         }
 
         /// <summary>
         /// 인터랙션 시 말풍선 새로 고침
         /// </summary>
-        IEnumerator ResetBubble(int index)
+        IEnumerator ResetBubble()
         {
-            index = UnityEngine.Random.Range(0, 33); // 전체 개수 가져오고 싶은데
+            int index = UnityEngine.Random.Range(0, (int)maxCount);
             Script script = DataManager.Instance.GetData<Script>(index);
 
             // 임시: 캐릭터 종류 관련 로직 정해지면 수정
@@ -88,7 +87,7 @@ namespace Client
 
             if (script == null) 
             {
-                yield return null;
+                yield break;
             }
 
             try
@@ -100,11 +99,10 @@ namespace Client
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to update bubble: {e.Message}");
                 coroutine = null;
+                Debug.LogError($"Failed to update bubble: {e.Message}");
             }
-
-            yield return null;
+            yield break;
         }
 
         /// <summary>

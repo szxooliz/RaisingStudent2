@@ -103,16 +103,16 @@ namespace Client
             // TODO : static 배열 없애고 다른 방식으로 수정
             int turn = DataManager.Instance.playerData.currentTurn;
 
-            for (int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
-            {
-                if (turn == UI_SchedulePopup.scheduledTurn[i])
-                {
-                    GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
-                    return;
-                }
+            //for (int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
+            //{
+            //    if (turn == UI_SchedulePopup.scheduledTurn[i])
+            //    {
+            //        GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
+            //        return;
+            //    }
                 // TODO : 다음 스케줄에 맞춰 남은 턴 표시 로직 더 추가
                 // GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
-            }
+            //}
         }
 
         /// <summary>

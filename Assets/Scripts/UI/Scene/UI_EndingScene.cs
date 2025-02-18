@@ -106,22 +106,22 @@ namespace Client
             }
             else if (highStatsCount >= 2)
             {
-                if (highStats[0] && highStats[3])
+                if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
                 {
                     Debug.Log("대기업 SI 취업 엔딩");
                     currentEndingNum = (int)eEndingName.CorporateSI;
                 }
-                else if (highStats[0] && highStats[1])
+                else if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Otaku])
                 {
                     Debug.Log("게임회사 취업 엔딩");
                     currentEndingNum = (int)eEndingName.GameCompany;
                 }
-                else if (highStats[3] && highStats[1])
+                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Charming])
                 {
                     Debug.Log("버튜버 엔딩");
                     currentEndingNum = (int)eEndingName.VirtualYoutuber;
                 }
-                else if (highStats[2] && highStats[1])
+                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Strength])
                 {
                     Debug.Log("프로게이머 엔딩");
                     currentEndingNum = (int)eEndingName.ProGamer;

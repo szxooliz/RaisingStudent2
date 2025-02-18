@@ -12,6 +12,10 @@ namespace Client
 {
     public class ActivityUI : UI_Base, IPointerClickHandler
     {
+        // 기획 조정 용
+        [SerializeField] float charDuration = 5f;
+        [SerializeField] float narDuration = 5f;
+
         [SerializeField]
         private List<string> _charLines = new List<string>()
         {
@@ -19,8 +23,8 @@ namespace Client
             "오예 굿굿 저녁으로 맛잇는거 먹어야지",
             "차라리 쿨쿨따 하는게 더 나았겠다"
         };
-        [SerializeField] private string _restLine = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
 
+        [SerializeField] private string _restLine = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
 
         enum GameObjects
         {
@@ -48,10 +52,6 @@ namespace Client
         private TMPro.TMP_Text line;     // 결과 나레이션
 
         private Coroutine coroutine = null;
-
-        // 기획 조정 용
-        [SerializeField] float charDuration = 5f;
-        [SerializeField] float narDuration = 5f;
 
         public override void Init()
         {
@@ -92,13 +92,6 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
-            /*
-            1. ShowResult1() 실행 중 눌렀을 때 중단하고 텍스트 전체 보임
-            2. ShowResult1() 종료 후 눌렀을 때 Activity2 활성화 후 ShowResult2() 실행
-            3. ShowResult2() 실행 중 눌렀을 때 중단하고 텍스트 전체 보임
-            4. ShowResult2() 종료 후 눌렀을 때 ActivityUI 비활성화
-             */
-
             if (coroutine != null) // 타이핑 애니메이션 중인 경우에
             {
                 StopCoroutine(coroutine);

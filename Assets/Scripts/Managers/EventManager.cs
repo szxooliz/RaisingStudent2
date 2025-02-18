@@ -22,8 +22,9 @@ namespace Client
         public Queue<(long ID, string title)> EventIDQueue { get; } = new Queue<(long, string)>();
         public Queue<EventData> EventQueue { get; } = new Queue<EventData>();
 
+        public EventData nowEventData;
         #region Singleton
-EventManager() { }
+        EventManager() { }
         #endregion
 
         /// <summary>
@@ -213,7 +214,6 @@ EventManager() { }
 
             return eventScripts;
         }
-
 
         private int GetNextEventScriptIndex(int branchIndex)
         {

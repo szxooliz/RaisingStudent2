@@ -20,7 +20,7 @@ namespace Client
 
         public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
 
-        [SerializeField] eStatus _currentStatus;    // 현재 상태 
+        eStatus _currentStatus;    // 현재 상태 
         public eStatus currentStatus
         {
             get => _currentStatus;
@@ -31,9 +31,9 @@ namespace Client
             }
         }
 
-        public int[] statsAmounts; // 스탯 리스트, StatName 열거형 요소와 순서 같음
+        public int[] statsAmounts; // 스탯 리스트, eStatName 열거형 요소와 순서 같음
 
-        [SerializeField] float _stressAmount; // 스트레스 양
+        float _stressAmount; // 스트레스 양
         public float stressAmount
         {
             get => _stressAmount;

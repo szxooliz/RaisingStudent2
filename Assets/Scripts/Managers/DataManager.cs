@@ -17,8 +17,8 @@ namespace Client
         // 로드한 적 있는 Sprite
         Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
-        public PlayerData playerData; // 플레이어 데이터
-        public PersistentData persistentData = new PersistentData(); // 엔딩 목록
+        public PlayerData playerData; 
+        public PersistentData persistentData = new PersistentData();
 
         public ActivityData activityData = new ActivityData(); // 활동 하나의 데이터, 결과 전달용
 

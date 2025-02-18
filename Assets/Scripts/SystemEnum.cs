@@ -124,9 +124,14 @@ namespace Client
 
         public enum eMainEvents
         {
-            Intro, ApplyToHackerton, Hackerton, MidTest_1, SportsDay, FinTest_1, 
-            SummerVac, 
-            Festival, MidTest_2, Gstar, FinTest_2
+            Intro, ApplyToHackerton, Hackerton, MidTest_1, SportsDay, FinTest_1, SummerVac, 
+            Festival, MidTest_2, Gstar, FinTest_2, Finish
+        }
+
+        public enum eScheduleEvent
+        {
+            Intro = 0, MidTest_1 = 2, FinTest_1 = 5, SummerVac = 6, 
+            MidTest_2 = 8, FinTest_2 = 9, Finish = 10
         }
         #endregion
 
