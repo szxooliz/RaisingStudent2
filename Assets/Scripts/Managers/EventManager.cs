@@ -92,7 +92,6 @@ namespace Client
         {
             try
             {
-                Debug.Log($"{eventData.title}은 봤던 이벤트로 추가");
                 DataManager.Instance.playerData.watchedEvents.Add(eventData.eventIndex, eventData);
             }
             catch
@@ -163,7 +162,6 @@ namespace Client
         /// </summary>
         public void CheckEvent()
         {
-            Debug.Log($"이벤트 체크 할 때 턴: {DataManager.Instance.playerData.currentTurn}");
             EnqueueEventID();
             LoadEventData();
 
@@ -194,7 +192,8 @@ namespace Client
 
                     if (eventScript.EventNum == eventID)
                     {
-                        if (string.Equals(eventScript.BranchType, "Choice")) //eventScript.BranchType == "Choice")
+                        // EventUI.cs로 옮겨서, 유저가 선택지를 선택할 타이밍에 실행되도록 해주세요!
+                        if (eventScript.BranchType == eBranchType.Choice)
                         {
                             int nextLineIndex = GetNextEventScriptIndex((int)eventScript.BranchIndex);
                             eventScript = DataManager.Instance.GetData<EventScript>(nextLineIndex);
@@ -205,7 +204,6 @@ namespace Client
                 }
                 catch
                 {
-                    Debug.Log($"이벤트 {eventID}의 스크립트 총 {eventScripts.Count}개");
                     break;
                 }
 

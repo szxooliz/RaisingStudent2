@@ -86,8 +86,6 @@ namespace Client
             // 실행할 이벤트 없으면 메인으로 돌아감
             if (EventManager.Instance.EventQueue.Count <= 0)
             {
-                Debug.Log("대기 중인 이벤트 없음, 메인으로 돌아갑니다");
-
                 StartCoroutine(DelayedTransition());
                 return;
             }
@@ -101,7 +99,6 @@ namespace Client
         IEnumerator DelayedTransition()
         {
             yield return new WaitForSeconds(0.5f); // 최종 스크립트 표시 시간 확보
-
             DataManager.Instance.playerData.currentStatus = eStatus.Main;
         }
 
@@ -111,17 +108,16 @@ namespace Client
         public void RenewEvent()
         {
             EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
+            Debug.Log($"현재 이벤트 인덱스 : {EventManager.Instance.nowEventData.eventIndex}, 현재 이벤트 타이틀 : {EventManager.Instance.nowEventData.title}");
 
             // 스크립트 첫 대사 인덱스 초기화
             nowEventScriptID = EventManager.Instance.nowEventData.eventScripts[0].index; 
             startingID = EventManager.Instance.nowEventData.eventScripts[0].index;
-
-            Debug.Log($"실행할 이벤트 : {EventManager.Instance.nowEventData.title}, 시작 스크립트 인덱스 : {nowEventScriptID}, 앞으로 남은 이벤트 : {EventManager.Instance.EventQueue.Count}개");
         }
 
 
         /// <summary>
-        /// 다음 대사 가져오기, 있으면 대사 넣고 없으면 null << 이게 맞나?
+        /// 다음 대사 가져오기, 있으면 대사 넣고 없으면 null
         /// </summary>
         /// <param name="_eventScripts"></param>
         public EventScript TryGetNextScript(long _index, List<EventScript> _eventScripts)

@@ -144,7 +144,6 @@ namespace Client
             }
             else
             {
-                Debug.Log($"{script.Character}_{script.Face}");
                 str = $"Sprites/Character/{script.Character}_{script.Face}";
             }
 

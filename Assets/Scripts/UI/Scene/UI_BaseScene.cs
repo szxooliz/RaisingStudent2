@@ -14,7 +14,6 @@ namespace Client
         {
             BTN_Menu, BTN_Schedule, BTN_Log
         }
-
         enum Texts
         {
             TXT_Turn, TXT_Term
@@ -100,19 +99,8 @@ namespace Client
         /// </summary>
         void UpdateTurnUI()
         {
-            // TODO : static 배열 없애고 다른 방식으로 수정
             int turn = DataManager.Instance.playerData.currentTurn;
 
-            //for (int i = 0; i < UI_SchedulePopup.scheduledTurn.Length; i++)
-            //{
-            //    if (turn == UI_SchedulePopup.scheduledTurn[i])
-            //    {
-            //        GetText((int)Texts.TXT_Turn).text = UI_SchedulePopup.scheduleTitle[i]; // scheduleText에 내용이 있으면 바꿔주고 종료
-            //        return;
-            //    }
-                // TODO : 다음 스케줄에 맞춰 남은 턴 표시 로직 더 추가
-                // GetText((int)Texts.TXT_Turn).text = "앞으로 " + (UI_SchedulePopup.scheduledTurn[i + 1] - turn) + "턴";
-            //}
         }
 
         /// <summary>
@@ -121,11 +109,18 @@ namespace Client
         void UpdateTermUI()
         {
             GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
-                                                + SystemEnum.GetThirdsKor(DataManager.Instance.playerData.currentThird);
+                                                + GetThirdsKor(DataManager.Instance.playerData.currentThird);
         }
 
         // 이벤트 실행 시에 턴 대신 이벤트 이름 표시 함수
         // 이벤트쪽에서 제목 스트링 받아와서 UI에 띄우기
+        /// <summary>
+        /// 이벤트 실행 시에 턴 대신 이벤트 이름 표시 함수
+        /// </summary>
+        public void ShowEventName()
+        {
+            GetText((int)Texts.TXT_Turn).text = EventManager.Instance.nowEventData.title;
+        }
 
     }
 
