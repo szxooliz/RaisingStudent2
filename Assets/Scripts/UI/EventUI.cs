@@ -113,6 +113,9 @@ namespace Client
             // 스크립트 첫 대사 인덱스 초기화
             nowEventScriptID = EventManager.Instance.nowEventData.eventScripts[0].index; 
             startingID = EventManager.Instance.nowEventData.eventScripts[0].index;
+
+            // 이벤트 타이틀 띄우기
+            EventManager.Instance.OnEventStart?.Invoke();
         }
 
 

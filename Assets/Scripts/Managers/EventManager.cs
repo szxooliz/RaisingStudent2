@@ -23,6 +23,8 @@ namespace Client
         public Queue<EventData> EventQueue { get; } = new Queue<EventData>();
 
         public EventData nowEventData;
+        public Action OnEventStart;
+
         #region Singleton
         EventManager() { }
         #endregion
@@ -193,11 +195,11 @@ namespace Client
                     if (eventScript.EventNum == eventID)
                     {
                         // EventUI.cs로 옮겨서, 유저가 선택지를 선택할 타이밍에 실행되도록 해주세요!
-                        if (eventScript.BranchType == eBranchType.Choice)
-                        {
-                            int nextLineIndex = GetNextEventScriptIndex((int)eventScript.BranchIndex);
-                            eventScript = DataManager.Instance.GetData<EventScript>(nextLineIndex);
-                        }
+                        //if (eventScript.BranchType == eBranchType.Choice)
+                        //{
+                        //    int nextLineIndex = GetNextEventScriptIndex((int)eventScript.BranchIndex);
+                        //    eventScript = DataManager.Instance.GetData<EventScript>(nextLineIndex);
+                        //}
 
                         eventScripts.Add(eventScript);
                     }

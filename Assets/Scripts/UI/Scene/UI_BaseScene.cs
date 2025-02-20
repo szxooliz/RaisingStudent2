@@ -24,7 +24,6 @@ namespace Client
         }
 
         private string spritePath = "Sprites/UI/Status_";
-        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         public override void Init()
         {
@@ -39,6 +38,7 @@ namespace Client
             UpdateTurnUI();
 
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
+            EventManager.Instance.OnEventStart += ShowEventName;
         }
 
         void BindButton()
