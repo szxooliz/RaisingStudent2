@@ -86,14 +86,16 @@ namespace Client
             }
         }
 
+        #region 이벤트 진행 상황
         /// <summary>
         /// 봤던 이벤트로 기록
         /// </summary>
         /// <param name="eventData"></param>
-        private void AddWatchedEvent(EventData eventData)
+        public void AddWatchedEvent(EventData eventData)
         {
             try
             {
+                Debug.Log($"이벤트 끝, watchedEvents에 {eventData.title}을 저장");
                 DataManager.Instance.playerData.watchedEvents.Add(eventData.eventIndex, eventData);
             }
             catch
@@ -117,6 +119,59 @@ namespace Client
                 }
             }
         }
+
+        /// <summary>
+        /// 학사 일정 이벤트 중에서 watchedEvent에 기록된 게 있으면 제일 마지막 기록된 인덱스 리턴
+        /// </summary>
+        /// <returns></returns>
+        public long GetLargestScheduleID()
+        {
+            List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
+            long watchedEventID = -1; 
+
+            // 역순환 -  기록된 것 중에 가장 큰 스케줄 인덱스를 가져오기 위해
+            scheduleList.Reverse();
+            foreach(eScheduleEvent sch in scheduleList)
+            {
+                if(DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
+                {
+                    Debug.Log($"watchedEvents에는 Key인 {sch.ToString()}이 있음");
+                    watchedEventID = (long)sch;
+                    break;
+                }
+            }
+            return watchedEventID;
+        }
+
+        /// <summary>
+        /// 다음 실행될 예정인 학사일정 이벤트 enum 리턴
+        /// </summary>
+        /// <returns></returns>
+        public long GetNextScheduleID()
+        {
+            List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
+            int schIndex = -1;
+
+            if (DataManager.Instance.playerData.watchedEvents.Count == 0)
+                return -1;
+
+            // 역순환 -  기록된 것 중에 가장 큰 스케줄ID를 가져오기 위해
+            scheduleList.Reverse();
+            foreach (eScheduleEvent sch in scheduleList)
+            {
+                if (DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
+                {
+                    schIndex = scheduleList.IndexOf(sch);
+                    Debug.Log($"마지막으로 본 학사일정 {sch.ToString()}, 인덱스 {schIndex}이 있음");
+                    break;
+                }
+            }
+
+            eScheduleEvent scheduleEvent = scheduleList[schIndex - 1];
+            return (long)scheduleEvent;
+        }
+        #endregion
+
         /// <summary>
         /// 등장 가능 범위 내의 이벤트인지 확인
         /// </summary>
@@ -142,8 +197,6 @@ namespace Client
         /// </summary>
         private void LoadEventData()
         {
-            Debug.Log($"eventIDQueue에서 전달받아야 할 이벤트 개수 : {EventIDQueue.Count}");
-
             if (EventIDQueue.Count == 0) return;
 
             while (EventIDQueue.Count > 0)
@@ -155,7 +208,6 @@ namespace Client
                 EventData eventData = new EventData(eventID, eventType, eventScripts) { title = eventTitle };
                 Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title}");
                 EventQueue.Enqueue(eventData);
-                AddWatchedEvent(eventData);
             }
         }
 

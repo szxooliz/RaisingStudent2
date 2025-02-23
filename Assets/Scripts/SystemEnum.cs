@@ -130,7 +130,7 @@ namespace Client
 
         public enum eScheduleEvent
         {
-            Intro = 0, MidTest_1 = 2, FinTest_1 = 5, SummerVac = 6, 
+            Intro = 0, MidTest_1 = 3, FinTest_1 = 5, SummerVac = 6, 
             MidTest_2 = 8, FinTest_2 = 9, Finish = 10
         }
         #endregion

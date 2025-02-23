@@ -59,7 +59,6 @@ namespace Client
         /// <param name="_index"></param>
         IEnumerator LoadNextDialogue()
         {
-            // 클릭할 때 다음 스크립트 띄우기 -> 스크립트 인덱스 증가를 여기 안에서 하는게 안전할 듯
             // 가져온 이벤트 스크립트가 null이면 CheckAndShowEvent 실행해서 새 이벤트 있는지 체크하고 바로 세팅
 
             EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
@@ -72,6 +71,8 @@ namespace Client
             }
             else
             {
+                // 이벤트가 실제 실행 후 끝나는 시점에 봤던 이벤트로 등록
+                EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
                 CheckAndShowEvent();
             }
 
@@ -108,7 +109,7 @@ namespace Client
         public void RenewEvent()
         {
             EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
-            Debug.Log($"현재 이벤트 인덱스 : {EventManager.Instance.nowEventData.eventIndex}, 현재 이벤트 타이틀 : {EventManager.Instance.nowEventData.title}");
+            Debug.Log($"현재 이벤트 타이틀 : {EventManager.Instance.nowEventData.title}, {EventManager.Instance.nowEventData.eventIndex}");
 
             // 스크립트 첫 대사 인덱스 초기화
             nowEventScriptID = EventManager.Instance.nowEventData.eventScripts[0].index; 
@@ -138,7 +139,6 @@ namespace Client
                 }
                 catch
                 {
-                    Debug.Log($"현재 이벤트 - {EventManager.Instance.nowEventData.title}, 스크립트 총 개수 {_eventScripts.Count}개 끝남");
                     return null;
                 }
             }

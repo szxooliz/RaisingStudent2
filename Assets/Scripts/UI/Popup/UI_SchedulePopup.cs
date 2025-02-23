@@ -13,7 +13,7 @@ namespace Client
 {
     public class UI_SchedulePopup : UI_Popup
     {
-        // 이벤트 인덱스, 진행 여부
+        // key: 이벤트 인덱스, value: 진행 여부
         Dictionary<int, bool> scheduleEvent = new Dictionary<int, bool>();
 
         // 학사일정 컨텐츠 박스들
@@ -65,18 +65,27 @@ namespace Client
         {
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
 
-            // 1. 이벤트 진행여부 딕셔너리 초기화
+            // 이벤트 진행여부 딕셔너리 초기화
             scheduleEvent.Clear();
             foreach (eScheduleEvent eSchedule in scheduleList)
             {
-                scheduleEvent.Add((int)eSchedule, false);
+                // 진행한 이벤트 중 스케줄이 있으면 true, 없으면 false
+                if (DataManager.Instance.playerData.watchedEvents.ContainsKey((int)eSchedule))
+                {
+                    Debug.Log($"watchedEvents에 Key인 {eSchedule.ToString()} 추가");
+                    scheduleEvent.Add((int)eSchedule, true);
+                }
+                else
+                {
+                    scheduleEvent.Add((int)eSchedule, false);
+                }
             }
 
-            // 2. 스케줄 컨텐츠 박스 UI 리스트로 가져오기
+            // 스케줄 컨텐츠 박스 UI 리스트로 가져오기
             scheduleContents.Clear();
             scheduleContents = new List<ScheduleContent>(GetComponentsInChildren<ScheduleContent>(true));
 
-            // 3. 스케줄 컨텐츠 박스 UI 상태 초기화
+            // 스케줄 컨텐츠 박스 UI 상태 초기화
             scheduleContentMap.Clear();
 
             if (scheduleContents.Count != scheduleList.Count)
@@ -98,11 +107,12 @@ namespace Client
             // 지나간 이벤트, 진행중인 이벤트를 딕셔너리에 기록하도록            
             // nowEventData.eventIndex를 기준으로, 이 값보다 작은 key 값의 value는 true로 설정
             // 값이 같은 경우에는 동그라미를 쳐야 하니까..
-            int nowEvtIndex = (int)EventManager.Instance.nowEventData.eventIndex;
 
+            int nowEvtIndex = (int)EventManager.Instance.GetLargestScheduleID();
+            Debug.Log($"가장 마지막에 본 학사일정 아이디 : {nowEvtIndex}");
             foreach (int key in new List<int>(scheduleEvent.Keys))
             {
-                scheduleEvent[key] = key < nowEvtIndex;
+                scheduleEvent[key] = key <= nowEvtIndex;
             }
         }
 

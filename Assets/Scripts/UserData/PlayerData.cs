@@ -16,7 +16,7 @@ namespace Client
         public eThirds currentThird;    // a순 상중하
 
         public List<ProcessData> watchedProcess;          // 로그용 - 이미 진행한 or 진행 중인 활동, 이벤트 순서대로 저장
-        public Dictionary<long, EventData> watchedEvents; // 이벤트 중복 실행 방지용 - 딕셔너리에 있으면 이미 본 이벤트
+        public Dictionary<long, EventData> watchedEvents; // 이벤트 중복 실행 방지용
 
         public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
 
