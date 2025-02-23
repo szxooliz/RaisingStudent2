@@ -95,12 +95,13 @@ namespace Client
         {
             try
             {
-                Debug.Log($"이벤트 끝, watchedEvents에 {eventData.title}을 저장");
+                Debug.Log($"이벤트 끝, {eventData.title} 등록");
                 DataManager.Instance.playerData.watchedEvents.Add(eventData.eventIndex, eventData);
             }
             catch
             {
                 Debug.LogError($"{eventData.title} : {eventData.eventIndex}는 이미 등록된 이벤트 인덱스입니다");
+                return;
             }
         }
 
@@ -135,7 +136,6 @@ namespace Client
             {
                 if(DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
                 {
-                    Debug.Log($"watchedEvents에는 Key인 {sch.ToString()}이 있음");
                     watchedEventID = (long)sch;
                     break;
                 }

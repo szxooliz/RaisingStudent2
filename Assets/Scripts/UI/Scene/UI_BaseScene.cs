@@ -103,20 +103,13 @@ namespace Client
             int turn = DataManager.Instance.playerData.currentTurn;
             string str = "";
 
-            // eScheduleEvent를 활용해야 할 것 같긴 함
-            // 순차적으로 돌면서 값이 key로 watchedEvent에 있는지 확인하고
-            // 없으면 그 전거 인덱스 리턴하도록 하고
-            // 리턴한 인덱스 받아서 GetData 후에 AppearStart 가져와서 현재 턴과 비교 계산
-
             long index = (int)EventManager.Instance.GetNextScheduleID();
-
 
             if (index == -1) return;
             else
             {
                 EventTitle eventTitle = DataManager.Instance.GetData<EventTitle>(index);
 
-                Debug.Log($"다음 이벤트 예정 : {eventTitle.EventName}");
                 int nextTurn = (int)eventTitle.AppearStart;
                 str = $"앞으로 {nextTurn - turn}턴";
             }

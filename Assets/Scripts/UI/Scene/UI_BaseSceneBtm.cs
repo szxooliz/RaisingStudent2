@@ -66,8 +66,6 @@ namespace Client
         /// <param name="e"></param>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
-            Debug.Log($"현재 상태: {DataManager.Instance.playerData.currentStatus}");
-
             MakeTransition((int)DataManager.Instance.playerData.currentStatus);
         }
 
@@ -144,32 +142,22 @@ namespace Client
         #region MainUI 버튼 이벤트
         void OnClickRestBtn(PointerEventData evt)
         {
-            Debug.Log("자체 휴강 버튼 클릭");
-
             StartActivity((int)eActivityType.Rest);
         }
         void OnClickStudyBtn(PointerEventData evt)
         {
-            Debug.Log("공부 버튼 클릭");
-
             StartActivity((int)eActivityType.Class);
         }
         void OnClickGameBtn(PointerEventData evt)
         {
-            Debug.Log("게임 버튼 클릭"); 
-
             StartActivity((int)eActivityType.Game);
         }
         void OnClickWorkOutBtn(PointerEventData evt)
         {
-            Debug.Log("운동 버튼 클릭");
-
             StartActivity((int)eActivityType.Workout);
         }
         void OnClickClubBtn(PointerEventData evt)
         {
-            Debug.Log("동아리 버튼 클릭");
-
             StartActivity((int)eActivityType.Club);
         }
         #endregion
