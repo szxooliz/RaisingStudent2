@@ -10,9 +10,9 @@ namespace Client
     {
         public long eventIndex;
         public eEventType eventType; // 필요한가?
-        public List<EventScript> eventScripts;
+        public Dictionary<long, EventScript> eventScripts;
 
-        public EventData(long _eventIndex, eEventType _eventType, List<EventScript> _eventScripts)
+        public EventData(long _eventIndex, eEventType _eventType, Dictionary<long, EventScript> _eventScripts)
         {
             eventIndex = _eventIndex;
             eventType = _eventType;

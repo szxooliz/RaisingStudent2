@@ -203,7 +203,7 @@ namespace Client
             {
                 var (eventID, eventTitle) = EventIDQueue.Dequeue();
                 eEventType eventType = (eventID > RANDOM_THRESHOLD) ? eEventType.Random : eEventType.Main;
-                List<EventScript> eventScripts = LoadScript(eventID, eventType);
+                Dictionary<long, EventScript> eventScripts = LoadScript(eventID, eventType);
 
                 EventData eventData = new EventData(eventID, eventType, eventScripts) { title = eventTitle };
                 Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title}");
@@ -233,9 +233,9 @@ namespace Client
         /// <summary>
         /// 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
         /// </summary>
-        private List<EventScript> LoadScript(long eventID, eEventType eventType)
+        private Dictionary<long, EventScript> LoadScript(long eventID, eEventType eventType)
         {
-            List<EventScript> eventScripts = new List<EventScript>();
+            Dictionary<long, EventScript> eventScripts = new Dictionary<long, EventScript>();
             int tempIndex = eventType == eEventType.Random ? RANDOM_SCRIPT_THRESHOLD : 0;
 
             while (true)
@@ -246,14 +246,7 @@ namespace Client
 
                     if (eventScript.EventNum == eventID)
                     {
-                        // EventUI.cs로 옮겨서, 유저가 선택지를 선택할 타이밍에 실행되도록 해주세요!
-                        //if (eventScript.BranchType == eBranchType.Choice)
-                        //{
-                        //    int nextLineIndex = GetNextEventScriptIndex((int)eventScript.BranchIndex);
-                        //    eventScript = DataManager.Instance.GetData<EventScript>(nextLineIndex);
-                        //}
-
-                        eventScripts.Add(eventScript);
+                        eventScripts.Add(eventScript.index, eventScript);
                     }
                 }
                 catch

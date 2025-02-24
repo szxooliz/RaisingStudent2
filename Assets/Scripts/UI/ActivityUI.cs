@@ -12,7 +12,7 @@ namespace Client
 {
     public class ActivityUI : UI_Base, IPointerClickHandler
     {
-        // 기획 조정 용
+        #region 기획 조정용
         [SerializeField] float charDuration = 5f;
         [SerializeField] float narDuration = 5f;
 
@@ -25,7 +25,9 @@ namespace Client
         };
 
         [SerializeField] private string _restLine = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
+        #endregion
 
+        #region enum
         enum GameObjects
         {
             Activity1, Activity2, Stats
@@ -45,6 +47,7 @@ namespace Client
             IMG_CharFace,
             IMG_Bubble1, IMG_Bubble2
         }
+        #endregion
 
         private Image charFace;          // 캐릭터 이미지
         private TMPro.TMP_Text charName; // 캐릭터 이름표
