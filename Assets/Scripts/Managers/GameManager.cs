@@ -17,6 +17,7 @@ namespace Client
         void Start()
         {
             Init();
+            SoundManager.Instance.Play(eSound.BGM_Main);
         }
 
 

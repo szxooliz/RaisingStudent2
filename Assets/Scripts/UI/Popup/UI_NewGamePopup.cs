@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -28,20 +29,24 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_No).gameObject, OnClickNoBtn);
         }
 
+        #region 버튼 이벤트
         void OnClickPanel(PointerEventData evt)
         {
             Debug.Log("판넬 누름..");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
-
         void OnClickYesBtn(PointerEventData evt)
         {
             Debug.Log("예 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
         }
         void OnClickNoBtn(PointerEventData evt)
         {
             Debug.Log("아니오 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
+        #endregion
     }
 }

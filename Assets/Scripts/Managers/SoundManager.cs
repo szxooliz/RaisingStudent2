@@ -8,6 +8,9 @@ namespace Client
 {
     public class SoundManager : Singleton<SoundManager>
     {
+        private const string BGMvolKey = "BGMvol";
+        private const string SFXvolKey = "SFXvol";
+
         AudioSource[] _audioSources = new AudioSource[(int)SystemEnum.eSound.MaxCount];
 
         private float[] _volume = new float[(int)eSound.MaxCount];
@@ -41,7 +44,7 @@ namespace Client
                 }
 
 
-                _audioSources[(int)SystemEnum.eSound.BGM].loop = true;
+                _audioSources[(int)SystemEnum.eSound.BGM_Main].loop = true;
             }
         }
 
@@ -57,25 +60,25 @@ namespace Client
 
         public void Play(SystemEnum.eSound type)
         {
-            Play(type.ToString(), SystemEnum.eSound.SFX);
+            Play(type.ToString(), type);
         }
 
-        public void Play(string path, SystemEnum.eSound type = SystemEnum.eSound.SFX, float pitch = 1.0f)
+        public void Play(string path, SystemEnum.eSound type, float pitch = 1.0f)
         {
             AudioClip audioClip = GetOrAddAudioClip(path, type);
             Play(audioClip, type, pitch);
         }
 
-        public void Play(AudioClip audioClip, SystemEnum.eSound type = SystemEnum.eSound.SFX, float pitch = 1.0f)
+        public void Play(AudioClip audioClip, SystemEnum.eSound type, float pitch = 1.0f)
         {
             if (audioClip == null)
             {
                 Debug.Log("No Clip");
                 return;
             }
-            if (type == SystemEnum.eSound.BGM)
+            if (type.ToString().StartsWith("BGM"))
             {
-                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM_Main];
                 if (audioSource.isPlaying)
                     audioSource.Stop();
 
@@ -85,27 +88,27 @@ namespace Client
             }
             else
             {
-                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.SFX];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.SFX_Positive];
                 audioSource.pitch = pitch;
                 audioSource.PlayOneShot(audioClip);
             }
 
         }
 
-        AudioClip GetOrAddAudioClip(string path, SystemEnum.eSound type = SystemEnum.eSound.SFX)
+        AudioClip GetOrAddAudioClip(string path, SystemEnum.eSound type)
         {
-            if (path.Contains("Sounds/") == false)
+            if (!path.Contains("Sounds/"))
                 path = $"Sounds/{path}";
 
             AudioClip audioClip = null;
 
-            if (type == SystemEnum.eSound.BGM)
+            if (type.ToString().StartsWith("BGM"))
             {
                 audioClip = ResourceManager.Instance.Load<AudioClip>(path);
             }
             else
             {
-                if (_audioclips.TryGetValue(path, out audioClip) == false)
+                if (!_audioclips.TryGetValue(path, out audioClip))
                 {
                     audioClip = ResourceManager.Instance.Load<AudioClip>(path);
                     _audioclips.Add(path, audioClip);
@@ -119,17 +122,29 @@ namespace Client
             return audioClip;
         }
 
-        public void ChangeVolume(SystemEnum.eSound type, float value)
+        public void ChangeVolume(bool isBGM, float value)
         {
-            if (type == SystemEnum.eSound.BGM)
+            if (isBGM)
             {
-                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM];
+                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.BGM_Main];
                 audioSource.volume = value;
+                PlayerPrefs.SetFloat(BGMvolKey, value);
+                PlayerPrefs.Save();
             }
             else
             {
-                AudioSource audioSource = _audioSources[(int)SystemEnum.eSound.SFX];
-                audioSource.volume = value;
+                Debug.Log("SFX!!");
+                // 모든 SFX AudioSource 볼륨 적용
+                for (eSound sounds = eSound.BGM_Main; sounds < eSound.MaxCount; sounds++)
+                {
+                    if (sounds.ToString().StartsWith("SFX"))
+                    {
+                        _audioSources[(int)sounds].volume = value;
+                        Debug.Log(_audioSources[(int)sounds].volume);
+                    }
+                }
+                PlayerPrefs.SetFloat(SFXvolKey, value);
+                PlayerPrefs.Save();
             }
         }
 

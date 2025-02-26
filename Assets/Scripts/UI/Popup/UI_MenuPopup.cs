@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -54,10 +55,12 @@ namespace Client
         void OnClickPanel(PointerEventData evt)
         {
             ClosePopupUI();
+            SoundManager.Instance.Play(eSound.SFX_Negative);
         }
         void OnClickContinueBtn(PointerEventData evt)
         {
             Debug.Log("이어하기 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             ClosePopupUI();
         }
         /// <summary>
@@ -67,6 +70,7 @@ namespace Client
         void OnClickRenewBtn(PointerEventData evt)
         {
             Debug.Log("새로하기 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
 
             DataManager.Instance.playerData = new PlayerData();
 
@@ -82,6 +86,7 @@ namespace Client
         void OnClickTitleBtn(PointerEventData evt)
         {
             Debug.Log("타이틀로 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
 
             // 타이틀로 돌아가기
             // LoadTitleScreen();
@@ -100,15 +105,11 @@ namespace Client
 
         void ChangeBGM(float value)
         {
-            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.BGM, value);
-            PlayerPrefs.SetFloat(BGMvolKey, value);
-            PlayerPrefs.Save();
+            SoundManager.Instance.ChangeVolume(true, value);
         }
         void ChangeSFX(float value)
         {
-            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.SFX, value);
-            PlayerPrefs.SetFloat(SFXvolKey, value);
-            PlayerPrefs.Save();
+            SoundManager.Instance.ChangeVolume(false, value);
         }
         public float LoadBGMVolume()
         {

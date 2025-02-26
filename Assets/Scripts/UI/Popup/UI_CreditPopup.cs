@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -28,6 +29,7 @@ namespace Client
         void OnClickPanel(PointerEventData evt)
         {
             Debug.Log("판넬 누름..");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
     }

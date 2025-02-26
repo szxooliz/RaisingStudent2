@@ -39,15 +39,18 @@ namespace Client
         void OnClickPanel(PointerEventData evt)
         {
             Debug.Log("판넬 누름..");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         void OnClickRetryBtn(PointerEventData evt)
         {
             Debug.Log("다시 시도 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
         }
         void OnClickCancelBtn(PointerEventData evt)
         {
             Debug.Log("취소 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         #endregion

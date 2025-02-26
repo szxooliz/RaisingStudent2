@@ -15,7 +15,13 @@ namespace Client
 
         public enum eSound
         {
-            SFX, BGM,
+            BGM_Main,        // 메인 BGM
+            SFX_Positive,    // 긍정 효과음
+            SFX_BigSuccess,  // 대성공 효과음
+            SFX_DialogClick, // 대화창 클릭 효과음
+            SFX_Negative,    // 부정 효과음
+            SFX_Success,     // 성공 효과음
+            SFX_Failure,     // 실패 효과음
             MaxCount
         }
 

@@ -37,19 +37,23 @@ namespace Client
         void OnClickNewGameBtn(PointerEventData evt)
         {
             Debug.Log("새로 하기 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_NewGamePopup>();
         }
         void OnClickContinueBtn(PointerEventData evt)
         {
             Debug.Log("이어 하기 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
         }
         void OnClickEndingListBtn(PointerEventData evt)
         {
             Debug.Log("엔딩 리스트 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
         }
         void OnClickSettingsBtn(PointerEventData evt)
         {
             Debug.Log("설정 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_SettingsPopup>();
         }
         #endregion

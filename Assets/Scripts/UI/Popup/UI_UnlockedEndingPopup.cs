@@ -11,7 +11,7 @@ namespace Client
     {
         enum Buttons
         {
-            Panel,
+            Panel, BTN_X,
         }
 
         enum Texts
@@ -31,18 +31,32 @@ namespace Client
             Bind<TMPro.TMP_Text>(typeof(Texts));
             Bind<Image>(typeof(Images));
             BindButton();
+            GetImage((int)Images.IMG_Illustraion).gameObject.AddComponent<Button>().onClick.AddListener(OnClickImage);
         }
 
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
+            BindEvent(GetButton((int)Buttons.BTN_X).gameObject, OnClickXBtn);
         }
 
         #region 버튼 이벤트
         void OnClickPanel(PointerEventData evt)
         {
             Debug.Log("판넬 누름..");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
+        }
+        void OnClickXBtn(PointerEventData evt)
+        {
+            Debug.Log("x 버튼 누름");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
+            ClosePopupUI();
+        }
+        void OnClickImage()
+        {
+            Debug.Log("이미지 누름");
+            SoundManager.Instance.Play(eSound.SFX_DialogClick);
         }
         #endregion
 

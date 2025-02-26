@@ -78,12 +78,14 @@ namespace Client
         #region 버튼 이벤트
         public void onClickUnlockedEnding(Ending ending)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             var popup = UI_Manager.Instance.ShowPopupUI<UI_UnlockedEndingPopup>();
             popup.SetUnlockedEndingPopup(ending);
         }
 
         public void onClickLockedEnding(Ending ending)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             var popup = UI_Manager.Instance.ShowPopupUI<UI_LockedEndingPopup>();
             popup.SetLockedEndingPopup(ending);
         }

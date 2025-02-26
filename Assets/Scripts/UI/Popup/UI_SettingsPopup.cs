@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -52,12 +53,14 @@ namespace Client
         void OnClickPanel(PointerEventData evt)
         {
             Debug.Log("판넬 누름..");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
 
         void OnClickCreditBtn(PointerEventData evt)
         {
             Debug.Log("크레딧 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_CreditPopup>();
         }
         #endregion
@@ -65,15 +68,11 @@ namespace Client
         #region 볼륨 설정
         void ChangeBGM(float value)
         {
-            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.BGM, value);
-            PlayerPrefs.SetFloat(BGMvolKey, value);
-            PlayerPrefs.Save();
+            SoundManager.Instance.ChangeVolume(true, value);
         }
         void ChangeSFX(float value)
         {
-            SoundManager.Instance.ChangeVolume(SystemEnum.eSound.SFX, value);
-            PlayerPrefs.SetFloat(SFXvolKey, value);
-            PlayerPrefs.Save();
+            SoundManager.Instance.ChangeVolume(false, value);
         }
         public float LoadBGMVolume()
         {
