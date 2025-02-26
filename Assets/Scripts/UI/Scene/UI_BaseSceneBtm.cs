@@ -125,7 +125,7 @@ namespace Client
                 status = "calm";
             }
 
-            string path = $"Sprites/UI/Stress_{status}";
+            string path = $"Sprites/UI/Stress/Stress_{status}";
 
             // 스트레스 바 채우기
             GetImage((int)Images.UI_Stress).fillAmount = DataManager.Instance.playerData.stressAmount / 100;

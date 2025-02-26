@@ -17,14 +17,14 @@ namespace Client
         }
         enum Texts
         {
-            TXT_Turn, TXT_Term
+            TMP_Turn, TMP_Term
         }
         enum Images
         {
             IMG_Status
         }
 
-        private string spritePath = "Sprites/UI/Status_";
+        private string spritePath = "Sprites/UI/Status/Status_";
 
         public override void Init()
         {
@@ -113,8 +113,7 @@ namespace Client
                 int nextTurn = (int)eventTitle.AppearStart;
                 str = $"앞으로 {nextTurn - turn}턴";
             }
-
-            GetText((int)Texts.TXT_Turn).text = str;
+            GetText((int)Texts.TMP_Turn).text = str;
         }
 
         /// <summary>
@@ -122,7 +121,7 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
+            GetText((int)Texts.TMP_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
                                                 + GetThirdsKor(DataManager.Instance.playerData.currentThird);
         }
 
@@ -131,7 +130,7 @@ namespace Client
         /// </summary>
         public void ShowEventName()
         {
-            GetText((int)Texts.TXT_Turn).text = EventManager.Instance.nowEventData.title;
+            GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.title;
         }
 
     }

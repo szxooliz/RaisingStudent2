@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 751445052913840687}
   - component: {fileID: 8997042362574525687}
   m_Layer: 5
-  m_Name: TXT_Term
+  m_Name: TMP_Term
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,7 +764,7 @@ GameObject:
   - component: {fileID: 843565538789546295}
   - component: {fileID: 2047488060653842968}
   m_Layer: 5
-  m_Name: TXT_Turn
+  m_Name: TMP_Turn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,7 +786,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -169, y: -63}
+  m_AnchoredPosition: {x: -198, y: -70}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &843565538789546295

@@ -13,8 +13,10 @@ namespace Client
     public partial class SelectScript : SheetData
     {
 public long index; // 선택지 번호
-		public string SelectNum; // 선택지 (랜덤 이벤트)
-		public long MoveLine; // 옮길 라인
+		public string Selection1; // 선택지1 
+		public string Selection2; // 선택지2
+		public long MoveLine1; // 옮길 라인1
+		public long MoveLine2; // 옮길 라인2
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -52,14 +54,24 @@ public long index; // 선택지 번호
 					    data.index = Convert.ToInt64(values[0]);
 					
 					if(values[1] == "")
-					    data.SelectNum = default;
+					    data.Selection1 = default;
 					else
-					    data.SelectNum = Convert.ToString(values[1]);
+					    data.Selection1 = Convert.ToString(values[1]);
 					
 					if(values[2] == "")
-					    data.MoveLine = default;
+					    data.Selection2 = default;
 					else
-					    data.MoveLine = Convert.ToInt64(values[2]);
+					    data.Selection2 = Convert.ToString(values[2]);
+					
+					if(values[3] == "")
+					    data.MoveLine1 = default;
+					else
+					    data.MoveLine1 = Convert.ToInt64(values[3]);
+					
+					if(values[4] == "")
+					    data.MoveLine2 = default;
+					else
+					    data.MoveLine2 = Convert.ToInt64(values[4]);
 					
 
                     dataList[data.index] = data;

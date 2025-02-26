@@ -32,7 +32,7 @@ namespace Client
 
         public enum eBranchType
         {
-            Choice, Condition
+            None, Choice, Condition
         }
 
         #region Turns
@@ -131,7 +131,7 @@ namespace Client
         public enum eScheduleEvent
         {
             Intro = 0, MidTest_1 = 3, FinTest_1 = 5, SummerVac = 6, 
-            MidTest_2 = 8, FinTest_2 = 9, Finish = 10
+            MidTest_2 = 8, FinTest_2 = 9
         }
         #endregion
 
