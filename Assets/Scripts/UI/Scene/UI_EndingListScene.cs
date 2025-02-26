@@ -65,14 +65,17 @@ namespace Client
                 // 텍스트, 버튼 및 자물쇠 아이콘 설정
                 if (ending.isUnlocked)
                 {
-                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_on");
+                    string imagePath = spritePath + (char)('A' + index) + "_on";
+                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
                     texts[(int)Texts.TMP_Name].text = GetEndingNameKor(ending.endingName);
                     BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(ending));
                     images[(int)Images.IMG_LockIcon].gameObject.SetActive(false);
                 }
                 else
                 {
-                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_lock");
+                    string imagePath = spritePath + (char)('A' + index) + "_lock";
+                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+
                     texts[(int)Texts.TMP_Name].text = "엔딩" + (char)('A' + index);
                     BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));
                     BindEvent(images[(int)Images.IMG_LockIcon].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));

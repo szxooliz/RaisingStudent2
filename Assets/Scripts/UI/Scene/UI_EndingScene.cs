@@ -27,7 +27,8 @@ namespace Client
             TMP_CharName, TMP_CharLine,
         }
 
-        private string spritePath = "Sprites/Character/";
+        private string characterSpritePath = "Sprites/Character/";
+        private string endingSpritePath = "Sprites/UI/Ending/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         int scriptIndex = 0; // 엔딩 대사 index
@@ -50,6 +51,7 @@ namespace Client
             CheckEnding();
 
             LoadScript();
+            LoadIllustration();
             LoadNextScript();
         }
 
@@ -154,6 +156,15 @@ namespace Client
         }
 
         /// <summary>
+        /// 엔딩에 맞는 일러스트 로드
+        /// </summary>
+        void LoadIllustration()
+        {
+            string imagePath = endingSpritePath + $"Ending_{currentEndingNum}";
+            GetImage((int)Images.IMG_Illustration).sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+        }
+
+        /// <summary>
         /// 다음 스크립트 로드
         /// </summary>
         void LoadNextScript()
@@ -214,11 +225,11 @@ namespace Client
             string path;
             if (endingScript.Face == "none")
             { // 임시
-                path = spritePath + "Comsoon_basic";
+                path = characterSpritePath + "Comsoon_basic";
             }
             else
             {
-                path = spritePath + "Comsoon_" + endingScript.Face;
+                path = characterSpritePath + "Comsoon_" + endingScript.Face;
             }
 
             GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
