@@ -16,7 +16,9 @@ namespace Client
 
         enum Texts
         {
-            TMP_Title, TMP_Name, TMP_Awards, TMP_Contents,
+            TMP_Title, TMP_Name,
+            TMP_Awards1, TMP_Awards2, TMP_Awards3, TMP_Awards4,
+            TMP_Contents,
         }
 
         enum Images
@@ -67,9 +69,14 @@ namespace Client
         public void SetUnlockedEndingPopup(Ending ending)
         {
             if (ending != null) {
-                GetText((int)Texts.TMP_Title).text = GetEndingNameKor(ending.endingName) + " - 열람 중";
+                GetText((int)Texts.TMP_Title).text = "엔딩" + (char)('A' + (int)(ending.endingName));
                 GetText((int)Texts.TMP_Name).text = GetEndingNameKor(ending.endingName);
-                GetText((int)Texts.TMP_Awards).text = string.Join(" ", ending.awards);
+
+                for (int i = 0; i < ending.awards.Count; i++)
+                {
+                    int index = (int)Texts.TMP_Awards1 + i;
+                    GetText(index).text = ending.awards[i];
+                }
             }
         }
     }

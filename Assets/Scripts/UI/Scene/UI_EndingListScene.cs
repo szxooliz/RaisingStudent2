@@ -12,6 +12,8 @@ namespace Client
         [SerializeField] private GameObject endingItemPrefab; // Prefab 연결
         [SerializeField] private Transform contentParent;     // 생성된 Prefab의 부모 객체
 
+        private string spritePath = "Sprites/UI/Ending/";
+
         enum Buttons
         {
             BTN_Image,
@@ -58,18 +60,22 @@ namespace Client
                 var images = Bind<Image>(endingItem, typeof(Images));
                 var texts = Bind<TMPro.TMP_Text>(endingItem, typeof(Texts));
 
+                int index = (int)(ending.endingName);
+
                 // 텍스트, 버튼 및 자물쇠 아이콘 설정
                 if (ending.isUnlocked)
                 {
+                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_on");
                     texts[(int)Texts.TMP_Name].text = GetEndingNameKor(ending.endingName);
                     BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(ending));
                     images[(int)Images.IMG_LockIcon].gameObject.SetActive(false);
                 }
                 else
                 {
-                    int index = (int)(ending.endingName);
+                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_lock");
                     texts[(int)Texts.TMP_Name].text = "엔딩" + (char)('A' + index);
                     BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));
+                    BindEvent(images[(int)Images.IMG_LockIcon].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));
                     images[(int)Images.IMG_LockIcon].gameObject.SetActive(true);
                 }
             }
