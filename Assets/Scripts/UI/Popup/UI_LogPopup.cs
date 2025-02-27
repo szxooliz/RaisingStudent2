@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 namespace Client
@@ -42,10 +43,12 @@ namespace Client
 
         void OnClickCloseBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         void OnClickPanel(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
     }

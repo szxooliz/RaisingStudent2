@@ -49,11 +49,13 @@ namespace Client
 
         void OnClickPanel(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
 
         void OnClickCloseBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         #endregion

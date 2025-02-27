@@ -113,6 +113,8 @@ namespace Client
             }
             else
             {
+                SoundManager.Instance.Play(eSound.SFX_DialogClick);
+
                 // 다음 단계로 넘어가기
                 if (GetGameObject((int)GameObjects.Activity1).activeSelf)
                 {

@@ -63,6 +63,7 @@ namespace Client
             }
             else
             {
+                SoundManager.Instance.Play(eSound.SFX_DialogClick);
                 coroutine = StartCoroutine(LoadNextDialogue());
             }
         }
@@ -184,6 +185,8 @@ namespace Client
         /// <param name="isFirst">첫번째 선택지인가?</param>
         void OnClickSelection(long nextIndex1, long nextIndex2, bool isFirst)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
+
             nowEventScriptID = isFirst ? nextIndex1 : nextIndex2;
 
             if (isFirst)

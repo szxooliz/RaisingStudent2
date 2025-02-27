@@ -133,7 +133,6 @@ namespace Client
             }
             else
             {
-                Debug.Log("SFX!!");
                 // 모든 SFX AudioSource 볼륨 적용
                 for (eSound sounds = eSound.BGM_Main; sounds < eSound.MaxCount; sounds++)
                 {

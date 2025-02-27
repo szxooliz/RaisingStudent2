@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
+using static Client.SystemEnum;
 using UnityEngine.U2D;
 using System;
 
@@ -70,6 +71,7 @@ namespace Client
             }
             else
             {
+                SoundManager.Instance.Play(eSound.SFX_DialogClick);
                 coroutine = StartCoroutine(ResetBubble());
             }
         }

@@ -142,22 +142,27 @@ namespace Client
         #region MainUI 버튼 이벤트
         void OnClickRestBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Rest);
         }
         void OnClickStudyBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Class);
         }
         void OnClickGameBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Game);
         }
         void OnClickWorkOutBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Workout);
         }
         void OnClickClubBtn(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Club);
         }
         #endregion

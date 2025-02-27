@@ -53,18 +53,21 @@ namespace Client
         void OnClickMenuBtn(PointerEventData evt)
         {
             Debug.Log("메뉴 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_MenuPopup>();
         }
 
         void OnClickScheduleBtn(PointerEventData evt)
         {
             Debug.Log("학사 일정 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_SchedulePopup>();
         }
 
         void OnClickLogBtn(PointerEventData evt)
         {
             Debug.Log("로그 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
         }
 
