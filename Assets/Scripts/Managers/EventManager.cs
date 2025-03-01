@@ -10,7 +10,7 @@ namespace Client
 {
     public class EventManager : Singleton<EventManager>
     {
-        #region constant
+        #region constant - 기획 조정용
         private const int MAIN_COUNT = 10; // 메인 이벤트 개수
 
         private const int RANDOM_THRESHOLD = 100;         // 랜덤 이벤트 ID 시작 인덱스
@@ -162,7 +162,6 @@ namespace Client
                 if (DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
                 {
                     schIndex = scheduleList.IndexOf(sch);
-                    Debug.Log($"마지막으로 본 학사일정 {sch.ToString()}, 인덱스 {schIndex}이 있음");
                     break;
                 }
             }

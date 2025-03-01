@@ -90,15 +90,17 @@ namespace Client
         /// </summary>
         IEnumerator LoadNextDialogue()
         {
-            if (pastEventScript != null)
+            // 처음 시작할 때
+            if (pastEventScript == null)
             {
-                // 다음 대사 로드 전에, 분기 발생하는지 먼저 확인 및 실행
-                Debug.Log($"이전 {pastEventScript.index}번 스크립트의 분기타입 {pastEventScript.BranchType.ToString()}");
+                EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+                ShowScript(eventScript);
+                pastEventScript = eventScript;
+            }
+            else
+            {
                 BranchByType(pastEventScript);
             }
-
-            pastEventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-            ShowScript(pastEventScript);
 
             yield return null;
         }
@@ -145,7 +147,6 @@ namespace Client
         {
             if (eventScript == null) return;
 
-            Debug.Log($"분기 타입 체크 {eventScript.BranchType.ToString()}");
             switch(eventScript.BranchType)
             {
                 case eBranchType.Choice:
@@ -155,16 +156,21 @@ namespace Client
                 case eBranchType.Condition:
                     ShowStatCondition(eventScript);
                     break;
+                default:
+                    EventScript _eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+                    ShowScript(_eventScript);
+                    pastEventScript = _eventScript;
+                    break;
             }
         }
+
+        #region 선택지
         /// <summary>
         /// 선택지 UI 띄우기
         /// </summary>
         void ShowSelection(EventScript _eventScript)
         {
             SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(_eventScript.BranchIndex);
-
-            Debug.Log($"선택지 무브라아ㅏ아인 {selectScript.MoveLine1}, {selectScript.MoveLine2}");
 
             GetText((int)Texts.TMP_Select1).text = selectScript.Selection1;
             GetText((int)Texts.TMP_Select2).text = selectScript.Selection2;
@@ -189,15 +195,19 @@ namespace Client
 
             nowEventScriptID = isFirst ? nextIndex1 : nextIndex2;
 
+            // 결과 아닌 스크립트 지우기
             if (isFirst)
-                StartCoroutine(DeleteOtherScripts(nextIndex1));
+                DeleteOtherScripts(nextIndex2);
             else
-                StartCoroutine(DeleteOtherScripts(nextIndex1, nextIndex2));
+                DeleteOtherScripts(nextIndex1, nextIndex2);
 
+            // 선택지 결과 스크립트 띄우기
+            EventScript _eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+            ShowScript(_eventScript);
+            pastEventScript = _eventScript;
+            
             GetGameObject((int)GameObjects.Selection).SetActive(false);
-            StartCoroutine(LoadNextDialogue());
         }
-
 
         /// <summary>
         /// 선택지 결과 외의 나머지 대사 삭제
@@ -205,16 +215,17 @@ namespace Client
         /// <param name="move1"></param>
         /// <param name="move2"></param>
         /// <returns></returns>
-        IEnumerator DeleteOtherScripts(long startIndex, long? endIndex = null)
+        void DeleteOtherScripts(long startIndex, long? endIndex = null)
         {
             while (EventManager.Instance.nowEventData.eventScripts.ContainsKey(startIndex))
             {
                 if (endIndex.HasValue && startIndex >= endIndex.Value) break;
                 EventManager.Instance.nowEventData.eventScripts.Remove(startIndex++);
             }
-            yield return null;
         }
+        #endregion
 
+        #region 이벤트 결과
         /// <summary>
         /// 스탯 기준치에 따라 내용이 바뀔 경우
         /// </summary>
@@ -224,6 +235,19 @@ namespace Client
             // 스크립트에 딸린 분기 인덱스 참고해서 스탯기준치 테이블의 정보 가져오기
             UpdateStatUIs();
         }
+
+        /// <summary>
+        /// 스탯 UI를 업데이트 - 이벤트 결과값 적용
+        /// </summary>
+        void UpdateStatUIs()
+        {
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
+            {
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 일반 대사 보여주기
@@ -271,15 +295,5 @@ namespace Client
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
         }
 
-        /// <summary>
-        /// 스탯 UI를 업데이트 - 이벤트 결과값 적용
-        /// </summary>
-        void UpdateStatUIs()
-        {
-            for (int i = 0; i < (int)eStatName.MaxCount; i++)
-            {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
-            }
-        }
     }
 }
