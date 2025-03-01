@@ -12,6 +12,15 @@ namespace Client
 {
     public class DataManager : Singleton<DataManager>
     {
+        #region constant 기획 조정용
+        // 증가 시에는 양수, 감소 시에는 음수로 값 설정
+        private const float STRESS_REST = -10f;
+        private const float STRESS_CLASS = 30f;
+        private const float STRESS_GAME = 10f;
+        private const float STRESS_WORKOUT = 20f;
+        private const float STRESS_CLUB = 10f;
+        #endregion
+
         // 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
         Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
         // 로드한 적 있는 Sprite
@@ -31,6 +40,21 @@ namespace Client
         {
             DataLoad();
             LoadPlayerData();
+
+            // 미리 EventResult 전부 딕셔너리에 저장
+            for (int i = 0; ; i++)
+            {
+                try
+                {
+                    EventResult eventResult = GetData<EventResult>(i);
+                    EventManager.Instance.EventResults.Add(eventResult.ScriptIndex, eventResult);
+                }
+                catch
+                {
+                    break;
+                }
+            }
+
         }
 
         #region SheetData Load & Save
@@ -181,34 +205,33 @@ namespace Client
 
             switch(activityType)
             {
-                // 증가 시에는 양수, 감소 시에는 음수로 값 설정
                 case eActivityType.Rest:
                     activityData.activityType = eActivityType.Rest;
-                    activityData.stressValue = -10f; // 임시값
+                    activityData.stressValue = STRESS_REST;
                     break;
                 case eActivityType.Class:
                     activityData.activityType = eActivityType.Class;
                     activityData.statNames.Add(eStatName.Inteli);
                     activityData.statNames.Add(eStatName.Strength);
-                    activityData.stressValue = 30f; // 임시값
+                    activityData.stressValue = STRESS_CLASS;
                     break;
                 case eActivityType.Game:
                     activityData.activityType = eActivityType.Class;
                     activityData.statNames.Add(eStatName.Otaku);
                     activityData.statNames.Add(eStatName.Inteli);
-                    activityData.stressValue = 10f; // 임시값
+                    activityData.stressValue = STRESS_GAME;
                     break;
                 case eActivityType.Workout:
                     activityData.activityType = eActivityType.Class;
                     activityData.statNames.Add(eStatName.Strength);
                     activityData.statNames.Add(eStatName.Charming);
-                    activityData.stressValue = 20f; // 임시값
+                    activityData.stressValue = STRESS_WORKOUT;
                     break;
                 case eActivityType.Club:
                     activityData.activityType = eActivityType.Class;
                     activityData.statNames.Add(eStatName.Charming);
                     activityData.statNames.Add(eStatName.Otaku);
-                    activityData.stressValue = 10f; // 임시값
+                    activityData.stressValue = STRESS_CLUB;
                     break;
             }
         

@@ -1,66 +1,48 @@
-using Client;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Client.SystemEnum;
 
 namespace Client
 {
-    [System.Serializable]
+    [Serializable]
     public class PlayerData
     {
-        public string charName;         // 현재 플레이 중인 캐릭터 이름
-        public int currentTurn;         // 턴 0~24 - 0: 인트로 이벤트용
-        public eMonths currentMonth;    // n월 3-6/9-12
-        public eThirds currentThird;    // a순 상중하
+        public string CharName { get; private set; } = "Comsoon";  // 프로토타입
+        public int CurrentTurn { get; set; } = 0;                  // 턴 0~24 - 0: 인트로 이벤트용
+        public eMonths CurrentMonth { get; set; } = eMonths.Mar;   // n월 3-6/9-12
+        public eThirds CurrentThird { get; set; } = eThirds.First; // a순 상중하
 
-        public List<ProcessData> watchedProcess;          // 로그용 - 이미 진행한 or 진행 중인 활동, 이벤트 순서대로 저장
-        public Dictionary<long, EventData> watchedEvents; // 이벤트 중복 실행 방지용
+        public List<ProcessData> WatchedProcess { get; } = new();
+        public Dictionary<long, EventData> WatchedEvents { get; } = new();
 
-        public event EventHandler OnStatusChanged; // 상태 변경에 따라 UI 활성화 하는 용도의 이벤트 핸들러
+        public event EventHandler OnStatusChanged;
 
-        eStatus _currentStatus;    // 현재 상태 
-        public eStatus currentStatus
+        private eStatus _currentStatus = eStatus.Main;
+        public eStatus CurrentStatus
         {
             get => _currentStatus;
             set
             {
-                _currentStatus = value;
-                OnStatusChanged?.Invoke(this, EventArgs.Empty);
+                if (_currentStatus != value)
+                {
+                    _currentStatus = value;
+                    OnStatusChanged?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
-        public int[] statsAmounts; // 스탯 리스트, eStatName 열거형 요소와 순서 같음
+        public int[] StatsAmounts { get; } = new int[4];
 
-        float _stressAmount; // 스트레스 양
-        public float stressAmount
+        private float _stressAmount;
+        public float StressAmount
         {
             get => _stressAmount;
-            set
-            {
-                _stressAmount = Mathf.Clamp(value, 0, 100);
-            }
+            set => _stressAmount = Mathf.Clamp(value, 0, 100);
         }
 
-        public PlayerData() // 생성자
-        {
-            charName = "Comsoon"; // 프로토타입
-            currentTurn = 0;
-            currentMonth = eMonths.Mar;
-            currentThird = eThirds.First;
-            currentStatus = eStatus.Main;
+        public bool IsEnrolled { get; set; } = false; // 해커톤 참여 여부 기록
 
-            statsAmounts = new int[4];
-            for (int i = 0; i < statsAmounts.Length; i++)
-            {
-                statsAmounts[i] = 0; // 0으로 초기화
-            }
-            stressAmount = 0;
-
-            watchedProcess = new List<ProcessData>();
-            watchedEvents = new Dictionary<long, EventData>();
-        }
+        public PlayerData() { }
     }
-
 }

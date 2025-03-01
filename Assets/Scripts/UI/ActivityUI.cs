@@ -73,7 +73,7 @@ namespace Client
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
 
-            if (DataManager.Instance.playerData.currentStatus == eStatus.Activity)
+            if (DataManager.Instance.playerData.CurrentStatus == eStatus.Activity)
             {
                 coroutine = StartCoroutine(ShowResult1());
                 charName.text = "컴순";
@@ -83,7 +83,7 @@ namespace Client
 
         private void Start()
         {
-            if (DataManager.Instance.playerData.currentStatus != eStatus.Activity) return;
+            if (DataManager.Instance.playerData.CurrentStatus != eStatus.Activity) return;
 
             GetGameObject((int)GameObjects.Activity1).SetActive(true);
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
@@ -127,7 +127,7 @@ namespace Client
                 {
                     GameManager.Instance.NextTurn();
                     EventManager.Instance.CheckEvent();
-                    Debug.Log($"활동 후 NextTurn() 실행 후 CurrentTurn : {DataManager.Instance.playerData.currentTurn}");
+                    Debug.Log($"활동 후 NextTurn() 실행 후 CurrentTurn : {DataManager.Instance.playerData.CurrentTurn}");
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace Client
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
         }
 

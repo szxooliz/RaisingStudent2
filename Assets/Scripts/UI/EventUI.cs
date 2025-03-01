@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -113,13 +114,13 @@ namespace Client
         /// <returns></returns>
         public EventScript TryGetNextScript(long index, Dictionary<long, EventScript> eventScripts)
         {
-            return index - startingID < eventScripts.Count ? eventScripts.GetValueOrDefault(index, null) : null;
+            return eventScripts.GetValueOrDefault(index, null);
         }
 
         IEnumerator DelayedTransition()
         {
             yield return new WaitForSeconds(0.3f); // 최종 스크립트 표시 시간 확보
-            DataManager.Instance.playerData.currentStatus = eStatus.Main;
+            DataManager.Instance.playerData.CurrentStatus = eStatus.Main;
         }
 
         /// <summary>
@@ -145,16 +146,24 @@ namespace Client
         /// <param name="eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
         void BranchByType(EventScript eventScript)
         {
-            if (eventScript == null) return;
+            if (eventScript == null)
+            {
+                if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
+                {
+                    Debug.Log("이벤트 결과 잇뜸");
+                    ShowStatResult(pastEventScript);
+                }
+                else return;
+            }
 
-            switch(eventScript.BranchType)
+            switch (eventScript.BranchType)
             {
                 case eBranchType.Choice:
                     GetGameObject((int)GameObjects.Selection).SetActive(true);
                     ShowSelection(eventScript);
                     break;
                 case eBranchType.Condition:
-                    ShowStatCondition(eventScript);
+                    GetStatCondition(eventScript);
                     break;
                 default:
                     EventScript _eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
@@ -164,7 +173,24 @@ namespace Client
             }
         }
 
-        #region 선택지
+        /// <summary>
+        /// 분기 결과 외의 나머지 대사 삭제
+        /// </summary>
+        /// <param name="move1"></param>
+        /// <param name="move2"></param>
+        /// <returns></returns>
+        void DeleteOtherScripts(long startIndex, long? endIndex = null)
+        {
+            while (EventManager.Instance.nowEventData.eventScripts.ContainsKey(startIndex))
+            {
+                if (endIndex.HasValue && startIndex >= endIndex.Value) break;
+
+                Debug.Log($"{startIndex}번 스크립트는 지웁니다");
+                EventManager.Instance.nowEventData.eventScripts.Remove(startIndex++);
+            }
+        }
+
+        #region 선택지에 따른 분기
         /// <summary>
         /// 선택지 UI 띄우기
         /// </summary>
@@ -209,19 +235,58 @@ namespace Client
             GetGameObject((int)GameObjects.Selection).SetActive(false);
         }
 
+        #endregion
+
+        #region 스탯 조건에 따른 분기
         /// <summary>
-        /// 선택지 결과 외의 나머지 대사 삭제
+        /// 분기 기준치 결과 스크립트 가져오기
         /// </summary>
-        /// <param name="move1"></param>
-        /// <param name="move2"></param>
-        /// <returns></returns>
-        void DeleteOtherScripts(long startIndex, long? endIndex = null)
+        void GetStatCondition(EventScript _eventScript)
         {
-            while (EventManager.Instance.nowEventData.eventScripts.ContainsKey(startIndex))
+            StatCondition statCondition = DataManager.Instance.GetData<StatCondition>(_eventScript.BranchIndex);
+
+            // 조건 만족하는지 확인한 후 결과에 따라 스크립트 조정
+            if (MeasureUpCondition(statCondition))
             {
-                if (endIndex.HasValue && startIndex >= endIndex.Value) break;
-                EventManager.Instance.nowEventData.eventScripts.Remove(startIndex++);
+                nowEventScriptID = statCondition.TrueIndex;
+                DeleteOtherScripts(statCondition.FalseIndex);
             }
+            else
+            {
+                nowEventScriptID = statCondition.FalseIndex;
+                DeleteOtherScripts(statCondition.TrueIndex, statCondition.FalseIndex);
+            }
+
+            EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+            ShowScript(eventScript);
+            pastEventScript = eventScript;
+        }
+
+        /// <summary>
+        /// 기준치와 현재 스탯 비교해서 조건 만족하는지 확인
+        /// </summary>
+        /// <param name="_statCondition"></param>
+        /// <returns></returns>
+        bool MeasureUpCondition(StatCondition _statCondition)
+        {
+            bool result = true;
+            List<long> conditions = new()
+            {
+                _statCondition.Inteli, _statCondition.Otaku, _statCondition.Strength, _statCondition.Charming
+            };
+
+            for (int i = 0; i < conditions.Count; i++)
+            {
+                if (DataManager.Instance.playerData.StatsAmounts[i] < (int)conditions[i])
+                {
+                    Debug.Log($"{(eStatName)i} 스탯 : {DataManager.Instance.playerData.StatsAmounts[i]}, 스탯 기준치 : {conditions[i]}");
+                    result = false;
+                    break;
+                }
+            }
+
+            Debug.Log($"스탯 기준치 비교 결과 : {result}");
+            return result;
         }
         #endregion
 
@@ -230,10 +295,34 @@ namespace Client
         /// 스탯 기준치에 따라 내용이 바뀔 경우
         /// </summary>
         /// <param name="_eventScript"></param>
-        void ShowStatCondition(EventScript _eventScript)
+        void ShowStatResult(EventScript _eventScript)
         {
-            // 스크립트에 딸린 분기 인덱스 참고해서 스탯기준치 테이블의 정보 가져오기
-            UpdateStatUIs();
+            if (!EventManager.Instance.EventResults.ContainsKey(_eventScript.index)) return;
+
+            EventResult eventResult = EventManager.Instance.EventResults.GetValueOrDefault(_eventScript.index);
+            List<long> result = new()
+            {
+                eventResult.Inteli, eventResult.Otaku, eventResult.Strength, eventResult.Charming, eventResult.StressValue
+            };
+
+            StringBuilder sb = new();
+            for (int i = 0; i < (int)eStatNameAll.MaxCount; i++)
+            {
+                // UI 표시 string
+                if (result[i] != 0)
+                {
+                    sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {result[i]}만큼 ");
+                    if (result[i] < 0) sb.Append("감소했다!");
+                    else sb.Append("증가했다!");
+                }
+
+                // 실제 스탯에 반영
+                if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
+                else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
+            }
+            //UpdateStatUIs();
+            GetText((int)Texts.TMP_CharName).text = "";
+            GetText((int)Texts.TMP_CharLine).text = sb.ToString();
         }
 
         /// <summary>
@@ -243,7 +332,7 @@ namespace Client
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
         }
 

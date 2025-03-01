@@ -81,6 +81,24 @@ namespace Client
             temp += ((eStatNameKor)((int)statName)).ToString();
             return temp;
         }
+        public enum eStatNameAll
+        {
+            Inteli, Otaku, Strength, Charming, Stress, MaxCount
+        }
+        public enum eStatNameAllKor
+        {
+            지력, 덕력, 체력, 매력, 스트레스
+        }
+        public static string GetStatNameAllKor(eStatNameAll statName)
+        {
+            if (statName == eStatNameAll.MaxCount) return null;
+
+            string temp = "";
+            temp += ((eStatNameAllKor)((int)statName)).ToString();
+            return temp;
+        }
+
+
         #endregion
 
         #region Activity

@@ -66,7 +66,7 @@ namespace Client
         /// <param name="e"></param>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
-            MakeTransition((int)DataManager.Instance.playerData.currentStatus);
+            MakeTransition((int)DataManager.Instance.playerData.CurrentStatus);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Client
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.statsAmounts[i].ToString();
+                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
         }
 
@@ -109,12 +109,12 @@ namespace Client
         {
             string status;
             // 상태 따라 색, 상태 이미지 정하기 
-            if (DataManager.Instance.playerData.stressAmount >= 70)
+            if (DataManager.Instance.playerData.StressAmount >= 70)
             {
                 GetImage((int)Images.UI_Stress).color = new Color32(255, 68, 51, 255);
                 status = "danger";
             }
-            else if(DataManager.Instance.playerData.stressAmount >= 40)
+            else if(DataManager.Instance.playerData.StressAmount >= 40)
             {
                 GetImage((int)Images.UI_Stress).color = new Color32(243, 230, 0, 255);
                 status = "normal";
@@ -128,7 +128,7 @@ namespace Client
             string path = $"Sprites/UI/Stress/Stress_{status}";
 
             // 스트레스 바 채우기
-            GetImage((int)Images.UI_Stress).fillAmount = DataManager.Instance.playerData.stressAmount / 100;
+            GetImage((int)Images.UI_Stress).fillAmount = DataManager.Instance.playerData.StressAmount / 100;
             
             // path 경로 통해서 상태 이미지 로드
             GetImage((int)Images.UI_StressStatus).sprite = DataManager.Instance.GetOrLoadSprite(path);
@@ -176,7 +176,7 @@ namespace Client
             GameManager.Instance.StartActivity(actType);
 
             // 현재 상태를 활동 상태로 변경
-            DataManager.Instance.playerData.currentStatus = eStatus.Activity;
+            DataManager.Instance.playerData.CurrentStatus = eStatus.Activity;
         }
 
 

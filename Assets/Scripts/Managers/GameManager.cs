@@ -77,13 +77,13 @@ namespace Client
             // 이번 활동 결과의 확률을 정함
             int prob = UnityEngine.Random.Range(0, 100);
 
-            if (DataManager.Instance.playerData.stressAmount >= 70)
+            if (DataManager.Instance.playerData.StressAmount >= 70)
             {
                 if (prob <= 50) { return eResultType.Failure; }
                 else if (prob <= 95) { return eResultType.Success; }
                 else { return eResultType.BigSuccess; }
             }
-            else if (DataManager.Instance.playerData.stressAmount >= 40)
+            else if (DataManager.Instance.playerData.StressAmount >= 40)
             {
                 if (prob <= 80) { return eResultType.Success; }
                 else { return eResultType.BigSuccess; }
@@ -128,7 +128,7 @@ namespace Client
                 DataManager.Instance.activityData.statValues[i] = value;
 
                 // 스탯 증감 처리
-                DataManager.Instance.playerData.statsAmounts[(int)DataManager.Instance.activityData.statNames[i]] += value;
+                DataManager.Instance.playerData.StatsAmounts[(int)DataManager.Instance.activityData.statNames[i]] += value;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Client
         /// <param name="amount">음수: 감소</param>
         public void UpdateStress()
         {
-            DataManager.Instance.playerData.stressAmount += DataManager.Instance.activityData.stressValue;
+            DataManager.Instance.playerData.StressAmount += DataManager.Instance.activityData.stressValue;
         }
 
         /// <summary>
@@ -147,19 +147,19 @@ namespace Client
         public void NextTurn()
         {
             // TODO : 엔딩으로 넘어가기
-            if (DataManager.Instance.playerData.currentTurn == 24) return; // 미구현
+            if (DataManager.Instance.playerData.CurrentTurn == 24) return; // 미구현
 
-            DataManager.Instance.playerData.currentTurn++;
+            DataManager.Instance.playerData.CurrentTurn++;
 
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            DataManager.Instance.playerData.currentThird = (eThirds)(DataManager.Instance.playerData.currentTurn % 3);
+            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
 
             // 상순이 되면 다음 달로 넘어감
-            if (DataManager.Instance.playerData.currentThird == 0)
+            if (DataManager.Instance.playerData.CurrentThird == 0)
             {
                 // TODO : 6월과 9월 사이 여름방학 달 추가해야 하므로 수정 필요
-                if (DataManager.Instance.playerData.currentMonth == eMonths.Jun) DataManager.Instance.playerData.currentMonth = eMonths.Sep;
-                else DataManager.Instance.playerData.currentMonth++;
+                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun) DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
+                else DataManager.Instance.playerData.CurrentMonth++;
             }
         }
 

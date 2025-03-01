@@ -94,7 +94,7 @@ namespace Client
 
             for (int i = 0; i < 4; i++)
             {
-                if ((int)DataManager.Instance.playerData.statsAmounts[i] >= 85)
+                if ((int)DataManager.Instance.playerData.StatsAmounts[i] >= 85)
                 {
                     highStats[i] = true;
                     highStatsCount++;

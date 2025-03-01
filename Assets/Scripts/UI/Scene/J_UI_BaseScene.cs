@@ -73,7 +73,7 @@ namespace Client
         {
             string path = "";
 
-            switch (DataManager.Instance.playerData.currentStatus)
+            switch (DataManager.Instance.playerData.CurrentStatus)
             {
                 case eStatus.Main:
                     UpdateTermUI();
@@ -122,8 +122,8 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 "
-                                                + SystemEnum.GetThirdsKor(DataManager.Instance.playerData.currentThird);
+            GetText((int)Texts.TXT_Term).text = (int)DataManager.Instance.playerData.CurrentMonth + "월 "
+                                                + SystemEnum.GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
         }
     }
 

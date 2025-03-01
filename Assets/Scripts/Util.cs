@@ -115,13 +115,13 @@ namespace Client
             string str = "";
 
             // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
             {
-                str = $"Sprites/Character/{DataManager.Instance.playerData.charName}_Summer_{face}";
+                str = $"Sprites/Character/{DataManager.Instance.playerData.CharName}_Summer_{face}";
             }
             else
             {
-                str = $"Sprites/Character/{DataManager.Instance.playerData.charName}_{face}";
+                str = $"Sprites/Character/{DataManager.Instance.playerData.CharName}_{face}";
             }
 
             return str;
@@ -138,7 +138,7 @@ namespace Client
             
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
             // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
             {
                 str = $"Sprites/Character/{script.Character}_Summer_{script.Face}";
             }
@@ -160,7 +160,7 @@ namespace Client
             string str = "";
 
             // 계절 이미지가 없는 캐릭터의 경우
-            if (eventScript.Character != DataManager.Instance.playerData.charName)
+            if (eventScript.Character != DataManager.Instance.playerData.CharName)
             {
                 str = $"Sprites/Character/{eventScript.Character}";
                 return str;
@@ -168,7 +168,7 @@ namespace Client
 
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
             // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.currentTurn >= 6 && DataManager.Instance.playerData.currentTurn <= 17)
+            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
             {
                 str = $"Sprites/Character/{eventScript.Character}_Summer_{eventScript.Face}";
             }

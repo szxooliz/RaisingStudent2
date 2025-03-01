@@ -77,7 +77,7 @@ namespace Client
         {
             string path = "";
 
-            switch(DataManager.Instance.playerData.currentStatus)
+            switch(DataManager.Instance.playerData.CurrentStatus)
             {
                 case eStatus.Main:
                     UpdateTermUI();
@@ -103,7 +103,7 @@ namespace Client
         /// </summary>
         void UpdateTurnUI()
         {
-            int turn = DataManager.Instance.playerData.currentTurn;
+            int turn = DataManager.Instance.playerData.CurrentTurn;
             string str = "";
 
             long index = (int)EventManager.Instance.GetNextScheduleID();
@@ -124,8 +124,8 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TMP_Term).text = (int)DataManager.Instance.playerData.currentMonth + "월 " 
-                                                + GetThirdsKor(DataManager.Instance.playerData.currentThird);
+            GetText((int)Texts.TMP_Term).text = (int)DataManager.Instance.playerData.CurrentMonth + "월 " 
+                                                + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
         }
 
         /// <summary>

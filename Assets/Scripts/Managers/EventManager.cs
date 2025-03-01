@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using static Client.SystemEnum;
 using System.Linq;
+using UnityEditor.PackageManager;
 
 namespace Client
 {
@@ -19,8 +20,9 @@ namespace Client
         private const int RANDOM_PROB = 50;               // 랜덤 이벤트 등장 확률
         #endregion
 
-        public Queue<(long ID, string title)> EventIDQueue { get; } = new Queue<(long, string)>();
-        public Queue<EventData> EventQueue { get; } = new Queue<EventData>();
+        public Queue<(long ID, string title)> EventIDQueue { get; } = new();
+        public Queue<EventData> EventQueue { get; } = new();
+        public Dictionary<long, EventResult> EventResults { get; } = new(); // key : ScriptIndex
 
         public EventData nowEventData;
         public Action OnEventStart;
@@ -39,7 +41,10 @@ namespace Client
             {
                 EventTitle eventTitle = DataManager.Instance.GetData<EventTitle>(i);
 
-                if (DataManager.Instance.playerData.currentTurn == eventTitle.AppearStart)
+                //// 해커톤 참여 선택에 따라 추가
+                //if (!DataManager.Instance.playerData.IsEnrolled) continue;
+
+                if (DataManager.Instance.playerData.CurrentTurn == eventTitle.AppearStart)
                 {
                     EventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
                 }
@@ -60,7 +65,6 @@ namespace Client
 
             // 랜덤 이벤트 한 개만 추가
             EventTitle randomEventTitle = GetOneRandomEvent(randomList);
-
             if (randomEventTitle != null)
             {
                 EventIDQueue.Enqueue((randomEventTitle.index, randomEventTitle.EventName));
@@ -96,7 +100,7 @@ namespace Client
             try
             {
                 Debug.Log($"이벤트 끝, {eventData.title} 등록");
-                DataManager.Instance.playerData.watchedEvents.Add(eventData.eventIndex, eventData);
+                DataManager.Instance.playerData.WatchedEvents.Add(eventData.eventIndex, eventData);
             }
             catch
             {
@@ -114,7 +118,7 @@ namespace Client
             // 역 for문 사용
             for (int i = randomList.Count - 1; i >= 0; i--)
             {
-                if (DataManager.Instance.playerData.watchedEvents.ContainsKey(randomList[i].index))
+                if (DataManager.Instance.playerData.WatchedEvents.ContainsKey(randomList[i].index))
                 {
                     randomList.RemoveAt(i);
                 }
@@ -134,7 +138,7 @@ namespace Client
             scheduleList.Reverse();
             foreach(eScheduleEvent sch in scheduleList)
             {
-                if(DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
+                if(DataManager.Instance.playerData.WatchedEvents.ContainsKey((int)sch))
                 {
                     watchedEventID = (long)sch;
                     break;
@@ -152,14 +156,14 @@ namespace Client
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
             int schIndex = -1;
 
-            if (DataManager.Instance.playerData.watchedEvents.Count == 0)
+            if (DataManager.Instance.playerData.WatchedEvents.Count == 0)
                 return -1;
 
             // 역순환 -  기록된 것 중에 가장 큰 스케줄ID를 가져오기 위해
             scheduleList.Reverse();
             foreach (eScheduleEvent sch in scheduleList)
             {
-                if (DataManager.Instance.playerData.watchedEvents.ContainsKey((int)sch))
+                if (DataManager.Instance.playerData.WatchedEvents.ContainsKey((int)sch))
                 {
                     schIndex = scheduleList.IndexOf(sch);
                     break;
@@ -178,7 +182,7 @@ namespace Client
         /// <returns></returns>
         private bool IsInTurnRange(EventTitle eventTitle)
         {
-            int currentTurn = DataManager.Instance.playerData.currentTurn;
+            int currentTurn = DataManager.Instance.playerData.CurrentTurn;
             return currentTurn >= eventTitle.AppearStart && currentTurn <= eventTitle.AppearEnd;
         }
 
@@ -226,11 +230,11 @@ namespace Client
         /// </summary>
         private void StartEventPhase()
         {
-            DataManager.Instance.playerData.currentStatus = eStatus.Event;
+            DataManager.Instance.playerData.CurrentStatus = eStatus.Event;
         }
 
         /// <summary>
-        /// 이벤트 인덱스에 맞는 이벤트 스크립트 불러오기
+        /// 이벤트 인덱스에 맞는 이벤트 스크립트 전체 불러오기
         /// </summary>
         private Dictionary<long, EventScript> LoadScript(long eventID, eEventType eventType)
         {
