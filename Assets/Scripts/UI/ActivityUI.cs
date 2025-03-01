@@ -127,7 +127,6 @@ namespace Client
                 {
                     GameManager.Instance.NextTurn();
                     EventManager.Instance.CheckEvent();
-                    Debug.Log($"활동 후 NextTurn() 실행 후 CurrentTurn : {DataManager.Instance.playerData.CurrentTurn}");
                 }
             }
         }

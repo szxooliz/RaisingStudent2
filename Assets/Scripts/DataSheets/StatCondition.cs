@@ -13,7 +13,6 @@ namespace Client
     public partial class StatCondition : SheetData
     {
 public long index; // 인덱스
-		public long ScriptIndex; // 스크립트 넘버
 		public long Inteli; // 지력
 		public long Otaku; // 덕력
 		public long Strength; // 체력
@@ -57,39 +56,34 @@ public long index; // 인덱스
 					    data.index = Convert.ToInt64(values[0]);
 					
 					if(values[1] == "")
-					    data.ScriptIndex = default;
-					else
-					    data.ScriptIndex = Convert.ToInt64(values[1]);
-					
-					if(values[2] == "")
 					    data.Inteli = default;
 					else
-					    data.Inteli = Convert.ToInt64(values[2]);
+					    data.Inteli = Convert.ToInt64(values[1]);
 					
-					if(values[3] == "")
+					if(values[2] == "")
 					    data.Otaku = default;
 					else
-					    data.Otaku = Convert.ToInt64(values[3]);
+					    data.Otaku = Convert.ToInt64(values[2]);
 					
-					if(values[4] == "")
+					if(values[3] == "")
 					    data.Strength = default;
 					else
-					    data.Strength = Convert.ToInt64(values[4]);
+					    data.Strength = Convert.ToInt64(values[3]);
 					
-					if(values[5] == "")
+					if(values[4] == "")
 					    data.Charming = default;
 					else
-					    data.Charming = Convert.ToInt64(values[5]);
+					    data.Charming = Convert.ToInt64(values[4]);
 					
-					if(values[6] == "")
+					if(values[5] == "")
 					    data.TrueIndex = default;
 					else
-					    data.TrueIndex = Convert.ToInt64(values[6]);
+					    data.TrueIndex = Convert.ToInt64(values[5]);
 					
-					if(values[7] == "")
+					if(values[6] == "")
 					    data.FalseIndex = default;
 					else
-					    data.FalseIndex = Convert.ToInt64(values[7]);
+					    data.FalseIndex = Convert.ToInt64(values[6]);
 					
 
                     dataList[data.index] = data;

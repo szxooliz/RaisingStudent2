@@ -23,7 +23,7 @@ namespace Client
             TMP_CharLine
         }
 
-        private long maxCount = 33; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
+        private long maxCount = 52; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
         private Image charFace;
         private Image charBubble;

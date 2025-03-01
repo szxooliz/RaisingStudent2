@@ -24,7 +24,8 @@ namespace Client
         enum Texts
         {
             TMP_CharLine, TMP_CharName,
-            TMP_Select1, TMP_Select2
+            TMP_Select1, TMP_Select2,
+            TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming
         }
         enum Images
         {
@@ -32,7 +33,7 @@ namespace Client
         }
         enum GameObjects
         {
-            Selection
+            Selection, Stats
         }
         #endregion
 
@@ -86,9 +87,6 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 이벤트 대사 로드
-        /// </summary>
         IEnumerator LoadNextDialogue()
         {
             // 처음 시작할 때
@@ -138,47 +136,44 @@ namespace Client
             EventManager.Instance.OnEventStart?.Invoke();
 
             GetGameObject((int)GameObjects.Selection).SetActive(false);
+            GetGameObject((int)GameObjects.Stats).SetActive(false);
         }
 
         /// <summary>
         /// 분기 타입별 함수 호출
         /// </summary>
-        /// <param name="eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
-        void BranchByType(EventScript eventScript)
+        /// <param name="_eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
+        void BranchByType(EventScript _eventScript)
         {
-            if (eventScript == null)
+            if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
             {
-                if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
-                {
-                    Debug.Log("이벤트 결과 잇뜸");
-                    ShowStatResult(pastEventScript);
-                }
-                else return;
+                Debug.Log("이벤트 결과 발생!!");
+                ShowStatResult(pastEventScript);
+
+                EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+                ShowScript(eventScript);
+                pastEventScript = eventScript;
+
+                return;
             }
 
-            switch (eventScript.BranchType)
+            switch (_eventScript.BranchType)
             {
                 case eBranchType.Choice:
                     GetGameObject((int)GameObjects.Selection).SetActive(true);
-                    ShowSelection(eventScript);
+                    ShowSelection(_eventScript);
                     break;
                 case eBranchType.Condition:
-                    GetStatCondition(eventScript);
+                    GetStatCondition(_eventScript);
                     break;
                 default:
-                    EventScript _eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-                    ShowScript(_eventScript);
-                    pastEventScript = _eventScript;
+                    EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
+                    ShowScript(eventScript);
+                    pastEventScript = eventScript;
                     break;
             }
         }
 
-        /// <summary>
-        /// 분기 결과 외의 나머지 대사 삭제
-        /// </summary>
-        /// <param name="move1"></param>
-        /// <param name="move2"></param>
-        /// <returns></returns>
         void DeleteOtherScripts(long startIndex, long? endIndex = null)
         {
             while (EventManager.Instance.nowEventData.eventScripts.ContainsKey(startIndex))
@@ -191,9 +186,6 @@ namespace Client
         }
 
         #region 선택지에 따른 분기
-        /// <summary>
-        /// 선택지 UI 띄우기
-        /// </summary>
         void ShowSelection(EventScript _eventScript)
         {
             SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(_eventScript.BranchIndex);
@@ -211,7 +203,7 @@ namespace Client
         }
 
         /// <summary>
-        /// 선택지 클릭 후 실행될 내용
+        /// 선택지 버튼 클릭 후 실행될 내용
         /// </summary>
         /// <param name="nextIndex1">옮길 스크립트 인덱스</param>
         /// <param name="isFirst">첫번째 선택지인가?</param>
@@ -311,18 +303,30 @@ namespace Client
                 // UI 표시 string
                 if (result[i] != 0)
                 {
-                    sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {result[i]}만큼 ");
-                    if (result[i] < 0) sb.Append("감소했다!");
-                    else sb.Append("증가했다!");
+                    if (i == (int)eStatNameAll.Stress)
+                    {
+                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {result[i]}만큼 {ResultString(result[i])}");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}이 {result[i]}만큼 {ResultString(result[i])}");
+                    }
                 }
 
                 // 실제 스탯에 반영
                 if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
                 else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
             }
-            //UpdateStatUIs();
+            GetGameObject((int)GameObjects.Stats).SetActive(true);
+            UpdateStatUIs();
             GetText((int)Texts.TMP_CharName).text = "";
-            GetText((int)Texts.TMP_CharLine).text = sb.ToString();
+            coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
+        }
+
+        string ResultString(long stat)
+        {
+            if (stat < 0) return "감소했다!";
+            else          return "증가했다!";
         }
 
         /// <summary>
@@ -332,16 +336,12 @@ namespace Client
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
+                GetText((int)Texts.TMP_Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
         }
 
         #endregion
 
-        /// <summary>
-        /// 일반 대사 보여주기
-        /// </summary>
-        /// <param name="_eventScript"></param>
         void ShowScript(EventScript _eventScript)
         {
             if (_eventScript == null)
@@ -351,17 +351,15 @@ namespace Client
                 return;
             }
 
-            DisplayScript(_eventScript);
+            DisplayScriptUI(_eventScript);
             StartCoroutine(Util.LoadTextOneByOne(_eventScript.Line, GetText((int)Texts.TMP_CharLine)));
             nowEventScriptID++;
         }
 
-        /// <summary>
-        /// 스크립트 내용 맞춰서 UI 띄우기
-        /// </summary>
-        /// <param name="_eventScript"></param>
-        void DisplayScript(EventScript _eventScript)
+        void DisplayScriptUI(EventScript _eventScript)
         {
+            GetGameObject((int)GameObjects.Selection).SetActive(false);
+
             // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
             if (_eventScript.NameTag)
             {
