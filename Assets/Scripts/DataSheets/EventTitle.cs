@@ -16,7 +16,8 @@ public long index; // 이벤트 넘버
 		public string EventName; // 이벤트 제목
 		public long AppearStart; // 등장 시작 턴
 		public long AppearEnd; // 등장 종료 턴
-		public bool IsEnrolled; // 참가신청 여부
+		public bool ApplyOption; // 참가 선택 발생
+		public long ApplyEvent; // 신청 이벤트
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -69,9 +70,14 @@ public long index; // 이벤트 넘버
 					    data.AppearEnd = Convert.ToInt64(values[3]);
 					
 					if(values[4] == "")
-					    data.IsEnrolled = default;
+					    data.ApplyOption = default;
 					else
-					    data.IsEnrolled = Convert.ToBoolean(values[4]);
+					    data.ApplyOption = Convert.ToBoolean(values[4]);
+					
+					if(values[5] == "")
+					    data.ApplyEvent = default;
+					else
+					    data.ApplyEvent = Convert.ToInt64(values[5]);
 					
 
                     dataList[data.index] = data;

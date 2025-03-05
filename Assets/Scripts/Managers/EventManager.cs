@@ -20,7 +20,7 @@ namespace Client
         private const int RANDOM_PROB = 50;               // 랜덤 이벤트 등장 확률
         #endregion
 
-        public Queue<(long ID, string title)> EventIDQueue { get; } = new();
+        public Queue<EventTitle> EventIDQueue { get; } = new();
         public Queue<EventData> EventQueue { get; } = new();
         public Dictionary<long, EventResult> EventResults { get; } = new(); // key : ScriptIndex
 
@@ -41,12 +41,17 @@ namespace Client
             {
                 EventTitle eventTitle = DataManager.Instance.GetData<EventTitle>(i);
 
-                //// 해커톤 참여 선택에 따라 추가
-                //if (!DataManager.Instance.playerData.IsEnrolled) continue;
+                // 딕셔너리에 해당 이벤트 키가 있다면 (참가 여부 신청을 받은 이벤트라면)
+                if (DataManager.Instance.playerData.AppliedEventsDict.TryGetValue(eventTitle.index, out bool value))
+                {
+                    Debug.Log($"이전에 {eventTitle.index}번 이벤트 참가 신청을 {value}로 함");
+                    // 이벤트에 참여하지 않는 것으로 기록되어 있다면 Queue에 추가하지 않는다
+                    if (!value) continue;
+                }
 
                 if (DataManager.Instance.playerData.CurrentTurn == eventTitle.AppearStart)
                 {
-                    EventIDQueue.Enqueue((eventTitle.index, eventTitle.EventName));
+                    EventIDQueue.Enqueue(eventTitle);
                 }
             }
 
@@ -67,7 +72,7 @@ namespace Client
             EventTitle randomEventTitle = GetOneRandomEvent(randomList);
             if (randomEventTitle != null)
             {
-                EventIDQueue.Enqueue((randomEventTitle.index, randomEventTitle.EventName));
+                EventIDQueue.Enqueue(randomEventTitle);
             }
                 
         }
@@ -100,11 +105,11 @@ namespace Client
             try
             {
                 Debug.Log($"이벤트 끝, {eventData.title} 등록");
-                DataManager.Instance.playerData.WatchedEvents.Add(eventData.eventIndex, eventData);
+                DataManager.Instance.playerData.WatchedEvents.Add(eventData.eventTitle.index, eventData);
             }
             catch
             {
-                Debug.LogError($"{eventData.title} : {eventData.eventIndex}는 이미 등록된 이벤트 인덱스입니다");
+                Debug.LogError($"{eventData.title} : {eventData.eventTitle.index}는 이미 등록된 이벤트 인덱스입니다");
                 return;
             }
         }
@@ -204,12 +209,12 @@ namespace Client
 
             while (EventIDQueue.Count > 0)
             {
-                var (eventID, eventTitle) = EventIDQueue.Dequeue();
-                eEventType eventType = (eventID > RANDOM_THRESHOLD) ? eEventType.Random : eEventType.Main;
-                Dictionary<long, EventScript> eventScripts = LoadScript(eventID, eventType);
+                EventTitle eventTitle = EventIDQueue.Dequeue();
+                eEventType eventType = (eventTitle.index > RANDOM_THRESHOLD) ? eEventType.Random : eEventType.Main;
+                Dictionary<long, EventScript> eventScripts = LoadScript(eventTitle.index, eventType);
 
-                EventData eventData = new EventData(eventID, eventType, eventScripts) { title = eventTitle };
-                Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title}");
+                EventData eventData = new EventData(eventTitle, eventScripts);
+                Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title} (넣기 전 count : {EventQueue.Count})");
                 EventQueue.Enqueue(eventData);
             }
         }

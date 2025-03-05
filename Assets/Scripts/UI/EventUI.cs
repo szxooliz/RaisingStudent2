@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -243,12 +244,17 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             nowEventScriptID = isFirst ? nextIndex1 : nextIndex2;
-
-            // 결과 아닌 스크립트 지우기
-            if (isFirst)
+            
+            if (isFirst) // 첫 번째 버튼이면
+            {
                 DeleteOtherScripts(nextIndex2);
-            else
+                ApplyEvents(true);
+            }
+            else // 두 번째 버튼이면
+            {
                 DeleteOtherScripts(nextIndex1, nextIndex2);
+                ApplyEvents(false);
+            }
 
             // 선택지 결과 스크립트 띄우기
             EventScript _eventScript = GetNextScript(nowEventScriptID);
@@ -258,6 +264,20 @@ namespace Client
             GetGameObject((int)GameObjects.Selection).SetActive(false);
         }
 
+        /// <summary>
+        /// 이벤트 참가 여부 저장
+        /// </summary>
+        /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
+        void ApplyEvents(bool isEnroll)
+        {
+            // 참가 여부 선택이 진행되어야 하는 이벤트에서만 실행
+            if (EventManager.Instance.nowEventData.eventTitle.ApplyOption)
+            {
+                long eventID =  EventManager.Instance.nowEventData.eventTitle.ApplyEvent;
+                DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
+                Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
+            }
+        }
         #endregion
 
         #region 스탯 조건에 따른 분기

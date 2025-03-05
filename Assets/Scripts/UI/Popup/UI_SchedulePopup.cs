@@ -126,7 +126,7 @@ namespace Client
             // 취소선의 경우 딕셔너리 value == true 인 경우에 활성화
             // 동그라미의 경우 이벤트매니저의 nowEventData.eventIndex의 값이 딕셔너리의 키 값이 같으면 활성화 
 
-            int nowEvtIndex = (int)EventManager.Instance.nowEventData.eventIndex;
+            int nowEvtIndex = (int)EventManager.Instance.nowEventData.eventTitle.index;
 
             foreach (var kvp in scheduleEvent)
             {

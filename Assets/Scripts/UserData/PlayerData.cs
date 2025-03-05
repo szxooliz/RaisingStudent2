@@ -13,8 +13,8 @@ namespace Client
         public eMonths CurrentMonth { get; set; } = eMonths.Mar;   // n월 3-6/9-12
         public eThirds CurrentThird { get; set; } = eThirds.First; // a순 상중하
 
-        public List<ProcessData> WatchedProcess { get; } = new();
-        public Dictionary<long, EventData> WatchedEvents { get; } = new();
+        public List<ProcessData> WatchedProcess = new();
+        public Dictionary<long, EventData> WatchedEvents = new();
 
         public event EventHandler OnStatusChanged;
 
@@ -41,7 +41,7 @@ namespace Client
             set => _stressAmount = Mathf.Clamp(value, 0, 100);
         }
 
-        public bool IsEnrolled { get; set; } = false; // 해커톤 참여 여부 기록
+        public Dictionary<long, bool> AppliedEventsDict = new();  // 이벤트 참여 여부 기록
 
         public PlayerData() { }
     }
