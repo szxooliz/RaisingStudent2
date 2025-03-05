@@ -50,7 +50,7 @@ namespace Client
             Bind<Button>(typeof(Buttons));
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             CheckAndShowEvent();
         }
@@ -73,7 +73,7 @@ namespace Client
         /// <summary>
         /// 대기하고 있는 이벤트 확인 후 실행
         /// </summary>
-        public void CheckAndShowEvent()
+        void CheckAndShowEvent()
         {
             // 실행할 이벤트 없으면 메인으로 돌아감
             if (EventManager.Instance.EventQueue.Count <= 0)
@@ -87,32 +87,9 @@ namespace Client
             }
         }
 
-        IEnumerator LoadNextDialogue()
+        EventScript GetNextScript(long index)
         {
-            // 처음 시작할 때
-            if (pastEventScript == null)
-            {
-                EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-                ShowScript(eventScript);
-                pastEventScript = eventScript;
-            }
-            else
-            {
-                BranchByType(pastEventScript);
-            }
-
-            yield return null;
-        }
-
-        /// <summary>
-        /// 다음 대사 가져오기, 있으면 대사 넣고 없으면 null
-        /// </summary>
-        /// <param name="_index">딕셔너리의 키인 EventScript상의 index</param>
-        /// <param name="_eventScripts">해당 이벤트의 대사 목록 딕셔너리</param>
-        /// <returns></returns>
-        public EventScript TryGetNextScript(long index, Dictionary<long, EventScript> eventScripts)
-        {
-            return eventScripts.GetValueOrDefault(index, null);
+            return EventManager.Instance.nowEventData.eventScripts.GetValueOrDefault(index, null);
         }
 
         IEnumerator DelayedTransition()
@@ -122,13 +99,11 @@ namespace Client
         }
 
         /// <summary>
-        /// 새로 실행할 이벤트에 맞춰 정보 설정
+        /// 새로운 이벤트 초기화 및 UI 상태 리셋
         /// </summary>
-        public void InitNewEvent()
+        void InitNewEvent()
         {
             EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
-
-            // 스크립트 첫 대사 인덱스 초기화
             startingID = EventManager.Instance.nowEventData.eventScripts.Keys.Min();
             nowEventScriptID = startingID; 
 
@@ -138,6 +113,35 @@ namespace Client
             GetGameObject((int)GameObjects.Selection).SetActive(false);
             GetGameObject((int)GameObjects.Stats).SetActive(false);
         }
+        IEnumerator LoadNextDialogue()
+        {
+            if (pastEventScript == null)
+            {
+                EventScript eventScript = GetNextScript(nowEventScriptID);
+                DisplayScript(eventScript);
+                pastEventScript = eventScript;
+            }
+            else
+            {
+                if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
+                    GetResult();
+                else 
+                    BranchByType(pastEventScript);
+            }
+
+            yield return null;
+        }
+
+        void GetResult()
+        {
+            Debug.Log("이벤트 결과 발생!!");
+            ShowStatResult(pastEventScript);
+            
+            EventScript eventScript = GetNextScript(nowEventScriptID);
+            pastEventScript = eventScript;
+            
+            return;
+        }
 
         /// <summary>
         /// 분기 타입별 함수 호출
@@ -145,18 +149,6 @@ namespace Client
         /// <param name="_eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
         void BranchByType(EventScript _eventScript)
         {
-            if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
-            {
-                Debug.Log("이벤트 결과 발생!!");
-                ShowStatResult(pastEventScript);
-
-                EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-                ShowScript(eventScript);
-                pastEventScript = eventScript;
-
-                return;
-            }
-
             switch (_eventScript.BranchType)
             {
                 case eBranchType.Choice:
@@ -167,11 +159,50 @@ namespace Client
                     GetStatCondition(_eventScript);
                     break;
                 default:
-                    EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-                    ShowScript(eventScript);
+                    EventScript eventScript = GetNextScript(nowEventScriptID);
+                    DisplayScript(eventScript);
                     pastEventScript = eventScript;
                     break;
             }
+        }
+        void DisplayScript(EventScript _eventScript)
+        {
+            if (_eventScript == null)
+            {
+                EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
+                CheckAndShowEvent();
+                return;
+            }
+
+            UpdateScriptUI(_eventScript);
+            StartCoroutine(Util.LoadTextOneByOne(_eventScript.Line, GetText((int)Texts.TMP_CharLine)));
+            nowEventScriptID++;
+        }
+
+        void UpdateScriptUI(EventScript _eventScript)
+        {
+            GetGameObject((int)GameObjects.Selection).SetActive(false);
+
+            // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
+            if (_eventScript.NameTag)
+            {
+                string path = Util.GetSeasonIllustPath(_eventScript);
+
+                GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 1);
+                GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
+                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(true);
+            }
+            else
+            {
+                // 나타낼 이미지 없을 때 스프라이트 알파값 0
+                GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 0);
+                GetImage((int)Images.IMG_CharFace).sprite = null;
+                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(false);
+            }
+
+            GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
+                DataManager.Instance.GetCharNameKor(_eventScript.Character) : "";
+            GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
         }
 
         void DeleteOtherScripts(long startIndex, long? endIndex = null)
@@ -220,8 +251,8 @@ namespace Client
                 DeleteOtherScripts(nextIndex1, nextIndex2);
 
             // 선택지 결과 스크립트 띄우기
-            EventScript _eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-            ShowScript(_eventScript);
+            EventScript _eventScript = GetNextScript(nowEventScriptID);
+            DisplayScript(_eventScript);
             pastEventScript = _eventScript;
             
             GetGameObject((int)GameObjects.Selection).SetActive(false);
@@ -249,8 +280,8 @@ namespace Client
                 DeleteOtherScripts(statCondition.TrueIndex, statCondition.FalseIndex);
             }
 
-            EventScript eventScript = TryGetNextScript(nowEventScriptID, EventManager.Instance.nowEventData.eventScripts);
-            ShowScript(eventScript);
+            EventScript eventScript = GetNextScript(nowEventScriptID);
+            DisplayScript(eventScript);
             pastEventScript = eventScript;
         }
 
@@ -283,15 +314,12 @@ namespace Client
         #endregion
 
         #region 이벤트 결과
-        /// <summary>
-        /// 스탯 기준치에 따라 내용이 바뀔 경우
-        /// </summary>
-        /// <param name="_eventScript"></param>
         void ShowStatResult(EventScript _eventScript)
         {
             if (!EventManager.Instance.EventResults.ContainsKey(_eventScript.index)) return;
 
             EventResult eventResult = EventManager.Instance.EventResults.GetValueOrDefault(_eventScript.index);
+            EventManager.Instance.nowEventData.hasChange = true;
             List<long> result = new()
             {
                 eventResult.Inteli, eventResult.Otaku, eventResult.Strength, eventResult.Charming, eventResult.StressValue
@@ -318,8 +346,9 @@ namespace Client
                 else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
             }
             GetGameObject((int)GameObjects.Stats).SetActive(true);
-            UpdateStatUIs();
             GetText((int)Texts.TMP_CharName).text = "";
+
+            UpdateStatUIs();
             coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
         }
 
@@ -341,46 +370,5 @@ namespace Client
         }
 
         #endregion
-
-        void ShowScript(EventScript _eventScript)
-        {
-            if (_eventScript == null)
-            {
-                EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
-                CheckAndShowEvent();
-                return;
-            }
-
-            DisplayScriptUI(_eventScript);
-            StartCoroutine(Util.LoadTextOneByOne(_eventScript.Line, GetText((int)Texts.TMP_CharLine)));
-            nowEventScriptID++;
-        }
-
-        void DisplayScriptUI(EventScript _eventScript)
-        {
-            GetGameObject((int)GameObjects.Selection).SetActive(false);
-
-            // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
-            if (_eventScript.NameTag)
-            {
-                string path = Util.GetSeasonIllustPath(_eventScript);
-
-                GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 1);
-                GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
-                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(true);
-            }
-            else
-            {
-                // 나타낼 이미지 없을 때 스프라이트 알파값 0
-                GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 0);
-                GetImage((int)Images.IMG_CharFace).sprite = null;
-                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(false);
-            }
-
-            GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
-                DataManager.Instance.GetCharNameKor(_eventScript.Character) : "";
-            GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
-        }
-
     }
 }
