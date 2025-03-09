@@ -24,7 +24,13 @@ namespace Client
             "차라리 쿨쿨따 하는게 더 나았겠다"
         };
 
-        [SerializeField] private string _restLine = "F 안 맞을 정도로만 쉬어도 돼~ ㅋㅋ";
+        [SerializeField]
+        private List<string> _restLines = new()
+        {
+            "스트레스가 싹 풀렸어요!! 겡끼삥삥~!",
+            "역시 최고의 대학은 침대예요!",
+            "으우... 시간만 낭비한 것 같아요..."
+        };
         #endregion
 
         #region enum
@@ -76,7 +82,7 @@ namespace Client
             if (DataManager.Instance.playerData.CurrentStatus == eStatus.Activity)
             {
                 coroutine = StartCoroutine(ShowResult1());
-                charName.text = "컴순";
+                charName.text = Util.GetCharNameKor(DataManager.Instance.playerData.CharName);
                 UpdateStatUIs();
             }
         }
@@ -152,28 +158,19 @@ namespace Client
             string face = null;
 
             if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
-            {
-                str = _restLine;
-            }
+                str = _restLines[(int)DataManager.Instance.activityData.resultType];
             else
-            {
                 str = _charLines[(int)DataManager.Instance.activityData.resultType];
 
-                switch (DataManager.Instance.activityData.resultType)
-                {
-                    case eResultType.BigSuccess:
-                        face = "glad";
-                        break;
-                    case eResultType.Success:
-                        face = "basic";
-                        break;
-                    case eResultType.Failure:
-                        face = "sad";
-                        break;
-                }
-                string path = Util.GetSeasonIllustPath(face);
-                charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
-            }
+            if (DataManager.Instance.activityData.resultType == eResultType.BigSuccess)
+                face = "glad";
+            else if (DataManager.Instance.activityData.resultType == eResultType.Success)
+                face = "basic";
+            else
+                face = "sad";
+
+            string path = Util.GetSeasonIllustPath(face);
+            charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
             yield return null;
@@ -188,12 +185,13 @@ namespace Client
             GetGameObject((int)GameObjects.Activity2).SetActive(true);
             GetGameObject((int)GameObjects.Activity1).SetActive(false);
 
-            string str;
+            string str; // TODO : StringBuilder로 바꾸기
 
             if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
-                str = "스트레스가 " + -DataManager.Instance.activityData.stressValue + " 감소했다!";
+                str = GetResultTypeKor(DataManager.Instance.activityData.resultType) + Environment.NewLine
+                    + "스트레스가 " + -DataManager.Instance.activityData.stressValue + " 감소했다!";
             }
             else
             {

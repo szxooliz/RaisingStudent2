@@ -202,7 +202,7 @@ namespace Client
             }
 
             GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
-                DataManager.Instance.GetCharNameKor(_eventScript.Character) : "";
+                Util.GetCharNameKor(_eventScript.Character) : "";
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
         }
 
@@ -348,16 +348,23 @@ namespace Client
             StringBuilder sb = new();
             for (int i = 0; i < (int)eStatNameAll.MaxCount; i++)
             {
+                // 음수는 감소했다! 고 이미 표현되므로 마이너스 떼고 표시
+                long resultTxt = 0;
                 // UI 표시 string
                 if (result[i] != 0)
                 {
+                    if (result[i] < 0)
+                        resultTxt = -result[i];
+                    else
+                        resultTxt = result[i];
+
                     if (i == (int)eStatNameAll.Stress)
                     {
-                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {result[i]}만큼 {ResultString(result[i])}");
+                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {resultTxt}만큼 {ResultString(result[i])}");
                     }
                     else
                     {
-                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}이 {result[i]}만큼 {ResultString(result[i])}");
+                        sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}이 {resultTxt}만큼 {ResultString(result[i])}");
                     }
                 }
 

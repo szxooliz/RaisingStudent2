@@ -14,11 +14,11 @@ namespace Client
     {
         #region constant 기획 조정용
         // 증가 시에는 양수, 감소 시에는 음수로 값 설정
-        private const float STRESS_REST = -10f;
-        private const float STRESS_CLASS = 30f;
-        private const float STRESS_GAME = 10f;
+        private const float STRESS_CLASS = 25f;
+        private const float STRESS_GAME = 20f;
         private const float STRESS_WORKOUT = 20f;
-        private const float STRESS_CLUB = 10f;
+        private const float STRESS_CLUB = 20f;
+        private List<int> StressRestList = new() { 80, 60, 30 };
         #endregion
 
         // 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
@@ -207,7 +207,10 @@ namespace Client
             {
                 case eActivityType.Rest:
                     activityData.activityType = eActivityType.Rest;
-                    activityData.stressValue = STRESS_REST;
+                    // 자체휴강만 랜덤으로 대성공/성공/대실패 여부 결정
+                    int prob = UnityEngine.Random.Range(0, 3);
+                    activityData.resultType = (eResultType)prob;
+                    activityData.stressValue = -StressRestList[prob]; ;
                     break;
                 case eActivityType.Class:
                     activityData.activityType = eActivityType.Class;
@@ -261,25 +264,6 @@ namespace Client
             // 로드된 스프라이트를 캐싱
             spriteCache[_path] = loadedSprite;
             return loadedSprite;
-        }
-
-        public string GetCharNameKor(string _charName)
-        {
-            // 이벤트 스크립트의 캐릭터 이름을 받아서
-            // 캐릭터 페이스 스크립트에 표시된 캐릭터 한국어 이름으로 뜨도록
-            string str = null;
-            // 임시로 5 해둠
-            for (int i = 0; i < 5; i++)
-            {
-                CharacterFace charFace = GetData<CharacterFace>(i);
-
-                if (charFace.Character == _charName)
-                {
-                    str = charFace.CharacterName;
-                    break;
-                }
-            }
-            return str;
         }
     }
 }

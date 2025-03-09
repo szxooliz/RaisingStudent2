@@ -31,6 +31,11 @@ namespace Client
         EventManager() { }
         #endregion
 
+        public override void Init()
+        {
+            EventIDQueue.Clear();
+            EventQueue.Clear();
+        }
         /// <summary>
         /// 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기
         /// </summary>

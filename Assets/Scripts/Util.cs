@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -181,5 +182,31 @@ namespace Client
         }
 
         #endregion
+
+
+        public static bool TryFindTuple(List<(long, bool)> list, long key, out (long, bool) result)
+        {
+            result = list.FirstOrDefault(item => item.Item1 == key);
+            return result.Item1 == key; // key가 0일 경우 대비
+        }
+        public static string GetCharNameKor(string _charName)
+        {
+            // 이벤트 스크립트의 캐릭터 이름을 받아서
+            // 캐릭터 페이스 스크립트에 표시된 캐릭터 한국어 이름으로 뜨도록
+            string str = null;
+            // 임시로 5 해둠
+            for (int i = 0; i < 5; i++)
+            {
+                CharacterFace charFace = DataManager.Instance.GetData<CharacterFace>(i);
+
+                if (charFace.Character == _charName)
+                {
+                    str = charFace.CharacterName;
+                    break;
+                }
+            }
+            return str;
+        }
+
     }
 }
