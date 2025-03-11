@@ -31,6 +31,7 @@ namespace Client
         // 박스 배경 길이도 유동적
 
 
+
     } 
 
 }

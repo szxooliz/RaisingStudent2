@@ -2,12 +2,8 @@ using Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -206,17 +202,6 @@ namespace Client
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
         }
 
-        void DeleteOtherScripts(long startIndex, long? endIndex = null)
-        {
-            while (EventManager.Instance.nowEventData.eventScripts.ContainsKey(startIndex))
-            {
-                if (endIndex.HasValue && startIndex >= endIndex.Value) break;
-
-                Debug.Log($"{startIndex}번 스크립트는 지웁니다");
-                EventManager.Instance.nowEventData.eventScripts.Remove(startIndex++);
-            }
-        }
-
         #region 선택지에 따른 분기
         void ShowSelection(EventScript _eventScript)
         {
@@ -247,13 +232,13 @@ namespace Client
             
             if (isFirst) // 첫 번째 버튼이면
             {
-                DeleteOtherScripts(nextIndex2);
-                ApplyEvents(true);
+                EventManager.Instance.DeleteOtherScripts(nextIndex2);
+                EventManager.Instance.ApplyEvents(true);
             }
             else // 두 번째 버튼이면
             {
-                DeleteOtherScripts(nextIndex1, nextIndex2);
-                ApplyEvents(false);
+                EventManager.Instance.DeleteOtherScripts(nextIndex1, nextIndex2);
+                EventManager.Instance.ApplyEvents(false);
             }
 
             // 선택지 결과 스크립트 띄우기
@@ -262,21 +247,6 @@ namespace Client
             pastEventScript = _eventScript;
             
             GetGameObject((int)GameObjects.Selection).SetActive(false);
-        }
-
-        /// <summary>
-        /// 이벤트 참가 여부 저장
-        /// </summary>
-        /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
-        void ApplyEvents(bool isEnroll)
-        {
-            // 참가 여부 선택이 진행되어야 하는 이벤트에서만 실행
-            if (EventManager.Instance.nowEventData.eventTitle.ApplyOption)
-            {
-                long eventID =  EventManager.Instance.nowEventData.eventTitle.ApplyEvent;
-                DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
-                Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
-            }
         }
         #endregion
 
@@ -292,12 +262,12 @@ namespace Client
             if (MeasureUpCondition(statCondition))
             {
                 nowEventScriptID = statCondition.TrueIndex;
-                DeleteOtherScripts(statCondition.FalseIndex);
+                EventManager.Instance.DeleteOtherScripts(statCondition.FalseIndex);
             }
             else
             {
                 nowEventScriptID = statCondition.FalseIndex;
-                DeleteOtherScripts(statCondition.TrueIndex, statCondition.FalseIndex);
+                EventManager.Instance.DeleteOtherScripts(statCondition.TrueIndex, statCondition.FalseIndex);
             }
 
             EventScript eventScript = GetNextScript(nowEventScriptID);
@@ -359,13 +329,9 @@ namespace Client
                         resultTxt = result[i];
 
                     if (i == (int)eStatNameAll.Stress)
-                    {
                         sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}가 {resultTxt}만큼 {ResultString(result[i])}");
-                    }
                     else
-                    {
                         sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}이 {resultTxt}만큼 {ResultString(result[i])}");
-                    }
                 }
 
                 // 실제 스탯에 반영

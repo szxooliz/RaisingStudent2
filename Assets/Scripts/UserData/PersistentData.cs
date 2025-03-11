@@ -13,20 +13,20 @@ namespace Client
 
         public PersistentData() // 생성자
         {
-            foreach (eEndingName endingName in Enum.GetValues(typeof(eEndingName)))
-            {
-                Ending ending = new Ending(endingName);
+        //    foreach (eEndingName endingName in Enum.GetValues(typeof(eEndingName)))
+        //    {
+        //        Ending ending = new Ending(endingName);
 
-                // *****더미데이터*****
-                ending.awards.Add("A+");
-                ending.awards.Add("B0");
-                ending.awards.Add("C+");
-                ending.awards.Add("D+");
-                // *****더미데이터*****
+        //        // *****더미데이터*****
+        //        ending.awards.Add("A+");
+        //        ending.awards.Add("B0");
+        //        ending.awards.Add("C+");
+        //        ending.awards.Add("D+");
+        //        // *****더미데이터*****
 
-                endingList.Add(ending);
-            }
-        }
+        //        endingList.Add(ending);
+        //    }
+        //}
     }
 
 }

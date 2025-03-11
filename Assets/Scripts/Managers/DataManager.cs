@@ -38,8 +38,13 @@ namespace Client
 
         public override void Init()
         {
-            DataLoad();
-            LoadPlayerData();
+
+            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+
+            LoadSheetDatas();
+            playerData = LoadData<PlayerData>(playerData_path);
+            persistentData = LoadData<PersistentData>(persistentData_path);
 
             // 미리 EventResult 전부 딕셔너리에 저장
             for (int i = 0; ; i++)
@@ -58,7 +63,7 @@ namespace Client
         }
 
         #region SheetData Load & Save
-        public void DataLoad()
+        public void LoadSheetDatas()
         {
             // 현재 어셈블리 내에서 SheetData를 상속받는 모든 타입을 찾음
             var sheetDataTypes = Assembly.GetExecutingAssembly().GetTypes()
@@ -138,51 +143,45 @@ namespace Client
         #endregion
 
         #region JSON Data Load & Save
-        public void LoadPlayerData()
+        public T LoadData<T>(string path) where T : new()
         {
-            string path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-
 #if UNITY_EDITOR
-            // 에디터 내부 테스트용 
-            DeleteSaveFile();
+            DeleteSaveFile(path);
 #endif
             if (!File.Exists(path))
             {
-                Debug.LogError("Player Data 없음, 새로 생성");
-                playerData = new PlayerData();
-                SavePlayerData();
+                Debug.LogError("데이터 없음, 새로 생성: " + path);
+                T data = new T();
+                SaveData(path, data);
+                return data;
             }
 
             FileStream fileStream = new FileStream(path, FileMode.Open);
-            byte[] data = new byte[fileStream.Length];
-            fileStream.Read(data, 0, data.Length);
+            byte[] fileData = new byte[fileStream.Length];
+            fileStream.Read(fileData, 0, fileData.Length);
             fileStream.Close();
-            string jsonData = Encoding.UTF8.GetString(data);
-            playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+            string jsonData = Encoding.UTF8.GetString(fileData);
 
-            Debug.Log("Player Data Load 성공");
+            Debug.Log("데이터 Load 성공: " + path);
+            return JsonUtility.FromJson<T>(jsonData);
         }
 
-        public void SavePlayerData() 
+        public void SaveData<T>(string path, T data)
         {
-            string path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-
-            string jsonData = JsonUtility.ToJson(playerData, true);
+            string jsonData = JsonUtility.ToJson(data, true);
             FileStream fileStream = new FileStream(path, FileMode.Create);
-            byte[] data = Encoding.UTF8.GetBytes(jsonData);
-            fileStream.Write(data, 0, data.Length);
+            byte[] fileData = Encoding.UTF8.GetBytes(jsonData);
+            fileStream.Write(fileData, 0, fileData.Length);
             fileStream.Close();
 
-            Debug.Log("Player Data Save 성공");
-
+            Debug.Log("데이터 Save 성공: " + path);
         }
 
-        void DeleteSaveFile()
+        void DeleteSaveFile(string path)
         {
-            string filePath = Path.Combine(Application.persistentDataPath, "PlayerData.json"); // 저장된 파일 이름
-            if (File.Exists(filePath))
+            if (File.Exists(path))
             {
-                File.Delete(filePath);
+                File.Delete(path);
                 Debug.Log("Save file deleted.");
             }
             else
@@ -191,7 +190,7 @@ namespace Client
             }
         }
 
-    #endregion
+        #endregion
 
         /// <summary>
         /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩

@@ -146,11 +146,6 @@ namespace Client
             Main, Random
         }
 
-        public enum eMainEvents
-        {
-            Intro, ApplyToHackerton, Hackerton, MidTest_1, SportsDay, FinTest_1, SummerVac, 
-            Festival, MidTest_2, Gstar, FinTest_2, Finish
-        }
 
         public enum eScheduleEvent
         {

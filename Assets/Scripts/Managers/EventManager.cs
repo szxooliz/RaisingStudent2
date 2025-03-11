@@ -110,7 +110,8 @@ namespace Client
             try
             {
                 Debug.Log($"이벤트 끝, {eventData.title} 등록");
-                DataManager.Instance.playerData.WatchedEvents.Add(eventData.eventTitle.index, eventData);
+                DataManager.Instance.playerData.WatchedEventsDict.Add(eventData.eventTitle.index, eventData);
+                // TODO : 플레이어 데이터 save 하기
             }
             catch
             {
@@ -128,7 +129,7 @@ namespace Client
             // 역 for문 사용
             for (int i = randomList.Count - 1; i >= 0; i--)
             {
-                if (DataManager.Instance.playerData.WatchedEvents.ContainsKey(randomList[i].index))
+                if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey(randomList[i].index))
                 {
                     randomList.RemoveAt(i);
                 }
@@ -148,7 +149,7 @@ namespace Client
             scheduleList.Reverse();
             foreach(eScheduleEvent sch in scheduleList)
             {
-                if(DataManager.Instance.playerData.WatchedEvents.ContainsKey((int)sch))
+                if(DataManager.Instance.playerData.WatchedEventsDict.ContainsKey((int)sch))
                 {
                     watchedEventID = (long)sch;
                     break;
@@ -166,14 +167,14 @@ namespace Client
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
             int schIndex = -1;
 
-            if (DataManager.Instance.playerData.WatchedEvents.Count == 0)
+            if (DataManager.Instance.playerData.WatchedEventsDict.Count == 0)
                 return -1;
 
             // 역순환 -  기록된 것 중에 가장 큰 스케줄ID를 가져오기 위해
             scheduleList.Reverse();
             foreach (eScheduleEvent sch in scheduleList)
             {
-                if (DataManager.Instance.playerData.WatchedEvents.ContainsKey((int)sch))
+                if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey((int)sch))
                 {
                     schIndex = scheduleList.IndexOf(sch);
                     break;
@@ -272,5 +273,44 @@ namespace Client
 
             return eventScripts;
         }
+
+        /// <summary>
+        /// 분기 결과 이외 스크립트는 지움
+        /// </summary>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
+        public void DeleteOtherScripts(long startIndex, long? endIndex = null)
+        {
+            while (nowEventData.eventScripts.ContainsKey(startIndex))
+            {
+                if (endIndex.HasValue && startIndex >= endIndex.Value) break;
+
+                Debug.Log($"{startIndex}번 스크립트는 지웁니다");
+                nowEventData.eventScripts.Remove(startIndex++);
+            }
+        }
+
+        /// <summary>
+        /// 이벤트 참가 여부 저장
+        /// </summary>
+        /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
+        public void ApplyEvents(bool isEnroll)
+        {
+            // 참가 여부 선택이 진행되어야 하는 이벤트에서만 실행
+            if (nowEventData.eventTitle.ApplyOption)
+            {
+                long eventID = nowEventData.eventTitle.ApplyEvent;
+                DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
+
+                if (!isEnroll) // 엔딩 이력서 표시용 기록
+                {
+                    string title = DataManager.Instance.GetData<EventTitle>(eventID).ToString().TrimEnd('!');
+                    DataManager.Instance.playerData.EventRecordList.Add((title, "미참여")); // TODO : 기록할 것 구조 정리되면 바꾸기
+
+                }
+                Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
+            }
+        }
+
     }
 }

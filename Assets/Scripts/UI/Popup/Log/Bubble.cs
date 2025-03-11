@@ -10,6 +10,17 @@ namespace Client
     /// </summary>
     public class LogBubble : UI_Base
     {
+        #region enum
+        enum Texts
+        {
+            TMP_CharLine, TMP_CharName
+        }
+        enum Images
+        {
+            IMG_CharFace
+        }
+        #endregion
+
 
     }
 }
