@@ -302,15 +302,27 @@ namespace Client
                 long eventID = nowEventData.eventTitle.ApplyEvent;
                 DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
 
-                if (!isEnroll) // 엔딩 이력서 표시용 기록
-                {
-                    string title = DataManager.Instance.GetData<EventTitle>(eventID).ToString().TrimEnd('!');
-                    DataManager.Instance.playerData.EventRecordList.Add((title, "미참여")); // TODO : 기록할 것 구조 정리되면 바꾸기
+                if (!isEnroll) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록
 
-                }
                 Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
             }
         }
 
+        /// <summary>
+        /// 엔딩 이력서에 표시될 이벤트 진행 결과 저장
+        /// </summary>
+        /// <param name="eventID"></param>
+        /// <param name="str"></param>
+        public void RecordEventResult(long eventID, string str = "미참여")
+        {
+            string title = DataManager.Instance.GetData<EventTitle>(eventID).EventName;
+
+            if (title.EndsWith("!")) // "!" 지우기
+                title = title.Substring(0, str.Length - 1);
+            else // "고사" 지우기
+                title = title.Substring(0, str.Length - 2);
+
+            DataManager.Instance.playerData.EventRecordList.Add((title, str)); 
+        }
     }
 }

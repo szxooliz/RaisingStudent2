@@ -146,11 +146,15 @@ namespace Client
             Main, Random
         }
 
-
         public enum eScheduleEvent
         {
             Intro = 0, MidTest_1 = 3, FinTest_1 = 5, SummerVac = 6, 
             MidTest_2 = 8, FinTest_2 = 9
+        }
+
+        public enum eRecordType
+        {
+            Test, ETC
         }
         #endregion
 

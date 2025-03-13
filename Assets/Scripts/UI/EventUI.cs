@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -298,8 +299,39 @@ namespace Client
                 }
             }
 
-            Debug.Log($"스탯 기준치 비교 결과 : {result}");
+            string str = null;
+            if (_statCondition.RecordType == eRecordType.Test)
+            {
+                str = GetTestGrade(conditions[(int)eStatName.Inteli]);
+            }
+            else if (_statCondition.RecordType == eRecordType.ETC)
+            {
+                if (result)
+                    str = _statCondition.TrueRecord;
+                else
+                    str = _statCondition.FalseRecord;
+            }
+
+            long eventID = EventManager.Instance.nowEventData.eventTitle.index;
+            EventManager.Instance.RecordEventResult(eventID, str);
+
             return result;
+        }
+
+        string GetTestGrade(long condition)
+        {
+            long diff = DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Inteli] - condition;
+
+            if (diff >= 15)
+                return "A+";
+            else if (diff >= 10 && diff < 15)
+                return "A";
+            else if (diff >= 0 && diff < 10)
+                return "B+";
+            else if (diff >= -15 && diff < 0)
+                return "B";
+            else
+                return "C+";
         }
         #endregion
 

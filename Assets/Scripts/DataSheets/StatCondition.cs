@@ -20,6 +20,10 @@ public long index; // 인덱스
 		public long TrueIndex; // 참일 때 인덱스
 		public long FalseIndex; // 거짓일 때 인덱스
 		
+		public SystemEnum.eRecordType RecordType; // 결과 기록 기준
+		public string TrueRecord; // 충족 시 이력
+		public string FalseRecord; // 미충족 시 이력
+		
 
         public override Dictionary<long, SheetData> LoadData()
         {
@@ -84,6 +88,21 @@ public long index; // 인덱스
 					    data.FalseIndex = default;
 					else
 					    data.FalseIndex = Convert.ToInt64(values[6]);
+					
+					if(values[7] == "")
+					    data.RecordType = default;
+					else
+					    data.RecordType = (SystemEnum.eRecordType)Enum.Parse(typeof(SystemEnum.eRecordType), values[7]);
+					
+					if(values[8] == "")
+					    data.TrueRecord = default;
+					else
+					    data.TrueRecord = Convert.ToString(values[8]);
+					
+					if(values[9] == "")
+					    data.FalseRecord = default;
+					else
+					    data.FalseRecord = Convert.ToString(values[9]);
 					
 
                     dataList[data.index] = data;
