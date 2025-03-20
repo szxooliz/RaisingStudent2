@@ -65,7 +65,7 @@ namespace Client
                 // 텍스트, 버튼 및 자물쇠 아이콘 설정
                 if (ending.isUnlocked)
                 {
-                    string imagePath = spritePath + (char)('A' + index) + "_on";
+                    string imagePath = spritePath + (char)('A' + index) + "_off";
                     buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
                     texts[(int)Texts.TMP_Name].text = GetEndingNameKor(ending.endingName);
                     BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(ending));

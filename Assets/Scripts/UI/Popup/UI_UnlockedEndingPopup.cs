@@ -9,6 +9,8 @@ namespace Client
 {
     public class UI_UnlockedEndingPopup : UI_Popup
     {
+        private string endingSpritePath = "Sprites/UI/Ending/";
+
         enum Buttons
         {
             Panel, BTN_X,
@@ -16,7 +18,7 @@ namespace Client
 
         enum Texts
         {
-            TMP_Title, TMP_Name,
+            TMP_Title, TMP_EndingName,
             TMP_Awards1, TMP_Awards2, TMP_Awards3, TMP_Awards4,
             TMP_Contents,
         }
@@ -70,7 +72,10 @@ namespace Client
         {
             if (ending != null) {
                 GetText((int)Texts.TMP_Title).text = "엔딩" + (char)('A' + (int)(ending.endingName));
-                GetText((int)Texts.TMP_Name).text = GetEndingNameKor(ending.endingName);
+                GetText((int)Texts.TMP_EndingName).text = GetEndingNameKor(ending.endingName);
+
+                string imagePath = endingSpritePath + $"Ending_{(int)(ending.endingName)}";
+                GetImage((int)Images.IMG_Illustraion).sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
 
                 for (int i = 0; i < ending.awards.Count; i++)
                 {
