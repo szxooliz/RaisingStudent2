@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Networking;
 using static Client.SystemEnum;
 
 namespace Client
@@ -64,8 +62,8 @@ namespace Client
 
             UpdateStress();
 
-            // 활동마다 데이터 저장 - TODO : 출시 때 주석 해제
-            //Data.SavePlayerData();
+            // 활동마다 데이터 Save - TODO : 출시 때 주석 해제
+            // DataManager.Instance.SaveAllData();
         }
 
         /// <summary>

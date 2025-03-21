@@ -33,7 +33,6 @@ namespace Client
                 }
             }
         }
-
         public int[] StatsAmounts { get; } = new int[4];
 
         private float _stressAmount;
@@ -42,8 +41,6 @@ namespace Client
             get => _stressAmount;
             set => _stressAmount = Mathf.Clamp(value, 0, 100);
         }
-
-
         public PlayerData() { }
     }
 }

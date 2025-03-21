@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using UnityEngine.UI;
 using static Client.SystemEnum;
-using UnityEngine.U2D;
-using System;
 
 namespace Client
 {
@@ -23,7 +20,7 @@ namespace Client
             TMP_CharLine
         }
 
-        private long maxCount = 52; // 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
+        private long maxCount = 52; // TODO : 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
         private Image charFace;
         private Image charBubble;
@@ -49,7 +46,6 @@ namespace Client
             charLine = GetText((int)CharTexts.TMP_CharLine);
 
             bubbleRect = charBubble.rectTransform;
-
             originalScale = bubbleRect.localScale;
             smallScale = originalScale * 0.1f;
 
@@ -84,7 +80,7 @@ namespace Client
             int index = UnityEngine.Random.Range(0, (int)maxCount);
             Script script = DataManager.Instance.GetData<Script>(index);
 
-            // 임시: 캐릭터 종류 관련 로직 정해지면 수정
+            // TODO : 캐릭터 종류 관련 로직 정해지면 수정
             //string charType = script.Character; 
 
             if (script == null) 

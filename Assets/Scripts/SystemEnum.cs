@@ -41,6 +41,11 @@ namespace Client
             None, Choice, Condition
         }
 
+        public enum eLineType
+        {
+            Narration, Speak
+        }
+
         #region Turns
         public enum eMonths
         {

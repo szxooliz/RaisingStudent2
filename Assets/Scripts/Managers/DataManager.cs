@@ -27,7 +27,7 @@ namespace Client
         Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         public PlayerData playerData; 
-        public PersistentData persistentData = new PersistentData();
+        public PersistentData persistentData;
 
         public ActivityData activityData = new ActivityData(); // 활동 하나의 데이터, 결과 전달용
 
@@ -38,12 +38,8 @@ namespace Client
 
         public override void Init()
         {
-            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
-
+            LoadAllData();
             LoadSheetDatas();
-            playerData = LoadData<PlayerData>(playerData_path);
-            persistentData = LoadData<PersistentData>(persistentData_path);
 
             // 미리 EventResult 전부 딕셔너리에 저장
             for (int i = 0; ; i++)
@@ -189,6 +185,20 @@ namespace Client
             {
                 Debug.Log("Save file does not exist.");
             }
+        }
+        public void LoadAllData()
+        {
+            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            playerData = LoadData<PlayerData>(playerData_path);
+            persistentData = LoadData<PersistentData>(persistentData_path);
+        }
+        public void SaveAllData()
+        {
+            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            SaveData<PlayerData>(playerData_path, playerData);
+            SaveData<PersistentData>(persistentData_path, persistentData);
         }
 
         #endregion

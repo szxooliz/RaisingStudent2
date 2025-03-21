@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Client.SystemEnum;
+using DG.Tweening;
 
 namespace Client
 {
@@ -21,10 +21,12 @@ namespace Client
         }
         enum Images
         {
-            IMG_Status
+            IMG_Status, IMG_Black
         }
 
         private string spritePath = "Sprites/UI/Status/Status_";
+        private Image blackImage;
+        private float duration = 0.5f;
 
         public override void Init()
         {
@@ -38,8 +40,11 @@ namespace Client
             UpdateTermUI();
             UpdateTurnUI();
 
+            blackImage = GetImage((int)Images.IMG_Black);
+
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
             EventManager.Instance.OnEventStart += ShowEventName;
+            EventManager.Instance.OnEventStart += EventFadeInOut;
         }
 
         void BindButton()
@@ -136,6 +141,57 @@ namespace Client
             GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.title;
         }
 
-    }
+        public void EventFadeInOut()
+        {
+            StartCoroutine(FadeInOut());
+        }
 
+        // 페이드 인과 아웃을 순차적으로 수행하는 코루틴
+        private IEnumerator FadeInOut()
+        {
+            // 페이드 인
+            yield return FadeIn();
+
+            // 페이드 아웃
+            yield return FadeOut();
+        }
+
+        private IEnumerator FadeIn()
+        {
+            Color color = blackImage.color;
+            color.a = 0f;
+            blackImage.color = color;
+
+            float timer = 0f;
+            while (timer < duration)
+            {
+                color.a = Mathf.Lerp(0f, 1f, timer / duration);
+                blackImage.color = color;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            color.a = 1f;
+            blackImage.color = color;
+        }
+
+        private IEnumerator FadeOut()
+        {
+            Color color = blackImage.color;
+            color.a = 1f;
+            blackImage.color = color;
+
+            float timer = 0f;
+            while (timer < duration)
+            {
+                color.a = Mathf.Lerp(1f, 0f, timer / duration);
+                blackImage.color = color;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            color.a = 0f;
+            blackImage.color = color;
+        }
+    }
 }

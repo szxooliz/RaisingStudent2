@@ -1,14 +1,13 @@
-using Client;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Client.SystemEnum;
+
 
 namespace Client
 {
@@ -27,7 +26,7 @@ namespace Client
         }
         enum Images
         {
-            IMG_CharFace, IMG_NameTag
+            IMG_CharFace, IMG_NameTag, IMG_Black
         }
         enum GameObjects
         {
@@ -35,6 +34,7 @@ namespace Client
         }
         #endregion
 
+        private float fadeDuration = 0.5f;
         private long startingID;
         private long nowEventScriptID;
         private Coroutine coroutine = null;
@@ -103,14 +103,16 @@ namespace Client
         {
             EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
             startingID = EventManager.Instance.nowEventData.eventScripts.Keys.Min();
-            nowEventScriptID = startingID; 
+            nowEventScriptID = startingID;
 
-            // 이벤트 타이틀 띄우기
             EventManager.Instance.OnEventStart?.Invoke();
 
             GetGameObject((int)GameObjects.Selection).SetActive(false);
             GetGameObject((int)GameObjects.Stats).SetActive(false);
+
         }
+
+
         IEnumerator LoadNextDialogue()
         {
             if (pastEventScript == null)
@@ -215,7 +217,6 @@ namespace Client
             GetButton((int)Buttons.BTN_Select1).onClick.RemoveAllListeners(); 
             GetButton((int)Buttons.BTN_Select2).onClick.RemoveAllListeners();
 
-            // 리스너 추가
             GetButton((int)Buttons.BTN_Select1).onClick.AddListener(() => OnClickSelection(selectScript.MoveLine1, selectScript.MoveLine2, true));
             GetButton((int)Buttons.BTN_Select2).onClick.AddListener(() => OnClickSelection(selectScript.MoveLine1, selectScript.MoveLine2, false));
         }
@@ -369,6 +370,9 @@ namespace Client
                 // 실제 스탯에 반영
                 if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
                 else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
+
+                // TODO : Save - 출시 때 주석 해제
+                // DataManager.Instance.SaveAllData();
             }
             GetGameObject((int)GameObjects.Stats).SetActive(true);
             GetText((int)Texts.TMP_CharName).text = "";
