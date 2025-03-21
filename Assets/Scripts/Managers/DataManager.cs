@@ -38,7 +38,6 @@ namespace Client
 
         public override void Init()
         {
-
             string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
             string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
 
@@ -59,7 +58,9 @@ namespace Client
                     break;
                 }
             }
-
+            
+            // MARK-: EndingList 객체 생성 함수
+            persistentData.Initialize();
         }
 
         #region SheetData Load & Save
