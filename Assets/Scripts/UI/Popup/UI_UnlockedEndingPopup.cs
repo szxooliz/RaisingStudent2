@@ -13,7 +13,7 @@ namespace Client
 
         enum Buttons
         {
-            Panel, BTN_X,
+            Panel, BTN_X, BTN_BigIllustraion,
         }
 
         enum Texts
@@ -35,6 +35,7 @@ namespace Client
             Bind<TMPro.TMP_Text>(typeof(Texts));
             Bind<Image>(typeof(Images));
             BindButton();
+            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(false);
             GetImage((int)Images.IMG_Illustraion).gameObject.AddComponent<Button>().onClick.AddListener(OnClickImage);
         }
 
@@ -42,6 +43,7 @@ namespace Client
         {
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
             BindEvent(GetButton((int)Buttons.BTN_X).gameObject, OnClickXBtn);
+            BindEvent(GetButton((int)Buttons.BTN_BigIllustraion).gameObject, OnClickBigImage);
         }
 
         #region 버튼 이벤트
@@ -57,10 +59,17 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
+        void OnClickBigImage(PointerEventData evt)
+        {
+            Debug.Log("큰 일러스트 누름");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
+            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(false);
+        }
         void OnClickImage()
         {
             Debug.Log("이미지 누름");
             SoundManager.Instance.Play(eSound.SFX_DialogClick);
+            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(true);
         }
         #endregion
 
@@ -76,13 +85,36 @@ namespace Client
 
                 string imagePath = endingSpritePath + $"Ending_{(int)(ending.endingName)}";
                 GetImage((int)Images.IMG_Illustraion).sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+                GetButton((int)Buttons.BTN_BigIllustraion).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
 
-                for (int i = 0; i < ending.awards.Count; i++)
+                // 이벤트 표시
+                string str = "";
+                for (int i = 0; i < ending.playerData.EventRecordList.Count; i++)
                 {
-                    int index = (int)Texts.TMP_Awards1 + i;
-                    GetText(index).text = ending.awards[i];
+                    string title = ending.playerData.EventRecordList[i].Item1;
+                    string record = ending.playerData.EventRecordList[i].Item2;
+                    switch (title)
+                    {
+                        case "1학기 중간":
+                            GetText((int)Texts.TMP_Awards1).text = record;
+                            break;
+                        case "1학기 기말":
+                            GetText((int)Texts.TMP_Awards2).text = record;
+                            break;
+                        case "2학기 중간":
+                            GetText((int)Texts.TMP_Awards3).text = record;
+                            break;
+                        case "2학기 기말":
+                            GetText((int)Texts.TMP_Awards4).text = record;
+                            break;
+                        default:
+                            str += title + " " + record + "\n";
+                            break;
+                    }
                 }
+                GetText((int)Texts.TMP_Contents).text = str;
             }
+
         }
     }
 }
