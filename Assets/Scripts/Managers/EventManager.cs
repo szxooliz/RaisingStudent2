@@ -251,26 +251,19 @@ namespace Client
         {
             Dictionary<long, EventScript> eventScripts = new Dictionary<long, EventScript>();
             int tempIndex = eventType == eEventType.Random ? RANDOM_SCRIPT_THRESHOLD : 0;
-
             while (true)
             {
                 try
                 {
                     EventScript eventScript = DataManager.Instance.GetData<EventScript>(tempIndex);
-
                     if (eventScript.EventNum == eventID)
                     {
                         eventScripts.Add(eventScript.index, eventScript);
                     }
                 }
-                catch
-                {
-                    break;
-                }
-
+                catch { break; }
                 tempIndex++;
             }
-
             return eventScripts;
         }
 
@@ -284,8 +277,6 @@ namespace Client
             while (nowEventData.eventScripts.ContainsKey(startIndex))
             {
                 if (endIndex.HasValue && startIndex >= endIndex.Value) break;
-
-                Debug.Log($"{startIndex}번 스크립트는 지웁니다");
                 nowEventData.eventScripts.Remove(startIndex++);
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,20 +15,29 @@ namespace Client
         [SerializeField] float charDuration = 5f;
         [SerializeField] float narDuration = 5f;
 
-        [SerializeField]
-        private List<string> _charLines = new List<string>()
+        private List<string> bigSuccessLines = new List<string>()
         {
-            "오늘 집중이 너무 잘 되는데요!",
-            "오예 굿굿 저녁으로 맛잇는거 먹어야지",
-            "차라리 쿨쿨따 하는게 더 나았겠다"
+            "오늘 출결 시스템이 고장났대요! 나이스 타이밍!",
+            "오늘 집중이 너무 잘 됐어요! 교수님의 깔깔 유머집 시리즈까지 전부 기억나요!",
+            "22킬 0데스 7어시! 게임이 너무 쉬운데요!",
+            "백만 스물하나… 백만 스물둘…! 하루 종일 할 수도 있어요!",
+            "동방에서 피자 먹기로 했어요! 내일 봬요!"
         };
-
-        [SerializeField]
-        private List<string> _restLines = new()
+        private List<string> successLines = new List<string>()
         {
-            "스트레스가 싹 풀렸어요!! 겡끼삥삥~!",
-            "역시 최고의 대학은 침대예요!",
-            "으우... 시간만 낭비한 것 같아요..."
+            "몇 번까지는 빠져도 점수 안 깎이니까!",
+            "수업 끝! 집 가서 복습만 하면 되겠는데요!",
+            "8킬 3데스 13어시, 이 정도 쯤이야!",
+            "목표보다 십 분 더 뛰었어요… 체력이 늘었나?!",
+            "동방에서 낮잠 자야지…!"
+        };
+        private List<string> failLines = new List<string>()
+        {
+            "어떡해, 교수님이 오늘 출석 두 번이나 부르셨대요…!",
+            "하아아암… 엇, 벌써 수업 끝인가?!",
+            "0킬 9데스 2어시…… 게임 접을까?",
+            "으으으… 힘들어… 단백질 쉐이크 맛 없어…",
+            "헉… 동방에 있는 에너지 드링크, 먹으면 안 되는 거였다고요?!"
         };
         #endregion
 
@@ -53,7 +63,7 @@ namespace Client
         }
         #endregion
 
-        private Image charFace;          // 캐릭터 이미지
+        private Image          charFace; // 캐릭터 이미지
         private TMPro.TMP_Text charName; // 캐릭터 이름표
         private TMPro.TMP_Text charLine; // 캐릭터 대사
         private TMPro.TMP_Text line;     // 결과 나레이션
@@ -146,6 +156,51 @@ namespace Client
             }
         }
 
+        string GetLineByResult(ActivityData activityData)
+        {
+            if (activityData.resultType == eResultType.MaxCount)
+            {
+                Debug.LogError("유효한 결과가 아닙니다.");
+                return null;
+            }
+            if (activityData.activityType == eActivityType.MaxCount)
+            {
+                Debug.LogError("유효한 활동이 아닙니다.");
+                return null;
+            }
+            Debug.Log($"선택한 활동 종류 {activityData.activityType}");
+
+            if (activityData.resultType == eResultType.BigSuccess)
+            {
+                return bigSuccessLines[(int)activityData.activityType];
+            }
+            else if (activityData.resultType == eResultType.Success)
+            {
+                return successLines[(int)activityData.activityType];
+            }
+            else
+            {
+                return failLines[(int)activityData.activityType];
+            }
+        }
+
+        string GetFaceByResult(eResultType resultType)
+        {
+            if (resultType == eResultType.MaxCount)
+            {
+                Debug.LogError("유효한 결과가 아닙니다.");
+                return null;
+            }
+
+            if (resultType == eResultType.BigSuccess)
+                return "glad";
+            else if (resultType == eResultType.Success)
+                return "basic";
+            else
+                return "sad";
+
+        }
+
         /// <summary>
         /// 활동 결과 1 화면 - 캐릭터 대사
         /// </summary>
@@ -155,17 +210,8 @@ namespace Client
             string str = null;
             string face = null;
 
-            if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
-                str = _restLines[(int)DataManager.Instance.activityData.resultType];
-            else
-                str = _charLines[(int)DataManager.Instance.activityData.resultType];
-
-            if (DataManager.Instance.activityData.resultType == eResultType.BigSuccess)
-                face = "glad";
-            else if (DataManager.Instance.activityData.resultType == eResultType.Success)
-                face = "basic";
-            else
-                face = "sad";
+            str = GetLineByResult(DataManager.Instance.activityData);
+            face = GetFaceByResult(DataManager.Instance.activityData.resultType);
 
             string path = Util.GetSeasonIllustPath(face);
             charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
@@ -183,25 +229,25 @@ namespace Client
             GetGameObject((int)GameObjects.Activity2).SetActive(true);
             GetGameObject((int)GameObjects.Activity1).SetActive(false);
 
-            string str; // TODO : StringBuilder로 바꾸기
+            StringBuilder sb = new StringBuilder();
 
             if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
-                str = GetResultTypeKor(DataManager.Instance.activityData.resultType) + Environment.NewLine
-                    + "스트레스가 " + -DataManager.Instance.activityData.stressValue + " 감소했다!";
+                sb.AppendLine($"{GetResultTypeKor(DataManager.Instance.activityData.resultType)}");
+                sb.AppendLine($"스트레스가 + {-DataManager.Instance.activityData.stressValue} 감소했다!");
             }
             else
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
                 UpdateStatUIs();
 
-                str = GetResultTypeKor(DataManager.Instance.activityData.resultType) + Environment.NewLine
-                      + GetStatNameKor(DataManager.Instance.activityData.statNames[0]) + "이 " + DataManager.Instance.activityData.statValues[0] + " 상승했다." + Environment.NewLine
-                      + GetStatNameKor(DataManager.Instance.activityData.statNames[1]) + "이 " + DataManager.Instance.activityData.statValues[1] + " 상승했다." + Environment.NewLine;
+                sb.AppendLine($"{GetResultTypeKor(DataManager.Instance.activityData.resultType)}");
+                sb.AppendLine($"{GetStatNameKor(DataManager.Instance.activityData.statNames[0])}이 {DataManager.Instance.activityData.statValues[0]} 상승했다.");
+                sb.AppendLine($"{GetStatNameKor(DataManager.Instance.activityData.statNames[1])}이 {DataManager.Instance.activityData.statValues[1]} 상승했다.");
             }
 
-            StartCoroutine(Util.LoadTextOneByOne(str, line));
+            StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), line));
 
             yield return null;
         }

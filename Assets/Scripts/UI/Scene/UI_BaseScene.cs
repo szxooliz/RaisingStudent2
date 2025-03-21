@@ -44,7 +44,7 @@ namespace Client
 
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
             EventManager.Instance.OnEventStart += ShowEventName;
-            EventManager.Instance.OnEventStart += EventFadeInOut;
+            //EventManager.Instance.OnEventStart += EventFadeInOut;
         }
 
         void BindButton()
@@ -141,10 +141,10 @@ namespace Client
             GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.title;
         }
 
-        public void EventFadeInOut()
-        {
-            StartCoroutine(FadeInOut());
-        }
+        //public void EventFadeInOut()
+        //{
+        //    StartCoroutine(FadeInOut());
+        //}
 
         // 페이드 인과 아웃을 순차적으로 수행하는 코루틴
         private IEnumerator FadeInOut()

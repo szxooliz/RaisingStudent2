@@ -29,7 +29,7 @@ namespace Client
         public PlayerData playerData; 
         public PersistentData persistentData;
 
-        public ActivityData activityData = new ActivityData(); // 활동 하나의 데이터, 결과 전달용
+        public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
 
         #region Singleton
         private DataManager()
@@ -216,32 +216,32 @@ namespace Client
             switch(activityType)
             {
                 case eActivityType.Rest:
-                    activityData.activityType = eActivityType.Rest;
+                    activityData.activityType = activityType;
                     // 자체휴강만 랜덤으로 대성공/성공/대실패 여부 결정
                     int prob = UnityEngine.Random.Range(0, 3);
                     activityData.resultType = (eResultType)prob;
                     activityData.stressValue = -StressRestList[prob]; ;
                     break;
                 case eActivityType.Class:
-                    activityData.activityType = eActivityType.Class;
+                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Inteli);
                     activityData.statNames.Add(eStatName.Strength);
                     activityData.stressValue = STRESS_CLASS;
                     break;
                 case eActivityType.Game:
-                    activityData.activityType = eActivityType.Class;
+                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Otaku);
                     activityData.statNames.Add(eStatName.Inteli);
                     activityData.stressValue = STRESS_GAME;
                     break;
                 case eActivityType.Workout:
-                    activityData.activityType = eActivityType.Class;
+                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Strength);
                     activityData.statNames.Add(eStatName.Charming);
                     activityData.stressValue = STRESS_WORKOUT;
                     break;
                 case eActivityType.Club:
-                    activityData.activityType = eActivityType.Class;
+                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Charming);
                     activityData.statNames.Add(eStatName.Otaku);
                     activityData.stressValue = STRESS_CLUB;
