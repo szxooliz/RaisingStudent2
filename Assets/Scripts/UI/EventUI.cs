@@ -26,7 +26,7 @@ namespace Client
         }
         enum Images
         {
-            IMG_CharFace, IMG_NameTag, IMG_Black
+            IMG_Background, IMG_CharFace, IMG_NameTag, //IMG_Black
         }
         enum GameObjects
         {
@@ -40,12 +40,28 @@ namespace Client
         private Coroutine coroutine = null;
         private EventScript pastEventScript = null;
 
+        private string backGround;
+        public string BackGround
+        {
+            get => backGround;
+            set
+            {
+                if (backGround != value)
+                {
+                    backGround = value;
+                    OnBGChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+        public event EventHandler OnBGChanged;
+
         public override void Init()
         {
             Bind<TMPro.TMP_Text>(typeof(Texts));
             Bind<Image>(typeof(Images));
             Bind<GameObject>(typeof(GameObjects));
             Bind<Button>(typeof(Buttons));
+            OnBGChanged += ChangeBackGround;
         }
 
         void OnEnable()
@@ -109,9 +125,7 @@ namespace Client
 
             GetGameObject((int)GameObjects.Selection).SetActive(false);
             GetGameObject((int)GameObjects.Stats).SetActive(false);
-
         }
-
 
         IEnumerator LoadNextDialogue()
         {
@@ -123,7 +137,7 @@ namespace Client
             }
             else
             {
-                if (EventManager.Instance.EventResults.ContainsKey(pastEventScript.index))
+                if (DataManager.Instance.EventResultDict.ContainsKey(pastEventScript.index))
                     GetResult();
                 else 
                     BranchByType(pastEventScript);
@@ -134,9 +148,7 @@ namespace Client
 
         void GetResult()
         {
-            Debug.Log("이벤트 결과 발생!!");
             ShowStatResult(pastEventScript);
-            
             EventScript eventScript = GetNextScript(nowEventScriptID);
             pastEventScript = eventScript;
             
@@ -149,22 +161,23 @@ namespace Client
         /// <param name="_eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
         void BranchByType(EventScript _eventScript)
         {
-            switch (_eventScript.BranchType)
+            if (_eventScript.BranchType == eBranchType.Choice)
             {
-                case eBranchType.Choice:
-                    GetGameObject((int)GameObjects.Selection).SetActive(true);
-                    ShowSelection(_eventScript);
-                    break;
-                case eBranchType.Condition:
-                    GetStatCondition(_eventScript);
-                    break;
-                default:
-                    EventScript eventScript = GetNextScript(nowEventScriptID);
-                    DisplayScript(eventScript);
-                    pastEventScript = eventScript;
-                    break;
+                GetGameObject((int)GameObjects.Selection).SetActive(true);
+                ShowSelection(_eventScript);
+            }
+            else if (_eventScript.BranchType == eBranchType.Condition)
+            {
+                GetStatCondition(_eventScript);
+            }
+            else
+            {
+                EventScript eventScript = GetNextScript(nowEventScriptID);
+                DisplayScript(eventScript);
+                pastEventScript = eventScript;
             }
         }
+
         void DisplayScript(EventScript _eventScript)
         {
             if (_eventScript == null)
@@ -203,6 +216,14 @@ namespace Client
             GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
                 Util.GetCharNameKor(_eventScript.Character) : "";
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
+        }
+
+        void ChangeBackGround(object sender, System.EventArgs e)
+        {
+            if (BackGround == null) return;
+
+            string path = $"Sprites/UI/BackGround/{BackGround}";
+            GetImage((int)Images.IMG_Background).sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
 
         #region 선택지에 따른 분기
@@ -339,9 +360,9 @@ namespace Client
         #region 이벤트 결과
         void ShowStatResult(EventScript _eventScript)
         {
-            if (!EventManager.Instance.EventResults.ContainsKey(_eventScript.index)) return;
+            if (!DataManager.Instance.EventResultDict.ContainsKey(_eventScript.index)) return;
 
-            EventResult eventResult = EventManager.Instance.EventResults.GetValueOrDefault(_eventScript.index);
+            EventResult eventResult = DataManager.Instance.EventResultDict.GetValueOrDefault(_eventScript.index);
             EventManager.Instance.nowEventData.hasChange = true;
             List<long> result = new()
             {
@@ -397,7 +418,6 @@ namespace Client
                 GetText((int)Texts.TMP_Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
         }
-
         #endregion
     }
 }

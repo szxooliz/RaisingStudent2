@@ -19,6 +19,7 @@ public long index; // 스크립트 넘버
 		public string Face; // 캐릭터의 감정
 		public bool NameTag; // 이름표 사용 여부
 		public bool HasIllust; // 일러스트 등장 여부
+		public string Background; // 배경 설정
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -84,6 +85,11 @@ public long index; // 스크립트 넘버
 					    data.HasIllust = default;
 					else
 					    data.HasIllust = Convert.ToBoolean(values[6]);
+					
+					if(values[7] == "")
+					    data.Background = default;
+					else
+					    data.Background = Convert.ToString(values[7]);
 					
 
                     dataList[data.index] = data;

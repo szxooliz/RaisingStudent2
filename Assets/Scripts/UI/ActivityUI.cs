@@ -210,8 +210,8 @@ namespace Client
             string str = null;
             string face = null;
 
-            str = GetLineByResult(DataManager.Instance.activityData);
-            face = GetFaceByResult(DataManager.Instance.activityData.resultType);
+            str = GetLineByResult(GameManager.Instance.activityData);
+            face = GetFaceByResult(GameManager.Instance.activityData.resultType);
 
             string path = Util.GetSeasonIllustPath(face);
             charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
@@ -231,20 +231,20 @@ namespace Client
 
             StringBuilder sb = new StringBuilder();
 
-            if (DataManager.Instance.activityData.activityType == eActivityType.Rest)
+            if (GameManager.Instance.activityData.activityType == eActivityType.Rest)
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
-                sb.AppendLine($"{GetResultTypeKor(DataManager.Instance.activityData.resultType)}");
-                sb.AppendLine($"스트레스가 + {-DataManager.Instance.activityData.stressValue} 감소했다!");
+                sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
+                sb.AppendLine($"스트레스가 + {-GameManager.Instance.activityData.stressValue} 감소했다!");
             }
             else
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
                 UpdateStatUIs();
 
-                sb.AppendLine($"{GetResultTypeKor(DataManager.Instance.activityData.resultType)}");
-                sb.AppendLine($"{GetStatNameKor(DataManager.Instance.activityData.statNames[0])}이 {DataManager.Instance.activityData.statValues[0]} 상승했다.");
-                sb.AppendLine($"{GetStatNameKor(DataManager.Instance.activityData.statNames[1])}이 {DataManager.Instance.activityData.statValues[1]} 상승했다.");
+                sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
+                sb.AppendLine($"{GetStatNameKor(GameManager.Instance.activityData.statNames[0])}이 {GameManager.Instance.activityData.statValues[0]} 상승했다.");
+                sb.AppendLine($"{GetStatNameKor(GameManager.Instance.activityData.statNames[1])}이 {GameManager.Instance.activityData.statValues[1]} 상승했다.");
             }
 
             StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), line));

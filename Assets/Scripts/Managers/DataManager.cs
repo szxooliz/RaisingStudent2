@@ -12,24 +12,22 @@ namespace Client
 {
     public class DataManager : Singleton<DataManager>
     {
-        #region constant 기획 조정용
-        // 증가 시에는 양수, 감소 시에는 음수로 값 설정
-        private const float STRESS_CLASS = 25f;
-        private const float STRESS_GAME = 20f;
-        private const float STRESS_WORKOUT = 20f;
-        private const float STRESS_CLUB = 20f;
-        private List<int> StressRestList = new() { 80, 60, 30 };
-        #endregion
 
         // 로드한 적 있는 DataTable (Table 명을  Key1 데이터 ID를 Key2로 사용)
         Dictionary<string, Dictionary<long, SheetData>> _cache = new Dictionary<string, Dictionary<long, SheetData>>();
         // 로드한 적 있는 Sprite
         Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
+
+        Dictionary<long, EventResult> _eventResultDict = new();
+        public Dictionary<long, EventResult> EventResultDict => _eventResultDict; // key : ScriptIndex
+        // EventID별 EventScript
+        Dictionary<long, Dictionary<long, EventScript>> _eventScriptDict = new();
+        public Dictionary<long, Dictionary<long, EventScript>> EventScriptDict => _eventScriptDict;
+
         public PlayerData playerData; 
         public PersistentData persistentData;
 
-        public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
 
         #region Singleton
         private DataManager()
@@ -42,19 +40,13 @@ namespace Client
             LoadSheetDatas();
 
             // 미리 EventResult 전부 딕셔너리에 저장
-            for (int i = 0; ; i++)
+            var eventResultList = GetDataList<EventResult>();
+            foreach (var _eventResult in eventResultList)
             {
-                try
-                {
-                    EventResult eventResult = GetData<EventResult>(i);
-                    EventManager.Instance.EventResults.Add(eventResult.ScriptIndex, eventResult);
-                }
-                catch
-                {
-                    break;
-                }
+                var eventResult = _eventResult as EventResult;
+                _eventResultDict.TryAdd(eventResult.ScriptIndex, eventResult);
             }
-            
+
             // MARK-: EndingList 객체 생성 함수
             persistentData.Initialize();
         }
@@ -84,7 +76,7 @@ namespace Client
                 {
                     _cache.Add(type.Name, sheet);
                 }
-
+                SetTypeData(type.Name);
             }
         }
 
@@ -137,6 +129,47 @@ namespace Client
                 _cache[key].Add(id, data);
             }
         }
+
+        public List<SheetData> GetDataList<T>() where T : SheetData
+        {
+            string typeName = typeof(T).Name;
+            if (_cache.ContainsKey(typeName) == false)
+            {
+                Debug.LogWarning($"DataManager : {typeName} 타입 데이터가 존재하지 않습니다.");
+
+                return null;
+            }
+            return _cache[typeName].Values.ToList();
+        }
+        private void SetTypeData(string data)
+        {
+            if (typeof(EventScript).ToString().Contains(data)) { SetEventScriptsMap(); return; }
+
+        }
+        /// <summary>
+        /// 이벤트 아이디별 스크립트 데이터
+        /// </summary>
+        private void SetEventScriptsMap()
+        {
+            string key = typeof(EventScript).Name;
+            if (_cache.ContainsKey(key) == false)
+                return;
+
+            var eventScriptDict = _cache[key];
+            if (eventScriptDict is null) return;
+
+            foreach (var kvp in eventScriptDict)
+            {
+                var eventScript = kvp.Value as EventScript;
+
+                if (!_eventScriptDict.ContainsKey(eventScript.EventNum))
+                    _eventScriptDict.Add(eventScript.EventNum, new Dictionary<long, EventScript>());
+
+                if (!_eventScriptDict[eventScript.EventNum].ContainsKey(eventScript.index))
+                    _eventScriptDict[eventScript.EventNum].Add(eventScript.index, eventScript);
+            }
+        }
+
         #endregion
 
         #region JSON Data Load & Save
@@ -188,68 +221,25 @@ namespace Client
         }
         public void LoadAllData()
         {
-            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            // 슬래시와 역슬래시 이슈로 직접 작용
+            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
             playerData = LoadData<PlayerData>(playerData_path);
             persistentData = LoadData<PersistentData>(persistentData_path);
         }
         public void SaveAllData()
         {
-            string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
             SaveData<PlayerData>(playerData_path, playerData);
             SaveData<PersistentData>(persistentData_path, persistentData);
         }
 
         #endregion
-
-        /// <summary>
-        /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
-        /// </summary>
-        /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
-        /// <returns></returns>
-        public ActivityData SetNewActivityData(eActivityType activityType)
-        {
-            activityData = new ActivityData();
-            activityData.statValues = new List<int>() { 10, 5 }; // 임시값
-
-            switch(activityType)
-            {
-                case eActivityType.Rest:
-                    activityData.activityType = activityType;
-                    // 자체휴강만 랜덤으로 대성공/성공/대실패 여부 결정
-                    int prob = UnityEngine.Random.Range(0, 3);
-                    activityData.resultType = (eResultType)prob;
-                    activityData.stressValue = -StressRestList[prob]; ;
-                    break;
-                case eActivityType.Class:
-                    activityData.activityType = activityType;
-                    activityData.statNames.Add(eStatName.Inteli);
-                    activityData.statNames.Add(eStatName.Strength);
-                    activityData.stressValue = STRESS_CLASS;
-                    break;
-                case eActivityType.Game:
-                    activityData.activityType = activityType;
-                    activityData.statNames.Add(eStatName.Otaku);
-                    activityData.statNames.Add(eStatName.Inteli);
-                    activityData.stressValue = STRESS_GAME;
-                    break;
-                case eActivityType.Workout:
-                    activityData.activityType = activityType;
-                    activityData.statNames.Add(eStatName.Strength);
-                    activityData.statNames.Add(eStatName.Charming);
-                    activityData.stressValue = STRESS_WORKOUT;
-                    break;
-                case eActivityType.Club:
-                    activityData.activityType = activityType;
-                    activityData.statNames.Add(eStatName.Charming);
-                    activityData.statNames.Add(eStatName.Otaku);
-                    activityData.stressValue = STRESS_CLUB;
-                    break;
-            }
-        
-            return activityData;
-        }
 
         /// <summary>
         /// 캐싱된 스프라이트 로드 / 반환

@@ -1,19 +1,19 @@
 ﻿ ,캐릭터 고유값,캐릭터 이름,기본,,,,,,,,,,,,,,,,,,,,,,
 index,Character,CharacterName,basic,,,,,,,,,,,,,,,,,,,,,,
 long,string,string,string,,,,,,,,,,,,,,,,,,,,,,
-0,Comsoon,김컴순,Comsoon_basic,,,,,,,,,,,,,,,,,,,,,,
-1,Professor,교수님,Professor_basic,,,,,,,,,,,,,,,,,,,,,,
-2,StudentA,학생 A,,,,,,,,,,,,,,,,,,,,,,,
-3,StudentB,학생 B,,,,,,,,,,,,,,,,,,,,,,,
-4,Employee,직원,,,,,,,,,,,,,,,,,,,,,,,
-5,Announce,,,,,,,,,,,,,,,,,,,,,,,,
-
-
-
-
-
-
-
+0,Comsoon,김컴순,Comsoon,,,,,,,,,,,,,,,,,,,,,,
+1,Player,플레이어,none,,,,,,,,,,,,,,,,,,,,,,
+2,Narration,나레이션,none,,,,,,,,,,,,,,,,,,,,,,
+3,Professor,교수님,Professor,,,,,,,,,,,,,,,,,,,,,,
+4,StudentA,학생 A,ExtraA,,,,,,,,,,,,,,,,,,,,,,
+5,StudentB,학생 B,ExtraB,,,,,,,,,,,,,,,,,,,,,,
+6,Employee,직원,ExtraB,,,,,,,,,,,,,,,,,,,,,,
+7,Announce,안내 방송,none,,,,,,,,,,,,,,,,,,,,,,
+8,FriendA,친구 A,ExtraA,,,,,,,,,,,,,,,,,,,,,,
+9,FriendB,친구,ExtraB,,,,,,,,,,,,,,,,,,,,,,
+10,SeniorA,선배,ExtraB,,,,,,,,,,,,,,,,,,,,,,
+11,UnknownComsoon,???,ExtraA,,,,,,,,,,,,,,,,,,,,,,
+12,Commentator,해설진,ExtraB,,,,,,,,,,,,,,,,,,,,,,
 
 
 

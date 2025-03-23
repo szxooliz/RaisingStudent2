@@ -13,7 +13,6 @@ namespace Client
         public eMonths CurrentMonth { get; set; } = eMonths.Mar;   // n월 3-6/9-12
         public eThirds CurrentThird { get; set; } = eThirds.First; // a순 상중하
 
-        //public List<ProcessData> WatchedProcess = new();
         public List<(string title, string record)> EventRecordList = new(); // 엔딩 이력서 표시용 이벤트 진행 결과
         public Dictionary<long, EventData> WatchedEventsDict = new();   // 이벤트 중복 방지용 기록
         public Dictionary<long, bool> AppliedEventsDict = new();        // 이벤트 참여 여부 기록

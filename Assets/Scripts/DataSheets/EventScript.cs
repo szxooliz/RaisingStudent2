@@ -21,6 +21,7 @@ public long index; // 스크립트 넘버
 		
 		public SystemEnum.eBranchType BranchType; // 분기타입
 		public long BranchIndex; // 분기인덱스
+		public string Background; // 배경 설정
 		
 
         public override Dictionary<long, SheetData> LoadData()
@@ -91,6 +92,11 @@ public long index; // 스크립트 넘버
 					    data.BranchIndex = default;
 					else
 					    data.BranchIndex = Convert.ToInt64(values[7]);
+					
+					if(values[8] == "")
+					    data.Background = default;
+					else
+					    data.Background = Convert.ToString(values[8]);
 					
 
                     dataList[data.index] = data;

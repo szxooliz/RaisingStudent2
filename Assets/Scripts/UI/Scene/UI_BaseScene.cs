@@ -21,7 +21,7 @@ namespace Client
         }
         enum Images
         {
-            IMG_Status, IMG_Black
+            IMG_Status, //IMG_Black
         }
 
         private string spritePath = "Sprites/UI/Status/Status_";
@@ -40,7 +40,7 @@ namespace Client
             UpdateTermUI();
             UpdateTurnUI();
 
-            blackImage = GetImage((int)Images.IMG_Black);
+            //blackImage = GetImage((int)Images.IMG_Black);
 
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
             EventManager.Instance.OnEventStart += ShowEventName;
