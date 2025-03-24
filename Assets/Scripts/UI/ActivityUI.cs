@@ -168,7 +168,6 @@ namespace Client
                 Debug.LogError("유효한 활동이 아닙니다.");
                 return null;
             }
-            Debug.Log($"선택한 활동 종류 {activityData.activityType}");
 
             if (activityData.resultType == eResultType.BigSuccess)
             {

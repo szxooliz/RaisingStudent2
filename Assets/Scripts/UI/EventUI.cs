@@ -238,8 +238,8 @@ namespace Client
             GetButton((int)Buttons.BTN_Select1).onClick.RemoveAllListeners(); 
             GetButton((int)Buttons.BTN_Select2).onClick.RemoveAllListeners();
 
-            GetButton((int)Buttons.BTN_Select1).onClick.AddListener(() => OnClickSelection(selectScript.MoveLine1, selectScript.MoveLine2, true));
-            GetButton((int)Buttons.BTN_Select2).onClick.AddListener(() => OnClickSelection(selectScript.MoveLine1, selectScript.MoveLine2, false));
+            GetButton((int)Buttons.BTN_Select1).onClick.AddListener(() => OnClickSelection(selectScript, true));
+            GetButton((int)Buttons.BTN_Select2).onClick.AddListener(() => OnClickSelection(selectScript, false));
         }
 
         /// <summary>
@@ -247,20 +247,20 @@ namespace Client
         /// </summary>
         /// <param name="nextIndex1">옮길 스크립트 인덱스</param>
         /// <param name="isFirst">첫번째 선택지인가?</param>
-        void OnClickSelection(long nextIndex1, long nextIndex2, bool isFirst)
+        void OnClickSelection(SelectScript selectScript, bool isFirst)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
-            nowEventScriptID = isFirst ? nextIndex1 : nextIndex2;
+            nowEventScriptID = isFirst ? selectScript.MoveLine1 : selectScript.MoveLine2;
             
             if (isFirst) // 첫 번째 버튼이면
             {
-                EventManager.Instance.DeleteOtherScripts(nextIndex2);
+                EventManager.Instance.DeleteOtherScripts(selectScript.MoveLine2);
                 EventManager.Instance.ApplyEvents(true);
             }
             else // 두 번째 버튼이면
             {
-                EventManager.Instance.DeleteOtherScripts(nextIndex1, nextIndex2);
+                EventManager.Instance.DeleteOtherScripts(selectScript.MoveLine1, selectScript.MoveLine2);
                 EventManager.Instance.ApplyEvents(false);
             }
 
@@ -364,6 +364,7 @@ namespace Client
 
             EventResult eventResult = DataManager.Instance.EventResultDict.GetValueOrDefault(_eventScript.index);
             EventManager.Instance.nowEventData.hasChange = true;
+            EventManager.Instance.nowEventData.eventResult = eventResult;
             List<long> result = new()
             {
                 eventResult.Inteli, eventResult.Otaku, eventResult.Strength, eventResult.Charming, eventResult.StressValue

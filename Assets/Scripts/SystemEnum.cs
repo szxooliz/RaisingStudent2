@@ -43,7 +43,7 @@ namespace Client
 
         public enum eLineType
         {
-            Narration, Speak
+            NARRATION, SPEAK
         }
 
         #region Turns

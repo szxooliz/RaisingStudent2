@@ -229,8 +229,7 @@ namespace Client
         /// </summary>
         private Dictionary<long, EventScript> LoadScript(long eventID)
         {
-            Dictionary<long, EventScript> eventScripts = DataManager.Instance.EventScriptDict[eventID];
-            return eventScripts;
+            return DataManager.Instance.EventScriptDict[eventID];
         }
 
         /// <summary>

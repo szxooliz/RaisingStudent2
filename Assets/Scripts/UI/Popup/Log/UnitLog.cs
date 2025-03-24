@@ -13,25 +13,14 @@ namespace Client
         // 대사 스트링
         // 토글 접어도 나타낼지 말지 bool
 
-        string charName;
-        string charPath;
-        string line;
-        bool isCollapsable;
+        public string charName;
+        public string charPath;
+        public string line;
+        public bool isCollapsable;
 
-        readonly string spritePath = "";
-        // EventScript 받아서 가공하는거랑
-        // 활동 시에 나타날 대사 or 나레이션 가공하는거 넣기
+        //public readonly string spritePath = "";
 
-        public void InitUnitLog(EventScript eventScript)
-        {
-            charName = eventScript.Character;
-            //charPath = 
-        }
-
-        public void InitUnitLog(string line, SystemEnum.eLineType eLineType)
-        {
-
-        }
+        public UnitLog() { }
     }
 
 }

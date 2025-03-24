@@ -46,6 +46,7 @@ namespace Client
 
                 DataManager.Instance.Init();
                 SoundManager.Instance.Init();
+                EventManager.Instance.Init();
             }
         }
 
