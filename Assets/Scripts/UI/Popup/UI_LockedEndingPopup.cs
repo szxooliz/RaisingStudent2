@@ -67,14 +67,11 @@ namespace Client
         /// LockedEndingPopup 데이터 설정 함
         /// </summary>
         /// <param name="ending"></param>
-        public void SetLockedEndingPopup(Ending ending)
+        public void SetLockedEndingPopup(eEndingName endingName)
         {
-            if (ending != null)
-            {
-                int index = (int)(ending.endingName);
-                GetText((int)Texts.TMP_Name).text = "파일명: 엔딩" + (char)('A' + index);
-                GetImage((int)Images.IMG_File).sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_lock");
-            }
+            int index = (int)(endingName);
+            GetText((int)Texts.TMP_Name).text = "파일명: 엔딩" + (char)('A' + index);
+            GetImage((int)Images.IMG_File).sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_lock");
         }
     }
 }

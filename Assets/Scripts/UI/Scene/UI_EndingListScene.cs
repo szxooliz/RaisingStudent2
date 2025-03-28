@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Client.SystemEnum;
+using System;
+using System.Linq;
 
 namespace Client
 {
@@ -44,14 +46,14 @@ namespace Client
         /// </summary>
         void PopulateEndingList()
         {
-            // DataManager에서 엔딩 리스트 가져오기
-            foreach (var ending in DataManager.Instance.persistentData.endingList)
-            {
-                if (ending.endingName == eEndingName.MaxCount)
-                {
-                    return;
-                }
+            List<eEndingName> endingNameList = new List<eEndingName>((eEndingName[])Enum.GetValues(typeof(eEndingName)));
 
+            var endingDict = DataManager.Instance.persistentData.endingList
+                .ToDictionary(e => e.endingName, e => e);
+
+            // DataManager에서 엔딩 리스트 가져오기
+            foreach (eEndingName endingName in endingNameList)
+            {
                 // Prefab 인스턴스 생성
                 GameObject endingItem = Instantiate(endingItemPrefab, contentParent);
 
@@ -60,25 +62,26 @@ namespace Client
                 var images = Bind<Image>(endingItem, typeof(Images));
                 var texts = Bind<TMPro.TMP_Text>(endingItem, typeof(Texts));
 
-                int index = (int)(ending.endingName);
+                // 엔딩을 나타내는 알파벳
+                char endingAlpha = (char)('A' + (int)(endingName));
 
-                // 텍스트, 버튼 및 자물쇠 아이콘 설정
-                if (ending.isUnlocked)
+                // 해금 여부를 기반으로 텍스트, 버튼 및 자물쇠 아이콘 설정
+                if (endingDict.ContainsKey(endingName))
                 {
-                    string imagePath = spritePath + (char)('A' + index) + "_off";
+                    string imagePath = spritePath + endingAlpha + "_off";
                     buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
-                    texts[(int)Texts.TMP_Name].text = GetEndingNameKor(ending.endingName);
-                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(ending));
+                    texts[(int)Texts.TMP_Name].text = GetEndingNameKor(endingName);
+                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(endingDict[endingName]));
                     images[(int)Images.IMG_LockIcon].gameObject.SetActive(false);
                 }
                 else
                 {
-                    string imagePath = spritePath + (char)('A' + index) + "_lock";
+                    string imagePath = spritePath + endingAlpha + "_lock";
                     buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
 
-                    texts[(int)Texts.TMP_Name].text = "엔딩" + (char)('A' + index);
-                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));
-                    BindEvent(images[(int)Images.IMG_LockIcon].gameObject, (PointerEventData evt) => onClickLockedEnding(ending));
+                    texts[(int)Texts.TMP_Name].text = "엔딩" + endingAlpha;
+                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickLockedEnding(endingName));
+                    BindEvent(images[(int)Images.IMG_LockIcon].gameObject, (PointerEventData evt) => onClickLockedEnding(endingName));
                     images[(int)Images.IMG_LockIcon].gameObject.SetActive(true);
                 }
             }
@@ -92,11 +95,11 @@ namespace Client
             popup.SetUnlockedEndingPopup(ending);
         }
 
-        public void onClickLockedEnding(Ending ending)
+        public void onClickLockedEnding(eEndingName endingName)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             var popup = UI_Manager.Instance.ShowPopupUI<UI_LockedEndingPopup>();
-            popup.SetLockedEndingPopup(ending);
+            popup.SetLockedEndingPopup(endingName);
         }
         #endregion
 

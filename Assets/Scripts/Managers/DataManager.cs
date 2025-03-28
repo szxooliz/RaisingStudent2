@@ -46,9 +46,6 @@ namespace Client
                 var eventResult = _eventResult as EventResult;
                 _eventResultDict.TryAdd(eventResult.ScriptIndex, eventResult);
             }
-
-            // MARK-: EndingList 객체 생성 함수
-            persistentData.Initialize();
         }
 
         #region SheetData Load & Save
