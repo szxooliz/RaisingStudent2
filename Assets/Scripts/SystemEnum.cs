@@ -166,11 +166,11 @@ namespace Client
         #region EndingName
         public enum eEndingName
         {
-            HomeProtector, ProGamer, VirtualYoutuber, GameCompany, CorporateSI, GraduateStudent, MaxCount
+            GraduateStudent, CorporateSI, GameCompany, VirtualYoutuber, ProGamer, HomeProtector, MaxCount
         }
         public enum eEndingNameKor
         {
-            홈프로텍터, 프로게이머, 버튜버, 게임회사, 대기업SI, 대학원생, MaxCount
+            대학원생, 대기업SI, 게임회사, 버튜버, 프로게이머, 홈프로텍터, MaxCount
         }
         public static string GetEndingNameKor(eEndingName endingName)
         {

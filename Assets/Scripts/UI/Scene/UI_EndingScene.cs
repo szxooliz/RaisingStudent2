@@ -16,6 +16,7 @@ namespace Client
 
         enum Images
         {
+            IMG_Background,
             IMG_Illustration,
             IMG_CharFace,
             IMG_Bubble,
@@ -28,6 +29,7 @@ namespace Client
         }
 
         private string characterSpritePath = "Sprites/Character/";
+        private string bgSpritePath = "Sprites/UI/BackGround/";
         private string endingSpritePath = "Sprites/UI/Ending/";
         private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
@@ -35,6 +37,7 @@ namespace Client
         int currentEndingNum = 0; // 현재 엔딩을 나타내는 숫자
         List<EndingScript> newEndingScripts = new List<EndingScript>(); // 현재 엔딩에 맞는 스크립트만을 저장
 
+        private bool hasBackgroundSet = false;        // 배경화면 변경 여부 
         private bool hasIllustrationAppeared = false; // 처음 일러스트 등장 여부
         private bool isIllustrationDisplayed = false; // 현재 일러스트가 표시된 상태인지 확인
 
@@ -188,6 +191,14 @@ namespace Client
 
             EndingScript endingScript = newEndingScripts[scriptIndex];
 
+            // 배경 설정
+            if (!hasBackgroundSet)
+            {
+                string bgPath = bgSpritePath + endingScript.Background;
+                GetImage((int)Images.IMG_Background).sprite = DataManager.Instance.GetOrLoadSprite(bgPath);
+                hasBackgroundSet = true;
+            }
+
             // 처음으로 일러스트가 등장한 경우
             if (!hasIllustrationAppeared && endingScript.HasIllust)
             {
@@ -222,14 +233,20 @@ namespace Client
                 GetImage((int)Images.IMG_Name).gameObject.SetActive(false);
             }
 
-            string path;
-            if (endingScript.Face == "none")
-            { // 임시
-                path = characterSpritePath + "Comsoon_basic";
+            string path = characterSpritePath + "Comsoon_Basic";
+            if (endingScript.Character == "Comsoon")
+            {
+                GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
+                path = characterSpritePath + "Comsoon_" + endingScript.Face;
+            }
+            else if (endingScript.Character == "Professor")
+            {
+                GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
+                path = characterSpritePath + endingScript.Character;
             }
             else
             {
-                path = characterSpritePath + "Comsoon_" + endingScript.Face;
+                GetImage((int)Images.IMG_CharFace).gameObject.SetActive(false);
             }
 
             GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
