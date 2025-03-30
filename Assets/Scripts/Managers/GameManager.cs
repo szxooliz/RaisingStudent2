@@ -80,38 +80,33 @@ namespace Client
         /// <returns></returns>
         public ActivityData SetNewActivityData(eActivityType activityType)
         {
-            ActivityData activityData = new ActivityData();
+            ActivityData activityData = new ActivityData(activityType);
             activityData.statValues = new List<int>() { 10, 5 }; // 임시값
 
             switch (activityType)
             {
                 case eActivityType.Rest:
-                    activityData.activityType = activityType;
                     // 자체휴강만 랜덤으로 대성공/성공/대실패 여부 결정
                     int prob = UnityEngine.Random.Range(0, 3);
                     activityData.resultType = (eResultType)prob;
                     activityData.stressValue = -StressRestList[prob]; ;
                     break;
                 case eActivityType.Class:
-                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Inteli);
                     activityData.statNames.Add(eStatName.Strength);
                     activityData.stressValue = STRESS_CLASS;
                     break;
                 case eActivityType.Game:
-                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Otaku);
                     activityData.statNames.Add(eStatName.Inteli);
                     activityData.stressValue = STRESS_GAME;
                     break;
                 case eActivityType.Workout:
-                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Strength);
                     activityData.statNames.Add(eStatName.Charming);
                     activityData.stressValue = STRESS_WORKOUT;
                     break;
                 case eActivityType.Club:
-                    activityData.activityType = activityType;
                     activityData.statNames.Add(eStatName.Charming);
                     activityData.statNames.Add(eStatName.Otaku);
                     activityData.stressValue = STRESS_CLUB;
@@ -156,15 +151,9 @@ namespace Client
         /// <returns></returns>
         public float GetStatMultiplier(eResultType resultType)
         {
-            switch(resultType)
-            {
-                case eResultType.Failure:
-                    return 0.5f;
-                case eResultType.Success:
-                    return 1f;
-                default:
-                    return 1.5f;
-            }
+            if (resultType == eResultType.Failure) return 0.5f;
+            else if (resultType == eResultType.Success) return 1f;
+            else return 1.5f;
         }
 
         /// <summary>

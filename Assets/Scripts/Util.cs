@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static Client.SystemEnum;
 
 namespace Client
 {
@@ -186,24 +187,44 @@ namespace Client
             result = list.FirstOrDefault(item => item.Item1 == key);
             return result.Item1 == key; // key가 0일 경우 대비
         }
+        /// <summary>
+        /// 캐릭터 한국어 이름 가져오기
+        /// </summary>
+
         public static string GetCharNameKor(string _charName)
         {
-            // 이벤트 스크립트의 캐릭터 이름을 받아서
-            // 캐릭터 페이스 스크립트에 표시된 캐릭터 한국어 이름으로 뜨도록
-            string str = null;
-            // 임시로 5 해둠
-            for (int i = 0; i < 5; i++)
+            if (!DataManager.Instance.CharFaceDict.ContainsKey(_charName))
             {
-                CharacterFace charFace = DataManager.Instance.GetData<CharacterFace>(i);
-
-                if (charFace.Character == _charName)
-                {
-                    str = charFace.CharacterName;
-                    break;
-                }
+                Debug.LogError($"캐릭터 고유값 오류, key 없음");
+                return null;
             }
-            return str;
+            return DataManager.Instance.CharFaceDict[_charName].CharacterName;
         }
 
+        /// <summary>
+        /// 캐릭터 이미지 기본 path
+        /// </summary>
+        public static string GetCharBasicSprite(string _charName)
+        {
+            if (!DataManager.Instance.CharFaceDict.ContainsKey(_charName))
+            {
+                Debug.LogError($"캐릭터 고유값 오류, key 없음");
+                return null;
+            }
+            return DataManager.Instance.CharFaceDict[_charName].basic;
+        }
+
+        public static string GetActivityTitle(SystemEnum.eActivityType eActivity)
+        {
+            StringBuilder sb = new();
+            sb.Append($"{GetActivityTypeKor(eActivity)}");
+            if (eActivity == eActivityType.Class)
+                sb.Append("을 들었다!");
+            else if (eActivity == eActivityType.Club)
+                sb.Append("활동을 했다!");
+            else sb.Append("을 했다!");
+
+            return sb.ToString();
+        }
     }
 }

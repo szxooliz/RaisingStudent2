@@ -18,16 +18,17 @@ namespace Client
         // 로드한 적 있는 Sprite
         Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
-
-        Dictionary<long, EventResult> _eventResultDict = new();
-        public Dictionary<long, EventResult> EventResultDict => _eventResultDict; // key : ScriptIndex
-        // EventID별 EventScript
+        // key1 : EventNum , key2: index
         Dictionary<long, Dictionary<long, EventScript>> _eventScriptDict = new();
+        Dictionary<long, EventResult>                   _eventResultDict = new();
+        Dictionary<string, CharacterFace>               _charFaceDict    = new();
+
         public Dictionary<long, Dictionary<long, EventScript>> EventScriptDict => _eventScriptDict;
+        public Dictionary<long, EventResult>                   EventResultDict => _eventResultDict; // key : ScriptIndex
+        public Dictionary<string, CharacterFace>               CharFaceDict    => _charFaceDict;
 
         public PlayerData playerData; 
         public PersistentData persistentData;
-
 
         #region Singleton
         private DataManager()
@@ -39,12 +40,18 @@ namespace Client
             LoadAllData();
             LoadSheetDatas();
 
-            // 미리 EventResult 전부 딕셔너리에 저장
+            // 미리 EventResult, CharacterFace 전부 딕셔너리에 저장
             var eventResultList = GetDataList<EventResult>();
             foreach (var _eventResult in eventResultList)
             {
                 var eventResult = _eventResult as EventResult;
                 _eventResultDict.TryAdd(eventResult.ScriptIndex, eventResult);
+            }
+            var charFaceList = GetDataList<CharacterFace>();
+            foreach (var _charFace in charFaceList)
+            {
+                var charFace = _charFace as CharacterFace;
+                _charFaceDict.TryAdd(charFace.CharacterName, charFace);
             }
         }
 

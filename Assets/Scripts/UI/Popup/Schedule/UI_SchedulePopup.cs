@@ -72,7 +72,7 @@ namespace Client
             foreach (eScheduleEvent eSchedule in scheduleList)
             {
                 // 진행한 이벤트 중 스케줄이 있으면 true, 없으면 false
-                if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey((int)eSchedule))
+                if (DataManager.Instance.playerData.WatchedEventIDList.Contains((int)eSchedule))
                 {
                     Debug.Log($"watchedEvents에 Key인 {eSchedule.ToString()} 추가");
                     scheduleEvent.Add((int)eSchedule, true);

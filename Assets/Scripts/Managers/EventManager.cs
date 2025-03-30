@@ -83,14 +83,14 @@ namespace Client
         /// </summary>
         public void AddWatchedEvent(EventData eventData)
         {
-            if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey(eventData.eventTitle.index))
+            if (DataManager.Instance.playerData.WatchedEventIDList.Contains(eventData.eventTitle.index))
             {
                 Debug.LogError($"{eventData.title} : {eventData.eventTitle.index}는 이미 등록된 이벤트 인덱스입니다");
                 return;
             }
 
             Debug.Log($"이벤트 끝, {eventData.title} 등록");
-            DataManager.Instance.playerData.WatchedEventsDict.Add(eventData.eventTitle.index, eventData);
+            DataManager.Instance.playerData.WatchedEventIDList.Add(eventData.eventTitle.index);
             // TODO : 플레이어 데이터 save 하기
         }
 
@@ -102,7 +102,7 @@ namespace Client
             // 제거 때문에 역 for문 사용
             for (int i = randomList.Count - 1; i >= 0; i--)
             {
-                if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey(randomList[i].index))
+                if (DataManager.Instance.playerData.WatchedEventIDList.Contains(randomList[i].index))
                 {
                     randomList.RemoveAt(i);
                 }
@@ -152,7 +152,7 @@ namespace Client
             scheduleList.Reverse();
             foreach(eScheduleEvent sch in scheduleList)
             {
-                if(DataManager.Instance.playerData.WatchedEventsDict.ContainsKey((int)sch))
+                if(DataManager.Instance.playerData.WatchedEventIDList.Contains((int)sch))
                 {
                     watchedEventID = (long)sch;
                     break;
@@ -169,14 +169,14 @@ namespace Client
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
             int schIndex = -1;
 
-            if (DataManager.Instance.playerData.WatchedEventsDict.Count == 0)
+            if (DataManager.Instance.playerData.WatchedEventIDList.Count == 0)
                 return -1;
 
             // 역순환 -  기록된 것 중에 가장 큰 스케줄ID를 가져오기 위해
             scheduleList.Reverse();
             foreach (eScheduleEvent sch in scheduleList)
             {
-                if (DataManager.Instance.playerData.WatchedEventsDict.ContainsKey((int)sch))
+                if (DataManager.Instance.playerData.WatchedEventIDList.Contains((int)sch))
                 {
                     schIndex = scheduleList.IndexOf(sch);
                     break;

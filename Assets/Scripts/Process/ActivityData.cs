@@ -14,14 +14,16 @@ namespace Client
         public List<int> statValues;       // 스탯 증감량
         public float stressValue;          // 스트레스 증감량
 
-        public ActivityData() // 생성자
+        public ActivityData(eActivityType activityType) // 생성자
         {
-            activityType = eActivityType.MaxCount;
+            this.activityType = activityType;
             resultType = eResultType.MaxCount;
 
             statNames = new List<eStatName>();
             statValues = new List<int>();
             stressValue = 0;
+
+            title = Util.GetActivityTitle(activityType);
         }
     }
 }

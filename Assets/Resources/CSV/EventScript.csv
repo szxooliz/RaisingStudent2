@@ -245,7 +245,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 164,8,Narration,…………,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 165,8,Comsoon,"와, 노래 진짜 잘한다…!",glad,TRUE,Condition,4,bg_school,,,,,,,,,,,,,,,,,,
 166,8,Comsoon,"여기요, 여기요! 한 번만 봐주세요!
-너무 예뻐요!!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+너무 멋져요!!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 167,8,Narration,"스탠딩 가장 앞줄에서 연예인과 셀카까지 찍을 수 있었다!
 떼창까지 하고 나니 스트레스도 풀리는 기분이다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 168,8,Comsoon,"밀, 밀지 마세요…!
@@ -363,453 +363,453 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 250,12,Narration,"클래스넷 수시 성적란에서, 컴순의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 251,12,Narration,"일단 고생했으니 푹 쉬기로 했다.
 4학년 때 만회 가능할 것이다… 아마도.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-252,100,Professor,"에… 그러니까…
+1000,100,Professor,"에… 그러니까…
 이번에 제출할 과제는 조별로 진행할 예정입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-253,100,Professor,"앞에 학번 확인하시고, 조별로 역할 분담해서
+1001,100,Professor,"앞에 학번 확인하시고, 조별로 역할 분담해서
 다음 주까지 준비해 올 수 있도록 하세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-254,100,Narration,잠시 후...,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-255,100,Comsoon,안녕하세요! 23학번 김컴순입니다!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-256,100,StudentA,"네, 안녕하세요. 21학번 박공대입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-257,100,StudentB,반갑습니다. 22학번 이미대예요.,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-258,100,StudentA,"저희 우선은 역할부터 나눌까요? 우선 조장부터 기입을 해야 하는데...
+1002,100,Narration,잠시 후...,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1003,100,Comsoon,안녕하세요! 23학번 김컴순입니다!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1004,100,StudentA,"네, 안녕하세요. 21학번 박공대입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1005,100,StudentB,반갑습니다. 22학번 이미대예요.,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1006,100,StudentA,"저희 우선은 역할부터 나눌까요? 우선 조장부터 기입을 해야 하는데...
 혹시 조장 하고 싶으신 분 계신가요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-259,100,Comsoon,"그… 
+1007,100,Comsoon,"그… 
 (어떡하지? 조교님한테 물어볼까?)",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-260,100,Comsoon,"(조교님!! 저 컴순인데요…
+1008,100,Comsoon,"(조교님!! 저 컴순인데요…
 조별과제 조장 해 볼까요?)",basic,TRUE,Choice,100,bg_classroom,,,,,,,,,,,,,,,,,,
-261,100,Comsoon,제가 한 번 해보겠습니다!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-262,100,StudentA,"아, 네. 컴순 님이 그러면 조장 맡아 주시겠어요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-263,100,StudentB,왠지 조장 잘 하실 것 같아요...!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-264,100,Comsoon,네! 최선을 다해 볼게요.,glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-265,100,StudentA,"네, 그러면 조장은 정해졌고…
+1009,100,Comsoon,제가 한 번 해보겠습니다!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1010,100,StudentA,"아, 네. 컴순 님이 그러면 조장 맡아 주시겠어요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1011,100,StudentB,왠지 조장 잘 하실 것 같아요...!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1012,100,Comsoon,네! 최선을 다해 볼게요.,glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1013,100,StudentA,"네, 그러면 조장은 정해졌고…
 조장님, 혹시 어떻게 진행하시고 싶으세요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-266,100,Comsoon,"네? 어… 그러니까…
+1014,100,Comsoon,"네? 어… 그러니까…
 이거는 이렇게…",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-267,100,Narration,"조장 역할은 분명히 힘들고 지쳤지만,
+1015,100,Narration,"조장 역할은 분명히 힘들고 지쳤지만,
 리더 역할을 수행하며 많은 것을 배울 수 있었다.",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-268,100,Comsoon,……,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-269,100,StudentA,"아무도 없으신가요? 그러면 조장은 제가 맡겠습니다.
+1016,100,Comsoon,……,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1017,100,StudentA,"아무도 없으신가요? 그러면 조장은 제가 맡겠습니다.
 생각해 둔 게 있어서, 그것대로 한 번 진행해볼게요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-270,100,StudentB,"앗, 네! 시켜주실 것 있으면 바로 말해주세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-271,100,StudentA,"그러면 학생B 님은 이걸 맡아 주시고... 
+1018,100,StudentB,"앗, 네! 시켜주실 것 있으면 바로 말해주세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1019,100,StudentA,"그러면 학생B 님은 이걸 맡아 주시고... 
 컴순님은 이걸 맡아 주시겠어요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-272,100,Comsoon,"네, 그렇게 하겠습니다!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-273,100,Narration,"조장은 엄청난 실력의 보유자였고, 생각보다 할 게 없었다. 얻어간 건 별로 없었지만, 조장의 활약으로 쉽게 버스를 타게 되었다.",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-274,101,Comsoon,"... …아! 다 봤다.
+1020,100,Comsoon,"네, 그렇게 하겠습니다!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1021,100,Narration,"조장은 엄청난 실력의 보유자였고, 생각보다 할 게 없었다. 얻어간 건 별로 없었지만, 조장의 활약으로 쉽게 버스를 타게 되었다.",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1022,101,Comsoon,"... …아! 다 봤다.
 이것만 봐야지 하다가 벌써 새벽이네.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-275,101,Comsoon,그럼 이제 슬슬 자 볼까.,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-276,101,Comsoon,…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-277,101,Comsoon,……,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-278,101,Comsoon,아!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-279,101,Comsoon,맞다 과제!!!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-280,101,Comsoon,"내일까지 내야 하는데, 깜빡했네... 
+1023,101,Comsoon,그럼 이제 슬슬 자 볼까.,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1024,101,Comsoon,…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1025,101,Comsoon,……,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1026,101,Comsoon,아!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1027,101,Comsoon,맞다 과제!!!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1028,101,Comsoon,"내일까지 내야 하는데, 깜빡했네... 
 어쩌지...?",sad,TRUE,Choice,101,bg_home,,,,,,,,,,,,,,,,,,
-281,101,Comsoon,아으으... 역시 해야겠지...?,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-282,101,Narration,"졸린 몸을 이끌고 간신히 과제를 끝마쳤다.
+1029,101,Comsoon,아으으... 역시 해야겠지...?,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1030,101,Narration,"졸린 몸을 이끌고 간신히 과제를 끝마쳤다.
 하지만 늦게까지 잠을 자지 못해 어딘가 피곤한 느낌이다…",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-283,101,Comsoon,졸리니까 일단 자고 내일 하자…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-284,101,Comsoon,쿨…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-285,101,Narration,다음 날...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-286,101,Comsoon,"하아암… 잘 잤다.
+1031,101,Comsoon,졸리니까 일단 자고 내일 하자…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1032,101,Comsoon,쿨…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1033,101,Narration,다음 날...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1034,101,Comsoon,"하아암… 잘 잤다.
 얼른 학교 갈 준비 해야지…",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-287,101,Comsoon,"음… 그런데…
+1035,101,Comsoon,"음… 그런데…
 뭘까, 뭔가 중요한 걸 잊은 듯한 이 느낌은…?",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-288,101,Narration,수업 시간…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-289,101,Professor,"자, 그럼 다들 지금 과제 제출할 수 있도록 하세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-290,101,Comsoon,… 아!,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-291,101,Narration,"푹 잤지만 과제가 있다는 사실을 잊어버렸다!
+1036,101,Narration,수업 시간…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1037,101,Professor,"자, 그럼 다들 지금 과제 제출할 수 있도록 하세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1038,101,Comsoon,… 아!,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1039,101,Narration,"푹 잤지만 과제가 있다는 사실을 잊어버렸다!
 결국 과제를 제출할 수 없었다…",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-292,102,Comsoon,"조교님, 이것 좀 보세요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-293,102,Comsoon,"제 최애캐 굿즈가 새로 나왔어요!
+1040,102,Comsoon,"조교님, 이것 좀 보세요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1041,102,Comsoon,"제 최애캐 굿즈가 새로 나왔어요!
 이번 건 진짜 역대급이에요!!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-294,102,Comsoon,"헉, 근데… 가격이…
+1042,102,Comsoon,"헉, 근데… 가격이…
 어, 어쩌죠?",sad,TRUE,Choice,102,bg_school,,,,,,,,,,,,,,,,,,
-295,102,Comsoon,"… 어서오세요!
+1043,102,Comsoon,"… 어서오세요!
 주문 도와드리겠습니다.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-296,102,Comsoon,"메가슈퍼킹슈림프머쉬룸버거 맞으시죠?
+1044,102,Comsoon,"메가슈퍼킹슈림프머쉬룸버거 맞으시죠?
 결제 되셨습니다. 감사합니다!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-297,102,Narration,일주일 뒤...,none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-298,102,Comsoon,네…! 이걸로 할게요.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-299,102,Comsoon,… 헤헤.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-300,102,Narration,"비록 알바는 정말 힘들었지만,
+1045,102,Narration,일주일 뒤...,none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1046,102,Comsoon,네…! 이걸로 할게요.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1047,102,Comsoon,… 헤헤.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1048,102,Narration,"비록 알바는 정말 힘들었지만,
 갖고 싶었던 굿즈를 살 수 있게 되었다!",none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-301,102,Comsoon,……역시 그렇죠?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-302,102,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-303,102,Comsoon,"그래, 난 아무 것도 못 본거야.
+1049,102,Comsoon,……역시 그렇죠?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1050,102,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1051,102,Comsoon,"그래, 난 아무 것도 못 본거야.
 굿즈는 나온 적이 없었던 거지.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-304,102,Comsoon,"그러니까 괜찮아.
+1052,102,Comsoon,"그러니까 괜찮아.
 애초에 아무 일도 없었으니까, 응…",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-305,102,Comsoon,… …,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-306,102,Comsoon,"우으으… 최애야……
+1053,102,Comsoon,… …,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1054,102,Comsoon,"우으으… 최애야……
 훌쩍…",sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-307,102,Narration,"정말 진짜 꼭 굿즈를 장만하고 싶었지만,
+1055,102,Narration,"정말 진짜 꼭 굿즈를 장만하고 싶었지만,
 결국 통장 잔고에 굴복하고 말았다!",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-308,103,Comsoon,하아암…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-309,103,FriendA,"지금 그거 다섯 번째 하품인 거 알아?
+1056,103,Comsoon,하아암…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1057,103,FriendA,"지금 그거 다섯 번째 하품인 거 알아?
 못 잔 거야?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-310,103,Comsoon,"으응… 어제 잠을 못 잤어…
+1058,103,Comsoon,"으응… 어제 잠을 못 잤어…
 밤새 게임… 이 아니라!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-311,103,Comsoon,"공부!
+1059,103,Comsoon,"공부!
 공부하느라! 헤헤…",glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-312,103,FriendA,"음… 그럼 내가 도와줄 수 있을 것 같은데.
+1060,103,FriendA,"음… 그럼 내가 도와줄 수 있을 것 같은데.
 이리 와 봐!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-313,103,Narration,…,none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
-314,103,Comsoon,"여긴… 편의점?
+1061,103,Narration,…,none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1062,103,Comsoon,"여긴… 편의점?
 커피 사 주려고?",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-315,103,FriendA,"커피같은 게 아냐! 잠자코 있어 봐.
+1063,103,FriendA,"커피같은 게 아냐! 잠자코 있어 봐.
 네, 이렇게 결제해주세요.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-316,103,FriendA,"이거랑, 저거를 섞고…
+1064,103,FriendA,"이거랑, 저거를 섞고…
 이 비율로 이걸 넣으면…!",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-317,103,FriendA,"자, 완성!
+1065,103,FriendA,"자, 완성!
 얼른 마셔봐. 잠 깨는 데에는 이게 최고거든.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-318,103,Comsoon,"어… 이거 마셔도 되는 거야?
+1066,103,Comsoon,"어… 이거 마셔도 되는 거야?
 뭔가 좀 위험해 보이는데…",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-319,103,FriendA,"졸리다며? 하품 다섯 번 했잖아?
+1067,103,FriendA,"졸리다며? 하품 다섯 번 했잖아?
 안 마실거면 내가 마신다?",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-320,103,Comsoon,그러니까…,basic,TRUE,Choice,103,bg_store,,,,,,,,,,,,,,,,,,
-321,103,Comsoon,"꿀꺽, 꿀꺽…",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-322,103,Comsoon,엄청 맛있다…!,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-323,103,FriendA,그치? 카페인 음료수랑 조합한 거라 잠도 잘 깨.,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-324,103,Comsoon,"응! 잠도 다 깬 것 같아.
+1068,103,Comsoon,그러니까…,basic,TRUE,Choice,103,bg_store,,,,,,,,,,,,,,,,,,
+1069,103,Comsoon,"꿀꺽, 꿀꺽…",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1070,103,Comsoon,엄청 맛있다…!,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1071,103,FriendA,그치? 카페인 음료수랑 조합한 거라 잠도 잘 깨.,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1072,103,Comsoon,"응! 잠도 다 깬 것 같아.
 고마워!",glad,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-325,103,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-326,103,Comsoon,…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-327,103,Comsoon,……,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-328,103,Comsoon,잠이 안 와…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-329,103,Narration,"특별한 음료수를 마시자 잠이 완전히 깼다!
+1073,103,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1074,103,Comsoon,…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1075,103,Comsoon,……,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1076,103,Comsoon,잠이 안 와…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1077,103,Narration,"특별한 음료수를 마시자 잠이 완전히 깼다!
 수업에 집중할 수 있었지만, 밤에 잠이 오지 않아 밤새 뒤척여야만 했다…",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-330,103,FriendA,"그래? 맛있는데… 싫으면 어쩔 수 없지.
+1078,103,FriendA,"그래? 맛있는데… 싫으면 어쩔 수 없지.
 내가 마신다?",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-331,103,Comsoon,응… 생각해줬는데 미안.,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-332,103,FriendA,"아냐 뭘, 나도 졸려서 이거 마시려고 했어.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-333,103,Narration,"역시 뭔가 불안하다!
+1079,103,Comsoon,응… 생각해줬는데 미안.,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1080,103,FriendA,"아냐 뭘, 나도 졸려서 이거 마시려고 했어.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1081,103,Narration,"역시 뭔가 불안하다!
 새로운 경험은 다음으로 미루기로 했다…",none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
-334,104,Professor,"이번 과제는 간단한 프로그램을 작성…
+1082,104,Professor,"이번 과제는 간단한 프로그램을 작성…
 … 자신의 취미가 출력되도록 해야 합니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-335,104,Professor,다음 수업 전까지 완성할 수 있도록 하세요.,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-336,104,FriendA,또 과제야?,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-337,104,Comsoon,그러게… 수업 때마다 과제가 생기네…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-338,104,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-339,104,Comsoon,"그러니까, 이걸 이렇게 짜면…
+1083,104,Professor,다음 수업 전까지 완성할 수 있도록 하세요.,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1084,104,FriendA,또 과제야?,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1085,104,Comsoon,그러게… 수업 때마다 과제가 생기네…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1086,104,Narration,그날 밤...,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1087,104,Comsoon,"그러니까, 이걸 이렇게 짜면…
 음, 코드는 완성했고…!",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-340,104,Comsoon,"취미를 출력하라고?
+1088,104,Comsoon,"취미를 출력하라고?
 취미… 내 취미라고 할 만한 게…",basic,TRUE,Choice,104,bg_home,,,,,,,,,,,,,,,,,,
-341,104,Narration,취미에 게임을 적었다!,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-342,104,Narration,취미에 운동을 적었다!,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-343,105,Comsoon,으… 오전 수업 끝!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-344,105,Comsoon,"오후 수업까지는 아직 좀 남았으니까,
+1089,104,Narration,취미에 게임을 적었다!,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1090,104,Narration,취미에 운동을 적었다!,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1091,105,Comsoon,으… 오전 수업 끝!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1092,105,Comsoon,"오후 수업까지는 아직 좀 남았으니까,
 이 틈에 빨리 밥 먹어야지.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-345,105,Comsoon,그런데… 뭘 먹지?,basic,TRUE,Choice,105,bg_school,,,,,,,,,,,,,,,,,,
-346,105,Comsoon,"‘이터널 아카이브’ 콜라보가 오늘부터였지!
+1093,105,Comsoon,그런데… 뭘 먹지?,basic,TRUE,Choice,105,bg_school,,,,,,,,,,,,,,,,,,
+1094,105,Comsoon,"‘이터널 아카이브’ 콜라보가 오늘부터였지!
 늦으면 전부 소진될텐데!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-347,105,Narration,"혼자 햄버거를 먹고,
+1095,105,Narration,"혼자 햄버거를 먹고,
 콜라보 굿즈까지 챙길 수 있었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-348,105,Comsoon,수업 끝나면 같이 먹자고 연락해야겠다.,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-349,105,FriendA,컴순아! 오래 기다렸어?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-350,105,Comsoon,"아냐, 나도 방금 끝났는데.
+1096,105,Comsoon,수업 끝나면 같이 먹자고 연락해야겠다.,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1097,105,FriendA,컴순아! 오래 기다렸어?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1098,105,Comsoon,"아냐, 나도 방금 끝났는데.
 오후 수업까지 시간 남지? 같이 밥 먹자.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-351,105,FriendA,"앗, 나 급한 과제가 있어서, 
+1099,105,FriendA,"앗, 나 급한 과제가 있어서, 
 학식 빠르게 먹으려고 했는데. 학식도 괜찮아?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-352,105,Comsoon,"돈 아끼고 좋지 뭐.
+1100,105,Comsoon,"돈 아끼고 좋지 뭐.
 배고픈데 빨리 먹으러 가자!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-353,105,Narration,친구를 기다렸다가 함께 식사를 마쳤다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-354,106,Comsoon,"오늘 수업 끝!
+1101,105,Narration,친구를 기다렸다가 함께 식사를 마쳤다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1102,106,Comsoon,"오늘 수업 끝!
 이제 운동 가야 하는데…",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-355,106,Comsoon,으으… 너무너무 귀찮아…,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-356,106,Comsoon,"킁킁, 이 냄새는 분명히…
+1103,106,Comsoon,으으… 너무너무 귀찮아…,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1104,106,Comsoon,"킁킁, 이 냄새는 분명히…
 떡볶이!",glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-357,106,Comsoon,"와아, 맛있겠다…!
+1105,106,Comsoon,"와아, 맛있겠다…!
 하지만 오늘은 운동 가는 날인데…!",basic,TRUE,Choice,106,bg_street,,,,,,,,,,,,,,,,,,
-358,106,Comsoon,떡볶이 1인분 주세요!,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-359,106,Comsoon,헤헤… 너무너무 맛있다…,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-360,106,Narration,"떡볶이는 정말 맛있었다.
+1106,106,Comsoon,떡볶이 1인분 주세요!,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1107,106,Comsoon,헤헤… 너무너무 맛있다…,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1108,106,Narration,"떡볶이는 정말 맛있었다.
 운동은… 내일부터 다시 열심히 하는 걸로!",none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-361,106,Comsoon,"우으… 가자… 가야지, 운동……",sad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-362,106,Narration,"떡볶이의 유혹을 이겨내고 운동을 했다!
+1109,106,Comsoon,"우으… 가자… 가야지, 운동……",sad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1110,106,Narration,"떡볶이의 유혹을 이겨내고 운동을 했다!
 눈앞에 계속 아른거리는 것만 같다…",none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-363,107,Comsoon,"어디 보자, 오늘 과제가…
+1111,107,Comsoon,"어디 보자, 오늘 과제가…
 음, 한결같이 많네, 정말……",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-364,107,Comsoon,"앗, 동아리 톡방 알림이잖아.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-365,107,Comsoon,"갑자기 모임? 지금?
+1112,107,Comsoon,"앗, 동아리 톡방 알림이잖아.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1113,107,Comsoon,"갑자기 모임? 지금?
 회장 선배가 쏜다고?",basic,TRUE,Choice,107,bg_home,,,,,,,,,,,,,,,,,,
-366,107,StudentB,어? 컴순아! 너도 왔구나?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-367,107,Comsoon,네! 안녕하세요 선배님!,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-368,107,FriendA,"컴순 하이~
+1114,107,StudentB,어? 컴순아! 너도 왔구나?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1115,107,Comsoon,네! 안녕하세요 선배님!,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1116,107,FriendA,"컴순 하이~
 여기 앉아!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-369,107,Narration,…,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-370,107,SeniorA,"… 그럼 내가 쏘는 거니까, 다들 맛있게 먹어!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-371,107,Narration,"모임에서 사람들과 즐거운 시간을 보냈다!
+1117,107,Narration,…,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1118,107,SeniorA,"… 그럼 내가 쏘는 거니까, 다들 맛있게 먹어!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1119,107,Narration,"모임에서 사람들과 즐거운 시간을 보냈다!
 뭔가 잊은 것 같긴 하지만…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-372,107,Comsoon,과제… 해야겠지…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-373,107,Narration,다음 날...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-374,107,FriendA,"컴순 하이!
+1120,107,Comsoon,과제… 해야겠지…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1121,107,Narration,다음 날...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1122,107,FriendA,"컴순 하이!
 너 어제 모임 왜 안 나왔어? 연락 못 본 거야?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-375,107,Comsoon,"응? 아, 과제 때문에…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-376,107,FriendA,"그렇구나.
+1123,107,Comsoon,"응? 아, 과제 때문에…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1124,107,FriendA,"그렇구나.
 아쉽다, 어제 재미있었는데.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-377,107,Narration,"모임에 가지 않고 과제를 성실히 마쳤다!
+1125,107,Narration,"모임에 가지 않고 과제를 성실히 마쳤다!
 아쉽지만 다음에 또 기회가 있기를.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-378,108,Comsoon,"내일 자격증 시험을 봐야 하는데,
+1126,108,Comsoon,"내일 자격증 시험을 봐야 하는데,
 떨려서 아무것도 못하겠어…",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-379,108,Comsoon,남은 시간동안 뭘 해야 하지?,basic,TRUE,Choice,108,bg_home,,,,,,,,,,,,,,,,,,
-380,108,Comsoon,역시 마지막으로 다시 한 번 복습해 봐야겠어…!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-381,108,Narration,"마음을 다잡고 복습을 끝마쳤다!
+1127,108,Comsoon,남은 시간동안 뭘 해야 하지?,basic,TRUE,Choice,108,bg_home,,,,,,,,,,,,,,,,,,
+1128,108,Comsoon,역시 마지막으로 다시 한 번 복습해 봐야겠어…!,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1129,108,Narration,"마음을 다잡고 복습을 끝마쳤다!
 왠지 내일 시험은 잘 볼 것만 같다!",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-382,108,Comsoon,"지금까지 충분히 노력했으니까,
+1130,108,Comsoon,"지금까지 충분히 노력했으니까,
 내일 컨디션을 위해서 오늘은 일찍 자야겠다!",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-383,108,Narration,"마음을 다잡고 일찍 잠자리에 들었다!
+1131,108,Narration,"마음을 다잡고 일찍 잠자리에 들었다!
 내일 컨디션은 최상일 것만 같다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-384,109,Comsoon,"앗, … 비 오잖아!
+1132,109,Comsoon,"앗, … 비 오잖아!
 우산 안 가져왔는데 어쩌지…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-385,109,Comsoon,편의점! 편의점에 우산 파니까!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-386,109,Narration,잠시 후...,none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
-387,109,Employee,"… 안 그래도 오늘 갑자기 비가 와서,
+1133,109,Comsoon,편의점! 편의점에 우산 파니까!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1134,109,Narration,잠시 후...,none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1135,109,Employee,"… 안 그래도 오늘 갑자기 비가 와서,
 벌써 다 팔리고 없어요. 죄송합니다.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-388,109,Comsoon,"아… 정말요?
+1136,109,Comsoon,"아… 정말요?
 알겠습니다…",sad,TRUE,Choice,109,bg_store,,,,,,,,,,,,,,,,,,
-389,109,Comsoon,"으으으음… 뾰족한 수 없나…
+1137,109,Comsoon,"으으으음… 뾰족한 수 없나…
 뾰족한 수… 뭉툭한 수…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-390,109,Comsoon,"맞다!
+1138,109,Comsoon,"맞다!
 과에서 학생들에게 우산을 빌려준다고 했던 것 같은데?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-391,109,Comsoon,"그러니까, 뭐더라…
+1139,109,Comsoon,"그러니까, 뭐더라…
 과 사무실에 가서…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-392,109,Narration,"기억했던 대로 과에서 우산을 빌려주었고,
+1140,109,Narration,"기억했던 대로 과에서 우산을 빌려주었고,
 다행히 우산을 쓰고 갈 수 있었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-393,109,Comsoon,…여보세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-394,109,StudentA,"여보세요? 컴순아?
+1141,109,Comsoon,…여보세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1142,109,StudentA,"여보세요? 컴순아?
 무슨 일이야?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-395,109,Comsoon,"아! 별 건 아니고, 내가 오늘 우산을 안 가져와서…
+1143,109,Comsoon,"아! 별 건 아니고, 내가 오늘 우산을 안 가져와서…
 이따가 역 앞까지만 같이 갈 수 있을까?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-396,109,StudentA,"우산? 우산이면 난 오늘 갖고 온 게 있어서,
+1144,109,StudentA,"우산? 우산이면 난 오늘 갖고 온 게 있어서,
 내 사물함에서 예비 우산 꺼내 쓰고 나중에 돌려줘.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-397,109,Comsoon,"진짜? 정말?
+1145,109,Comsoon,"진짜? 정말?
 고마워! 너밖에 없어!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-398,109,Narration,"친구의 도움으로 우산을 쓰고 집에 갈 수 있게 되었다!
+1146,109,Narration,"친구의 도움으로 우산을 쓰고 집에 갈 수 있게 되었다!
 이 감사는 나중에 보답하기로 했다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-399,110,Comsoon,"이번 달 용돈이 모자랄 것 같아…
+1147,110,Comsoon,"이번 달 용돈이 모자랄 것 같아…
 알바라도 해 볼까?",basic,TRUE,Choice,110,bg_home,,,,,,,,,,,,,,,,,,
-400,110,Narration,"주말동안 만화방에서 단기 알바를 했다!
+1148,110,Narration,"주말동안 만화방에서 단기 알바를 했다!
 제법 한산해 남는 시간에는 만화책도 볼 수 있었다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-401,110,Narration,"주말동안 카페에서 단기 알바를 했다!
+1149,110,Narration,"주말동안 카페에서 단기 알바를 했다!
 짧은 시간이지만 여러 사람들과 함께 일할 수 있었다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-402,111,Comsoon,"와, 이 영화 시리즈 신작이 나왔잖아!
+1150,111,Comsoon,"와, 이 영화 시리즈 신작이 나왔잖아!
 예전에 엄청 재미있게 봤는데.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-403,111,Comsoon,"이번 주말에 보러 가야겠다!
+1151,111,Comsoon,"이번 주말에 보러 가야겠다!
 그런데…",basic,TRUE,Choice,111,bg_home,,,,,,,,,,,,,,,,,,
-404,111,Comsoon,"이거 그 때 그 친구도 보고 싶다 했던 거였지?
+1152,111,Comsoon,"이거 그 때 그 친구도 보고 싶다 했던 거였지?
 한 번 물어봐야겠다.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-405,111,Narration,"친구 역시 주말에 영화를 보러 갈 계획이라고 한다!
+1153,111,Narration,"친구 역시 주말에 영화를 보러 갈 계획이라고 한다!
 함께 영화관에서 영화를 보기로 약속을 잡았다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-406,111,Comsoon,"역시 영화관도 멀고 귀찮으니까,
+1154,111,Comsoon,"역시 영화관도 멀고 귀찮으니까,
 그냥 집에서 구매해서 노트북으로 봐야겠다.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-407,111,Narration,"침대에 누워 뒹굴거리면서 영화를 봤다!
+1155,111,Narration,"침대에 누워 뒹굴거리면서 영화를 봤다!
 영화는 아주 감명깊었다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
-408,112,Comsoon,조교님! 마라탕 먹으러 가실래요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-409,112,Comsoon,"… 안 드셔보셨다고요?
+1156,112,Comsoon,조교님! 마라탕 먹으러 가실래요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1157,112,Comsoon,"… 안 드셔보셨다고요?
 한 번도요? 진짜요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-410,112,Comsoon,"저 마라탕 고수예요!
+1158,112,Comsoon,"저 마라탕 고수예요!
 저만 믿으세요!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-411,112,Narration,"같이 양고기, 소고기, 청경채, 숙주, 배추, 목이버섯, 옥수수면, 뉴진면, 분모자, 땅콩소스를 잔뜩 넣은 마라탕 3인분과 꿔바로우까지 해치웠다…",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-412,112,Narration,몸무게가 조금 늘은 것 같다…!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-413,113,Comsoon,"안녕하세요 조교님!
+1159,112,Narration,"같이 양고기, 소고기, 청경채, 숙주, 배추, 목이버섯, 옥수수면, 뉴진면, 분모자, 땅콩소스를 잔뜩 넣은 마라탕 3인분과 꿔바로우까지 해치웠다…",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1160,112,Narration,몸무게가 조금 늘은 것 같다…!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1161,113,Comsoon,"안녕하세요 조교님!
 오늘 학식 제육이래요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-414,113,Comsoon,"네? 네, 맞죠, 이번 주 내내 학식 먹는 중이에요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-415,113,Comsoon,"아, 그게… 누가 그러더라고요.
+1162,113,Comsoon,"네? 네, 맞죠, 이번 주 내내 학식 먹는 중이에요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1163,113,Comsoon,"아, 그게… 누가 그러더라고요.
 걸러야 하는 건 캐릭터가 아니라 끼니라고요, 헤헤…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-416,113,Comsoon,"그런 게 아니라요!
+1164,113,Comsoon,"그런 게 아니라요!
 다음 픽업은 진짜 꼭 뽑아야 되거든요…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-417,113,Comsoon,이 참에 다이어트도 하고 완전 럭키잖아요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-418,113,Narration,그렇게 말하는 컴순의 식판에는 밥이 산더미처럼 쌓여 있었다.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-419,113,Narration,"하지만 그렇게 말하는 컴순의 눈동자가 아주 빛나고 있었기 때문에, 딱히 문제삼지는 않기로 했다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-420,114,Comsoon,큰일 났어요!!!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-421,114,Comsoon,"지갑을 잃어버린 것 같아요…
+1165,113,Comsoon,이 참에 다이어트도 하고 완전 럭키잖아요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1166,113,Narration,그렇게 말하는 컴순의 식판에는 밥이 산더미처럼 쌓여 있었다.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1167,113,Narration,"하지만 그렇게 말하는 컴순의 눈동자가 아주 빛나고 있었기 때문에, 딱히 문제삼지는 않기로 했다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1168,114,Comsoon,큰일 났어요!!!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1169,114,Comsoon,"지갑을 잃어버린 것 같아요…
 분명히 오늘 아침까지는 분명히 있었는데…!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-422,114,Comsoon,"가방도 뒤져보고, 강의실도 전부 찾아 봤어요…
+1170,114,Comsoon,"가방도 뒤져보고, 강의실도 전부 찾아 봤어요…
 나 어떡해…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-423,114,Comsoon,"…… 아, 맞다! 분실물 센터!
+1171,114,Comsoon,"…… 아, 맞다! 분실물 센터!
 왜 그 생각을 못했지? 진짜 바본가봐!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-424,114,Narration,잠시 후...,none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
-425,114,Employee,"네, 오늘 지갑 하나 들어왔는데요…
+1172,114,Narration,잠시 후...,none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
+1173,114,Employee,"네, 오늘 지갑 하나 들어왔는데요…
 김컴순 학생인가요?",basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
-426,114,Comsoon,"네, 제 거예요!
+1174,114,Comsoon,"네, 제 거예요!
 너무 다행이다… 감사합니다!",glad,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
-427,114,Narration,"지갑을 무사히 되찾은 컴순은 안도의 한숨을 내쉬었다.
+1175,114,Narration,"지갑을 무사히 되찾은 컴순은 안도의 한숨을 내쉬었다.
 세상은 아직 따뜻한 것 같다…!",none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
-428,115,Comsoon,"강의실이… 여기가 맞는데?
+1176,115,Comsoon,"강의실이… 여기가 맞는데?
 왜 이렇게 조용하지?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-429,115,Comsoon,"오늘 휴강인가…?
+1177,115,Comsoon,"오늘 휴강인가…?
 그런 얘기는 못 들었는데…",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-430,115,Comsoon,"앗! 뭐야, 강의실 변경?!
+1178,115,Comsoon,"앗! 뭐야, 강의실 변경?!
 교수님 미워! 이걸 수업 15분 전에 올려주면 어떡해요!",sad,TRUE,Choice,115,bg_classroom,,,,,,,,,,,,,,,,,,
-431,115,Comsoon,"R동은 너무 멀어!
+1179,115,Comsoon,"R동은 너무 멀어!
 어쩔 수 없이 오늘은 쉬어야겠다…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-432,115,Narration,"솔직히 말하자면 이건 교수님 잘못인 것 같다.
+1180,115,Narration,"솔직히 말하자면 이건 교수님 잘못인 것 같다.
 양심의 가책 없이 잘 쉬었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-433,115,Comsoon,"헉, 헉…
+1181,115,Comsoon,"헉, 헉…
 세이프…!",glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-434,115,Narration,"교수님은 수업 끝에 출석체크를 하셨다.
+1182,115,Narration,"교수님은 수업 끝에 출석체크를 하셨다.
 빠졌으면 큰일 날 뻔했다…!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-435,116,Comsoon,조교님! 재미있는 거 보여드릴까요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-436,116,Comsoon,"과자 몇 개를 택배로 주문했는데요…
+1183,116,Comsoon,조교님! 재미있는 거 보여드릴까요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1184,116,Comsoon,"과자 몇 개를 택배로 주문했는데요…
 테이프가 너무 꼼꼼하게 붙어 있어서 커터칼로 그었거든요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-437,116,Comsoon,"이 사진 좀 보세요!
+1185,116,Comsoon,"이 사진 좀 보세요!
 바보같이 과자까지 다 그어버린 거 있죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-438,116,Comsoon,완전 망했어요…!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-439,116,Comsoon,…응? 인터넷에라도 올려보자고요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-440,116,Narration,"컴순은 인스타에 베인 과자 사진을 올렸다.
+1186,116,Comsoon,완전 망했어요…!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1187,116,Comsoon,…응? 인터넷에라도 올려보자고요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1188,116,Narration,"컴순은 인스타에 베인 과자 사진을 올렸다.
 과자는 먹지 못했지만 많은 사람들이 보고 같이 웃어 주었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-441,117,Comsoon,저 열람실에서 완전 재미있는 거 봤어요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-442,117,Comsoon,"오늘 수업 내용 복습하려고 열람실에 갔는데요,
+1189,117,Comsoon,저 열람실에서 완전 재미있는 거 봤어요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1190,117,Comsoon,"오늘 수업 내용 복습하려고 열람실에 갔는데요,
 제 자리에 ‘예약석’이라고 써 있는 거 있죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-443,117,Comsoon,"네, 진짜로요!
+1191,117,Comsoon,"네, 진짜로요!
 종이에 ‘예약석’이라고 써서 떡하니 붙여 놨다니까요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-444,117,Comsoon,"그래서 저도 그 옆에 ‘취소됨’이라고 적어 줬어요!
+1192,117,Comsoon,"그래서 저도 그 옆에 ‘취소됨’이라고 적어 줬어요!
 예약이 되면 취소도 되는 거지!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-445,117,Comsoon,"글씨체는 동글동글 귀여웠는데…
+1193,117,Comsoon,"글씨체는 동글동글 귀여웠는데…
 누구였을까요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-446,117,Comsoon,졸렸는데 덕분에 잠도 다 깼어요!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-447,117,Narration,열람실 알박기는 화가 나지만 컴순은 덕분에 졸지 않고 공부할 수 있었다고 한다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-448,118,Comsoon,"큰일났어요, 저 공부 진짜 하나도 못했는데…!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-449,118,Comsoon,"조교님, 치타가 울고 있어요…
+1194,117,Comsoon,졸렸는데 덕분에 잠도 다 깼어요!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1195,117,Narration,열람실 알박기는 화가 나지만 컴순은 덕분에 졸지 않고 공부할 수 있었다고 한다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1196,118,Comsoon,"큰일났어요, 저 공부 진짜 하나도 못했는데…!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1197,118,Comsoon,"조교님, 치타가 울고 있어요…
 당장 내일이 쪽지 시험인데!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-450,118,Comsoon,"네? ‘치타는 웃고 있다’ 몰라요?
+1198,118,Comsoon,"네? ‘치타는 웃고 있다’ 몰라요?
 지금부터 뛰어도 따라잡을 수 없다구요!",basic,TRUE,Choice,118,bg_school,,,,,,,,,,,,,,,,,,
-451,118,Comsoon,"맞아요, 아직 포기하기엔 너무 일러요…!
+1199,118,Comsoon,"맞아요, 아직 포기하기엔 너무 일러요…!
 반이라도 풀 수 있도록…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-452,118,Narration,"다음 날, 컴순은 세 번째 문제에서 벽을 마주했다… 그래도 두 문제는 풀었음에 의의를 두자!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-453,118,Comsoon,"다음에는 미리미리 해 둬야겠어요…
+1200,118,Narration,"다음 날, 컴순은 세 번째 문제에서 벽을 마주했다… 그래도 두 문제는 풀었음에 의의를 두자!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1201,118,Comsoon,"다음에는 미리미리 해 둬야겠어요…
 이번 건 어쩔 수 없죠 뭐…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-454,118,Narration,노력은 언제나 보답받는다. 공부하지 않은 컴순은 보답받지 못했다…,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-455,119,Comsoon,교수님들 다 제정신이 아닌 것 같아요…!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-456,119,Comsoon,모든 교수님들이 제가 자기 수업만 듣는 줄 아시나봐요!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-457,119,Comsoon,"과제가 많냐구요?
+1202,118,Narration,노력은 언제나 보답받는다. 공부하지 않은 컴순은 보답받지 못했다…,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1203,119,Comsoon,교수님들 다 제정신이 아닌 것 같아요…!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1204,119,Comsoon,모든 교수님들이 제가 자기 수업만 듣는 줄 아시나봐요!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1205,119,Comsoon,"과제가 많냐구요?
 그냥 많다 정도가 아니라요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-458,119,Comsoon,"매일매일 새로운 과제가 쏟아져요!
+1206,119,Comsoon,"매일매일 새로운 과제가 쏟아져요!
 이러다 사람 죽겠어요!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-459,119,Comsoon,저 좀 도와 주세요!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-460,119,Narration,"컴순의 과제에 간단한 힌트를 주었다.
+1207,119,Comsoon,저 좀 도와 주세요!,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1208,119,Narration,"컴순의 과제에 간단한 힌트를 주었다.
 컴순은 힌트를 통해 과제를 해결하고 많은 걸 배운 것 같았다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-461,120,Comsoon,"퀴즈 하나쯤… 말아먹어도 괜찮겠죠?
+1209,120,Comsoon,"퀴즈 하나쯤… 말아먹어도 괜찮겠죠?
 시험 잘 보면 어떻게든…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-462,120,Comsoon,내일 퀴즈를 본다고 해서 오늘 벼락치기하려고 했거든요.,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-463,120,Comsoon,그런데 친구가 급하게 알바 대타를 뛰어달라고 해서요…,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-464,120,Comsoon,"평소 같으면 거절하겠는데 이런 부탁 잘 하는 친구도 아니고, 너무 급해 보였어요…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-465,120,Comsoon,우정과 학점 사이에 뭐가 맞는 걸까요…?,basic,TRUE,Choice,120,bg_school,,,,,,,,,,,,,,,,,,
-466,120,Comsoon,"그쵸? 역시 친구가 더 소중하죠?
+1210,120,Comsoon,내일 퀴즈를 본다고 해서 오늘 벼락치기하려고 했거든요.,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1211,120,Comsoon,그런데 친구가 급하게 알바 대타를 뛰어달라고 해서요…,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1212,120,Comsoon,"평소 같으면 거절하겠는데 이런 부탁 잘 하는 친구도 아니고, 너무 급해 보였어요…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1213,120,Comsoon,우정과 학점 사이에 뭐가 맞는 걸까요…?,basic,TRUE,Choice,120,bg_school,,,,,,,,,,,,,,,,,,
+1214,120,Comsoon,"그쵸? 역시 친구가 더 소중하죠?
 좋아요! 밤이라도 새면 어떻게든 되겠죠!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-467,120,Narration,"컴순은 우정을 지켜내고 학점까지 지켜냈다!
+1215,120,Narration,"컴순은 우정을 지켜내고 학점까지 지켜냈다!
 불가능한 일을 해낸 것만 같다…!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-468,120,Comsoon,"너, 너무 매정한 거 아니에요…?",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-469,120,Comsoon,"하지만 맞는 말 같기도 해요…
+1216,120,Comsoon,"너, 너무 매정한 거 아니에요…?",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1217,120,Comsoon,"하지만 맞는 말 같기도 해요…
 학교는 결국 공부하러 온 거니까…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-470,120,Narration,"컴순은 당장의 학점을 택했다!
+1218,120,Narration,"컴순은 당장의 학점을 택했다!
 아아, 매정한 그대여…",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-471,121,Comsoon,하~~~암.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-472,121,Comsoon,"피곤해 보인다고요?
+1219,121,Comsoon,하~~~암.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1220,121,Comsoon,"피곤해 보인다고요?
 많이 티나요…? 헤헤…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-473,121,Comsoon,"사실 새로 나온 게임이 너무 재미있어서…
+1221,121,Comsoon,"사실 새로 나온 게임이 너무 재미있어서…
 멈출 수가 없었어요…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-474,121,Comsoon,게임은 질병이 맞을지도 몰라요…!,basic,TRUE,Choice,121,bg_school,,,,,,,,,,,,,,,,,,
-475,121,Comsoon,"알아요… 아는데 멈출 수가 없어요…!
+1222,121,Comsoon,게임은 질병이 맞을지도 몰라요…!,basic,TRUE,Choice,121,bg_school,,,,,,,,,,,,,,,,,,
+1223,121,Comsoon,"알아요… 아는데 멈출 수가 없어요…!
 그래도 오늘은 일찍 자야겠어요…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-476,121,Narration,"컴순은 그 날 일찍 잠들었다고 한다.
+1224,121,Narration,"컴순은 그 날 일찍 잠들었다고 한다.
 언제나 건강이 우선이다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-477,121,Comsoon,"에헤헤… 네!
+1225,121,Comsoon,"에헤헤… 네!
 마지막 보스 잡고 있는데, 오늘 밤에 엔딩 볼 것 같아요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-478,121,Narration,"컴순은 결국 그 날도 밤을 샜다고 한다.
+1226,121,Narration,"컴순은 결국 그 날도 밤을 샜다고 한다.
 그래도 엔딩 봤으니까 이제 일찍 자겠지!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-479,122,Announce,"이번 역은 사당, 사당역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-480,122,Comsoon,으음… 도착까진 아직 멀었나…,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-481,122,Comsoon,"시간이 좀 남는데…
+1227,122,Announce,"이번 역은 사당, 사당역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1228,122,Comsoon,으음… 도착까진 아직 멀었나…,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1229,122,Comsoon,"시간이 좀 남는데…
 뭐 할 만한 것 없을까?",basic,TRUE,Choice,122,bg_train,,,,,,,,,,,,,,,,,,
-482,122,Comsoon,"아직 도착까진 멀었으니까…
+1230,122,Comsoon,"아직 도착까진 멀었으니까…
 좀 자야겠다.",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-483,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-484,122,Comsoon,"…헛!
+1231,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1232,122,Comsoon,"…헛!
 어디지?",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-485,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-486,122,Comsoon,"내, 내릴게요!!!!!!",sad,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-487,122,Narration,"잠시 졸았더니 순식간에 도착했다.
+1233,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1234,122,Comsoon,"내, 내릴게요!!!!!!",sad,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1235,122,Narration,"잠시 졸았더니 순식간에 도착했다.
 어쩐지 몸이 개운하다!",none,FALSE,None,,bg_train,,,,,,,,,,,,,,,,,,
-488,122,Comsoon,일일 퀘스트만 하고 꺼야지.,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-489,122,Comsoon,"어? 이벤트 시작했네?
+1236,122,Comsoon,일일 퀘스트만 하고 꺼야지.,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1237,122,Comsoon,"어? 이벤트 시작했네?
 그럼 지금 보상 좀 받고… 부스터 좀 쓰고…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-490,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-491,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-492,122,Comsoon,… 어라? 벌써?,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-493,122,Narration,"게임을 하다 보니 시간 가는 줄 몰랐다!
+1238,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1239,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1240,122,Comsoon,… 어라? 벌써?,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1241,122,Narration,"게임을 하다 보니 시간 가는 줄 몰랐다!
 순식간에 학교에 도착했다.",none,FALSE,None,,bg_train,,,,,,,,,,,,,,,,,,
-494,123,Comsoon,와… 벌써 벚꽃 필 때구나!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-495,123,Comsoon,"완전 분홍분홍하고 예쁘다!
+1242,123,Comsoon,와… 벌써 벚꽃 필 때구나!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1243,123,Comsoon,"완전 분홍분홍하고 예쁘다!
 조교님, 이것 좀 보세요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-496,123,Comsoon,… 네? 벚꽃이 어떻다고요?,basic,TRUE,Choice,123,bg_school,,,,,,,,,,,,,,,,,,
-497,123,Comsoon,"맞아요… 공부해야죠…
+1244,123,Comsoon,… 네? 벚꽃이 어떻다고요?,basic,TRUE,Choice,123,bg_school,,,,,,,,,,,,,,,,,,
+1245,123,Comsoon,"맞아요… 공부해야죠…
 중간고사가 코앞인데…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-498,123,Comsoon,"지, 지금 보면 이게 벚꽃구경이죠!
+1246,123,Comsoon,"지, 지금 보면 이게 벚꽃구경이죠!
 와, 예쁘다!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-499,123,Comsoon,……,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-500,123,Comsoon,공부나 하러 갈게요…,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-501,123,Narration,"벚꽃의 꽃말은…
+1247,123,Comsoon,……,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1248,123,Comsoon,공부나 하러 갈게요…,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1249,123,Narration,"벚꽃의 꽃말은…
 중간고사……",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-502,123,Comsoon,맞아요! 꽃이 이렇게 예쁜데!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-503,123,Comsoon,친구들 불러서 같이 벚꽃 구경 가자고 해야지!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-504,123,Narration,"친구들을 불러 함께 한강으로 벛꽃 구경을 갔다!
+1250,123,Comsoon,맞아요! 꽃이 이렇게 예쁜데!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1251,123,Comsoon,친구들 불러서 같이 벚꽃 구경 가자고 해야지!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1252,123,Narration,"친구들을 불러 함께 한강으로 벛꽃 구경을 갔다!
 즐거운 시간을 보냈다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-505,124,Comsoon,"아으으… 교수님, 수업 시간 초과는 범죄예요…
+1253,124,Comsoon,"아으으… 교수님, 수업 시간 초과는 범죄예요…
 얼른 집이나 가야지…",sad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-506,124,Comsoon,"어? 평소 다니던 길이 막혔네?
+1254,124,Comsoon,"어? 평소 다니던 길이 막혔네?
 공사… 중?",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-507,124,Comsoon,"어쩔 수 없이 돌아서 가야겠네…
+1255,124,Comsoon,"어쩔 수 없이 돌아서 가야겠네…
 어떤 길로 갈까?",basic,TRUE,Choice,124,bg_street,,,,,,,,,,,,,,,,,,
-508,124,Comsoon,"여긴 오르막길이 많아서 원래 잘 안 갔는데…
+1256,124,Comsoon,"여긴 오르막길이 많아서 원래 잘 안 갔는데…
 오늘은 어쩔 수 없지.",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-509,124,Comsoon,……,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-510,124,Comsoon,"헥, 헥… 도착했다!
+1257,124,Comsoon,……,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1258,124,Comsoon,"헥, 헥… 도착했다!
 우으… 다리 아파…",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-511,124,Narration,"생각보다 많이 힘들긴 했지만,
+1259,124,Narration,"생각보다 많이 힘들긴 했지만,
 오르막길을 올랐더니 꽤 운동이 된 것 같다!",none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-512,124,Comsoon,"여기는 처음 가보는 길인데…
+1260,124,Comsoon,"여기는 처음 가보는 길인데…
 이런 길도 있었구나, 카페도 있고… 어?",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-513,124,Comsoon,"고양이다!
+1261,124,Comsoon,"고양이다!
 나비야, 이리 온~",basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
-514,124,Narration,마음에 드는 카페도 발견하고 귀여운 고양이와도 놀 수 있었다!,none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
-515,125,Comsoon,진짜로 사주는 거야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-516,125,StudentA,"그래, 저번에 내 과제 도와줬으니까 커피 정도는 쏴야지.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-517,125,Comsoon,"헤헤, 고마워! 별 거 아닌데…",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-518,125,StudentA,어떤 걸로 마실래?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-519,125,Comsoon,나는… 아메리카노!,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-520,125,StudentA,"나도 같은 걸로 해야겠다.
+1262,124,Narration,마음에 드는 카페도 발견하고 귀여운 고양이와도 놀 수 있었다!,none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
+1263,125,Comsoon,진짜로 사주는 거야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1264,125,StudentA,"그래, 저번에 내 과제 도와줬으니까 커피 정도는 쏴야지.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1265,125,Comsoon,"헤헤, 고마워! 별 거 아닌데…",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1266,125,StudentA,어떤 걸로 마실래?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1267,125,Comsoon,나는… 아메리카노!,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1268,125,StudentA,"나도 같은 걸로 해야겠다.
 차갑게, 아니면 뜨겁게?",basic,TRUE,Choice,125,bg_cafe,,,,,,,,,,,,,,,,,,
-521,125,StudentA,"오케이!
+1269,125,StudentA,"오케이!
 그럼, 아이스 하나, 핫 하나 주세요.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-522,125,Narration,잠시 후...,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-523,125,Employee,"아메리카노 차가운 거 한 잔, 따뜻한 거 한 잔 나왔습니다!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-524,125,StudentA,"네, 감사합니다!
+1270,125,Narration,잠시 후...,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1271,125,Employee,"아메리카노 차가운 거 한 잔, 따뜻한 거 한 잔 나왔습니다!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1272,125,StudentA,"네, 감사합니다!
 자! 네 거 받아.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-525,125,Comsoon,"응, 고마워. 잘 먹을게!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-526,125,Comsoon,"후아아, 따뜻해…",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-527,125,Narration,"음료수 컵은 무척이나 따뜻했다!
+1273,125,Comsoon,"응, 고마워. 잘 먹을게!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1274,125,Comsoon,"후아아, 따뜻해…",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1275,125,Narration,"음료수 컵은 무척이나 따뜻했다!
 한 모금 마시자 몸이 풀리는 느낌이다…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-528,125,StudentA,어? 너도 얼죽아파야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-529,125,Comsoon,"헤헤, 응.
+1276,125,StudentA,어? 너도 얼죽아파야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1277,125,Comsoon,"헤헤, 응.
 난 항상 아이스 아메리카노만 마시거든.",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-530,125,StudentA,"나도 그런데!
+1278,125,StudentA,"나도 그런데!
 주변에 나 말고는 처음 봤어!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-531,125,Narration,"어쩌다보니 친구와 같은 취향을 찾게 되었다!
+1279,125,Narration,"어쩌다보니 친구와 같은 취향을 찾게 되었다!
 친구와 아이스 아메리카노에 대해 많은 이야기를 나누었다.",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-532,126,Comsoon,"조교님, 얼버기!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-533,126,Comsoon,네? 얼버기가 뭔지 모르세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-534,126,Comsoon,"얼리버드 기상이요!
+1280,126,Comsoon,"조교님, 얼버기!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1281,126,Comsoon,네? 얼버기가 뭔지 모르세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1282,126,Comsoon,"얼리버드 기상이요!
 일찍 일어나는 새가 벌레를 잡는다고… 하잖아요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-535,126,Comsoon,"6시에 일어났거든요!
+1283,126,Comsoon,"6시에 일어났거든요!
 대단하죠?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-536,126,Comsoon,하~암.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-537,126,Comsoon,"그게, 사실은…
+1284,126,Comsoon,하~암.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1285,126,Comsoon,"그게, 사실은…
 아침 6시가 아니라 저녁 6시에 일어났어요.",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-538,126,Comsoon,낮잠을 너무 오래 자서… 밤을 새워 버렸지 뭐예요.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-539,126,Comsoon,"네? 커피 사 주신다고요?
+1286,126,Comsoon,낮잠을 너무 오래 자서… 밤을 새워 버렸지 뭐예요.,sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1287,126,Comsoon,"네? 커피 사 주신다고요?
 그럼 저는 메가 사이즈 커피 프라페 휘핑 많이 토핑 추가요!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-540,126,Narration,컴순은 메가 사이즈 커피 프라페를 전부 비우고 힘이 난 것 같다…!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1288,126,Narration,컴순은 메가 사이즈 커피 프라페를 전부 비우고 힘이 난 것 같다…!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 
 
 

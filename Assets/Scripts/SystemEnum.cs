@@ -43,7 +43,7 @@ namespace Client
 
         public enum eLineType
         {
-            NARRATION, SPEAK
+            NARRATION, SPEAK, RESULT
         }
 
         #region Turns
@@ -114,7 +114,7 @@ namespace Client
 
         public enum eActivityTypeKor
         {
-            Rest, Class, Game, Workout, Club, MaxCount
+            자체휴강, 수업, 게임, 운동, 동아리
         }
 
         public static string GetActivityTypeKor(eActivityType activityType)
