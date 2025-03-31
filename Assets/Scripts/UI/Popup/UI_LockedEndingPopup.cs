@@ -14,7 +14,7 @@ namespace Client
         enum Buttons
         {
             Panel,
-            BTN_Retry, BTN_Cancel,
+            BTN_Cancel,
         }
 
         enum Images
@@ -39,7 +39,6 @@ namespace Client
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
-            BindEvent(GetButton((int)Buttons.BTN_Retry).gameObject, OnClickRetryBtn);
             BindEvent(GetButton((int)Buttons.BTN_Cancel).gameObject, OnClickCancelBtn);
         }
 
@@ -50,11 +49,6 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
-        void OnClickRetryBtn(PointerEventData evt)
-        {
-            Debug.Log("다시 시도 버튼 클릭");
-            SoundManager.Instance.Play(eSound.SFX_Positive);
-        }
         void OnClickCancelBtn(PointerEventData evt)
         {
             Debug.Log("취소 버튼 클릭");
@@ -64,7 +58,7 @@ namespace Client
         #endregion
 
         /// <summary>
-        /// LockedEndingPopup 데이터 설정 함
+        /// LockedEndingPopup 데이터 설정 함수
         /// </summary>
         /// <param name="ending"></param>
         public void SetLockedEndingPopup(eEndingName endingName)

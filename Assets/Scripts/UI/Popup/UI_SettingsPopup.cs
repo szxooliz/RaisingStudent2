@@ -16,6 +16,7 @@ namespace Client
         {
             Panel,
             BTN_Credit,
+            BTN_X,
         }
 
         enum Sliders
@@ -38,6 +39,7 @@ namespace Client
         {
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
             BindEvent(GetButton((int)Buttons.BTN_Credit).gameObject, OnClickCreditBtn);
+            BindEvent(GetButton((int)Buttons.BTN_X).gameObject, OnClickXBtn);
         }
 
         void BindSlider()
@@ -56,12 +58,17 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
-
         void OnClickCreditBtn(PointerEventData evt)
         {
             Debug.Log("크레딧 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_CreditPopup>();
+        }
+        void OnClickXBtn(PointerEventData evt)
+        {
+            Debug.Log("X 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Negative);
+            ClosePopupUI();
         }
         #endregion
 
