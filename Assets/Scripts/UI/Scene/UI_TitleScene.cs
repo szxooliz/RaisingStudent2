@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Client.SystemEnum;
 
@@ -44,11 +45,15 @@ namespace Client
         {
             Debug.Log("이어 하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
+
+            // 게임 화면으로 이동
+            SceneManager.LoadScene("BaseScene");
         }
         void OnClickEndingListBtn(PointerEventData evt)
         {
             Debug.Log("엔딩 리스트 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
+            SceneManager.LoadScene("EndingListScene");
         }
         void OnClickSettingsBtn(PointerEventData evt)
         {

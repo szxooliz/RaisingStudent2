@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Client.SystemEnum;
 
@@ -40,6 +41,12 @@ namespace Client
         {
             Debug.Log("예 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
+
+            // 플레이어 데이터를 초기화 시킨 후 게임 화면으로 이동 
+            DataManager.Instance.playerData = new PlayerData();
+
+            ClosePopupUI();
+            SceneManager.LoadScene("BaseScene");
         }
         void OnClickNoBtn(PointerEventData evt)
         {

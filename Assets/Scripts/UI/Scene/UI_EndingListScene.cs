@@ -46,7 +46,10 @@ namespace Client
         /// </summary>
         void PopulateEndingList()
         {
-            List<eEndingName> endingNameList = new List<eEndingName>((eEndingName[])Enum.GetValues(typeof(eEndingName)));
+            List<eEndingName> endingNameList = Enum.GetValues(typeof(eEndingName))
+               .Cast<eEndingName>()
+               .Where(e => e != eEndingName.MaxCount)
+               .ToList();
 
             var endingDict = DataManager.Instance.persistentData.endingList
                 .ToDictionary(e => e.endingName, e => e);
