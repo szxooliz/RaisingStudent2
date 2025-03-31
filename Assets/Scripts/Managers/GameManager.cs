@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Client.SystemEnum;
 
 namespace Client
@@ -189,8 +190,14 @@ namespace Client
         /// </summary>
         public void NextTurn()
         {
-            // TODO : 엔딩으로 넘어가기
-            if (DataManager.Instance.playerData.CurrentTurn == 24) return; // 미구현
+            // 엔딩으로 넘어가기
+            if (DataManager.Instance.playerData.CurrentTurn == 24)
+            {
+                eEndingName endingName = CheckEnding();
+                Ending ending = new Ending(endingName, DataManager.Instance.playerData);
+                DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
+                SceneManager.LoadScene("EndingScene");
+            }
 
             DataManager.Instance.playerData.CurrentTurn++;
 
@@ -203,6 +210,61 @@ namespace Client
                 if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun) DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
                 else DataManager.Instance.playerData.CurrentMonth++;
             }
+        }
+
+        /// <summary>
+        /// 엔딩 계산 함수
+        /// </summary>
+        public eEndingName CheckEnding()
+        {
+            int endingNum = 0;
+            int highStatsCount = 0;
+            bool[] highStats = { false, false, false, false };
+
+            for (int i = 0; i < 4; i++)
+            {
+                if ((int)DataManager.Instance.playerData.StatsAmounts[i] >= 80)
+                {
+                    highStats[i] = true;
+                    highStatsCount++;
+                }
+            }
+
+            if (highStatsCount == 4 && (int)DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Inteli] == 100)
+            {
+                Debug.Log("대학원 엔딩");
+                endingNum = (int)eEndingName.GraduateStudent;
+            }
+            else if (highStatsCount >= 2)
+            {
+                if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
+                {
+                    Debug.Log("대기업 SI 취업 엔딩");
+                    endingNum = (int)eEndingName.CorporateSI;
+                }
+                else if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Otaku])
+                {
+                    Debug.Log("게임회사 취업 엔딩");
+                    endingNum = (int)eEndingName.GameCompany;
+                }
+                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Charming])
+                {
+                    Debug.Log("버튜버 엔딩");
+                    endingNum = (int)eEndingName.VirtualYoutuber;
+                }
+                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Strength])
+                {
+                    Debug.Log("프로게이머 엔딩");
+                    endingNum = (int)eEndingName.ProGamer;
+                }
+            }
+            else
+            {
+                Debug.Log("홈프로텍터 엔딩");
+                endingNum = (int)eEndingName.HomeProtector;
+            }
+
+            return (eEndingName)Enum.GetValues(typeof(eEndingName)).GetValue(endingNum);
         }
 
         /*

@@ -51,8 +51,8 @@ namespace Client
             Bind<TMPro.TMP_Text>(typeof(Texts));
 
             BindButton();
-            CheckEnding();
 
+            currentEndingNum = GetLatestEndingIndex();
             LoadScript();
             LoadIllustration();
             LoadNextScript();
@@ -79,64 +79,28 @@ namespace Client
         #endregion
 
         /// <summary>
+        /// 가장 최근에 Add된 엔딩의 인덱스를 불러와 저장함 
+        /// </summary>
+        public int GetLatestEndingIndex()
+        {
+            var list = DataManager.Instance.persistentData.endingList;
+            if (list.Count == 0)
+            {
+                Debug.LogWarning("엔딩 리스트가 비어 있습니다.");
+                return -1;
+            }
+            var lastEndingNum = (int)list[list.Count - 1].endingName;
+
+            return lastEndingNum;
+        }
+
+        /// <summary>
         /// 오브젝트에서 포인터를 누르고 뗄 때 호출됨
         /// </summary>
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
             LoadNextScript();
-        }
-
-        /// <summary>
-        /// 엔딩 계산 함수
-        /// </summary>
-        void CheckEnding()
-        {
-            int highStatsCount = 0;
-            bool[] highStats = { false, false, false, false };
-
-            for (int i = 0; i < 4; i++)
-            {
-                if ((int)DataManager.Instance.playerData.StatsAmounts[i] >= 85)
-                {
-                    highStats[i] = true;
-                    highStatsCount++;
-                }
-            }
-
-            if (highStatsCount == 4)
-            {
-                Debug.Log("대학원 엔딩");
-                currentEndingNum = (int)eEndingName.GraduateStudent;
-            }
-            else if (highStatsCount >= 2)
-            {
-                if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
-                {
-                    Debug.Log("대기업 SI 취업 엔딩");
-                    currentEndingNum = (int)eEndingName.CorporateSI;
-                }
-                else if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Otaku])
-                {
-                    Debug.Log("게임회사 취업 엔딩");
-                    currentEndingNum = (int)eEndingName.GameCompany;
-                }
-                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Charming])
-                {
-                    Debug.Log("버튜버 엔딩");
-                    currentEndingNum = (int)eEndingName.VirtualYoutuber;
-                }
-                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Strength])
-                {
-                    Debug.Log("프로게이머 엔딩");
-                    currentEndingNum = (int)eEndingName.ProGamer;
-                }
-            }
-            else
-            {
-                Debug.Log("홈프로텍터 엔딩");
-                currentEndingNum = (int)eEndingName.HomeProtector;
-            }
         }
 
         /// <summary>
@@ -224,7 +188,7 @@ namespace Client
 
             if (endingScript.NameTag)
             {
-                GetText((int)Texts.TMP_CharName).text = endingScript.Character;
+                GetText((int)Texts.TMP_CharName).text = Util.GetCharNameKor(endingScript.Character);
                 GetImage((int)Images.IMG_Name).gameObject.SetActive(true);
             }
             else
@@ -233,23 +197,23 @@ namespace Client
                 GetImage((int)Images.IMG_Name).gameObject.SetActive(false);
             }
 
-            string path = characterSpritePath + "Comsoon_Basic";
+            string basicSprite = Util.GetCharBasicSprite(endingScript.Character);
             if (endingScript.Character == "Comsoon")
             {
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
-                path = characterSpritePath + "Comsoon_" + endingScript.Face;
+                string path = characterSpritePath + "Comsoon_" + endingScript.Face;
+                GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
-            else if (endingScript.Character == "Professor")
+            else if (basicSprite != "none")
             {
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
-                path = characterSpritePath + endingScript.Character;
+                string path = characterSpritePath + basicSprite;
+                GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
             else
             {
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(false);
             }
-
-            GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
 
             yield return null;

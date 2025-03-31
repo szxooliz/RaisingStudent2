@@ -51,7 +51,7 @@ namespace Client
             foreach (var _charFace in charFaceList)
             {
                 var charFace = _charFace as CharacterFace;
-                _charFaceDict.TryAdd(charFace.CharacterName, charFace);
+                _charFaceDict.TryAdd(charFace.Character, charFace);
             }
         }
 
