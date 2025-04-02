@@ -43,7 +43,7 @@ namespace Client
         }
 
         /// <summary>
-        /// 이벤트 & 활동 중 캐릭터 대사 & 결과 & 선택지
+        /// 이벤트 - 결과 & 선택지 / 활동 중 캐릭터 대사 & 결과 
         /// </summary>
         /// <param name="_line"></param>
         public UnitLog(eLineType _eLineType, string _line)

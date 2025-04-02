@@ -161,7 +161,10 @@ namespace Client
             // 계절 이미지가 없는 캐릭터의 경우
             if (eventScript.Character != DataManager.Instance.playerData.CharName)
             {
-                str = $"Sprites/Character/{eventScript.Character}";
+                string charSprite = DataManager.Instance.CharFaceDict[eventScript.Character].basic;
+                if (charSprite == "none") return null;
+
+                str = $"Sprites/Character/{charSprite}";
                 return str;
             }
 

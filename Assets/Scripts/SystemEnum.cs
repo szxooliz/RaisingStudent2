@@ -153,8 +153,8 @@ namespace Client
 
         public enum eScheduleEvent
         {
-            Intro = 0, MidTest_1 = 3, FinTest_1 = 5, SummerVac = 6, 
-            MidTest_2 = 8, FinTest_2 = 9
+            Intro = 0, MidTest_1 = 4, FinTest_1 = 6, SummerVac = 7, 
+            MidTest_2 = 10, FinTest_2 = 12
         }
 
         public enum eRecordType

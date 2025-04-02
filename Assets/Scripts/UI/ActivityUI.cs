@@ -170,17 +170,11 @@ namespace Client
             }
 
             if (activityData.resultType == eResultType.BigSuccess)
-            {
                 return bigSuccessLines[(int)activityData.activityType];
-            }
             else if (activityData.resultType == eResultType.Success)
-            {
                 return successLines[(int)activityData.activityType];
-            }
             else
-            {
                 return failLines[(int)activityData.activityType];
-            }
         }
 
         string GetFaceByResult(eResultType resultType)
@@ -216,11 +210,12 @@ namespace Client
             charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
+            UnitLog unitLog = new UnitLog(eLineType.SPEAK, str);
             yield return null;
         }
 
         /// <summary>
-        /// 활동 결과 2 화면 - 나레이션
+        /// 활동 결과 2 화면 - 활동 결과
         /// </summary>
         /// <returns></returns>
         IEnumerator ShowResult2()
@@ -234,7 +229,7 @@ namespace Client
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(false);
                 sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
-                sb.AppendLine($"스트레스가 + {-GameManager.Instance.activityData.stressValue} 감소했다!");
+                sb.AppendLine($"스트레스가 {-GameManager.Instance.activityData.stressValue} 감소했다!");
             }
             else
             {
@@ -247,6 +242,7 @@ namespace Client
             }
 
             StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), line));
+            UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
 
             yield return null;
         }

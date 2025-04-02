@@ -132,8 +132,10 @@ namespace Client
             {
                 if (scheduleContentMap.TryGetValue(kvp.Key, out var content))
                 {
+                    if (DataManager.Instance.playerData.CurrentStatus == eStatus.Event)
+                        content.ToggleCircle(kvp.Key == nowEvtIndex);
+
                     content.ToggleLine(kvp.Value);
-                    content.ToggleCircle(kvp.Key == nowEvtIndex);
                 }
             }
         }

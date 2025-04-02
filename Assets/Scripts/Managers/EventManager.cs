@@ -85,11 +85,11 @@ namespace Client
         {
             if (DataManager.Instance.playerData.WatchedEventIDList.Contains(eventData.eventTitle.index))
             {
-                Debug.LogError($"{eventData.title} : {eventData.eventTitle.index}는 이미 등록된 이벤트 인덱스입니다");
+                Debug.LogError($"{eventData.eventTitle.EventName} : {eventData.eventTitle.index}는 이미 등록된 이벤트 인덱스입니다");
                 return;
             }
 
-            Debug.Log($"이벤트 끝, {eventData.title} 등록");
+            Debug.Log($"이벤트 끝, {eventData.eventTitle.EventName} 등록");
             DataManager.Instance.playerData.WatchedEventIDList.Add(eventData.eventTitle.index);
             // TODO : 플레이어 데이터 save 하기
         }
@@ -219,7 +219,7 @@ namespace Client
                 Dictionary<long, EventScript> eventScripts = LoadScript(eventTitle.index);
 
                 EventData eventData = new EventData(eventTitle, eventScripts);
-                Debug.Log($"EventQueue에 추가된 이벤트: {eventData.title} (넣기 전 count : {EventQueue.Count})");
+                Debug.Log($"EventQueue에 추가된 이벤트: {eventData.eventTitle.EventName} (넣기 전 count : {EventQueue.Count})");
                 EventQueue.Enqueue(eventData);
             }
         }
@@ -270,9 +270,9 @@ namespace Client
             string title = DataManager.Instance.GetData<EventTitle>(eventID).EventName;
 
             if (title.EndsWith("!")) // "!" 지우기
-                title = title.Substring(0, str.Length - 1);
+                title = title.Substring(title.Length - 1);
             else // "고사" 지우기
-                title = title.Substring(0, str.Length - 2);
+                title = title.Substring(title.Length - 2);
 
             DataManager.Instance.playerData.EventRecordList.Add((title, str)); 
         }

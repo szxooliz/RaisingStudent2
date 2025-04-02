@@ -5,7 +5,7 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class ActivityData : ProcessData
+    public class ActivityData
     {
         public eActivityType activityType; // 활동 종류
         public eResultType resultType;     // 활동 결과 실패/성공/대성공
@@ -22,8 +22,6 @@ namespace Client
             statNames = new List<eStatName>();
             statValues = new List<int>();
             stressValue = 0;
-
-            title = Util.GetActivityTitle(activityType);
         }
     }
 }

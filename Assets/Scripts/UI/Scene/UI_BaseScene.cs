@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static Client.SystemEnum;
-using DG.Tweening;
 
 namespace Client
 {
@@ -138,7 +137,7 @@ namespace Client
         /// </summary>
         public void ShowEventName()
         {
-            GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.title;
+            GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.eventTitle.EventName;
         }
 
         //public void EventFadeInOut()

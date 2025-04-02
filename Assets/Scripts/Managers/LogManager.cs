@@ -6,8 +6,8 @@ namespace Client
 {
     public class LogManager : Singleton<LogManager>
     {
-        private List<ProcessData> processList = new();
+        public List<EventLog> eventLogList = new();
 
-
+        //public void AddUnitLogList()
     }
 }

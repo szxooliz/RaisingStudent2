@@ -25,7 +25,7 @@ namespace Client
         }
         enum Images
         {
-            UI_Stress, UI_StressStatus
+            UI_Stress, UI_StressStatus, IMG_Background
         }
 
         public override void Init()
@@ -85,6 +85,7 @@ namespace Client
             // 육성 상태일 경우 스탯, 스트레스 업데이트
             if (index == (int)UIs.MainUI)
             {
+                ChangeBackGround("bg_school");
                 UpdateStatUIs();
                 UpdateStressUIs();
             }
@@ -144,26 +145,31 @@ namespace Client
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Rest);
+            ChangeBackGround("bg_classroom");
         }
         void OnClickStudyBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Class);
+            ChangeBackGround("bg_classroom");
         }
         void OnClickGameBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Game);
+            ChangeBackGround("bg_home");
         }
         void OnClickWorkOutBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Workout);
+            ChangeBackGround("bg_gym");
         }
         void OnClickClubBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
             StartActivity((int)eActivityType.Club);
+            ChangeBackGround("bg_club");
         }
         #endregion
 
@@ -179,6 +185,13 @@ namespace Client
             DataManager.Instance.playerData.CurrentStatus = eStatus.Activity;
         }
 
+        void ChangeBackGround(string spritePath)
+        {
+            if (spritePath == null) return;
+
+            string path = $"Sprites/UI/BackGround/{spritePath}";
+            GetImage((int)Images.IMG_Background).sprite = DataManager.Instance.GetOrLoadSprite(path);
+        }
 
     }
 }

@@ -164,11 +164,11 @@ namespace Client
             if (_eventScript.BranchType == eBranchType.Choice)
             {
                 GetGameObject((int)GameObjects.Selection).SetActive(true);
-                ShowSelection(_eventScript);
+                ShowSelection(_eventScript.BranchIndex);
             }
             else if (_eventScript.BranchType == eBranchType.Condition)
             {
-                GetStatCondition(_eventScript);
+                GetStatCondition(_eventScript.BranchIndex);
             }
             else
             {
@@ -194,28 +194,34 @@ namespace Client
 
         void UpdateScriptUI(EventScript _eventScript)
         {
+            eLineType eLineType = eLineType.SPEAK;
             GetGameObject((int)GameObjects.Selection).SetActive(false);
 
-            // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
-            if (_eventScript.NameTag)
-            {
-                string path = Util.GetSeasonIllustPath(_eventScript);
+            backGround = _eventScript.Background;
 
+            string path = Util.GetSeasonIllustPath(_eventScript);
+
+            // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
+            if (path != null)
+            {
                 GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 1);
                 GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
-                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(true);
             }
             else
             {
+                eLineType = eLineType.NARRATION;
                 // 나타낼 이미지 없을 때 스프라이트 알파값 0
                 GetImage((int)Images.IMG_CharFace).color = new Color(1, 1, 1, 0);
                 GetImage((int)Images.IMG_CharFace).sprite = null;
-                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(false);
             }
 
+            GetImage((int)Images.IMG_NameTag).gameObject.SetActive(_eventScript.NameTag);
             GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
                 Util.GetCharNameKor(_eventScript.Character) : "";
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
+
+            // 로그를 위한 unitLog 객체 생성
+            UnitLog unitLog = new UnitLog(eLineType, _eventScript); ;
         }
 
         void ChangeBackGround(object sender, System.EventArgs e)
@@ -227,9 +233,9 @@ namespace Client
         }
 
         #region 선택지에 따른 분기
-        void ShowSelection(EventScript _eventScript)
+        void ShowSelection(long BranchIndex)
         {
-            SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(_eventScript.BranchIndex);
+            SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(BranchIndex);
 
             GetText((int)Texts.TMP_Select1).text = selectScript.Selection1;
             GetText((int)Texts.TMP_Select2).text = selectScript.Selection2;
@@ -252,7 +258,9 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             nowEventScriptID = isFirst ? selectScript.MoveLine1 : selectScript.MoveLine2;
-            
+            string selection = isFirst ? selectScript.Selection1 : selectScript.Selection2;
+            UnitLog unitLog = new UnitLog(eLineType.NARRATION, selection);
+
             if (isFirst) // 첫 번째 버튼이면
             {
                 EventManager.Instance.DeleteOtherScripts(selectScript.MoveLine2);
@@ -277,9 +285,9 @@ namespace Client
         /// <summary>
         /// 분기 기준치 결과 스크립트 가져오기
         /// </summary>
-        void GetStatCondition(EventScript _eventScript)
+        void GetStatCondition(long BranchIndex)
         {
-            StatCondition statCondition = DataManager.Instance.GetData<StatCondition>(_eventScript.BranchIndex);
+            StatCondition statCondition = DataManager.Instance.GetData<StatCondition>(BranchIndex);
 
             // 조건 만족하는지 확인한 후 결과에 따라 스크립트 조정
             if (MeasureUpCondition(statCondition))
@@ -363,8 +371,6 @@ namespace Client
             if (!DataManager.Instance.EventResultDict.ContainsKey(_eventScript.index)) return;
 
             EventResult eventResult = DataManager.Instance.EventResultDict.GetValueOrDefault(_eventScript.index);
-            EventManager.Instance.nowEventData.hasChange = true;
-            EventManager.Instance.nowEventData.eventResult = eventResult;
             List<long> result = new()
             {
                 eventResult.Inteli, eventResult.Otaku, eventResult.Strength, eventResult.Charming, eventResult.StressValue
@@ -401,6 +407,7 @@ namespace Client
 
             UpdateStatUIs();
             coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
+            UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
         }
 
         string ResultString(long stat)
