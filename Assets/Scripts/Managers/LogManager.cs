@@ -8,6 +8,15 @@ namespace Client
     {
         public List<EventLog> eventLogList = new();
 
-        //public void AddUnitLogList()
+        //public EventLog GetOrAddEventLog(int _id)
+        //{
+        //    // UnitLog를 넣어줄 클래스
+        //    // 어떤 이벤트 로그에 UnitLog가 포함되는지를 알아야 하거나
+        //    // 
+        //}
+        public void AddUnitLogList(UnitLog unitLog)
+        {
+
+        }
     }
 }

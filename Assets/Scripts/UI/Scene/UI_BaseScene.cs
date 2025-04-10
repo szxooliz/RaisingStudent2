@@ -85,12 +85,12 @@ namespace Client
             {
                 case eStatus.Main:
                     UpdateTermUI();
-                    UpdateTurnUI();
+                    UpdateTurnUI(); // 메인으로 돌아올 때만 업데이트를 하다 보니까 제대로 업데이트가 안됨
                     path = spritePath + eStatus.Main.ToString();
                     break;
                 case eStatus.Activity:
                     path = spritePath + eStatus.Activity.ToString();
-                    break;
+                    break; 
                 case eStatus.Event:
                     path = spritePath + eStatus.Event.ToString();
                     break;
@@ -128,8 +128,10 @@ namespace Client
         /// </summary>
         void UpdateTermUI()
         {
-            GetText((int)Texts.TMP_Term).text = (int)DataManager.Instance.playerData.CurrentMonth + "월 " 
-                                                + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
+            string str = (int)DataManager.Instance.playerData.CurrentMonth + "월 " + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
+
+            GetText((int)Texts.TMP_Term).text = str;
+            Debug.Log($"UI 턴 : {str}");
         }
 
         /// <summary>

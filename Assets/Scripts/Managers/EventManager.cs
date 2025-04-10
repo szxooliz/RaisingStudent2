@@ -35,6 +35,7 @@ namespace Client
         /// </summary>
         private void EnqueueEventID()
         {
+            Debug.Log($"현재 턴 {DataManager.Instance.playerData.CurrentTurn}");
             var eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
             List<EventTitle> randomList = new List<EventTitle>();
 
@@ -45,7 +46,11 @@ namespace Client
                 // 1. 메인 이벤트만 먼저 추가
                 if (eventTitle.index < RANDOM_THRESHOLD)
                 {
-                    if (IsMainEventAddable(eventTitle)) EventIDQueue.Enqueue(eventTitle);
+                    if (IsMainEventAddable(eventTitle))
+                    {
+                        EventIDQueue.Enqueue(eventTitle);
+                        Debug.Log($"추가한 이벤트 아이디 : {eventTitle.index} {eventTitle.EventName}");
+                    }
                 }
                 // 2. 랜덤 이벤트 추가
                 else
@@ -196,6 +201,7 @@ namespace Client
             EnqueueEventID();
             LoadEventData();
             if (EventQueue.Count > 0) StartEventPhase();
+            else DataManager.Instance.playerData.CurrentStatus = eStatus.Main;
         }
 
         /// <summary>
