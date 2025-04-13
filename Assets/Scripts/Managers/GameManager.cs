@@ -15,6 +15,7 @@ namespace Client
         private const float STRESS_GAME = 20f;
         private const float STRESS_WORKOUT = 20f;
         private const float STRESS_CLUB = 20f;
+        private const int ENDING_TURN = 25;
         private List<int> StressRestList = new() { 80, 60, 30 };
         #endregion
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
@@ -56,14 +57,15 @@ namespace Client
         /// </summary>
         /// <param name="actType"></param>
         /// <returns></returns>
-        public void StartActivity(int actType)
+        public void StartActivity(eActivityType actType)
         {
-            if (actType == (int)eActivityType.MaxCount) 
+            if (actType == eActivityType.MaxCount) 
             { 
                 Debug.LogError("유효한 활동이 아닙니다");
                 return;
             }
-            activityData = SetNewActivityData((eActivityType)actType);
+            activityData = SetNewActivityData(actType);
+            LogManager.Instance.GetNewLogGroup(Util.GetActivityTitle(actType));
 
             // 자체 휴강일 때는 업데이트할 스탯 없음
             if (actType != (int)eActivityType.Rest) UpdateStats();
@@ -191,7 +193,7 @@ namespace Client
         public void NextTurn()
         {
             // 엔딩으로 넘어가기
-            if (DataManager.Instance.playerData.CurrentTurn == 24)
+            if (DataManager.Instance.playerData.CurrentTurn == ENDING_TURN)
             {
                 eEndingName endingName = CheckEnding();
                 Ending ending = new Ending(endingName, DataManager.Instance.playerData);
@@ -207,7 +209,8 @@ namespace Client
             // 상순이 되면 다음 달로 넘어감
             if (DataManager.Instance.playerData.CurrentThird == 0)
             {
-                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun) DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
+                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun) 
+                    DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
                 else DataManager.Instance.playerData.CurrentMonth++;
             }
         }
@@ -266,19 +269,6 @@ namespace Client
 
             return (eEndingName)Enum.GetValues(typeof(eEndingName)).GetValue(endingNum);
         }
-
-        /*
-        IEnumerator LoadDatas()
-        {
-            Coroutine cor1 = StartCoroutine(s_instance._data.RequestAndSetDayDatas(DayDatasURL));
-            Coroutine cor2 = StartCoroutine(s_instance._data.RequestAndSetRandEventDatas(RandEventURL));
-            Coroutine cor3 = StartCoroutine(s_instance._data.RequestAndSetItemDatas(MerchantURL));
-
-            yield return cor1;
-            yield return cor2;
-            yield return cor3;
-
-        }*/
 
     }
 }

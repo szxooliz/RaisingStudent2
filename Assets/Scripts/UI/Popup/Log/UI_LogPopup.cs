@@ -12,15 +12,29 @@ namespace Client
     {
         enum Buttons
         {
-            Panel,
-            BTN_Close
+            Panel, BTN_Close
         }
 
+        [SerializeField] GameObject logClusterUI;
+        [SerializeField] RectTransform parent;
         public override void Init()
         {
             base.Init();
             Bind<Button>(typeof(Buttons));
             BindButton();
+        }
+        private void OnEnable()
+        {
+            //InitLogClusters();
+        }
+
+        void InitLogClusters()
+        {
+            foreach(LogCluster cluster in LogManager.Instance.logClusterList)
+            {
+                GameObject gm = Instantiate(logClusterUI, parent);
+                gm.GetComponent<LogClusterUI>().InitClusterUI(cluster);
+            }
         }
 
         void BindButton()

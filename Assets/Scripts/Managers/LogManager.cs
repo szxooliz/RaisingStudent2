@@ -6,17 +6,33 @@ namespace Client
 {
     public class LogManager : Singleton<LogManager>
     {
-        public List<EventLog> eventLogList = new();
+        int _id = 0;
+        public List<LogCluster> logClusterList = new();
 
-        //public EventLog GetOrAddEventLog(int _id)
-        //{
-        //    // UnitLog를 넣어줄 클래스
-        //    // 어떤 이벤트 로그에 UnitLog가 포함되는지를 알아야 하거나
-        //    // 
-        //}
-        public void AddUnitLogList(UnitLog unitLog)
+        public int GetNextID() => _id++;
+
+        #region 생성자
+        LogManager() { }
+        #endregion
+        /// <summary>
+        /// 로그 그룹 새로 생성 후 매니저가 관리하는 리스트에 추가
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public LogCluster GetNewLogGroup(string title)
         {
-
+            LogCluster cluster = new LogCluster(title);
+            logClusterList.Add(cluster);
+            Debug.Log($"새 로그 그룹 생성 : {cluster.UID} {cluster.title}");
+            return cluster;
+        }
+        /// <summary>
+        /// 마지막 로그 그룹 가져오기
+        /// </summary>
+        /// <returns></returns>
+        public LogCluster GetLastLogGroup()
+        {
+            return logClusterList[^1];
         }
     }
 }

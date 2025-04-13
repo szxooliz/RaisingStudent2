@@ -144,31 +144,31 @@ namespace Client
         void OnClickRestBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            StartActivity((int)eActivityType.Rest);
+            StartActivity(eActivityType.Rest);
             ChangeBackGround("bg_classroom");
         }
         void OnClickStudyBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            StartActivity((int)eActivityType.Class);
+            StartActivity(eActivityType.Class);
             ChangeBackGround("bg_classroom");
         }
         void OnClickGameBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            StartActivity((int)eActivityType.Game);
+            StartActivity(eActivityType.Game);
             ChangeBackGround("bg_home");
         }
         void OnClickWorkOutBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            StartActivity((int)eActivityType.Workout);
+            StartActivity(eActivityType.Workout);
             ChangeBackGround("bg_gym");
         }
         void OnClickClubBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            StartActivity((int)eActivityType.Club);
+            StartActivity(eActivityType.Club);
             ChangeBackGround("bg_club");
         }
         #endregion
@@ -177,7 +177,7 @@ namespace Client
         /// 활동 실행
         /// </summary>
         /// <param name="actType"></param>
-        public void StartActivity(int actType)
+        public void StartActivity(eActivityType actType)
         {
             GameManager.Instance.StartActivity(actType);
 

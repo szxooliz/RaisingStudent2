@@ -113,8 +113,8 @@ namespace Client
         {
             string str = "";
 
-            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
+            // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
             {
                 str = $"Sprites/Character/{DataManager.Instance.playerData.CharName}_Summer_{face}";
             }
@@ -136,8 +136,8 @@ namespace Client
             string str = "";
             
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
-            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
+            // 5월 상순(7턴) ~ 10월 하순(17턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
             {
                 str = $"Sprites/Character/{script.Character}_Summer_{script.Face}";
             }
@@ -169,8 +169,8 @@ namespace Client
             }
 
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
-            // 5월 상순(6턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 6 && DataManager.Instance.playerData.CurrentTurn <= 17)
+            // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
+            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
             {
                 str = $"Sprites/Character/{eventScript.Character}_Summer_{eventScript.Face}";
             }
