@@ -75,18 +75,17 @@ namespace Client
         /// <summary>
         /// 인터랙션 시 말풍선 새로 고침
         /// </summary>
-        IEnumerator ResetBubble()
+        public IEnumerator ResetBubble()
         {
             int index = UnityEngine.Random.Range(0, (int)maxCount);
             Script script = DataManager.Instance.GetData<Script>(index);
-
-            // TODO : 캐릭터 종류 관련 로직 정해지면 수정
-            //string charType = script.Character; 
 
             if (script == null) 
             {
                 yield break;
             }
+
+            yield return new WaitForSeconds(0.3f);
 
             try
             {

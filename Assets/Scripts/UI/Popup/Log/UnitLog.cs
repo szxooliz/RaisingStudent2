@@ -31,7 +31,7 @@ namespace Client
             if (_eLineType == eLineType.SPEAK)
             {
                 charName = Util.GetCharNameKor(_eventScript.Character);
-                charPath = path + Util.GetCharBasicSprite(_eventScript.Character);
+                charPath = path + Util.GetCharBasicSpritePath(_eventScript.Character);
                 line = _eventScript.Line;
                 isCollapsable = true;
             }
@@ -60,8 +60,8 @@ namespace Client
             else if (eLineType == eLineType.SPEAK)
             {
                 isCollapsable = true;
-                charName = charName = Util.GetCharNameKor(DataManager.Instance.playerData.CharName);
-                charPath = path + Util.GetCharBasicSprite(DataManager.Instance.playerData.CharName);
+                charName = Util.GetCharNameKor(DataManager.Instance.playerData.CharName);
+                charPath = path + Util.GetCharBasicSpritePath(DataManager.Instance.playerData.CharName);
             }
             else // NARRATION , 이벤트의 선택지
             {

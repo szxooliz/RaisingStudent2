@@ -11,19 +11,19 @@ namespace Client
         int _uid = 0;
         public string title;
         // event&activity 단위를 담을 class
-        public List<UnitLog> unitLogs = new();
+        public List<UnitLog> unitLogs;
 
         public int UID => _uid;
         public LogCluster(string title)
         {
             _uid = LogManager.Instance.GetNextID();
             this.title = title;
-
+            unitLogs = new();
         }
+
         public void AddUnitLogList(UnitLog unitLog)
         {
             unitLogs.Add(unitLog);
-            Debug.Log($"{this.title}에 로그 추가 : {unitLog.charName} {unitLog.line}");
         }
 
 

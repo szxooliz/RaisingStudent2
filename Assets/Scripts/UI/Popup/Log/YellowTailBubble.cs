@@ -14,8 +14,8 @@ namespace Client
         public override void InitBubbleUI(UnitLog unitLog)
         {
             base.InitBubbleUI(unitLog);
-            IMG_Profile.sprite = DataManager.Instance.GetOrLoadSprite(unitLog.charPath);
-            TMP_Name.text = unitLog.name;
+            //IMG_Profile.sprite = DataManager.Instance.GetOrLoadSprite(unitLog.charPath);
+            TMP_Name.text = unitLog.charName;
         }
 
 

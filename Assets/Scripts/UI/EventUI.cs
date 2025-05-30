@@ -126,7 +126,8 @@ namespace Client
             GetGameObject((int)GameObjects.Selection).SetActive(false);
             GetGameObject((int)GameObjects.Stats).SetActive(false);
 
-            LogManager.Instance.GetNewLogGroup(EventManager.Instance.nowEventData.eventTitle.EventName);
+            //LogManager.Instance.GetNewLogGroup(EventManager.Instance.nowEventData.eventTitle.EventName);
+            LogManager.Instance.GetNewClusterGroup(EventManager.Instance.nowEventData.eventTitle.EventName);
         }
 
         IEnumerator LoadNextDialogue()
@@ -197,11 +198,10 @@ namespace Client
         void UpdateScriptUI(EventScript _eventScript)
         {
             eLineType eLineType = eLineType.SPEAK;
-            GetGameObject((int)GameObjects.Selection).SetActive(false);
-
             backGround = _eventScript.Background;
-
             string path = Util.GetSeasonIllustPath(_eventScript);
+
+            GetGameObject((int)GameObjects.Selection).SetActive(false);
 
             // 캐릭터 이미지 사용 여부에 따라 투명도, 파일 설정
             if (path != null)
@@ -223,8 +223,9 @@ namespace Client
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
 
             // 로그를 위한 unitLog 객체 생성
-            UnitLog unitLog = new UnitLog(eLineType, _eventScript);
-            LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            //UnitLog unitLog = new UnitLog(eLineType, _eventScript);
+            //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType, _eventScript);
         }
 
         void ChangeBackGround(object sender, System.EventArgs e)
@@ -263,8 +264,9 @@ namespace Client
             nowEventScriptID = isFirst ? selectScript.MoveLine1 : selectScript.MoveLine2;
             string selection = isFirst ? selectScript.Selection1 : selectScript.Selection2;
 
-            UnitLog unitLog = new UnitLog(eLineType.NARRATION, selection);
-            LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            //UnitLog unitLog = new UnitLog(eLineType.NARRATION, selection);
+            //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.NARRATION, selection);
 
 
             if (isFirst) // 첫 번째 버튼이면
@@ -413,8 +415,9 @@ namespace Client
 
             UpdateStatUIs();
             coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
-            UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
-            LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
+            //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.RESULT, sb.ToString());
 
         }
 

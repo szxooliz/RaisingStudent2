@@ -28,6 +28,8 @@ namespace Client
             UI_Stress, UI_StressStatus, IMG_Background
         }
 
+        Conversation conversation;
+
         public override void Init()
         {
             base.Init();
@@ -42,6 +44,7 @@ namespace Client
             GetGameObject((int)UIs.ActivityUI).SetActive(false);
             GetGameObject((int)UIs.EventUI).SetActive(false);
 
+            conversation = gameObject.GetComponentInChildren<Conversation>();
             UpdateStatUIs();
             UpdateStressUIs();
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
@@ -62,8 +65,6 @@ namespace Client
         /// <summary>
         /// 현재 상태에 맞추어 UI 트랜지션
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
             MakeTransition((int)DataManager.Instance.playerData.CurrentStatus);
@@ -75,10 +76,13 @@ namespace Client
         /// <param name="index"></param>
         public void MakeTransition(int index)
         {
+            // 메인은 남겨두고 이벤트&활동만 껐다 켰다 해야겠다
+
             for (int i = 0; i < 3; i++)
             {
                 GetGameObject(i).SetActive(false);
             }
+
             // 현재 상태인 UI 오브젝트만 활성화
             GetGameObject(index).SetActive(true);
 
@@ -88,6 +92,7 @@ namespace Client
                 ChangeBackGround("bg_school");
                 UpdateStatUIs();
                 UpdateStressUIs();
+                StartCoroutine(conversation.ResetBubble());
             }
         }
 

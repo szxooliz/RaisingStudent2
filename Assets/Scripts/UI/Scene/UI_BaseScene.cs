@@ -70,9 +70,9 @@ namespace Client
 
         void OnClickLogBtn(PointerEventData evt)
         {
-            Debug.Log("로그 버튼 클릭");
+            //Debug.Log("로그 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
+            UI_Manager.Instance.ShowPopupUI<UI_LogPopup_Simple>();
         }
 
         #endregion

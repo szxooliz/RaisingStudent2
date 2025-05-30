@@ -197,7 +197,7 @@ namespace Client
                 GetImage((int)Images.IMG_Name).gameObject.SetActive(false);
             }
 
-            string basicSprite = Util.GetCharBasicSprite(endingScript.Character);
+            string basicSprite = Util.GetCharBasicSpritePath(endingScript.Character);
             if (endingScript.Character == "Comsoon")
             {
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);

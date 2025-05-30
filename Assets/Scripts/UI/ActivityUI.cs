@@ -210,8 +210,9 @@ namespace Client
             charFace.sprite = DataManager.Instance.GetOrLoadSprite(path);
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
-            UnitLog unitLog = new UnitLog(eLineType.SPEAK, str);
-            LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            //UnitLog unitLog = new UnitLog(eLineType.SPEAK, str);
+            //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.SPEAK, str);
 
             yield return null;
         }
@@ -244,9 +245,9 @@ namespace Client
             }
 
             StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), line));
-            UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
-            LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
-            // 여기 로그가 자꾸 안뜸 뭐임
+            //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
+            //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.RESULT, sb.ToString());
 
             yield return null;
         }

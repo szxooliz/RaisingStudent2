@@ -190,10 +190,10 @@ namespace Client
             result = list.FirstOrDefault(item => item.Item1 == key);
             return result.Item1 == key; // key가 0일 경우 대비
         }
+
         /// <summary>
         /// 캐릭터 한국어 이름 가져오기
         /// </summary>
-
         public static string GetCharNameKor(string _charName)
         {
             if (!DataManager.Instance.CharFaceDict.ContainsKey(_charName))
@@ -207,7 +207,7 @@ namespace Client
         /// <summary>
         /// 캐릭터 이미지 기본 path
         /// </summary>
-        public static string GetCharBasicSprite(string _charName)
+        public static string GetCharBasicSpritePath(string _charName)
         {
             if (!DataManager.Instance.CharFaceDict.ContainsKey(_charName))
             {

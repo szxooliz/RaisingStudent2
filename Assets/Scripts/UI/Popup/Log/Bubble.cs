@@ -11,7 +11,6 @@ namespace Client
         
         public virtual void InitBubbleUI(UnitLog unitLog)
         {
-            if (unitLog == false) return;
             TMP_Line.text = unitLog.line;
         }
     }

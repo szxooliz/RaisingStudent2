@@ -65,7 +65,8 @@ namespace Client
                 return;
             }
             activityData = SetNewActivityData(actType);
-            LogManager.Instance.GetNewLogGroup(Util.GetActivityTitle(actType));
+            //LogManager.Instance.GetNewLogGroup(Util.GetActivityTitle(actType));
+            LogManager.Instance.GetNewClusterGroup(Util.GetActivityTitle(actType));
 
             // 자체 휴강일 때는 업데이트할 스탯 없음
             if (actType != (int)eActivityType.Rest) UpdateStats();
@@ -200,19 +201,23 @@ namespace Client
                 DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
                 SceneManager.LoadScene("EndingScene");
             }
-
-            DataManager.Instance.playerData.CurrentTurn++;
-
-            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
-
-            // 상순이 되면 다음 달로 넘어감
-            if (DataManager.Instance.playerData.CurrentThird == 0)
+            else
             {
-                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun) 
-                    DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
-                else DataManager.Instance.playerData.CurrentMonth++;
+                DataManager.Instance.playerData.CurrentTurn++;
+
+                // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
+                DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
+
+                // 상순이 되면 다음 달로 넘어감
+                if (DataManager.Instance.playerData.CurrentThird == 0)
+                {
+                    if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
+                        DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
+                    else DataManager.Instance.playerData.CurrentMonth++;
+                }
+
             }
+
         }
 
         /// <summary>
