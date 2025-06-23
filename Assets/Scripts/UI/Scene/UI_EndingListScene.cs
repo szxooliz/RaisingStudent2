@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using static Client.SystemEnum;
 using System;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 namespace Client
 {
@@ -18,7 +19,7 @@ namespace Client
 
         enum Buttons
         {
-            BTN_Image,
+            BTN_Image, BTN_Back
         }
 
         enum Images
@@ -37,6 +38,7 @@ namespace Client
 
             endingItemPrefab = Resources.Load<GameObject>("Prefabs/EndingItem");
             contentParent = GameObject.Find("EndingItems").transform;
+            BindEvent(GetButton((int)Buttons.BTN_Back).gameObject, OnClickBack);
 
             PopulateEndingList();
         }
@@ -103,6 +105,11 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_Positive);
             var popup = UI_Manager.Instance.ShowPopupUI<UI_LockedEndingPopup>();
             popup.SetLockedEndingPopup(endingName);
+        }
+
+        void OnClickBack(PointerEventData evt)
+        {
+            SceneManager.LoadScene("TitleScene");
         }
         #endregion
 

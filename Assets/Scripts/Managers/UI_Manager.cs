@@ -116,11 +116,18 @@ namespace Client
         public void ClosePopupUI()
         {
             if (_popupStack.Count <= 0) return;
+            try
+            {
+                UI_Popup popup = _popupStack.Pop();
+                popup.gameObject.SetActive(false);
 
-            UI_Popup popup = _popupStack.Pop();
-            popup.gameObject.SetActive(false);
+                _order--;
 
-            _order--;
+            }
+            catch
+            {
+                return;
+            }
         }
 
         /// <summary>

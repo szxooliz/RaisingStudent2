@@ -73,8 +73,7 @@ namespace Client
 
             UpdateStress();
 
-            // 활동마다 데이터 Save - TODO : 출시 때 주석 해제
-            // DataManager.Instance.SaveAllData();
+            DataManager.Instance.SaveAllData();
         }
 
         /// <summary>
@@ -193,30 +192,36 @@ namespace Client
         /// </summary>
         public void NextTurn()
         {
+            //// 엔딩으로 넘어가기
+            //if (DataManager.Instance.playerData.CurrentTurn == ENDING_TURN)
+            //{
+            //    eEndingName endingName = CheckEnding();
+            //    Ending ending = new Ending(endingName, DataManager.Instance.playerData);
+            //    DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
+            //    SceneManager.LoadScene("EndingScene");
+            //}
+            DataManager.Instance.playerData.CurrentTurn++;
+
+            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
+            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
+
+            // 상순이 되면 다음 달로 넘어감
+            if (DataManager.Instance.playerData.CurrentThird == 0)
+            {
+                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
+                    DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
+                else DataManager.Instance.playerData.CurrentMonth++;
+            }
+        }
+
+        public void CheckEndingTurn()
+        {
             // 엔딩으로 넘어가기
-            if (DataManager.Instance.playerData.CurrentTurn == ENDING_TURN)
-            {
-                eEndingName endingName = CheckEnding();
-                Ending ending = new Ending(endingName, DataManager.Instance.playerData);
-                DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
-                SceneManager.LoadScene("EndingScene");
-            }
-            else
-            {
-                DataManager.Instance.playerData.CurrentTurn++;
-
-                // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-                DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
-
-                // 상순이 되면 다음 달로 넘어감
-                if (DataManager.Instance.playerData.CurrentThird == 0)
-                {
-                    if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
-                        DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
-                    else DataManager.Instance.playerData.CurrentMonth++;
-                }
-
-            }
+            
+            eEndingName endingName = CheckEnding();
+            Ending ending = new Ending(endingName, DataManager.Instance.playerData);
+            DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
+            SceneManager.LoadScene("EndingScene");
 
         }
 

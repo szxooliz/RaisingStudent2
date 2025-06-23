@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Client.SystemEnum;
 
@@ -144,7 +145,10 @@ namespace Client
 
             //TODO: (scriptIndex == newEndingScripts.Count) 인 경우 게임 종료 나타내기
             if (scriptIndex >= newEndingScripts.Count)
+            {
+                SceneManager.LoadScene("TitleScene");
                 return;
+            }
 
             // 일러스트가 표시된 상태
             if (isIllustrationDisplayed)

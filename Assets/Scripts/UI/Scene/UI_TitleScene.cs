@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -39,15 +40,32 @@ namespace Client
         {
             Debug.Log("새로 하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
-            UI_Manager.Instance.ShowPopupUI<UI_NewGamePopup>();
+
+            // 세이브 데이터 확인 후 팝업 띄우기
+            if (IsExistSaveDatas())
+            {
+                UI_Manager.Instance.ShowPopupUI<UI_NewGamePopup>();
+            }
+            else
+            {
+                DataManager.Instance.LoadAllData();
+                SceneManager.LoadScene("BaseScene");
+            }
         }
         void OnClickContinueBtn(PointerEventData evt)
         {
             Debug.Log("이어 하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
-            // 게임 화면으로 이동
-            SceneManager.LoadScene("BaseScene");
+            // 세이브 데이터 확인 후 이동
+            if (!IsExistSaveDatas())
+            {
+                Debug.LogError("세이브 데이터 없음. 새로하기 ㄱㄱ");
+            }
+            else
+            {
+                SceneManager.LoadScene("BaseScene");
+            }
         }
         void OnClickEndingListBtn(PointerEventData evt)
         {
@@ -62,5 +80,16 @@ namespace Client
             UI_Manager.Instance.ShowPopupUI<UI_SettingsPopup>();
         }
         #endregion
+
+        bool IsExistSaveDatas()
+        {
+            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
+
+            bool isExist = File.Exists(playerData_path) && File.Exists(persistentData_path);
+            return isExist;
+        }
+
     }
+
 }

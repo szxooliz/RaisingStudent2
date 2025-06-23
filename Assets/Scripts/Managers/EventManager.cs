@@ -14,6 +14,8 @@ namespace Client
         private const int RANDOM_PROB = 50;               // 랜덤 이벤트 등장 확률
         #endregion
 
+        List<SheetData> eventTitleList;
+
         public Queue<EventTitle> EventIDQueue { get; } = new();
         public Queue<EventData> EventQueue { get; } = new();
 
@@ -28,6 +30,8 @@ namespace Client
         {
             EventIDQueue.Clear();
             EventQueue.Clear();
+
+            eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
         }
 
         /// <summary>
@@ -36,8 +40,10 @@ namespace Client
         private void EnqueueEventID()
         {
             Debug.Log($"현재 턴 {DataManager.Instance.playerData.CurrentTurn}");
-            var eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
             List<EventTitle> randomList = new List<EventTitle>();
+
+            // 랜덤 이벤트 발생 확률 체크 후 추가 작업 진행
+            bool doRand = TriggerRandomEvent();
 
             foreach (var _eventTitle in eventTitleList)
             {
@@ -55,8 +61,12 @@ namespace Client
                 // 2. 랜덤 이벤트 추가
                 else
                 {
-                    // 랜덤 이벤트 발생 확률 체크 후 추가 작업 진행
-                    if (!TriggerRandomEvent()) return;
+                    // 랜덤 이벤트 발생 체크 후 추가 작업 진행
+                    if (!doRand)
+                    {
+                        Debug.Log($"<color=red>확률에 따라 랜덤 이벤트 추가 안함</color>");
+                        return;
+                    }
 
                     // 발생 가능한 턴 범위에 있으면 후보 리스트에 추가
                     if (IsInTurnRange(eventTitle)) randomList.Add(eventTitle);
@@ -65,7 +75,11 @@ namespace Client
 
             // 2-1. 랜덤 이벤트 한 개만 추가
             EventTitle randomEventTitle = GetOneRandomEvent(randomList);
-            if (randomEventTitle != null) EventIDQueue.Enqueue(randomEventTitle);
+            if (randomEventTitle != null)
+            {
+                EventIDQueue.Enqueue(randomEventTitle);
+                Debug.Log($"{randomEventTitle.EventName} 랜덤 이벤트 최종 추가");
+            }
         }
         #region 이벤트 진행 상황, 조건 체크
         /// <summary>
@@ -140,7 +154,9 @@ namespace Client
         /// </summary>
         private bool TriggerRandomEvent()
         {
-            return UnityEngine.Random.Range(0, 101) <= RANDOM_PROB;
+            bool tm = UnityEngine.Random.Range(0, 101) <= RANDOM_PROB;
+            Debug.Log($"<color=blue>랜덤이벤트 발생 여부 {tm}</color>");
+            return tm;
         }
         #endregion
 

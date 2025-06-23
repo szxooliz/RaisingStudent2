@@ -40,28 +40,12 @@ namespace Client
         private Coroutine coroutine = null;
         private EventScript pastEventScript = null;
 
-        private string backGround;
-        public string BackGround
-        {
-            get => backGround;
-            set
-            {
-                if (backGround != value)
-                {
-                    backGround = value;
-                    OnBGChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-        }
-        public event EventHandler OnBGChanged;
-
         public override void Init()
         {
             Bind<TMPro.TMP_Text>(typeof(Texts));
             Bind<Image>(typeof(Images));
             Bind<GameObject>(typeof(GameObjects));
             Bind<Button>(typeof(Buttons));
-            OnBGChanged += ChangeBackGround;
         }
 
         void OnEnable()
@@ -89,6 +73,16 @@ namespace Client
         /// </summary>
         void CheckAndShowEvent()
         {
+            bool isFinished = DataManager.Instance.playerData.WatchedEventIDList.Contains(12);
+
+            Debug.Log($"<color=yellow> CheckAndShowEvent / 엔딩 보여줄 수 있음? : {isFinished}</color>");
+
+            if (isFinished)
+            {
+                GameManager.Instance.CheckEndingTurn();
+                return;
+            }
+
             // 실행할 이벤트 없으면 메인으로 돌아감
             if (EventManager.Instance.EventQueue.Count <= 0)
             {
@@ -198,7 +192,8 @@ namespace Client
         void UpdateScriptUI(EventScript _eventScript)
         {
             eLineType eLineType = eLineType.SPEAK;
-            backGround = _eventScript.Background;
+            string path_bg = $"Sprites/UI/BackGround/{_eventScript.Background}";
+
             string path = Util.GetSeasonIllustPath(_eventScript);
 
             GetGameObject((int)GameObjects.Selection).SetActive(false);
@@ -217,23 +212,17 @@ namespace Client
                 GetImage((int)Images.IMG_CharFace).sprite = null;
             }
 
+            GetImage((int)Images.IMG_Background).sprite = DataManager.Instance.GetOrLoadSprite(path_bg);
             GetImage((int)Images.IMG_NameTag).gameObject.SetActive(_eventScript.NameTag);
             GetText((int)Texts.TMP_CharName).text = _eventScript.NameTag ?
                 Util.GetCharNameKor(_eventScript.Character) : "";
             GetText((int)Texts.TMP_CharLine).text = _eventScript.Line;
 
+
             // 로그를 위한 unitLog 객체 생성
             //UnitLog unitLog = new UnitLog(eLineType, _eventScript);
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
             LogManager.Instance.GetLastClusterGroup().AddLine(eLineType, _eventScript);
-        }
-
-        void ChangeBackGround(object sender, System.EventArgs e)
-        {
-            if (BackGround == null) return;
-
-            string path = $"Sprites/UI/BackGround/{BackGround}";
-            GetImage((int)Images.IMG_Background).sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
 
         #region 선택지에 따른 분기
@@ -407,8 +396,6 @@ namespace Client
                 if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
                 else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
 
-                // TODO : Save - 출시 때 주석 해제
-                // DataManager.Instance.SaveAllData();
             }
             GetGameObject((int)GameObjects.Stats).SetActive(true);
             GetText((int)Texts.TMP_CharName).text = "";
@@ -418,6 +405,7 @@ namespace Client
             //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
             LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.RESULT, sb.ToString());
+            DataManager.Instance.SaveAllData();
 
         }
 

@@ -1,3 +1,4 @@
+using DG.Tweening.Plugins.Core.PathCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,10 +23,12 @@ namespace Client
         Dictionary<long, Dictionary<long, EventScript>> _eventScriptDict = new();
         Dictionary<long, EventResult>                   _eventResultDict = new();
         Dictionary<string, CharacterFace>               _charFaceDict    = new();
+        Dictionary<long, Dictionary<long, EndingScript>> _endingScriptDict = new();
 
         public Dictionary<long, Dictionary<long, EventScript>> EventScriptDict => _eventScriptDict;
         public Dictionary<long, EventResult>                   EventResultDict => _eventResultDict; // key : ScriptIndex
         public Dictionary<string, CharacterFace>               CharFaceDict    => _charFaceDict;
+        public Dictionary<long, Dictionary<long, EndingScript>>EndingScriptDict => _endingScriptDict;
 
         public PlayerData playerData; 
         public PersistentData persistentData;
@@ -37,10 +40,11 @@ namespace Client
 
         public override void Init()
         {
-            LoadAllData();
+            //LoadAllData();
+            DeleteAllData();
             LoadSheetDatas();
 
-            // 미리 EventResult, CharacterFace 전부 딕셔너리에 저장
+            // 미리 EventResult, CharacterFace, EndingScriptDict 전부 딕셔너리에 저장
             var eventResultList = GetDataList<EventResult>();
             foreach (var _eventResult in eventResultList)
             {
@@ -148,7 +152,7 @@ namespace Client
         private void SetTypeData(string data)
         {
             if (typeof(EventScript).ToString().Contains(data)) { SetEventScriptsMap(); return; }
-
+            if (typeof(EndingScript).ToString().Contains(data)) { SetEndingScriptsMap(); return; }
         }
         /// <summary>
         /// 이벤트 아이디별 스크립트 데이터
@@ -173,15 +177,40 @@ namespace Client
                     _eventScriptDict[eventScript.EventNum].Add(eventScript.index, eventScript);
             }
         }
+        private void SetEndingScriptsMap()
+        {
+            string key = typeof(EndingScript).Name;
+            if (_cache.ContainsKey(key) == false)
+                return;
+
+            var endingScriptDict = _cache[key];
+            if (endingScriptDict is null) return;
+
+            foreach (var kvp in endingScriptDict)
+            {
+                var endingScript = kvp.Value as EndingScript;
+
+                if (!_endingScriptDict.ContainsKey(endingScript.EndingNum))
+                    _endingScriptDict.Add(endingScript.EndingNum, new Dictionary<long, EndingScript>());
+
+                if (!_endingScriptDict[endingScript.EndingNum].ContainsKey(endingScript.index))
+                    _endingScriptDict[endingScript.EndingNum].Add(endingScript.index, endingScript);
+            }
+            Debug.Log($"엔딩스크립트 모음.. {_endingScriptDict.Count}");
+            for (int i = 0; i < 6; i++)
+            {
+                Debug.Log($"<color=red>엔딩 {i} 딕셔너리 안에.. {_endingScriptDict[i].Count}</color>");
+                Debug.Log($"<color=red>엔딩 {i} 딕셔너리 안에.. min key {_endingScriptDict[i].Keys.Min()}</color>");
+
+            }
+        }
 
         #endregion
 
         #region JSON Data Load & Save
+
         public T LoadData<T>(string path) where T : new()
         {
-#if UNITY_EDITOR
-            DeleteSaveFile(path);
-#endif
             if (!File.Exists(path))
             {
                 Debug.LogError("데이터 없음, 새로 생성: " + path);
@@ -241,6 +270,18 @@ namespace Client
             string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
             SaveData<PlayerData>(playerData_path, playerData);
             SaveData<PersistentData>(persistentData_path, persistentData);
+        }
+        public void DeleteAllData()
+        {
+            // 슬래시와 역슬래시 이슈로 직접 작용
+            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
+            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
+#if UNITY_EDITOR
+            DeleteSaveFile(playerData_path);
+            DeleteSaveFile(persistentData_path);
+#endif
         }
 
         #endregion
