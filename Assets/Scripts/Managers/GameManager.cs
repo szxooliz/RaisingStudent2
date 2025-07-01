@@ -9,15 +9,34 @@ namespace Client
 {
     public class GameManager : MonoBehaviour
     {
-        #region constant 기획 조정용
-        // 코드 작성 시 증가 시에는 양수, 감소 시에는 음수로 값 설정
-        private const float STRESS_CLASS = 25f;
-        private const float STRESS_GAME = 20f;
-        private const float STRESS_WORKOUT = 20f;
-        private const float STRESS_CLUB = 20f;
-        private const int ENDING_TURN = 25;
+        #region 기획 조정용 상수
+
+        // 활동으로 얻는 스트레스 양
+        private readonly float STRESS_CLASS = 25f;
+        private readonly float STRESS_GAME = 20f;
+        private readonly float STRESS_WORKOUT = 20f;
+        private readonly float STRESS_CLUB = 20f;
+
+        // 활동으로 얻는 주스탯, 부스탯 증가량
+        private List<int> activityValues = new List<int>() { 10, 5 };
+
+        // 자체휴강 결과 확률 - 대실패는 얘네 바꾸면 자동으로 적용됩니다
+        private readonly int REST_BIGSUCCESS = 40;
+        private readonly int REST_SUCCESS = 50;
+
+        // 엔딩 결과 산출 기준값
+        private readonly int STAT_STANDARD = 80;
+
+        // 대학원생 엔딩 기준값
+        private readonly int POSTGRAD_INTELI = 100; // 지력
+        private readonly int POSTGRAD_OTAKU = 70; // 덕력
+        private readonly int POSTGRAD_STRENGTH = 0; // 체력
+        private readonly int POSTGRAD_CHARMING = 50; // 매력
+
+        // 자체휴강 시 감소하는 스트레스 값(차례로 대성공, 성공, 대실패)
         private List<int> StressRestList = new() { 80, 60, 30 };
         #endregion
+
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
         public eEndingName endingName;
         static GameManager s_instance;
@@ -76,23 +95,19 @@ namespace Client
             DataManager.Instance.SaveAllData();
         }
 
-        /// <summary>
-        /// 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩
-        /// </summary>
+        /// <summary> 활동에 대한 스트레스, 스탯 정보 설정 - 하드코딩 </summary>
         /// <param name="activityType">메인 화면에서 선택한 활동 타입</param>
-        /// <returns></returns>
         public ActivityData SetNewActivityData(eActivityType activityType)
         {
             ActivityData activityData = new ActivityData(activityType);
-            activityData.statValues = new List<int>() { 10, 5 }; // 임시값
+            activityData.statValues = activityValues;
 
             switch (activityType)
             {
                 case eActivityType.Rest:
-                    // 자체휴강만 랜덤으로 대성공/성공/대실패 여부 결정
-                    int prob = UnityEngine.Random.Range(0, 3);
-                    activityData.resultType = (eResultType)prob;
-                    activityData.stressValue = -StressRestList[prob]; ;
+                    eResultType eResult = GetRestResult();
+                    activityData.resultType = eResult;
+                    activityData.stressValue = -StressRestList[(int)eResult]; ;
                     break;
                 case eActivityType.Class:
                     activityData.statNames.Add(eStatName.Inteli);
@@ -119,12 +134,17 @@ namespace Client
             return activityData;
         }
 
+        eResultType GetRestResult()
+        {
+            int prob = UnityEngine.Random.Range(0, 100);
 
-        /// <summary>
-        /// 스트레스에 따른 활동 결과 리턴
-        /// </summary>
-        /// <returns></returns>
-        public eResultType GetResult()
+            if (prob <= REST_BIGSUCCESS) { return eResultType.BigSuccess; }
+            else if (prob <= REST_BIGSUCCESS + REST_SUCCESS) { return eResultType.Success; }
+            else { return eResultType.Failure; }
+        }
+
+        /// <summary> 스트레스에 따른 활동 결과 리턴 </summary>
+        eResultType GetResult()
         {
             // 이번 활동 결과의 확률을 정함
             int prob = UnityEngine.Random.Range(0, 100);
@@ -147,11 +167,7 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 활동 결과에 따른 스탯 획득량 배수 리턴
-        /// </summary>
-        /// <param name="resultType"></param>
-        /// <returns></returns>
+        /// <summary> 활동 결과에 따른 스탯 획득량 배수 리턴 </summary>
         public float GetStatMultiplier(eResultType resultType)
         {
             if (resultType == eResultType.Failure) return 0.5f;
@@ -159,9 +175,7 @@ namespace Client
             else return 1.5f;
         }
 
-        /// <summary>
-        /// 결과에 따른 스탯 획득량 반영
-        /// </summary>
+        /// <summary> 결과에 따른 스탯 획득량 반영 </summary>
         public void UpdateStats()
         {
             activityData.resultType = GetResult();
@@ -178,18 +192,14 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 스트레스 증감 함수
-        /// </summary>
+        /// <summary> 스트레스 증감 함수 </summary>
         /// <param name="amount">음수: 감소</param>
         public void UpdateStress()
         {
             DataManager.Instance.playerData.StressAmount += activityData.stressValue;
         }
 
-        /// <summary>
-        /// 다음 턴으로 넘김 처리
-        /// </summary>
+        /// <summary> 다음 턴으로 넘김 처리 </summary>
         public void NextTurn()
         {
             DataManager.Instance.playerData.CurrentTurn++;
@@ -214,62 +224,60 @@ namespace Client
             Ending ending = new Ending(endingName, DataManager.Instance.playerData);
             DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
             SceneManager.LoadScene("EndingScene");
-
         }
 
-        /// <summary>
-        /// 엔딩 계산 함수
-        /// </summary>
+        /// <summary> 엔딩 계산 함수 </summary>
         public eEndingName CheckEnding()
         {
-            int endingNum = 0;
             int highStatsCount = 0;
             bool[] highStats = { false, false, false, false };
 
             for (int i = 0; i < 4; i++)
             {
-                if ((int)DataManager.Instance.playerData.StatsAmounts[i] >= 80)
+                if (DataManager.Instance.playerData.StatsAmounts[i] >= STAT_STANDARD)
                 {
                     highStats[i] = true;
                     highStatsCount++;
                 }
             }
 
-            if (highStatsCount == 4 && (int)DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Inteli] == 100)
+            bool isPostgrad = DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Inteli] >= POSTGRAD_INTELI
+                               && DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Otaku] >= POSTGRAD_OTAKU
+                               && DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Strength] >= POSTGRAD_STRENGTH
+                               && DataManager.Instance.playerData.StatsAmounts[(int)eStatName.Charming] >= POSTGRAD_CHARMING;
+
+            if (isPostgrad)
             {
-                Debug.Log("대학원 엔딩");
-                endingNum = (int)eEndingName.GraduateStudent;
+                // 대학원생
+                return eEndingName.GraduateStudent;
             }
-            else if (highStatsCount >= 2)
+
+            if (highStatsCount >= 2)
             {
                 if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
                 {
-                    Debug.Log("대기업 SI 취업 엔딩");
-                    endingNum = (int)eEndingName.CorporateSI;
+                    // 대기업
+                    return eEndingName.CorporateSI;
                 }
                 else if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Otaku])
                 {
-                    Debug.Log("게임회사 취업 엔딩");
-                    endingNum = (int)eEndingName.GameCompany;
+                    // 게임회사
+                    return eEndingName.GameCompany;
                 }
                 else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Charming])
                 {
-                    Debug.Log("버튜버 엔딩");
-                    endingNum = (int)eEndingName.VirtualYoutuber;
+                    // 버부버
+                    return eEndingName.VirtualYoutuber;
                 }
                 else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Strength])
                 {
-                    Debug.Log("프로게이머 엔딩");
-                    endingNum = (int)eEndingName.ProGamer;
+                    // 프로게
+                    return eEndingName.ProGamer;
                 }
             }
-            else
-            {
-                Debug.Log("홈프로텍터 엔딩");
-                endingNum = (int)eEndingName.HomeProtector;
-            }
-
-            return (eEndingName)Enum.GetValues(typeof(eEndingName)).GetValue(endingNum);
+            
+            // 위에서 하나도 안 걸리면
+            return eEndingName.HomeProtector;
         }
 
     }
