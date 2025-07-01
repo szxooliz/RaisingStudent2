@@ -40,7 +40,7 @@ namespace Client
 
         public override void Init()
         {
-            //LoadAllData();
+            LoadPersistentData();
             DeleteAllData();
             LoadSheetDatas();
 
@@ -252,20 +252,24 @@ namespace Client
                 Debug.Log("Save file does not exist.");
             }
         }
+
+        public void LoadPlayerData()
+        {
+            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
+            playerData = LoadData<PlayerData>(playerData_path);
+        }
+        public void LoadPersistentData()
+        {
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
+            persistentData = LoadData<PersistentData>(persistentData_path);
+        }
         public void LoadAllData()
         {
-            // 슬래시와 역슬래시 이슈로 직접 작용
-            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
-            string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
-            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
-            playerData = LoadData<PlayerData>(playerData_path);
-            persistentData = LoadData<PersistentData>(persistentData_path);
+            LoadPlayerData();
+            LoadPersistentData();
         }
         public void SaveAllData()
         {
-            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
             string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
             string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
             SaveData<PlayerData>(playerData_path, playerData);
@@ -273,9 +277,6 @@ namespace Client
         }
         public void DeleteAllData()
         {
-            // 슬래시와 역슬래시 이슈로 직접 작용
-            //string playerData_path = Path.Combine(Application.persistentDataPath, "PlayerData.json");
-            //string persistentData_path = Path.Combine(Application.persistentDataPath, "PersistentData.json");
             string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
             string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
 #if UNITY_EDITOR

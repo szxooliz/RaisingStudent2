@@ -48,7 +48,7 @@ namespace Client
             }
             else
             {
-                DataManager.Instance.LoadAllData();
+                DataManager.Instance.LoadPlayerData();
                 SceneManager.LoadScene("BaseScene");
             }
         }
@@ -69,13 +69,11 @@ namespace Client
         }
         void OnClickEndingListBtn(PointerEventData evt)
         {
-            Debug.Log("엔딩 리스트 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             SceneManager.LoadScene("EndingListScene");
         }
         void OnClickSettingsBtn(PointerEventData evt)
         {
-            Debug.Log("설정 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_SettingsPopup>();
         }
@@ -84,10 +82,8 @@ namespace Client
         bool IsExistSaveDatas()
         {
             string playerData_path = $"{Application.persistentDataPath}/PlayerData.json";
-            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
 
-            bool isExist = File.Exists(playerData_path) && File.Exists(persistentData_path);
-            return isExist;
+            return File.Exists(playerData_path);
         }
 
     }

@@ -14,27 +14,18 @@ namespace Client
     {
         [SerializeField] private GameObject endingItemPrefab; // Prefab 연결
         [SerializeField] private Transform contentParent;     // 생성된 Prefab의 부모 객체
-
-        private string spritePath = "Sprites/UI/Ending/";
-
+        [SerializeField] private List<EndingIcon> endingIcons = new(); // 생성된 엔딩 아이콘 리스트
+        [SerializeField] private Button BTN_Back;
+ 
         enum Buttons
         {
-            BTN_Image, BTN_Back
-        }
-
-        enum Images
-        {
-            IMG_LockIcon,
-        }
-
-        enum Texts
-        {
-            TMP_Name,
+            BTN_Back
         }
 
         public override void Init()
         {
             base.Init();
+            Bind<Button>(typeof(Buttons));
 
             endingItemPrefab = Resources.Load<GameObject>("Prefabs/EndingItem");
             contentParent = GameObject.Find("EndingItems").transform;
@@ -53,60 +44,21 @@ namespace Client
                .Where(e => e != eEndingName.MaxCount)
                .ToList();
 
-            var endingDict = DataManager.Instance.persistentData.endingList
-                .ToDictionary(e => e.endingName, e => e);
 
             // DataManager에서 엔딩 리스트 가져오기
             foreach (eEndingName endingName in endingNameList)
             {
                 // Prefab 인스턴스 생성
-                GameObject endingItem = Instantiate(endingItemPrefab, contentParent);
+                GameObject prefab = Instantiate(endingItemPrefab, contentParent);
+                EndingIcon endingIcon = prefab.GetComponent<EndingIcon>();
 
-                // UI 요소 바인딩
-                var buttons = Bind<Button>(endingItem, typeof(Buttons));
-                var images = Bind<Image>(endingItem, typeof(Images));
-                var texts = Bind<TMPro.TMP_Text>(endingItem, typeof(Texts));
-
-                // 엔딩을 나타내는 알파벳
-                char endingAlpha = (char)('A' + (int)(endingName));
-
-                // 해금 여부를 기반으로 텍스트, 버튼 및 자물쇠 아이콘 설정
-                if (endingDict.ContainsKey(endingName))
-                {
-                    string imagePath = spritePath + endingAlpha + "_off";
-                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
-                    texts[(int)Texts.TMP_Name].text = GetEndingNameKor(endingName);
-                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickUnlockedEnding(endingDict[endingName]));
-                    images[(int)Images.IMG_LockIcon].gameObject.SetActive(false);
-                }
-                else
-                {
-                    string imagePath = spritePath + endingAlpha + "_lock";
-                    buttons[(int)Buttons.BTN_Image].image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
-
-                    texts[(int)Texts.TMP_Name].text = "엔딩" + endingAlpha;
-                    BindEvent(buttons[(int)Buttons.BTN_Image].gameObject, (PointerEventData evt) => onClickLockedEnding(endingName));
-                    BindEvent(images[(int)Images.IMG_LockIcon].gameObject, (PointerEventData evt) => onClickLockedEnding(endingName));
-                    images[(int)Images.IMG_LockIcon].gameObject.SetActive(true);
-                }
+                endingIcon.SetEndingNumber(endingName);
+                endingIcon.SetIcon();
+                endingIcons.Add(endingIcon);
             }
         }
 
         #region 버튼 이벤트
-        public void onClickUnlockedEnding(Ending ending)
-        {
-            SoundManager.Instance.Play(eSound.SFX_Positive);
-            var popup = UI_Manager.Instance.ShowPopupUI<UI_UnlockedEndingPopup>();
-            popup.SetUnlockedEndingPopup(ending);
-        }
-
-        public void onClickLockedEnding(eEndingName endingName)
-        {
-            SoundManager.Instance.Play(eSound.SFX_Positive);
-            var popup = UI_Manager.Instance.ShowPopupUI<UI_LockedEndingPopup>();
-            popup.SetLockedEndingPopup(endingName);
-        }
-
         void OnClickBack(PointerEventData evt)
         {
             SceneManager.LoadScene("TitleScene");

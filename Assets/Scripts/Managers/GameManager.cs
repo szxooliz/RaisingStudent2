@@ -19,7 +19,7 @@ namespace Client
         private List<int> StressRestList = new() { 80, 60, 30 };
         #endregion
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
-
+        public eEndingName endingName;
         static GameManager s_instance;
         public static GameManager Instance { get { Init(); return s_instance; } }
         GameManager() { }
@@ -192,14 +192,6 @@ namespace Client
         /// </summary>
         public void NextTurn()
         {
-            //// 엔딩으로 넘어가기
-            //if (DataManager.Instance.playerData.CurrentTurn == ENDING_TURN)
-            //{
-            //    eEndingName endingName = CheckEnding();
-            //    Ending ending = new Ending(endingName, DataManager.Instance.playerData);
-            //    DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
-            //    SceneManager.LoadScene("EndingScene");
-            //}
             DataManager.Instance.playerData.CurrentTurn++;
 
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
@@ -218,7 +210,7 @@ namespace Client
         {
             // 엔딩으로 넘어가기
             
-            eEndingName endingName = CheckEnding();
+            endingName = CheckEnding();
             Ending ending = new Ending(endingName, DataManager.Instance.playerData);
             DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
             SceneManager.LoadScene("EndingScene");

@@ -9,7 +9,7 @@ namespace Client
     [System.Serializable]
     public class PersistentData
     {
-        public List<Ending> endingList = new List<Ending>();
+        public Dictionary<eEndingName, Ending> endingDict = new();
 
         public PersistentData()
         {}
@@ -19,16 +19,13 @@ namespace Client
         /// </summary>
         public void AddOrUpdateEnding(Ending newEnding)
         {
-            int existingIndex = endingList.FindIndex(e => e.endingName == newEnding.endingName);
-
-            if (existingIndex >= 0)
+            if (endingDict.ContainsKey(newEnding.endingName))
             {
-                // 이미 엔딩이 있는 경우
-                endingList[existingIndex] = newEnding;
+                endingDict[newEnding.endingName] = newEnding;
             }
             else
             {
-                endingList.Add(newEnding);
+                endingDict.Add(newEnding.endingName, newEnding);
             }
         }
     }

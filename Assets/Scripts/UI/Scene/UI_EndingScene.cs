@@ -53,7 +53,8 @@ namespace Client
 
             BindButton();
 
-            currentEndingNum = GetLatestEndingIndex();
+            //currentEndingNum = GetLatestEndingIndex();
+            currentEndingNum = (int)GameManager.Instance.endingName;
             LoadScript();
             LoadIllustration();
             LoadNextScript();
@@ -82,18 +83,18 @@ namespace Client
         /// <summary>
         /// 가장 최근에 Add된 엔딩의 인덱스를 불러와 저장함 
         /// </summary>
-        public int GetLatestEndingIndex()
-        {
-            var list = DataManager.Instance.persistentData.endingList;
-            if (list.Count == 0)
-            {
-                Debug.LogWarning("엔딩 리스트가 비어 있습니다.");
-                return -1;
-            }
-            var lastEndingNum = (int)list[list.Count - 1].endingName;
+        //public int GetLatestEndingIndex()
+        //{
+        //    var list = DataManager.Instance.persistentData.endingDict;
+        //    if (list.Count == 0)
+        //    {
+        //        Debug.LogWarning("엔딩 리스트가 비어 있습니다.");
+        //        return -1;
+        //    }
+        //    var lastEndingNum = (int)list[list.Count - 1].value.endingName;
 
-            return lastEndingNum;
-        }
+        //    return lastEndingNum;
+        //}
 
         /// <summary>
         /// 오브젝트에서 포인터를 누르고 뗄 때 호출됨
