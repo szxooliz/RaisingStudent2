@@ -16,7 +16,7 @@ namespace Client
 
         List<SheetData> eventTitleList;
 
-        public Queue<EventTitle> EventIDQueue { get; } = new();
+        public Stack<EventTitle> EventIDStack { get; } = new(); // 스택 이유 - 개강 제외하고 랜덤->메인 순서대로 해야되는데 foreach 거꾸로 돌리는거 에바라서
         public Queue<EventData> EventQueue { get; } = new();
 
         public EventData nowEventData;
@@ -28,7 +28,7 @@ namespace Client
 
         public override void Init()
         {
-            EventIDQueue.Clear();
+            EventIDStack.Clear();
             EventQueue.Clear();
 
             eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
@@ -54,13 +54,19 @@ namespace Client
                 {
                     if (IsMainEventAddable(eventTitle))
                     {
-                        EventIDQueue.Enqueue(eventTitle);
+                        EventIDStack.Push(eventTitle);
                         Debug.Log($"추가한 이벤트 아이디 : {eventTitle.index} {eventTitle.EventName}");
                     }
                 }
                 // 2. 랜덤 이벤트 추가
                 else
                 {
+                    if (DataManager.Instance.playerData.CurrentTurn == 0)
+                    {
+                        Debug.Log($"<color=red>인트로 때는 랜덤 이벤트 추가 안함</color>");
+                        return;
+                    }
+
                     // 랜덤 이벤트 발생 체크 후 추가 작업 진행
                     if (!doRand)
                     {
@@ -77,10 +83,11 @@ namespace Client
             EventTitle randomEventTitle = GetOneRandomEvent(randomList);
             if (randomEventTitle != null)
             {
-                EventIDQueue.Enqueue(randomEventTitle);
+                EventIDStack.Push(randomEventTitle);
                 Debug.Log($"{randomEventTitle.EventName} 랜덤 이벤트 최종 추가");
             }
         }
+
         #region 이벤트 진행 상황, 조건 체크
         /// <summary>
         /// 메인 이벤트 등장 조건 체크
@@ -111,6 +118,7 @@ namespace Client
             Debug.Log($"이벤트 끝, {eventData.eventTitle.EventName} 등록");
             DataManager.Instance.playerData.WatchedEventIDList.Add(eventData.eventTitle.index);
             // TODO : 플레이어 데이터 save 하기
+            DataManager.Instance.SaveAllData();
         }
 
         /// <summary>
@@ -233,11 +241,11 @@ namespace Client
         /// </summary>
         private void LoadEventData()
         {
-            if (EventIDQueue.Count == 0) return;
+            if (EventIDStack.Count == 0) return;
 
-            while (EventIDQueue.Count > 0)
+            while (EventIDStack.Count > 0)
             {
-                EventTitle eventTitle = EventIDQueue.Dequeue();
+                EventTitle eventTitle = EventIDStack.Pop();
                 Dictionary<long, EventScript> eventScripts = LoadScript(eventTitle.index);
 
                 EventData eventData = new EventData(eventTitle, eventScripts);
