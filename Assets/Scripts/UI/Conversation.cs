@@ -20,7 +20,7 @@ namespace Client
             TMP_CharLine
         }
 
-        private long maxCount = 52; // TODO : 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
+        private readonly long MAXCOUNT = 52; // TODO : 임시 - 아마 선택한 캐릭터 스크립트 개수만큼 카운트 해야 됨..
 
         private Image charFace;
         private Image charBubble;
@@ -50,8 +50,8 @@ namespace Client
             smallScale = originalScale * 0.1f;
 
             charFace.alphaHitTestMinimumThreshold = 0.1f;
-
             StartCoroutine(ResetBubble());
+
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Client
         /// </summary>
         public IEnumerator ResetBubble()
         {
-            int index = UnityEngine.Random.Range(0, (int)maxCount);
+            int index = UnityEngine.Random.Range(0, (int)MAXCOUNT);
             Script script = DataManager.Instance.GetData<Script>(index);
 
             if (script == null) 

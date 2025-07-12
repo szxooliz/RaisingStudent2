@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using static Client.SystemEnum;
@@ -23,6 +22,7 @@ namespace Client
         private void Start()
         {
             lockButton.onClick.AddListener(OnClickLockedEnding);
+            pageButton.onClick.AddListener(OnClickUnlockedEnding);
         }
 
         public void SetEndingNumber(eEndingName eEndingName)

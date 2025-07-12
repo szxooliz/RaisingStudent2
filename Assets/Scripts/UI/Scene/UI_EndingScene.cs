@@ -32,7 +32,6 @@ namespace Client
         private string characterSpritePath = "Sprites/Character/";
         private string bgSpritePath = "Sprites/UI/BackGround/";
         private string endingSpritePath = "Sprites/UI/Ending/";
-        private Dictionary<string, Sprite> spriteCache = new Dictionary<string, Sprite>();
 
         int scriptIndex = 0; // 엔딩 대사 index
         int currentEndingNum = 0; // 현재 엔딩을 나타내는 숫자

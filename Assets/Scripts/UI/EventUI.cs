@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -39,6 +40,12 @@ namespace Client
         private long nowEventScriptID;
         private Coroutine coroutine = null;
         private EventScript pastEventScript = null;
+
+        [SerializeField] TextMeshProUGUI titleTxt;
+        [SerializeField] CanvasGroup canvasGroup;
+        [SerializeField] CanvasGroup panel;
+        [SerializeField] float fadeInOutTime = 0.3f;
+
 
         public override void Init()
         {
@@ -424,6 +431,58 @@ namespace Client
             {
                 GetText((int)Texts.TMP_Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
+        }
+        #endregion
+
+        #region 이벤트 연출
+        private IEnumerator fadeInOut(CanvasGroup target, float durationTime, bool inOut)
+        {
+            float start, end;
+            if (inOut)
+            {
+                start = 0f;
+                end = 1f;
+            }
+            else
+            {
+                start = 1f;
+                end = 0f;
+            }
+
+            Color current = Color.clear; /* (0, 0, 0, 0) = 검은색 글자, 투명도 100% */
+            float elapsedTime = 0.0f;
+
+            while (elapsedTime < durationTime)
+            {
+                float alpha = Mathf.Lerp(start, end, elapsedTime / durationTime);
+
+                target.alpha = alpha;
+
+                elapsedTime += Time.deltaTime;
+
+                yield return null;
+            }
+        }
+
+        public IEnumerator ShowMessageCoroutine(string msg)
+        {
+            Color originalColor = titleTxt.color;
+            titleTxt.text = msg;
+            titleTxt.enabled = true;
+
+            yield return fadeInOut(canvasGroup, fadeInOutTime, true);
+
+            float elapsedTime = 0.0f;
+            while (elapsedTime < fadeInOutTime)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return fadeInOut(canvasGroup, fadeInOutTime, false);
+
+            titleTxt.enabled = false;
+            titleTxt.color = originalColor;
         }
         #endregion
     }

@@ -16,7 +16,7 @@ namespace Client
 
         List<SheetData> eventTitleList;
 
-        public Stack<EventTitle> EventIDStack { get; } = new(); // 스택 이유 - 개강 제외하고 랜덤->메인 순서대로 해야되는데 foreach 거꾸로 돌리는거 에바라서
+        public Queue<EventTitle> EventIDQueue { get; } = new();
         public Queue<EventData> EventQueue { get; } = new();
 
         public EventData nowEventData;
@@ -28,19 +28,18 @@ namespace Client
 
         public override void Init()
         {
-            EventIDStack.Clear();
+            EventIDQueue.Clear();
             EventQueue.Clear();
 
             eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
         }
 
-        /// <summary>
-        /// 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기
-        /// </summary>
+        /// <summary> 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기 </summary>
         private void EnqueueEventID()
         {
             Debug.Log($"현재 턴 {DataManager.Instance.playerData.CurrentTurn}");
-            List<EventTitle> randomList = new List<EventTitle>();
+            List<EventTitle> mainList = new();
+            List<EventTitle> randomList = new();
 
             // 랜덤 이벤트 발생 확률 체크 후 추가 작업 진행
             bool doRand = TriggerRandomEvent();
@@ -49,15 +48,16 @@ namespace Client
             {
                 var eventTitle = _eventTitle as EventTitle;
 
-                // 1. 메인 이벤트만 먼저 추가
+                // 1. 메인 이벤트 먼저 추가
                 if (eventTitle.index < RANDOM_THRESHOLD)
                 {
                     if (IsMainEventAddable(eventTitle))
                     {
-                        EventIDStack.Push(eventTitle);
+                        mainList.Add(eventTitle);
                         Debug.Log($"추가한 이벤트 아이디 : {eventTitle.index} {eventTitle.EventName}");
                     }
                 }
+
                 // 2. 랜덤 이벤트 추가
                 else
                 {
@@ -83,8 +83,14 @@ namespace Client
             EventTitle randomEventTitle = GetOneRandomEvent(randomList);
             if (randomEventTitle != null)
             {
-                EventIDStack.Push(randomEventTitle);
+                EventIDQueue.Enqueue(randomEventTitle);
                 Debug.Log($"{randomEventTitle.EventName} 랜덤 이벤트 최종 추가");
+            }
+
+            // 3. 앞에서 정해둔 메인 이벤트 차례 맞춰 추가
+            foreach(var _eventTitle in mainList)
+            {
+                EventIDQueue.Enqueue(_eventTitle);
             }
         }
 
@@ -228,24 +234,20 @@ namespace Client
             else DataManager.Instance.playerData.CurrentStatus = eStatus.Main;
         }
 
-        /// <summary>
-        /// 이벤트 페이즈로 넘어감
-        /// </summary>
+        /// <summary> 이벤트 페이즈로 넘어감 </summary>
         private void StartEventPhase()
         {
             DataManager.Instance.playerData.CurrentStatus = eStatus.Event;
         }
 
-        /// <summary>
-        /// 이벤트 데이터를 로드해서 대기열에 추가
-        /// </summary>
+        /// <summary> 이벤트 데이터를 로드해서 대기열에 추가 </summary>
         private void LoadEventData()
         {
-            if (EventIDStack.Count == 0) return;
+            if (EventIDQueue.Count == 0) return;
 
-            while (EventIDStack.Count > 0)
+            while (EventIDQueue.Count > 0)
             {
-                EventTitle eventTitle = EventIDStack.Pop();
+                EventTitle eventTitle = EventIDQueue.Dequeue();
                 Dictionary<long, EventScript> eventScripts = LoadScript(eventTitle.index);
 
                 EventData eventData = new EventData(eventTitle, eventScripts);
@@ -254,17 +256,13 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 이벤트 인덱스에 맞는 이벤트 스크립트 전체 불러오기
-        /// </summary>
+        /// <summary> 이벤트 인덱스에 맞는 이벤트 스크립트 전체 불러오기 </summary>
         private Dictionary<long, EventScript> LoadScript(long eventID)
         {
             return DataManager.Instance.EventScriptDict[eventID];
         }
 
-        /// <summary>
-        /// 분기 결과 이외 스크립트는 지움
-        /// </summary>
+        /// <summary> 분기 결과 이외 스크립트는 지움 </summary>
         public void DeleteOtherScripts(long startIndex, long? endIndex = null)
         {
             while (nowEventData.eventScripts.ContainsKey(startIndex))
@@ -274,9 +272,7 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 이벤트 참가 여부 저장
-        /// </summary>
+        /// <summary> 이벤트 참가 여부 저장 </summary>
         /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
         public void ApplyEvents(bool isEnroll)
         {
@@ -292,9 +288,7 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 엔딩 이력서에 표시될 이벤트 진행 결과 저장
-        /// </summary>
+        /// <summary> 엔딩 이력서에 표시될 이벤트 진행 결과 저장 </summary>
         public void RecordEventResult(long eventID, string str = "미참여")
         {
             string title = DataManager.Instance.GetData<EventTitle>(eventID).EventName;

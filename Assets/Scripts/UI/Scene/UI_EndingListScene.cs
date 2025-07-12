@@ -65,23 +65,5 @@ namespace Client
         }
         #endregion
 
-        #region Prefab 바인딩 메서드
-        private Dictionary<int, T> Bind<T>(GameObject prefab, System.Type enumType) where T : UnityEngine.Object
-        {
-            Dictionary<int, T> bindings = new Dictionary<int, T>();
-            foreach (int value in System.Enum.GetValues(enumType))
-            {
-                string name = System.Enum.GetName(enumType, value);
-                Transform child = prefab.transform.Find(name);
-                if (child != null)
-                {
-                    T component = child.GetComponent<T>();
-                    if (component != null)
-                        bindings.Add(value, component);
-                }
-            }
-            return bindings;
-        }
-        #endregion
     }
 }
