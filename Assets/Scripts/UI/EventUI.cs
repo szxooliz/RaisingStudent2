@@ -41,10 +41,9 @@ namespace Client
         private Coroutine coroutine = null;
         private EventScript pastEventScript = null;
 
-        [SerializeField] TextMeshProUGUI titleTxt;
-        [SerializeField] CanvasGroup canvasGroup;
-        [SerializeField] CanvasGroup panel;
-        [SerializeField] float fadeInOutTime = 0.3f;
+        [SerializeField] CanvasGroup blackCanvasGroup;
+        [SerializeField] CanvasGroup otherCanvasGroup;
+        [SerializeField] float fadeInOutTime = 0.1f;
 
 
         public override void Init()
@@ -98,7 +97,8 @@ namespace Client
             else
             {
                 InitNewEvent();
-                coroutine = StartCoroutine(LoadNextDialogue());
+                //coroutine = StartCoroutine(LoadNextDialogue());
+                StartCoroutine(StartNewEvent());
             }
         }
 
@@ -129,6 +129,13 @@ namespace Client
 
             //LogManager.Instance.GetNewLogGroup(EventManager.Instance.nowEventData.eventTitle.EventName);
             LogManager.Instance.GetNewClusterGroup(EventManager.Instance.nowEventData.eventTitle.EventName);
+        }
+
+        IEnumerator StartNewEvent()
+        {
+            yield return StartCoroutine(FadeBlackImage());
+
+            yield return coroutine = StartCoroutine(LoadNextDialogue());
         }
 
         IEnumerator LoadNextDialogue()
@@ -449,7 +456,6 @@ namespace Client
                 end = 0f;
             }
 
-            Color current = Color.clear; /* (0, 0, 0, 0) = 검은색 글자, 투명도 100% */
             float elapsedTime = 0.0f;
 
             while (elapsedTime < durationTime)
@@ -464,13 +470,11 @@ namespace Client
             }
         }
 
-        public IEnumerator ShowMessageCoroutine(string msg)
+        public IEnumerator FadeBlackImage()
         {
-            Color originalColor = titleTxt.color;
-            titleTxt.text = msg;
-            titleTxt.enabled = true;
-
-            yield return fadeInOut(canvasGroup, fadeInOutTime, true);
+            otherCanvasGroup.gameObject.SetActive(false);
+            blackCanvasGroup.gameObject.SetActive(true);
+            yield return fadeInOut(blackCanvasGroup, fadeInOutTime, true);
 
             float elapsedTime = 0.0f;
             while (elapsedTime < fadeInOutTime)
@@ -479,10 +483,10 @@ namespace Client
                 yield return null;
             }
 
-            yield return fadeInOut(canvasGroup, fadeInOutTime, false);
+            yield return fadeInOut(blackCanvasGroup, fadeInOutTime, false);
+            blackCanvasGroup.gameObject.SetActive(false);
+            otherCanvasGroup.gameObject.SetActive(true);
 
-            titleTxt.enabled = false;
-            titleTxt.color = originalColor;
         }
         #endregion
     }

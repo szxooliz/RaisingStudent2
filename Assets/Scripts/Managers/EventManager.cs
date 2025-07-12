@@ -64,14 +64,14 @@ namespace Client
                     if (DataManager.Instance.playerData.CurrentTurn == 0)
                     {
                         Debug.Log($"<color=red>인트로 때는 랜덤 이벤트 추가 안함</color>");
-                        return;
+                        break;
                     }
 
                     // 랜덤 이벤트 발생 체크 후 추가 작업 진행
                     if (!doRand)
                     {
                         Debug.Log($"<color=red>확률에 따라 랜덤 이벤트 추가 안함</color>");
-                        return;
+                        break;
                     }
 
                     // 발생 가능한 턴 범위에 있으면 후보 리스트에 추가
