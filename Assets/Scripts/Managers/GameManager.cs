@@ -84,7 +84,6 @@ namespace Client
                 return;
             }
             activityData = SetNewActivityData(actType);
-            //LogManager.Instance.GetNewLogGroup(Util.GetActivityTitle(actType));
             LogManager.Instance.GetNewClusterGroup(Util.GetActivityTitle(actType));
 
             // 자체 휴강일 때는 업데이트할 스탯 없음
@@ -130,6 +129,8 @@ namespace Client
                     activityData.stressValue = STRESS_CLUB;
                     break;
             }
+            if (activityType != eActivityType.Rest)
+                Debug.Log($"<color=green> 스탯 증가값 {activityData.statNames[0]}: {activityData.statValues[0]} / {activityData.statNames[1]}: {activityData.statValues[1]}</color>");
 
             return activityData;
         }

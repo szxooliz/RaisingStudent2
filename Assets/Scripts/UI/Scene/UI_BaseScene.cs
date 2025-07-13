@@ -131,7 +131,7 @@ namespace Client
             string str = (int)DataManager.Instance.playerData.CurrentMonth + "월 " + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
 
             GetText((int)Texts.TMP_Term).text = str;
-            Debug.Log($"UI 턴 : {str}");
+            Debug.Log($"UI 턴 : {str}, 숫자로: {DataManager.Instance.playerData.CurrentTurn}");
         }
 
         /// <summary>
@@ -142,57 +142,6 @@ namespace Client
             GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.eventTitle.EventName;
         }
 
-        //public void EventFadeInOut()
-        //{
-        //    StartCoroutine(FadeInOut());
-        //}
 
-        // 페이드 인과 아웃을 순차적으로 수행하는 코루틴
-        private IEnumerator FadeInOut()
-        {
-            // 페이드 인
-            yield return FadeIn();
-
-            // 페이드 아웃
-            yield return FadeOut();
-        }
-
-        private IEnumerator FadeIn()
-        {
-            Color color = blackImage.color;
-            color.a = 0f;
-            blackImage.color = color;
-
-            float timer = 0f;
-            while (timer < duration)
-            {
-                color.a = Mathf.Lerp(0f, 1f, timer / duration);
-                blackImage.color = color;
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
-            color.a = 1f;
-            blackImage.color = color;
-        }
-
-        private IEnumerator FadeOut()
-        {
-            Color color = blackImage.color;
-            color.a = 1f;
-            blackImage.color = color;
-
-            float timer = 0f;
-            while (timer < duration)
-            {
-                color.a = Mathf.Lerp(1f, 0f, timer / duration);
-                blackImage.color = color;
-                timer += Time.deltaTime;
-                yield return null;
-            }
-
-            color.a = 0f;
-            blackImage.color = color;
-        }
     }
 }

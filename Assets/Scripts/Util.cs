@@ -9,7 +9,12 @@ namespace Client
 {
     public class Util
     {
-        public static bool nowTexting = false;                                                                                                                                                                      
+        public static bool nowTexting = false;
+
+        static readonly int mayTurn = 6;
+        static readonly int novTurn = 17;
+
+
         /// <summary>
         /// Game Object에서 해당 Component 얻거나 없으면 추가 (주의 무거움)
         /// </summary>
@@ -113,8 +118,9 @@ namespace Client
         {
             string str = "";
 
+            Debug.Log($"현재 이미지 확인.. 현재 턴: {DataManager.Instance.playerData.CurrentTurn}");
             // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
+            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
             {
                 str = $"Sprites/Character/{DataManager.Instance.playerData.CharName}_Summer_{face}";
             }
@@ -137,7 +143,7 @@ namespace Client
             
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
             // 5월 상순(7턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
+            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
             {
                 str = $"Sprites/Character/{script.Character}_Summer_{script.Face}";
             }
@@ -170,7 +176,7 @@ namespace Client
 
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
             // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= 7 && DataManager.Instance.playerData.CurrentTurn <= 18)
+            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
             {
                 str = $"Sprites/Character/{eventScript.Character}_Summer_{eventScript.Face}";
             }

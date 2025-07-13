@@ -230,8 +230,13 @@ namespace Client
         {
             EnqueueEventID();
             LoadEventData();
-            if (EventQueue.Count > 0) StartEventPhase();
-            else DataManager.Instance.playerData.CurrentStatus = eStatus.Main;
+            if (EventQueue.Count > 0) 
+                StartEventPhase();
+            else 
+            {
+                //GameManager.Instance.NextTurn();
+                DataManager.Instance.playerData.CurrentStatus = eStatus.Main; 
+            }
         }
 
         /// <summary> 이벤트 페이즈로 넘어감 </summary>
