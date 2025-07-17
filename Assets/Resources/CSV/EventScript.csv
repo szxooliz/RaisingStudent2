@@ -5,11 +5,9 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 홍익대학교 T동의 한 연구실.",none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
 1,0,Professor,인재가 없어!!!!!!!!!,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
 2,0,Player,(또 시작이시군…),none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
-3,0,Player,"(우리 교수님이 저렇게 인력난을 호소하신다는 건
-개강이 가까워졌다는 뜻이다.)",none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
+3,0,Player,(우리 교수님이 저렇게 인력난을 호소하신다는 건 개강이 가까워졌다는 뜻이다.),none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
 4,0,Professor,"김 조교, 인재가 없다고!",basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
-5,0,Professor,"어디 아주 똑똑하고 눈치 빠르고 착하고
-매력있고 말도 잘 통하는, ",basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
+5,0,Professor,어디 아주 똑똑하고 눈치 빠르고 착하고 매력있고 말도 잘 통하는...,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
 6,0,Professor,그런 학생 없나?,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
 7,0,Player,"교수님께서 이미 마음에 드는 학생들을
 전부 여기로 데리고 오셨잖아요…",none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
@@ -23,24 +21,21 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 쟤는 아직도 졸업 안 했나보네?",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 14,0,Player,"어디 보자…
 앗, 저 친구는?",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-15,0,Narration,"객체 지하철 과제를 꽤 멋지게 냈던 학생이다.
-질문도 몇 번 하러 왔다가 좀 친해졌지.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+15,0,Narration,객체 지하철 과제를 꽤 멋지게 냈던 학생이다. 질문도 몇 번 하러 왔다가 좀 친해졌지.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 16,0,Player,방학 잘 보냈어?,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 17,0,Comsoon,"앗, 조교님! 안녕하세요!
 벌써 개강이네요!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-18,0,Player,"그러게… 분명 설날이 며칠 전 같았는데.
-어떻게 지냈어?",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+18,0,Player,그러게… 분명 설날이 며칠 전 같았는데. 어떻게 지냈어?,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 19,0,Comsoon,"방학 동안 게임도 좀 하고…
 아! 동아리도 새로 들어갔어요. 게임 만드는 동아리!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 20,0,Player,"그렇구나. 3학년이지?
 이번에 무슨 수업 들어?",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-21,0,Comsoon,"잠시만요, 뭐더라…
-이번에 프로그래밍 언어론이랑, 컴퓨터 구조랑, ",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-22,0,Comsoon,"알고리즘 분석이랑, 컴퓨터 네트워크랑…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+21,0,Comsoon,"잠시만요, 뭐더라…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+22,0,Comsoon,"프로그래밍 언어론, 컴퓨터 구조,
+알고리즘 분석, 컴퓨터 네트워크랑…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 23,0,Player,"내가 공부 좀 도와줄까?
 사실 교수님이 연구비… 아니, 큼, 큼.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-24,0,Player,"교수님이 학생들 공부를 좀 잘 챙겨주라고 하셨거든.
-평균 점수가 너무 낮다고…",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+24,0,Player,학생들 공부를 좀 잘 챙겨주라고 하셨거든. 평균 점수가 너무 낮다고…,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 25,0,Comsoon,"정말요?
 사실 플글언이 너무 무서웠는데…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 26,0,Player,뭐라고?,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -55,7 +50,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 저 그럼 OT 들어야 해서 먼저 가 볼게요!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 33,0,Player,그래. 수업 열심히 듣고.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 34,0,Narration,컴순이는 그렇게 인파 틈으로 사라졌다.,none,FALSE,,,bg_school,,,,,,,,,,,,,,,,,,
-35,1,Comsoon,"밴드부, 보드 게임 동아리, 제빵 동아리…
+35,1,Comsoon,"밴드부, 보드 게임, 제빵…
 게임 동아리 말고도 엄청 많네!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 36,1,Comsoon,"앗… 여긴 사이비 동아리라고 했어.
 거들떠도 안 봐야지…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -127,12 +122,10 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 81,4,Comsoon,다 어제 본 내용에서만 나왔잖아?!,glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 82,4,Comsoon,"뭐지, 이 엄청난 느낌은?!
 잠도 세 시간밖에 못 잤는데 컨디션도 너무 좋아!",glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-83,4,Narration,"손이 저절로 정답을 적어 내려가는 것만 같았다!
-어쩐지 느낌이 좋다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+83,4,Narration,손이 저절로 정답을 적어 내려가는 것만 같았다! 어쩐지 느낌이 좋다!,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 84,4,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 85,4,Comsoon,조교님! 이거 보세요!!!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-86,4,Narration,"클래스넷 수시 성적란에는 컴순의 이름이 상위권으로 올라와 있었다!
-컴순이는 정말 ‘인재’일지도 모른다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+86,4,Narration,클래스넷 수시 성적란에는 '김컴순' 이름 석 자가 상위권으로 올라와 있었다! 컴순이는 정말 ‘인재’일지도 모른다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 87,4,Comsoon,이분 탐색이 뭐지? 바이너리 서치는 아는데…,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 88,4,Narration,…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 89,4,Comsoon,미 국방성… 펜타곤? 이거 클럽 아냐?,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
@@ -145,7 +138,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 느낌이 너무너무 안 좋다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 95,4,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 96,4,Comsoon,"조교님, 이것 좀 보세요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-97,4,Narration,"클래스넷 수시 성적란에서, 컴순의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+97,4,Narration,"클래스넷 수시 성적란에서, 컴순이의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 98,4,Narration,"일단 고생했으니 푹 쉬기로 했다.
 기말고사에서 만회해 보자!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 99,5,Comsoon,"날씨도 좋고, 바람도 기분 좋게 부네요!
@@ -165,13 +158,11 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 아, 아니! 공을 그렇게 차면 어떡해요!!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 110,5,Narration,………,none,FALSE,Condition,2,bg_school,,,,,,,,,,,,,,,,,,
 111,5,Comsoon,"하나 둘, 하나 둘, 하나 둘!
-넘어지지만 않으면…! 하나 둘!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-112,5,Narration,"목이 터져라 응원하고, 2인 3각도 1등으로 들어왔다!
-종일 산뜻한 햇살을 쬐며 즐겁게 움직였더니 몸이 홀가분하다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+넘어지지만 않으면…!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+112,5,Narration,"목이 터져라 응원하고, 2인 3각도 1등으로 들어왔다! 종일 산뜻한 햇살을 쬐며 즐겁게 움직였더니 몸이 홀가분하다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 113,5,Comsoon,"하나 둘, 하나 둘, 하나…!
 으아아아! 마음이 너무 급했나봐요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-114,5,Narration,"2인 3각 도중 호흡이 맞지 않아 넘어지고 말았다!
-무릎은 조금 까졌지만 야외 활동은 즐거웠다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+114,5,Narration,2인 3각 도중 호흡이 맞지 않아 넘어지고 말았다! 무릎은 조금 까졌지만 야외 활동은 즐거웠다.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 115,6,Comsoon,"기말고사인데 왜 전범위 시험이냐구…
 으으, 너무 힘들어…!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 116,6,Comsoon,"이제 시험 보러 가야지…
@@ -192,8 +183,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 어쩐지 느낌이 좋다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 128,6,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 129,6,Comsoon,조교님! 이거 보세요!!!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-130,6,Narration,"클래스넷 수시 성적란에는 컴순이의 이름이 상위권으로 올라와 있었다!
-컴순이는 정말 ‘인재’일지도 모른다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+130,6,Narration,클래스넷 수시 성적란에는 '김컴순' 이름 석 자가 상위권으로 올라와 있었다! 컴순이는 정말 ‘인재’일지도 모른다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 131,6,Comsoon,"외판원이 각 도시를 한 번씩만 방문하면…
 아니, 그냥 좀 가면 안 되나?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 132,6,Narration,…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
@@ -212,16 +202,16 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 143,7,Comsoon,와! 종강이다!!!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 144,7,Comsoon,"조교님은 방학 때 뭐 하세요?
 설마 계속 연구실에…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-145,7,Comsoon,"헉, 계속 학교에 오신다구요…!
+145,7,Comsoon,"헉, 계속 오신다구요...!
 그래도 학교 전체 쉬는 날이 있다니 다행이네요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 146,7,Comsoon,"저는 바다 갈 거예요!
 워터파크도! 계곡도!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 147,7,Comsoon,"… 공부는 안 하냐고요?
 무, 물론 그것도 해야죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 148,7,Comsoon,진짜예요! 약속!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-149,7,Comsoon,"그나저나 2학기에는 축제가 있었죠, 언제더라… 9월 중순?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-150,7,Comsoon,"연예인들 공연도 오고, 푸드트럭도 온대요!
-근데 사람도 엄청 많을 것 같아요……",basic,TRUE,Choice,2,bg_school,,,,,,,,,,,,,,,,,,
+149,7,Comsoon,"그나저나 2학기에는 축제가 있었죠?
+언제더라… 9월 중순?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+150,7,Comsoon,"연예인들 공연도 오고, 푸드트럭도 온대요! 근데 사람도 엄청 많을 것 같아요……",basic,TRUE,Choice,2,bg_school,,,,,,,,,,,,,,,,,,
 151,7,Comsoon,"역시 그렇죠?
 아직 멀었지만 꼭 가야지!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 152,7,Comsoon,"너무 재미있겠다! 그쵸?
@@ -246,30 +236,27 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 165,8,Comsoon,"와, 노래 진짜 잘한다…!",glad,TRUE,Condition,4,bg_school,,,,,,,,,,,,,,,,,,
 166,8,Comsoon,"여기요, 여기요! 한 번만 봐주세요!
 너무 멋져요!!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-167,8,Narration,"스탠딩 가장 앞줄에서 연예인과 셀카까지 찍을 수 있었다!
+167,8,Narration,"스탠딩 가장 앞줄에서 연예인과 셀카를 찍었다!
 떼창까지 하고 나니 스트레스도 풀리는 기분이다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 168,8,Comsoon,"밀, 밀지 마세요…!
 으아아아…!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-169,8,Narration,"스탠딩에는 사람이 너무 많아서 계속 뒤로 밀려났다…
-공연 내내 여기저기 치이기만 했다…",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+169,8,Narration,스탠딩에는 사람이 너무 많아서 계속 뒤로 밀려났다… 공연 내내 여기저기 치이기만 했다…,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 170,9,Comsoon,"소식 들으셨어요?!
 지스타 티켓팅이 열렸다는데!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 171,9,Comsoon,"지스타 모르세요?
-매년 열리는 게임 쇼요, 부산에서 하는 거!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+매년 열리는 게임 쇼 말이에요! 부산에서 하는 거!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 172,9,Comsoon,"신작 게임 시연도 하고,
 운 좋으면 경품도 타갈 수 있어요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-173,9,Comsoon,"작년에 진짜 가고 싶었는데,
-하필 그 때 엄청 어려운 과제가 나와서…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-174,9,Comsoon,"… 물론 이번에도 과제가 있기는 하겠죠!
-이번에는 미리 해 둘 거예요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+173,9,Comsoon,"작년에 진짜 가고 싶었는데, 하필 그 때 엄청 어려운 과제가 나와서…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+174,9,Comsoon,"… 무, 물론 이번에도 과제가 있기는 하겠죠! 이번에는 미리 해 둘 거예요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 175,9,Comsoon,진짜예요! 약속!,basic,TRUE,Choice,3,bg_school,,,,,,,,,,,,,,,,,,
 176,9,Comsoon,"역시 그렇죠!
 일단 티켓팅부터 해야겠다!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 177,9,Comsoon,"언제 열리더라?
-11월 중순… 시험 공부도 미리 해둬야겠어요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+11월 중순… 시험공부도 미리 해 둬야겠어요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 178,9,Comsoon,"역시 그렇죠…
 KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-179,9,Comsoon,"시험 공부도 해야 하고, 과제도 해야 하고…
+179,9,Comsoon,"시험공부도 해야 하고, 과제도 해야 하고…
 내년에 가면 되겠죠…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 180,10,Comsoon,몇 시지…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 181,10,Comsoon,"헉, 잘못하면 지각하겠다!
@@ -290,8 +277,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 어쩐지 느낌이 좋다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 193,10,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 194,10,Comsoon,조교님! 이거 보세요!!!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-195,10,Narration,"클래스넷 수시 성적란에는 컴순의 이름이 상위권으로 올라와 있었다!
-컴순이는 정말 ‘인재’인가 보다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+195,10,Narration,클래스넷 수시 성적란에는 '김컴순' 이름 석 자가 상위권으로 올라와 있었다! 컴순이는 정말 ‘인재’인가 보다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 196,10,Comsoon,강한 개체랑 약한 개체랑 싸우면 당연히 강한 개체가 이기지…!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 197,10,Narration,…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 198,10,Comsoon,"스레드? 그거 SNS 아냐?
@@ -304,7 +290,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 느낌이 너무너무 안 좋다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 204,10,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 205,10,Comsoon,"조교님, 이것 좀 보세요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-206,10,Narration,"클래스넷 수시 성적란에서, 컴순의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+206,10,Narration,"클래스넷 수시 성적란에서, 컴순이의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 207,10,Narration,"일단 고생했으니 푹 쉬기로 했다.
 기말고사에서 만회해 보자!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 208,11,Comsoon,KTX 진짜 오랜만에 타는 것 같아요…!,basic,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
@@ -323,11 +309,9 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 219,11,Narration,………,none,FALSE,Condition,6,bg_expo,,,,,,,,,,,,,,,,,,
 220,11,Comsoon,"전작이랑 이렇게 이어서 만든다고?
 세 시간이 뭐야, 네 시간을 기다렸어도 만족했을 거야…!",glad,TRUE,None,,bg_expo,,,,,,,,,,,,,,,,,,
-221,11,Narration,"이 회사는 유저들이 원하는 바를 정확히 아는 것 같다.
-감동적인 오마주와 헤어나올 수 없는 캐릭터를 겪고 나니 마음이 웅장해졌다!",none,FALSE,None,,bg_expo,,,,,,,,,,,,,,,,,,
+221,11,Narration,이 회사는 유저들이 원하는 바를 정확히 아는 것 같다. 감동적인 오마주와 헤어나올 수 없는 서사를 겪고 나니 마음이 웅장해졌다!,none,FALSE,None,,bg_expo,,,,,,,,,,,,,,,,,,
 222,11,Comsoon,"이, 이게 뭐야… 원래 있던 거랑 뭐가 다른데?",sad,TRUE,None,,bg_expo,,,,,,,,,,,,,,,,,,
-223,11,Narration,"이 회사는 돈 벌 생각만 하는 것 같다.
-캐릭터는 꽤나 매력적이었지만 그 이상은 없었다. 마음이 조금 허해졌다…",none,FALSE,None,,bg_expo,,,,,,,,,,,,,,,,,,
+223,11,Narration,이 회사는 돈 벌 생각만 하는 것 같다. 캐릭터는 꽤나 매력적이었지만 그 이상은 없었다. 마음이 조금 허해졌다…,none,FALSE,None,,bg_expo,,,,,,,,,,,,,,,,,,
 224,12,Comsoon,"교수님들은 왜 맨날 전범위 시험을 보는 걸까…
 아무리 공부해도 끝이 없어…",sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 225,12,Comsoon,"3학년도 곧 끝나는구나…
@@ -347,8 +331,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 어쩐지 느낌이 좋다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 237,12,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 238,12,Comsoon,조교님! 이거 보세요!!!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-239,12,Narration,"클래스넷 수시 성적란에는 컴순의 이름이 상위권으로 올라와 있었다!
-컴순이는 정말 ‘인재’다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+239,12,Narration,클래스넷 수시 성적란에는 '김컴순' 이름 석 자가 상위권으로 올라와 있었다! 컴순이는 정말 ‘인재’다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 240,12,Comsoon,"정규화… 으음, ER 다이어그램이 아니면 뭔지 잘 모르겠는데…",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 241,12,Narration,…,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 242,12,Comsoon,윈도우 부트… 부트 캠프라도 가야 하나…,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
@@ -356,13 +339,14 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 244,12,Comsoon,비트코인에서 해시… 해시 브라운 맛있는데…,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 245,12,Narration,………,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 246,12,Comsoon,쓸데없는 생각만 자꾸 나…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-247,12,Narration,"그런데 어쩐지 근거 없는 자신감이 자꾸…
+247,12,Narration,"그런데 어쩐지 근거 없는 자신감이…
 이건 아주 안 좋은 신호다!",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 248,12,Narration,며칠 뒤...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 249,12,Comsoon,"조교님, 이것 좀 보세요…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-250,12,Narration,"클래스넷 수시 성적란에서, 컴순의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+250,12,Narration,"클래스넷 수시 성적란에서, 컴순이의 이름은 한참 아래로 스크롤하고 나서야 찾을 수 있었다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 251,12,Narration,"일단 고생했으니 푹 쉬기로 했다.
-4학년 때 만회 가능할 것이다… 아마도.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+4학년 때 만회 가능할 것이다…
+아마도.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1000,100,Professor,"에… 그러니까…
 이번에 제출할 과제는 조별로 진행할 예정입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1001,100,Professor,"앞에 학번 확인하시고, 조별로 역할 분담해서
@@ -442,7 +426,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1053,102,Comsoon,… …,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1054,102,Comsoon,"우으으… 최애야……
 훌쩍…",sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-1055,102,Narration,"정말 진짜 꼭 굿즈를 장만하고 싶었지만,
+1055,102,Narration,"정말 진짜 꼭 굿즈를 갖고 싶었지만,
 결국 통장 잔고에 굴복하고 말았다!",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1056,103,Comsoon,하아암…,sad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1057,103,FriendA,"지금 그거 다섯 번째 하품인 거 알아?
@@ -451,8 +435,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 밤새 게임… 이 아니라!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1059,103,Comsoon,"공부!
 공부하느라! 헤헤…",glad,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-1060,103,FriendA,"음… 그럼 내가 도와줄 수 있을 것 같은데.
-이리 와 봐!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1060,103,FriendA,음… 그럼 내가 도와줄 수 있을 것 같은데. 나랑 어디 좀 가자!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1061,103,Narration,…,none,FALSE,None,,bg_store,,,,,,,,,,,,,,,,,,
 1062,103,Comsoon,"여긴… 편의점?
 커피 사 주려고?",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
@@ -460,8 +443,8 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 네, 이렇게 결제해주세요.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
 1064,103,FriendA,"이거랑, 저거를 섞고…
 이 비율로 이걸 넣으면…!",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
-1065,103,FriendA,"자, 완성!
-얼른 마셔봐. 잠 깨는 데에는 이게 최고거든.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
+1065,103,FriendA,"자, 완성! 얼른 마셔 봐.
+잠 깨는 데에는 이게 최고거든.",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
 1066,103,Comsoon,"어… 이거 마셔도 되는 거야?
 뭔가 좀 위험해 보이는데…",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
 1067,103,FriendA,"졸리다며? 하품 다섯 번 했잖아?
@@ -477,7 +460,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1075,103,Comsoon,……,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1076,103,Comsoon,잠이 안 와…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1077,103,Narration,"특별한 음료수를 마시자 잠이 완전히 깼다!
-수업에 집중할 수 있었지만, 밤에 잠이 오지 않아 밤새 뒤척여야만 했다…",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+수업에 집중할 수는 있었지만, 밤에 잠이 오지 않아 밤새 뒤척여야만 했다…",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1078,103,FriendA,"그래? 맛있는데… 싫으면 어쩔 수 없지.
 내가 마신다?",basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
 1079,103,Comsoon,응… 생각해줬는데 미안.,basic,TRUE,None,,bg_store,,,,,,,,,,,,,,,,,,
@@ -508,8 +491,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1097,105,FriendA,컴순아! 오래 기다렸어?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1098,105,Comsoon,"아냐, 나도 방금 끝났는데.
 오후 수업까지 시간 남지? 같이 밥 먹자.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1099,105,FriendA,"앗, 나 급한 과제가 있어서, 
-학식 빠르게 먹으려고 했는데. 학식도 괜찮아?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1099,105,FriendA,"앗, 나 급한 과제가 있어서, 빠르게 먹으려고 했는데. 학식도 괜찮아?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1100,105,Comsoon,"돈 아끼고 좋지 뭐.
 배고픈데 빨리 먹으러 가자!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1101,105,Narration,친구를 기다렸다가 함께 식사를 마쳤다!,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -542,13 +524,11 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 뭔가 잊은 것 같긴 하지만…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1120,107,Comsoon,과제… 해야겠지…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1121,107,Narration,다음 날...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1122,107,FriendA,"컴순 하이!
-너 어제 모임 왜 안 나왔어? 연락 못 본 거야?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1122,107,FriendA,컴순 하이! 너 어제 모임 왜 안 나왔어? 연락 못 본 거야?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1123,107,Comsoon,"응? 아, 과제 때문에…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1124,107,FriendA,"그렇구나.
 아쉽다, 어제 재미있었는데.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1125,107,Narration,"모임에 가지 않고 과제를 성실히 마쳤다!
-아쉽지만 다음에 또 기회가 있기를.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1125,107,Narration,모임에 가지 않고 과제를 성실히 마쳤다! 아쉽지만 다음에 또 기회가 있기를.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1126,108,Comsoon,"내일 자격증 시험을 봐야 하는데,
 떨려서 아무것도 못하겠어…",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1127,108,Comsoon,남은 시간동안 뭘 해야 하지?,basic,TRUE,Choice,108,bg_home,,,,,,,,,,,,,,,,,,
@@ -578,14 +558,14 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1141,109,Comsoon,…여보세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1142,109,StudentA,"여보세요? 컴순아?
 무슨 일이야?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1143,109,Comsoon,"아! 별 건 아니고, 내가 오늘 우산을 안 가져와서…
+1143,109,Comsoon,"아! 그게, 내가 오늘 우산을 깜빡해서…
 이따가 역 앞까지만 같이 갈 수 있을까?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1144,109,StudentA,"우산? 우산이면 난 오늘 갖고 온 게 있어서,
 내 사물함에서 예비 우산 꺼내 쓰고 나중에 돌려줘.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1145,109,Comsoon,"진짜? 정말?
 고마워! 너밖에 없어!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1146,109,Narration,"친구의 도움으로 우산을 쓰고 집에 갈 수 있게 되었다!
-이 감사는 나중에 보답하기로 했다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+이 은혜는 나중에 보답하기로 했다.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1147,110,Comsoon,"이번 달 용돈이 모자랄 것 같아…
 알바라도 해 볼까?",basic,TRUE,Choice,110,bg_home,,,,,,,,,,,,,,,,,,
 1148,110,Narration,"주말동안 만화방에서 단기 알바를 했다!
@@ -596,10 +576,8 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 예전에 엄청 재미있게 봤는데.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1151,111,Comsoon,"이번 주말에 보러 가야겠다!
 그런데…",basic,TRUE,Choice,111,bg_home,,,,,,,,,,,,,,,,,,
-1152,111,Comsoon,"이거 그 때 그 친구도 보고 싶다 했던 거였지?
-한 번 물어봐야겠다.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
-1153,111,Narration,"친구 역시 주말에 영화를 보러 갈 계획이라고 한다!
-함께 영화관에서 영화를 보기로 약속을 잡았다.",none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1152,111,Comsoon,이거 그 때 그 친구도 보고 싶다 했던 거였지? 한 번 물어봐야겠다.,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
+1153,111,Narration,친구 역시 주말에 영화를 보러 갈 계획이라고 한다! 함께 영화관에서 영화를 보기로 약속을 잡았다.,none,FALSE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1154,111,Comsoon,"역시 영화관도 멀고 귀찮으니까,
 그냥 집에서 구매해서 노트북으로 봐야겠다.",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1155,111,Narration,"침대에 누워 뒹굴거리면서 영화를 봤다!
@@ -617,7 +595,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1163,113,Comsoon,"아, 그게… 누가 그러더라고요.
 걸러야 하는 건 캐릭터가 아니라 끼니라고요, 헤헤…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1164,113,Comsoon,"그런 게 아니라요!
-다음 픽업은 진짜 꼭 뽑아야 되거든요…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+다음 픽업은 진짜 꼭 뽑아야 돼서요.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1165,113,Comsoon,이 참에 다이어트도 하고 완전 럭키잖아요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1166,113,Narration,그렇게 말하는 컴순의 식판에는 밥이 산더미처럼 쌓여 있었다.,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1167,113,Narration,"하지만 그렇게 말하는 컴순의 눈동자가 아주 빛나고 있었기 때문에, 딱히 문제삼지는 않기로 했다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -653,13 +631,13 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1184,116,Comsoon,"과자 몇 개를 택배로 주문했는데요…
 테이프가 너무 꼼꼼하게 붙어 있어서 커터칼로 그었거든요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1185,116,Comsoon,"이 사진 좀 보세요!
-바보같이 과자까지 다 그어버린 거 있죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+바보같이 과자까지 다 같이 그어버린 거 있죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1186,116,Comsoon,완전 망했어요…!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1187,116,Comsoon,…응? 인터넷에라도 올려보자고요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1188,116,Narration,"컴순은 인스타에 베인 과자 사진을 올렸다.
 과자는 먹지 못했지만 많은 사람들이 보고 같이 웃어 주었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1189,117,Comsoon,저 열람실에서 완전 재미있는 거 봤어요!,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1190,117,Comsoon,"오늘 수업 내용 복습하려고 열람실에 갔는데요,
+1190,117,Comsoon,"수업 내용 복습하려고 열람실에 갔는데요,
 제 자리에 ‘예약석’이라고 써 있는 거 있죠!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1191,117,Comsoon,"네, 진짜로요!
 종이에 ‘예약석’이라고 써서 떡하니 붙여 놨다니까요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -674,8 +652,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 당장 내일이 쪽지 시험인데!",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1198,118,Comsoon,"네? ‘치타는 웃고 있다’ 몰라요?
 지금부터 뛰어도 따라잡을 수 없다구요!",basic,TRUE,Choice,118,bg_school,,,,,,,,,,,,,,,,,,
-1199,118,Comsoon,"맞아요, 아직 포기하기엔 너무 일러요…!
-반이라도 풀 수 있도록…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1199,118,Comsoon,"맞아요, 아직 포기하기엔 너무 일러요…! 반이라도 풀 수 있도록…!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1200,118,Narration,"다음 날, 컴순은 세 번째 문제에서 벽을 마주했다… 그래도 두 문제는 풀었음에 의의를 두자!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1201,118,Comsoon,"다음에는 미리미리 해 둬야겠어요…
 이번 건 어쩔 수 없죠 뭐…",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -691,13 +668,13 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 컴순은 힌트를 통해 과제를 해결하고 많은 걸 배운 것 같았다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1209,120,Comsoon,"퀴즈 하나쯤… 말아먹어도 괜찮겠죠?
 시험 잘 보면 어떻게든…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1210,120,Comsoon,내일 퀴즈를 본다고 해서 오늘 벼락치기하려고 했거든요.,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1210,120,Comsoon,"아, 그기... 내일 퀴즈를 본다고 해서 오늘 벼락치기하려고 했거든요.",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1211,120,Comsoon,그런데 친구가 급하게 알바 대타를 뛰어달라고 해서요…,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1212,120,Comsoon,"평소 같으면 거절하겠는데 이런 부탁 잘 하는 친구도 아니고, 너무 급해 보였어요…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1213,120,Comsoon,우정과 학점 사이에 뭐가 맞는 걸까요…?,basic,TRUE,Choice,120,bg_school,,,,,,,,,,,,,,,,,,
 1214,120,Comsoon,"그쵸? 역시 친구가 더 소중하죠?
 좋아요! 밤이라도 새면 어떻게든 되겠죠!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1215,120,Narration,"컴순은 우정을 지켜내고 학점까지 지켜냈다!
+1215,120,Narration,"컴순은 우정과 학점 모두를 지켜냈다!
 불가능한 일을 해낸 것만 같다…!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1216,120,Comsoon,"너, 너무 매정한 거 아니에요…?",sad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1217,120,Comsoon,"하지만 맞는 말 같기도 해요…
@@ -790,13 +767,11 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1274,125,Comsoon,"후아아, 따뜻해…",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1275,125,Narration,"음료수 컵은 무척이나 따뜻했다!
 한 모금 마시자 몸이 풀리는 느낌이다…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-1276,125,StudentA,어? 너도 얼죽아파야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-1277,125,Comsoon,"헤헤, 응.
-난 항상 아이스 아메리카노만 마시거든.",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1276,125,StudentA,어? 너도 얼죽아 파야?,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1277,125,Comsoon,"헤헤, 응. 난 항상 아이스 아메리카노만 마시거든.",glad,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1278,125,StudentA,"나도 그런데!
 주변에 나 말고는 처음 봤어!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-1279,125,Narration,"어쩌다보니 친구와 같은 취향을 찾게 되었다!
-친구와 아이스 아메리카노에 대해 많은 이야기를 나누었다.",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1279,125,Narration,얼죽아 파 어셈블! 친구와 아이스 아메리카노에 대한 심도 깊고 우아한 토론을 진행했다.,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1280,126,Comsoon,"조교님, 얼버기!!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1281,126,Comsoon,네? 얼버기가 뭔지 모르세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1282,126,Comsoon,"얼리버드 기상이요!
