@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,30 +14,29 @@ namespace Client
 
         enum Buttons
         {
-            Panel, BTN_X, BTN_BigIllustraion,
+            Panel, BTN_X, BTN_BigIllustraion, BTN_Enlarge, BTN_Illustration
         }
 
         enum Texts
         {
-            TMP_Title, TMP_EndingName,
+            TMP_Title, TMP_EndingName, TMP_Contents,
             TMP_Awards1, TMP_Awards2, TMP_Awards3, TMP_Awards4,
-            TMP_Contents,
         }
 
-        enum Images
+        enum GameObjects
         {
-            IMG_Illustraion,
+            Maxs, MaskArea
         }
-
         public override void Init()
         {
             base.Init();
             Bind<Button>(typeof(Buttons));
             Bind<TMPro.TMP_Text>(typeof(Texts));
-            Bind<Image>(typeof(Images));
+            Bind<GameObject>(typeof(GameObjects));
+
             BindButton();
-            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(false);
-            GetImage((int)Images.IMG_Illustraion).gameObject.AddComponent<Button>().onClick.AddListener(OnClickImage);
+
+            GetGameObject((int)GameObjects.Maxs).gameObject.SetActive(false);
         }
 
         void BindButton()
@@ -44,76 +44,61 @@ namespace Client
             BindEvent(GetButton((int)Buttons.Panel).gameObject, OnClickPanel);
             BindEvent(GetButton((int)Buttons.BTN_X).gameObject, OnClickXBtn);
             BindEvent(GetButton((int)Buttons.BTN_BigIllustraion).gameObject, OnClickBigImage);
+
+            BindEvent(GetButton((int)Buttons.BTN_Enlarge).gameObject, OnClickImage);
+            BindEvent(GetButton((int)Buttons.BTN_Illustration).gameObject, OnClickImage);
         }
 
         #region 버튼 이벤트
         void OnClickPanel(PointerEventData evt)
         {
-            Debug.Log("판넬 누름..");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         void OnClickXBtn(PointerEventData evt)
         {
-            Debug.Log("x 버튼 누름");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         void OnClickBigImage(PointerEventData evt)
         {
-            Debug.Log("큰 일러스트 누름");
             SoundManager.Instance.Play(eSound.SFX_Negative);
-            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(false);
+            GetGameObject((int)GameObjects.Maxs).SetActive(false);
         }
-        void OnClickImage()
+        void OnClickImage(PointerEventData evt)
         {
-            Debug.Log("이미지 누름");
             SoundManager.Instance.Play(eSound.SFX_DialogClick);
-            GetButton((int)Buttons.BTN_BigIllustraion).gameObject.SetActive(true);
+            GetGameObject((int)GameObjects.Maxs).SetActive(true);
         }
         #endregion
 
-        /// <summary>
-        /// UnlockedEndingPopup 데이터 설정 함수
-        /// </summary>
-        /// <param name="ending"></param>
         public void SetUnlockedEndingPopup(Ending ending)
         {
-            if (ending != null) {
-                GetText((int)Texts.TMP_Title).text = "엔딩" + (char)('A' + (int)(ending.endingName));
-                GetText((int)Texts.TMP_EndingName).text = GetEndingNameKor(ending.endingName);
+            if (ending == null)
+                return;
 
-                string imagePath = endingSpritePath + $"Ending_{(int)(ending.endingName)}";
-                GetImage((int)Images.IMG_Illustraion).sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
-                GetButton((int)Buttons.BTN_BigIllustraion).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+            // 엔딩 제목 설정
+            GetText((int)Texts.TMP_Title).text = $"엔딩{(char)('A' + (int)(ending.endingName))}";
+            GetText((int)Texts.TMP_EndingName).text = GetEndingNameKor(ending.endingName);
 
-                // 이벤트 표시
-                string str = "";
-                for (int i = 0; i < ending.playerData.EventRecordList.Count; i++)
-                {
-                    string title = ending.playerData.EventRecordList[i].Item1;
-                    string record = ending.playerData.EventRecordList[i].Item2;
-                    switch (title)
-                    {
-                        case "1학기 중간":
-                            GetText((int)Texts.TMP_Awards1).text = record;
-                            break;
-                        case "1학기 기말":
-                            GetText((int)Texts.TMP_Awards2).text = record;
-                            break;
-                        case "2학기 중간":
-                            GetText((int)Texts.TMP_Awards3).text = record;
-                            break;
-                        case "2학기 기말":
-                            GetText((int)Texts.TMP_Awards4).text = record;
-                            break;
-                        default:
-                            str += title + " " + record + "\n";
-                            break;
-                    }
-                }
-                GetText((int)Texts.TMP_Contents).text = str;
+            // 일러스트 설정
+            string imagePath = $"{endingSpritePath}Ending_{(int)(ending.endingName)}";
+            GetButton((int)Buttons.BTN_Illustration).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+            GetButton((int)Buttons.BTN_BigIllustraion).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
+
+            // 시험 성적 입력
+            for (int i = 0; i < ending.playerData.EventRecordList.Count; i++)
+            {
+                GetText((int)Texts.TMP_Awards1 + i).text = ending.playerData.EventRecordList[i].record;
             }
+
+            // 기타 이력 입력
+            StringBuilder sb = new();
+            foreach(var recordList in ending.playerData.EventRecordList_etc)
+            {
+                sb.AppendLine($"{recordList.title} {recordList.record}");
+            }
+            GetText((int)Texts.TMP_Contents).text = sb.ToString();
 
         }
     }

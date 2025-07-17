@@ -299,11 +299,15 @@ namespace Client
             string title = DataManager.Instance.GetData<EventTitle>(eventID).EventName;
 
             if (title.EndsWith("!")) // "!" 지우기
-                title = title.Substring(title.Length - 1);
+            {
+                title = title.Substring(0, title.Length - 1);
+                DataManager.Instance.playerData.EventRecordList_etc.Add((title, str));
+            }
             else // "고사" 지우기
-                title = title.Substring(title.Length - 2);
-
-            DataManager.Instance.playerData.EventRecordList.Add((title, str)); 
+            {
+                title = title.Substring(0, title.Length - 2);
+                DataManager.Instance.playerData.EventRecordList.Add((title, str));
+            }
         }
     }
 }

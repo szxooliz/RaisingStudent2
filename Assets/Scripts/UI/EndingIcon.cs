@@ -69,6 +69,11 @@ namespace Client
         /// <summary> 클릭 시 엔딩 내용 팝업 </summary>
         public void OnClickUnlockedEnding()
         {
+            if(!DataManager.Instance.persistentData.endingDict.ContainsKey(eEndingNumber))
+            {
+                return;
+            }
+
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             Ending ending = DataManager.Instance.persistentData.endingDict[eEndingNumber];

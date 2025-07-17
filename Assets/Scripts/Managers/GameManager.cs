@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Client.SystemEnum;
@@ -99,7 +100,8 @@ namespace Client
         public ActivityData SetNewActivityData(eActivityType activityType)
         {
             ActivityData activityData = new ActivityData(activityType);
-            activityData.statValues = activityValues;
+            activityData.statValues = activityValues.ToList();
+            Debug.Log($"<color=lemonchiffon>활동 데이터 스탯값 확인 {activityValues[0]} {activityValues[1]}</color>");
 
             switch (activityType)
             {
