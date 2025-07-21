@@ -21,7 +21,7 @@ namespace Client
             IMG_Illustration,
             IMG_CharFace,
             IMG_Bubble,
-            IMG_Name,
+            IMG_NameTag,
         }
 
         enum Texts
@@ -54,6 +54,7 @@ namespace Client
 
             //currentEndingNum = GetLatestEndingIndex();
             currentEndingNum = (int)GameManager.Instance.endingName;
+            LogManager.Instance.GetNewLogGroup("육성 완료");
             LoadScript();
             LoadIllustration();
             LoadNextScript();
@@ -75,7 +76,7 @@ namespace Client
         void OnClickLogBtn(PointerEventData evt)
         {
             Debug.Log("로그 버튼 클릭");
-            UI_Manager.Instance.ShowPopupUI<UI_LogPopup>();
+            UI_Manager.Instance.ShowPopupUI<UI_LogPopup_Simple>();
         }
         #endregion
 
@@ -187,18 +188,20 @@ namespace Client
         /// <param name="endingScript"></param>
         IEnumerator LoadNextDialogue(EndingScript endingScript)
         {
+            eLineType eLineType = eLineType.SPEAK;
+
             TMPro.TMP_Text charLine = GetText((int)Texts.TMP_CharLine);
             string str = endingScript.Line;
 
             if (endingScript.NameTag)
             {
                 GetText((int)Texts.TMP_CharName).text = Util.GetCharNameKor(endingScript.Character);
-                GetImage((int)Images.IMG_Name).gameObject.SetActive(true);
+                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(true);
             }
             else
             {
                 GetText((int)Texts.TMP_CharName).text = "";
-                GetImage((int)Images.IMG_Name).gameObject.SetActive(false);
+                GetImage((int)Images.IMG_NameTag).gameObject.SetActive(false);
             }
 
             string basicSprite = Util.GetCharBasicSpritePath(endingScript.Character);
@@ -210,6 +213,8 @@ namespace Client
             }
             else if (basicSprite != "none")
             {
+                eLineType = eLineType.NARRATION;
+
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
                 string path = characterSpritePath + basicSprite;
                 GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
@@ -219,6 +224,7 @@ namespace Client
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(false);
             }
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
+            LogManager.Instance.GetLastClusterGroup().AddLine(eLineType, endingScript);
 
             yield return null;
         }

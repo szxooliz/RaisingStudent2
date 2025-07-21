@@ -62,6 +62,24 @@ namespace Client
             LineList.Add(str);
 
         }
+
+        public void AddLine(eLineType _eLineType, EndingScript _endingScript)
+        {
+            string charName, line, str = null;
+            if (_eLineType == eLineType.SPEAK)
+            {
+                charName = Util.GetCharNameKor(_endingScript.Character);
+                line = _endingScript.Line;
+                str = $"{charName} : {line}";
+            }
+            else if (_eLineType == eLineType.NARRATION)
+            {
+                line = _endingScript.Line;
+                str = $"{line}";
+            }
+            LineList.Add(str);
+        }
+
     }
 
 }
