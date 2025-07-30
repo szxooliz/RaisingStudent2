@@ -242,6 +242,7 @@ namespace Client
         #region 선택지에 따른 분기
         void ShowSelection(long BranchIndex)
         {
+            GameManager.Instance.OnSelection?.Invoke();
             SelectScript selectScript = DataManager.Instance.GetData<SelectScript>(BranchIndex);
 
             GetText((int)Texts.TMP_Select1).text = selectScript.Selection1;
@@ -262,6 +263,7 @@ namespace Client
         /// <param name="isFirst">첫번째 선택지인가?</param>
         void OnClickSelection(SelectScript selectScript, bool isFirst)
         {
+            GameManager.Instance.OnSelection?.Invoke();
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             nowEventScriptID = isFirst ? selectScript.MoveLine1 : selectScript.MoveLine2;

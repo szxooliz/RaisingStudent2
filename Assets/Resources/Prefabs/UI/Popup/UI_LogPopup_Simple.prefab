@@ -883,7 +883,7 @@ GameObject:
   - component: {fileID: 588593475251416305}
   - component: {fileID: 965174445891931099}
   m_Layer: 5
-  m_Name: TMP_Turn
+  m_Name: TMP_Term
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -963,8 +963,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55
-  m_fontSizeBase: 55
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1220,3 +1220,4 @@ MonoBehaviour:
   textClusterUI: {fileID: 1793933737468569747, guid: 40e3d7a0adfee404c862563fcb1e316c, type: 3}
   parent: {fileID: 3764284517342106519}
   scrollRect: {fileID: 6115539212691555387}
+  TMP_Term: {fileID: 965174445891931099}

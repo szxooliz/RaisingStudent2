@@ -89,6 +89,7 @@ namespace Client
 
             if (DataManager.Instance.playerData.CurrentStatus == eStatus.Activity)
             {
+                GameManager.Instance.OnActivity?.Invoke();
                 coroutine = StartCoroutine(ShowResult1());
                 charName.text = Util.GetCharNameKor(DataManager.Instance.playerData.CharName);
                 UpdateStatUIs();

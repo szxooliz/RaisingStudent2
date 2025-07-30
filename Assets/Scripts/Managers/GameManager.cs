@@ -38,6 +38,9 @@ namespace Client
         private List<int> StressRestList = new() { 80, 60, 30 };
         #endregion
 
+        public Action OnActivity; // 활동때 로그버튼 onoff
+        public Action OnSelection; // 이벤트 선택지때 스케줄 확인 버튼 onoff
+
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
         public eEndingName endingName;
         static GameManager s_instance;
@@ -206,17 +209,21 @@ namespace Client
         public void NextTurn()
         {
             DataManager.Instance.playerData.CurrentTurn++;
+        }
 
-            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
-
-            // 상순이 되면 다음 달로 넘어감
-            if (DataManager.Instance.playerData.CurrentThird == 0)
+        public void NextMonthandTerm()
+        {
+            // 이전 턴에 하순이었을 때 다음 달로 넘어감
+            if (DataManager.Instance.playerData.CurrentThird == eThirds.Third)
             {
                 if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
                     DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
                 else DataManager.Instance.playerData.CurrentMonth++;
             }
+
+            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
+            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
+
         }
 
         public void CheckEndingTurn()
@@ -281,6 +288,14 @@ namespace Client
             
             // 위에서 하나도 안 걸리면
             return eEndingName.HomeProtector;
+        }
+
+        /// <summary> 여름 기간에 해당되면 true 반환 </summary>
+        public bool IsSummerTerm()
+        {
+            Debug.Log($"현재 이미지 확인.. 현재 턴: {DataManager.Instance.playerData.CurrentTurn} 현재 달: {DataManager.Instance.playerData.CurrentMonth}");
+
+            return DataManager.Instance.playerData.CurrentMonth >= eMonths.May && DataManager.Instance.playerData.CurrentMonth <= eMonths.Nov;
         }
 
     }

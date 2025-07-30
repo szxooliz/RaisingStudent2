@@ -11,9 +11,6 @@ namespace Client
     {
         public static bool nowTexting = false;
 
-        static readonly int mayTurn = 6;
-        static readonly int novTurn = 17;
-
 
         /// <summary>
         /// Game Object에서 해당 Component 얻거나 없으면 추가 (주의 무거움)
@@ -109,18 +106,14 @@ namespace Client
         }
 
         #region 일러스트 경로 반환 함수 오버로드
-        /// <summary>
-        /// 계절에 맞는 옷 일러스트 경로 반환 - 활동 결과
-        /// </summary>
-        /// <param name="face"></param>
-        /// <returns></returns>
+
+
+        /// <summary> /// 계절에 맞는 옷 일러스트 경로 반환 - 활동 결과 </summary>
         public static string GetSeasonIllustPath(string face)
         {
             string str = "";
 
-            Debug.Log($"현재 이미지 확인.. 현재 턴: {DataManager.Instance.playerData.CurrentTurn}");
-            // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
+            if (GameManager.Instance.IsSummerTerm())
             {
                 str = $"Sprites/Character/{DataManager.Instance.playerData.CharName}_Summer_{face}";
             }
@@ -132,18 +125,14 @@ namespace Client
             return str;
         }
 
-        /// <summary>
-        /// 계절에 맞는 옷 일러스트 경로 반환
-        /// </summary>
+        /// <summary> 계절에 맞는 옷 일러스트 경로 반환 </summary>
         /// <param name="script">대화 인터랙션 스크립트</param>
-        /// <returns></returns>
         public static string GetSeasonIllustPath(Script script)
         {
             string str = "";
-            
+
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
-            // 5월 상순(7턴) ~ 10월 하순(17턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
+            if (GameManager.Instance.IsSummerTerm())
             {
                 str = $"Sprites/Character/{script.Character}_Summer_{script.Face}";
             }
@@ -155,16 +144,12 @@ namespace Client
             return str;
         }
 
-        /// <summary>
-        /// 계절에 맞는 옷 일러스트 경로 반환
-        /// </summary>
+        /// <summary> 계절에 맞는 옷 일러스트 경로 반환 </summary>
         /// <param name="eventScript">메인 이벤트 스크립트</param>
-        /// <returns></returns>
         public static string GetSeasonIllustPath(EventScript eventScript)
         {
             string str = "";
 
-            // 계절 이미지가 없는 캐릭터의 경우
             if (eventScript.Character != DataManager.Instance.playerData.CharName)
             {
                 string charSprite = DataManager.Instance.CharFaceDict[eventScript.Character].basic;
@@ -175,8 +160,7 @@ namespace Client
             }
 
             // 계절 이미지가 있는 플레이어블 캐릭터의 경우
-            // 5월 상순(7턴) ~ 10월 하순(18턴) - 반팔 이미지
-            if (DataManager.Instance.playerData.CurrentTurn >= mayTurn && DataManager.Instance.playerData.CurrentTurn <= novTurn)
+            if (GameManager.Instance.IsSummerTerm())
             {
                 str = $"Sprites/Character/{eventScript.Character}_Summer_{eventScript.Face}";
             }

@@ -93,6 +93,7 @@ namespace Client
                 UpdateStatUIs();
                 UpdateStressUIs();
                 StartCoroutine(conversation.ResetBubble());
+                GameManager.Instance.OnActivity?.Invoke();
             }
         }
 

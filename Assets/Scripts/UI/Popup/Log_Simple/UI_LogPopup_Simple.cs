@@ -18,6 +18,8 @@ namespace Client
         [SerializeField] RectTransform parent;
         [SerializeField] ScrollRect scrollRect;
 
+        [SerializeField] TextMeshProUGUI TMP_Term;
+
         List<GameObject> clusterUIList = new();
         // 클러스터별 라인 출력 상태를 저장하는 딕셔너리
         private Dictionary<int, int> clusterLineProgress = new();
@@ -49,6 +51,7 @@ namespace Client
 
         private void OnEnable()
         {
+            ShowMonthandTerm();
             InitLog();
         }
 
@@ -103,6 +106,11 @@ namespace Client
             }
         }
 
+        void ShowMonthandTerm()
+        {
+            string str = (int)DataManager.Instance.playerData.CurrentMonth + "월 " + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
+            TMP_Term.text = str;
+        }
         IEnumerator ScrollToBottomDelayed()
         {
             yield return null;
