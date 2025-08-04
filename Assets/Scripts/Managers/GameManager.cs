@@ -26,13 +26,13 @@ namespace Client
         private readonly int REST_SUCCESS = 50;
 
         // 엔딩 결과 산출 기준값
-        private readonly int STAT_STANDARD = 80;
+        private readonly int STAT_STANDARD = 90;
 
         // 대학원생 엔딩 기준값
         private readonly int POSTGRAD_INTELI = 100; // 지력
-        private readonly int POSTGRAD_OTAKU = 70; // 덕력
-        private readonly int POSTGRAD_STRENGTH = 0; // 체력
-        private readonly int POSTGRAD_CHARMING = 50; // 매력
+        private readonly int POSTGRAD_OTAKU = 80; // 덕력
+        private readonly int POSTGRAD_STRENGTH = 80; // 체력
+        private readonly int POSTGRAD_CHARMING = 0; // 매력
 
         // 자체휴강 시 감소하는 스트레스 값(차례로 대성공, 성공, 대실패)
         private List<int> StressRestList = new() { 80, 60, 30 };
