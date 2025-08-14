@@ -349,13 +349,12 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 아마도.",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1000,100,Professor,"에… 그러니까…
 이번에 제출할 과제는 조별로 진행할 예정입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-1001,100,Professor,"앞에 학번 확인하시고, 조별로 역할 분담해서
-다음 주까지 준비해 올 수 있도록 하세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1001,100,Professor,"앞에 학번 확인하시고, 조별로 역할 분담해서 다음 주까지 준비해 올 수 있도록 하세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1002,100,Narration,잠시 후...,none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1003,100,Comsoon,안녕하세요! 23학번 김컴순입니다!,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1004,100,StudentA,"네, 안녕하세요. 21학번 박공대입니다.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1005,100,StudentB,반갑습니다. 22학번 이미대예요.,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-1006,100,StudentA,"저희 우선은 역할부터 나눌까요? 우선 조장부터 기입을 해야 하는데...
+1006,100,StudentA,"저희 일단 역할부터 나눌까요?
 혹시 조장 하고 싶으신 분 계신가요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1007,100,Comsoon,"그… 
 (어떡하지? 조교님한테 물어볼까?)",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
@@ -372,11 +371,10 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1015,100,Narration,"조장 역할은 분명히 힘들고 지쳤지만,
 리더 역할을 수행하며 많은 것을 배울 수 있었다.",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1016,100,Comsoon,……,basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-1017,100,StudentA,"아무도 없으신가요? 그러면 조장은 제가 맡겠습니다.
-생각해 둔 게 있어서, 그것대로 한 번 진행해볼게요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1017,100,StudentA,"아무도 없으신가요? 그러면 조장은 제가 맡겠습니다. 생각해 둔 게 있어서, 그대로 한 번 진행해볼게요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1018,100,StudentB,"앗, 네! 시켜주실 것 있으면 바로 말해주세요.",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
-1019,100,StudentA,"그러면 학생B 님은 이걸 맡아 주시고... 
-컴순님은 이걸 맡아 주시겠어요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
+1019,100,StudentA,"그러면 미대 님은 이걸 맡아 주시고...
+컴순 님은 이걸 맡아 주시겠어요?",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1020,100,Comsoon,"네, 그렇게 하겠습니다!",basic,TRUE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1021,100,Narration,"조장은 엄청난 실력의 보유자였고, 생각보다 할 게 없었다. 얻어간 건 별로 없었지만, 조장의 활약으로 쉽게 버스를 타게 되었다.",none,FALSE,None,,bg_classroom,,,,,,,,,,,,,,,,,,
 1022,101,Comsoon,"... …아! 다 봤다.
@@ -698,13 +696,14 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1227,122,Announce,"이번 역은 사당, 사당역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1228,122,Comsoon,으음… 도착까진 아직 멀었나…,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1229,122,Comsoon,"시간이 좀 남는데…
-뭐 할 만한 것 없을까?",basic,TRUE,Choice,122,bg_train,,,,,,,,,,,,,,,,,,
+뭐 할 만한 것 없을까?",basic,TRUE,Choice,122,bg_train,,,,, ,,,,,,,,,,,,,
 1230,122,Comsoon,"아직 도착까진 멀었으니까…
 좀 자야겠다.",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1231,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1232,122,Comsoon,"…헛!
 어디지?",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-1233,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1233,122,Announce,"이번 역은 상수, 상수역입니다.
+내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1234,122,Comsoon,"내, 내릴게요!!!!!!",sad,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1235,122,Narration,"잠시 졸았더니 순식간에 도착했다.
 어쩐지 몸이 개운하다!",none,FALSE,None,,bg_train,,,,,,,,,,,,,,,,,,
@@ -712,7 +711,8 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1237,122,Comsoon,"어? 이벤트 시작했네?
 그럼 지금 보상 좀 받고… 부스터 좀 쓰고…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1238,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
-1239,122,Announce,"이번 역은 상수, 상수역입니다. 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+1239,122,Announce,"이번 역은 상수, 상수역입니다.
+내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1240,122,Comsoon,… 어라? 벌써?,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1241,122,Narration,"게임을 하다 보니 시간 가는 줄 몰랐다!
 순식간에 학교에 도착했다.",none,FALSE,None,,bg_train,,,,,,,,,,,,,,,,,,
