@@ -7,7 +7,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 2,0,Player,(또 시작이시군…),none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
 3,0,Player,(우리 교수님이 저렇게 인력난을 호소하신다는 건 개강이 가까워졌다는 뜻이다.),none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
 4,0,Professor,"김 조교, 인재가 없다고!",basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
-5,0,Professor,어디 아주 똑똑하고 눈치 빠르고 착하고 매력있고 말도 잘 통하는...,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
+5,0,Professor,어디 아주 똑똑하고 눈치 빠르고 착하고 생각도 깊고 말도 잘 통하는...,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
 6,0,Professor,그런 학생 없나?,basic,TRUE,None,,bg_office,,,,,,,,,,,,,,,,,,
 7,0,Player,"교수님께서 이미 마음에 드는 학생들을
 전부 여기로 데리고 오셨잖아요…",none,FALSE,None,,bg_office,,,,,,,,,,,,,,,,,,
@@ -97,8 +97,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 줄다리기는 해볼 만하겠다!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 64,3,Comsoon,"이스포츠 같은 건 없나?
 조교님도 체육대회 해 보셨어요?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-65,3,Comsoon,"2인 3각에서 넘어져서 꼴찌를 했다고요?
-아하하!",glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+65,3,Comsoon,2인 3각에서 넘어져서 꼴찌를 했다고요? 아하하!,glad,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 66,3,Comsoon,"치킨 기프티콘도 받고? 재미있겠다!
 근데 저 같은 애도 참가해도 되는 거예요?",basic,TRUE,Choice,1,bg_school,,,,,,,,,,,,,,,,,,
 67,3,Comsoon,"역시 그렇죠?
@@ -408,8 +407,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 어, 어쩌죠?",sad,TRUE,Choice,102,bg_school,,,,,,,,,,,,,,,,,,
 1043,102,Comsoon,"… 어서오세요!
 주문 도와드리겠습니다.",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-1044,102,Comsoon,"메가슈퍼킹슈림프머쉬룸버거 맞으시죠?
-결제 되셨습니다. 감사합니다!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1044,102,Comsoon,메가슈퍼킹슈림프몬스터머쉬룸버거 맞으시죠? 결제 되셨습니다!,basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1045,102,Narration,일주일 뒤...,none,FALSE,None,,bg_street,,,,,,,,,,,,,,,,,,
 1046,102,Comsoon,네…! 이걸로 할게요.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
 1047,102,Comsoon,… 헤헤.,glad,TRUE,None,,bg_street,,,,,,,,,,,,,,,,,,
@@ -709,7 +707,8 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 어쩐지 몸이 개운하다!",none,FALSE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1236,122,Comsoon,일일 퀘스트만 하고 꺼야지.,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1237,122,Comsoon,"어? 이벤트 시작했네?
-그럼 지금 보상 좀 받고… 부스터 좀 쓰고…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
+그럼 지금 보상 좀 받고…
+부스터 좀 쓰고…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1238,122,Comsoon,……,basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
 1239,122,Announce,"이번 역은 상수, 상수역입니다.
 내리실 문은…",basic,TRUE,None,,bg_train,,,,,,,,,,,,,,,,,,
