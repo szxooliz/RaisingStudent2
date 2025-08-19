@@ -13,12 +13,10 @@ namespace Client
         public eMonths CurrentMonth { get; set; } = eMonths.Mar;   // n월 3-6/9-12
         public eThirds CurrentThird { get; set; } = eThirds.First; // a순 상중하
 
-        public List<(string title, string record)> EventRecordList    = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 성적
-        public List<(string title, string record)> EventRecordList_etc    = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 기타이력
-        
-        public Dictionary<long, bool>              AppliedEventsDict  = new(); // 이벤트 참여 여부 기록
-        public List<long>                          WatchedEventIDList = new(); // 진행한 이벤트 아이디만 담아둠
-
+        public List<(string title, string record)> EventRecordList;
+        public List<(string title, string record)> EventRecordList_etc;
+        public Dictionary<long, bool> AppliedEventsDict;
+        public List<long> WatchedEventIDList;
         public event EventHandler OnStatusChanged;
 
         private eStatus _currentStatus = eStatus.Main;
@@ -42,6 +40,12 @@ namespace Client
             get => _stressAmount;
             set => _stressAmount = Mathf.Clamp(value, 0, 100);
         }
-        public PlayerData() { }
+        public PlayerData() 
+        {
+            EventRecordList = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 성적
+            EventRecordList_etc = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 기타이력
+            AppliedEventsDict = new(); // 이벤트 참여 여부 기록
+            WatchedEventIDList = new(); // 진행한 이벤트 아이디만 담아둠
+        }
     }
 }

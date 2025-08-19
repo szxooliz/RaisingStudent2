@@ -1,6 +1,7 @@
 using Client;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -49,6 +50,12 @@ namespace Client
             UpdateStressUIs();
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
         }
+        private void OnDestroy()
+        {
+            DataManager.Instance.playerData.OnStatusChanged -= OnStatusChanged;
+        }
+
+
 
         /// <summary>
         /// 버튼 바인딩
@@ -76,7 +83,8 @@ namespace Client
         /// <param name="index"></param>
         public void MakeTransition(int index)
         {
-            // 메인은 남겨두고 이벤트&활동만 껐다 켰다 해야겠다
+            if (this == null) return; // 오브젝트 자체가 사라진 경우
+            if (gameObject == null) return; // 게임오브젝트 파괴된 경우
 
             for (int i = 0; i < 3; i++)
             {
@@ -107,7 +115,46 @@ namespace Client
             {
                 GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
             }
+            HighlightStatUIs();
         }
+
+        /// <summary>
+        /// 높은 스탯 2개 하이라이트 표시
+        /// </summary>
+        void HighlightStatUIs()
+        {
+            string hexCode = "#5587FA";
+            var filtered = DataManager.Instance.playerData.StatsAmounts
+                .Select((value, index) => new { value, index })
+                .Where(x => x.value > 0)
+                .OrderByDescending(x => x.value)
+                .ThenBy(x => x.index)             // 스탯 같을 경우 지력>덕력>체력>매력 순(인덱스 작은 순)우선순위
+                .ToList();
+
+            // 설정 전 텍스트 스타일 초기화
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
+            {
+                GetText((int)eStatName.Inteli + i).color = Util.GetHexColor("#000000");
+                GetText((int)eStatName.Inteli + i).fontStyle &= ~TMPro.FontStyles.Bold;
+            }
+
+            if (filtered.Count == 0)
+            {
+                Debug.Log("스탯 양수값 없음, 0일때는 하이라이트 안 하도록 해둠");
+                return;
+            }
+
+            // 1, 2위 하이라이트
+            GetText(filtered[0].index).color = Util.GetHexColor(hexCode);
+            GetText(filtered[0].index).fontStyle = TMPro.FontStyles.Bold;
+
+            if (filtered.Count > 1)
+            {
+                GetText(filtered[1].index).color = Util.GetHexColor(hexCode);
+                GetText(filtered[1].index).fontStyle = TMPro.FontStyles.Bold;
+            }
+        }
+
 
         /// <summary>
         /// 스트레스 UI 바 및 상태 이미지 업데이트

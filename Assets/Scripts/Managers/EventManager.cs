@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Client.SystemEnum;
+using Unity.VisualScripting;
 
 namespace Client
 {
@@ -32,6 +33,14 @@ namespace Client
             EventQueue.Clear();
 
             eventTitleList = DataManager.Instance.GetDataList<EventTitle>();
+        }
+
+        public void ResetEventData()
+        {
+            EventIDQueue.Clear();
+            EventQueue.Clear();
+            //nowEventData.
+
         }
 
         /// <summary> 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기 </summary>
@@ -106,6 +115,9 @@ namespace Client
                 Debug.Log($"이전에 {eventTitle.index}번 이벤트 참가 신청을 {value}로 함");
                 if (!value) return false;
             }
+
+            if (DataManager.Instance.playerData.WatchedEventIDList.Contains(eventTitle.index)) return false;
+
             if (DataManager.Instance.playerData.CurrentTurn == eventTitle.AppearStart) return true;
             else return false;
         }

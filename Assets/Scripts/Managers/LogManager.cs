@@ -16,6 +16,13 @@ namespace Client
         LogManager() { }
         #endregion
 
+        /// <summary> 새로하기 선택 시 육성 데이터 초기화 </summary>
+        public void ResetLogData()
+        {
+            _id = 0;
+            logClusterList = new();
+            textClusters = new();
+        }
         /// <summary>
         /// 로그 그룹 새로 생성 후 매니저가 관리하는 리스트에 추가
         /// </summary>

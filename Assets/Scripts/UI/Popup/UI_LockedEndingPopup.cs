@@ -64,7 +64,7 @@ namespace Client
         public void SetLockedEndingPopup(eEndingName endingName)
         {
             int index = (int)(endingName);
-            GetText((int)Texts.TMP_Name).text = "파일명: 엔딩" + (char)('A' + index);
+            GetText((int)Texts.TMP_Name).text = $"파일명: {GetEndingNameKor((eEndingName)endingName)}";
             GetImage((int)Images.IMG_File).sprite = DataManager.Instance.GetOrLoadSprite(spritePath + (char)('A' + index) + "_lock");
         }
     }

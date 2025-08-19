@@ -17,6 +17,7 @@ namespace Client
             UI_Manager.Instance.ShowSceneUI<UI_BaseScene>();
             UI_Manager.Instance.ShowSceneUI<UI_BaseSceneBtm>();
 
+            if (DataManager.Instance.playerData.CurrentTurn != 0) return;
             EventManager.Instance.CheckEvent();
         }
     }

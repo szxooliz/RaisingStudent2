@@ -219,5 +219,18 @@ namespace Client
 
             return sb.ToString();
         }
+
+        public static Color GetHexColor(string hexCode)
+        {
+            if (ColorUtility.TryParseHtmlString(hexCode, out Color color))
+            {
+                return color;
+            }
+            else
+            {
+                Debug.LogWarning($"Invalid Hex Code: {hexCode}");
+                return Color.white; // 기본값 (잘못된 Hex 코드가 들어오면 흰색 반환)
+            }
+        }
     }
 }

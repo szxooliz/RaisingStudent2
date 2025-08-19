@@ -22,6 +22,8 @@ namespace Client
             Bind<Button>(typeof(Buttons));
 
             BindButton();
+            SoundManager.Instance.Play(eSound.BGM_Main);
+
         }
 
         /// <summary>

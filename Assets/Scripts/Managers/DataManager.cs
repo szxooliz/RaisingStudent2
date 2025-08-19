@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using static Client.SystemEnum;
 
@@ -43,8 +44,12 @@ namespace Client
             LoadPersistentData();
             DeleteAllData();
             LoadSheetDatas();
-
+        }
+        
+        public void PreDataMapping()
+        {
             // 미리 EventResult, CharacterFace, EndingScriptDict 전부 딕셔너리에 저장
+            // monobehavior 상속중인 게임매니저에서 호출됨
             var eventResultList = GetDataList<EventResult>();
             foreach (var _eventResult in eventResultList)
             {
@@ -287,12 +292,13 @@ namespace Client
 
         #endregion
 
-        /// <summary>
-        /// 캐싱된 스프라이트 로드 / 반환
-        /// </summary>
-        /// <param name="_path"></param>
-        /// <returns></returns>
-        /// <exception cref="System.Exception"></exception>
+        /// <summary> 새로하기 선택 시 육성 데이터 초기화 </summary>
+        public void ResetData()
+        {
+            playerData = new PlayerData();
+        }
+
+        /// <summary> 캐싱된 스프라이트 로드 / 반환 </summary>
         public Sprite GetOrLoadSprite(string _path)
         {
             if (spriteCache.TryGetValue(_path, out Sprite cachedSprite))

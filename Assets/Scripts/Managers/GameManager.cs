@@ -36,6 +36,15 @@ namespace Client
 
         // 자체휴강 시 감소하는 스트레스 값(차례로 대성공, 성공, 대실패)
         private List<int> StressRestList = new() { 80, 60, 30 };
+
+        static readonly Dictionary<(int, int), eEndingName> endingMap = new()
+        {
+            { ((int)eStatName.Inteli, (int)eStatName.Charming), eEndingName.CorporateSI },
+            { ((int)eStatName.Inteli, (int)eStatName.Otaku),    eEndingName.GameCompany },
+            { ((int)eStatName.Otaku,  (int)eStatName.Charming), eEndingName.VirtualYoutuber },
+            { ((int)eStatName.Otaku,  (int)eStatName.Strength), eEndingName.ProGamer },
+        };
+
         #endregion
 
         public Action OnActivity; // 활동때 로그버튼 onoff
@@ -50,7 +59,7 @@ namespace Client
         void Start()
         {
             Init();
-            SoundManager.Instance.Play(eSound.BGM_Main);
+            DataManager.Instance.PreDataMapping();
         }
 
 
@@ -262,8 +271,23 @@ namespace Client
                 return eEndingName.GraduateStudent;
             }
 
-            if (highStatsCount >= 2)
+            // 스탯 정렬 (값 ↓, 우선순위 ↑)
+            var ordered = DataManager.Instance.playerData.StatsAmounts
+                .Select((value, index) => new { value, index })
+                .Where(x => x.value >= STAT_STANDARD) // 기준치 이상만
+                .OrderByDescending(x => x.value)
+                .ThenBy(x => x.index)
+                .ToList();
+
+            if (ordered.Count >= 2)
             {
+                int first = ordered[0].index;
+                int second = ordered[1].index;
+
+                var key = (Math.Min(first, second), Math.Max(first, second));
+                if (endingMap.TryGetValue(key, out var ending))
+                    return ending;
+                /*
                 if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
                 {
                     // 대기업
@@ -283,7 +307,7 @@ namespace Client
                 {
                     // 프로게
                     return eEndingName.ProGamer;
-                }
+                }*/
             }
             
             // 위에서 하나도 안 걸리면
@@ -295,7 +319,7 @@ namespace Client
         {
             Debug.Log($"현재 이미지 확인.. 현재 턴: {DataManager.Instance.playerData.CurrentTurn} 현재 달: {DataManager.Instance.playerData.CurrentMonth}");
 
-            return DataManager.Instance.playerData.CurrentMonth >= eMonths.May && DataManager.Instance.playerData.CurrentMonth <= eMonths.Nov;
+            return DataManager.Instance.playerData.CurrentMonth > eMonths.Apr && DataManager.Instance.playerData.CurrentMonth < eMonths.Nov;
         }
 
     }

@@ -53,6 +53,14 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Log).gameObject, OnClickLogBtn);
         }
 
+        private void OnDestroy()
+        {
+            DataManager.Instance.playerData.OnStatusChanged -= OnStatusChanged;
+            GameManager.Instance.OnActivity -= SetButtonOnOff;
+            GameManager.Instance.OnSelection -= SetScheduleOnOff;
+            EventManager.Instance.OnEventStart -= ShowEventName;
+        }
+
         #region 버튼 이벤트
         void OnClickMenuBtn(PointerEventData evt)
         {
@@ -79,25 +87,29 @@ namespace Client
 
         void OnStatusChanged(object sender, System.EventArgs e)
         {
+            if (this == null) return; // 오브젝트 자체가 사라진 경우
+            var img = GetImage((int)Images.IMG_Status);
+            if (img == null) return; // 이미지가 이미 Destroy된 경우
+
             string path = "";
 
-            switch(DataManager.Instance.playerData.CurrentStatus)
+            switch (DataManager.Instance.playerData.CurrentStatus)
             {
                 case eStatus.Main:
                     GameManager.Instance.NextMonthandTerm();
                     UpdateTermUI();
-                    UpdateTurnUI(); // 메인으로 돌아올 때만 업데이트를 하다 보니까 제대로 업데이트가 안됨
+                    UpdateTurnUI();
                     path = spritePath + eStatus.Main.ToString();
                     break;
                 case eStatus.Activity:
                     path = spritePath + eStatus.Activity.ToString();
-                    break; 
+                    break;
                 case eStatus.Event:
                     path = spritePath + eStatus.Event.ToString();
                     break;
             }
 
-            GetImage((int)Images.IMG_Status).sprite = DataManager.Instance.GetOrLoadSprite(path);
+            img.sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
 
         // TODO : 상황에 따른 로그 버튼 활성/비활성 함수 만들기 - 반투명 이미지를 위에 붙여서 활성화
