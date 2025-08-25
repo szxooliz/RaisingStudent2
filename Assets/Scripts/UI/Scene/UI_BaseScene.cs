@@ -37,9 +37,6 @@ namespace Client
 
             BindButton();
 
-            UpdateTermUI();
-            UpdateTurnUI();
-
             GameManager.Instance.OnActivity += SetButtonOnOff;
             GameManager.Instance.OnSelection += SetScheduleOnOff;
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
@@ -51,6 +48,12 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Menu).gameObject, OnClickMenuBtn);
             BindEvent(GetButton((int)Buttons.BTN_Schedule).gameObject, OnClickScheduleBtn);
             BindEvent(GetButton((int)Buttons.BTN_Log).gameObject, OnClickLogBtn);
+        }
+
+        private void Start()
+        {
+            UpdateTermUI();
+            UpdateTurnUI();
         }
 
         private void OnDestroy()

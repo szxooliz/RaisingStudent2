@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -61,7 +62,8 @@ namespace Client
 
         public void OnPointerClick(PointerEventData evt)
         {
-            if (coroutine != null)
+            // 다 보이긴 하는데,, 보이고 바로 다음 LoadNextDialogue이 실행되어버림
+            if (Util.nowTexting)
             {
                 StopCoroutine(coroutine);
                 coroutine = null;
@@ -72,6 +74,18 @@ namespace Client
                 SoundManager.Instance.Play(eSound.SFX_DialogClick);
                 coroutine = StartCoroutine(LoadNextDialogue());
             }
+
+            //if (coroutine != null)
+            //{
+            //    StopCoroutine(coroutine);
+            //    coroutine = null;
+            //    GetText((int)Texts.TMP_CharLine).ForceMeshUpdate();
+            //}
+            //else
+            //{
+            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
+            //    coroutine = StartCoroutine(LoadNextDialogue());
+            //}
         }
 
         /// <summary>
@@ -118,7 +132,8 @@ namespace Client
         /// </summary>
         void InitNewEvent()
         {
-            EventManager.Instance.nowEventData = EventManager.Instance.EventQueue.Dequeue();
+            EventData dequeued = EventManager.Instance.EventQueue.Dequeue();
+            EventManager.Instance.nowEventData = new EventData(dequeued);
             startingID = EventManager.Instance.nowEventData.eventScripts.Keys.Min();
             nowEventScriptID = startingID;
 

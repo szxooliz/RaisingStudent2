@@ -110,7 +110,7 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
-            if (coroutine != null) // 타이핑 애니메이션 중인 경우에
+            if(Util.nowTexting)
             {
                 StopCoroutine(coroutine);
                 coroutine = null;
@@ -144,6 +144,40 @@ namespace Client
                     EventManager.Instance.CheckEvent();
                 }
             }
+            //if (coroutine != null) // 타이핑 애니메이션 중인 경우에
+            //{
+            //    StopCoroutine(coroutine);
+            //    coroutine = null;
+
+            //    // 텍스트 전체 보여주기
+            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
+            //    {
+            //        charLine.maxVisibleCharacters = charLine.text.Length;
+            //        charLine.ForceMeshUpdate();
+            //    }
+            //    else if (GetGameObject((int)GameObjects.Activity2).activeSelf)
+            //    {
+            //        line.maxVisibleCharacters = line.text.Length;
+            //    }
+            //}
+            //else
+            //{
+            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
+
+            //    // 다음 단계로 넘어가기
+            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
+            //    {
+            //        GetGameObject((int)GameObjects.Activity2).SetActive(true);
+            //        GetGameObject((int)GameObjects.Activity1).SetActive(false);
+
+            //        coroutine = StartCoroutine(ShowResult2());
+            //    }
+            //    else // 메인으로 돌아가기
+            //    {
+            //        GameManager.Instance.NextTurn();
+            //        EventManager.Instance.CheckEvent();
+            //    }
+            //}
         }
 
         /// <summary>

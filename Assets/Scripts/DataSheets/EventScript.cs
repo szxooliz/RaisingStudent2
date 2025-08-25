@@ -22,8 +22,22 @@ public long index; // 스크립트 넘버
 		public SystemEnum.eBranchType BranchType; // 분기타입
 		public long BranchIndex; // 분기인덱스
 		public string Background; // 배경 설정
-		
 
+        public EventScript Clone()
+        {
+            return new EventScript
+            {
+                index = this.index,
+                EventNum = this.EventNum,
+                Character = this.Character,
+                Line = this.Line,
+                Face = this.Face,
+                NameTag = this.NameTag,
+                BranchType = this.BranchType,
+                BranchIndex = this.BranchIndex,
+                Background = this.Background
+            };
+        }
         public override Dictionary<long, SheetData> LoadData()
         {
             var dataList = new Dictionary<long, SheetData>();
