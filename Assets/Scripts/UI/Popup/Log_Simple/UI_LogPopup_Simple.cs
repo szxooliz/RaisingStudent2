@@ -31,7 +31,6 @@ namespace Client
             BindButton();
             StartCoroutine(ScrollToBottomDelayed());      
         }
-
         void BindButton()
         {
             BindEvent(Panel, OnClickPanel);
@@ -53,7 +52,16 @@ namespace Client
         {
             ShowMonthandTerm();
             InitLog();
+            // OnEnable 직후에는 아직 레이아웃이 계산 안 된 경우가 많아서
+            // 한 프레임 기다렸다가 적용하는 게 안정적임
+            StartCoroutine(ScrollToBottomNextFrame());
         }
+        private IEnumerator ScrollToBottomNextFrame()
+        {
+            yield return null; // 한 프레임 대기
+            scrollRect.verticalNormalizedPosition = 0f; // 바닥
+        }
+
 
         private void InitLog()
         {

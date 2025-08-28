@@ -87,9 +87,7 @@ namespace Client
         {
             Debug.Log("타이틀로 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
-
-            // 타이틀로 돌아가기
-            // LoadTitleScreen();
+            DataManager.Instance.GoHome();
 
             ClosePopupUI();
             SceneManager.LoadScene("TitleScene");

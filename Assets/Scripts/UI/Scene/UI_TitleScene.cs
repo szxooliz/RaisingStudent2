@@ -23,6 +23,15 @@ namespace Client
 
             BindButton();
             SoundManager.Instance.Play(eSound.BGM_Main);
+        }
+        private void OnEnable()
+        {
+            if (!IsExistSaveDatas())
+            {
+                Debug.LogError("세이브 데이터 없음. 새로하기 ㄱㄱ");
+                GetButton((int)Buttons.BTN_Continue).interactable = false;
+            }
+            else GetButton((int)Buttons.BTN_Continue).interactable = true;
 
         }
 

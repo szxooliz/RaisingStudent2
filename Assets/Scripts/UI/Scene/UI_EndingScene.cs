@@ -12,7 +12,7 @@ namespace Client
     {
         enum Buttons
         {
-            BTN_Menu, BTN_Log,
+            BTN_Menu, BTN_Log, BTN_Schedule
         }
 
         enum Images
@@ -58,6 +58,7 @@ namespace Client
             LoadScript();
             LoadIllustration();
             LoadNextScript();
+            GetButton((int)Buttons.BTN_Schedule).interactable = false;
         }
 
         void BindButton()
@@ -70,31 +71,17 @@ namespace Client
         void OnClickMenuBtn(PointerEventData evt)
         {
             Debug.Log("메뉴 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_MenuPopup>();
         }
 
         void OnClickLogBtn(PointerEventData evt)
         {
             Debug.Log("로그 버튼 클릭");
+            SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_LogPopup_Simple>();
         }
         #endregion
-
-        /// <summary>
-        /// 가장 최근에 Add된 엔딩의 인덱스를 불러와 저장함 
-        /// </summary>
-        //public int GetLatestEndingIndex()
-        //{
-        //    var list = DataManager.Instance.persistentData.endingDict;
-        //    if (list.Count == 0)
-        //    {
-        //        Debug.LogWarning("엔딩 리스트가 비어 있습니다.");
-        //        return -1;
-        //    }
-        //    var lastEndingNum = (int)list[list.Count - 1].value.endingName;
-
-        //    return lastEndingNum;
-        //}
 
         /// <summary>
         /// 오브젝트에서 포인터를 누르고 뗄 때 호출됨

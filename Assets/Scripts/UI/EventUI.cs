@@ -28,7 +28,7 @@ namespace Client
         }
         enum Images
         {
-            IMG_Background, IMG_CharFace, IMG_NameTag, //IMG_Black
+            IMG_Background, IMG_CharFace, IMG_NameTag
         }
         enum GameObjects
         {
@@ -111,7 +111,6 @@ namespace Client
             else
             {
                 InitNewEvent();
-                //coroutine = StartCoroutine(LoadNextDialogue());
                 StartCoroutine(StartNewEvent());
             }
         }
@@ -150,7 +149,7 @@ namespace Client
         {
             yield return StartCoroutine(FadeBlackImage());
 
-            yield return coroutine = StartCoroutine(LoadNextDialogue());
+            coroutine = StartCoroutine(LoadNextDialogue());
         }
 
         IEnumerator LoadNextDialogue()

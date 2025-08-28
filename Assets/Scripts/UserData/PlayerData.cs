@@ -27,6 +27,8 @@ namespace Client
             {
                 if (_currentStatus != value)
                 {
+                    Debug.Log($"CurrrentState 변경 감지 : {_currentStatus} -> {value}");
+
                     _currentStatus = value;
                     OnStatusChanged?.Invoke(this, EventArgs.Empty);
                 }

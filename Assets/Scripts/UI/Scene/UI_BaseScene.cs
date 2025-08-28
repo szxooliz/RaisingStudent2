@@ -21,13 +21,10 @@ namespace Client
         }
         enum Images
         {
-            IMG_Status, //IMG_Black
+            IMG_Status
         }
 
         private string spritePath = "Sprites/UI/Status/Status_";
-        private Image blackImage;
-        private float duration = 0.5f;
-        private bool isLogButtonInteractable = true;
         public override void Init()
         {
             base.Init();
@@ -37,8 +34,6 @@ namespace Client
 
             BindButton();
 
-            GameManager.Instance.OnActivity += SetButtonOnOff;
-            GameManager.Instance.OnSelection += SetScheduleOnOff;
             DataManager.Instance.playerData.OnStatusChanged += OnStatusChanged;
             EventManager.Instance.OnEventStart += ShowEventName;
         }
@@ -50,8 +45,9 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Log).gameObject, OnClickLogBtn);
         }
 
-        private void Start()
+        private void OnEnable()
         {
+            GameManager.Instance.NextMonthandTerm();
             UpdateTermUI();
             UpdateTurnUI();
         }
@@ -59,29 +55,24 @@ namespace Client
         private void OnDestroy()
         {
             DataManager.Instance.playerData.OnStatusChanged -= OnStatusChanged;
-            GameManager.Instance.OnActivity -= SetButtonOnOff;
-            GameManager.Instance.OnSelection -= SetScheduleOnOff;
             EventManager.Instance.OnEventStart -= ShowEventName;
         }
 
         #region 버튼 이벤트
         void OnClickMenuBtn(PointerEventData evt)
         {
-            Debug.Log("메뉴 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_MenuPopup>();
         }
 
         void OnClickScheduleBtn(PointerEventData evt)
         {
-            Debug.Log("학사 일정 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_SchedulePopup>();
         }
 
         void OnClickLogBtn(PointerEventData evt)
         {
-            //Debug.Log("로그 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_LogPopup_Simple>();
         }
@@ -114,23 +105,6 @@ namespace Client
 
             img.sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
-
-        // TODO : 상황에 따른 로그 버튼 활성/비활성 함수 만들기 - 반투명 이미지를 위에 붙여서 활성화
-        // 활동 때, 이벤트 마지막에 스탯 변경될 때 비활성화
-        void SetButtonOnOff()
-        {
-            isLogButtonInteractable = !isLogButtonInteractable;
-            // isLogButtonInteractable값과 반대로 버튼 활성화 설정, 그리고 그 반대값 넣기
-            GetButton((int)Buttons.BTN_Log).interactable = !isLogButtonInteractable;
-            GetButton((int)Buttons.BTN_Schedule).interactable = !isLogButtonInteractable;
-        }
-        void SetScheduleOnOff()
-        {
-            isLogButtonInteractable = !isLogButtonInteractable;
-            // isLogButtonInteractable값과 반대로 버튼 활성화 설정, 그리고 그 반대값 넣기
-            GetButton((int)Buttons.BTN_Schedule).interactable = !isLogButtonInteractable;
-        }
-
         /// 학사 일정 표시된 주요 이벤트까지 남은 턴 표시
         /// </summary>
         void UpdateTurnUI()

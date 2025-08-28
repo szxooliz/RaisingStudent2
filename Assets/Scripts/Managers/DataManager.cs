@@ -298,6 +298,10 @@ namespace Client
             playerData = new PlayerData();
         }
 
+        public void GoHome()
+        {
+            playerData.CurrentStatus = eStatus.Main;
+        }
         /// <summary> 캐싱된 스프라이트 로드 / 반환 </summary>
         public Sprite GetOrLoadSprite(string _path)
         {
