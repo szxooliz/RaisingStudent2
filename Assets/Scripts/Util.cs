@@ -72,37 +72,62 @@ namespace Client
         public static IEnumerator LoadTextOneByOne(string inputTextString, TMPro.TMP_Text inputTextUI, float eachTime = 0.05f, bool canClickSkip = true)
         {
             nowTexting = true;
-            float miniTimer = 0f; //타이머
-            float currentTargetNumber = 0f; // 해당 Time에 출력을 목표로 하는 최소 글자 수
-            int currentNumber = 0; // 해당 Time에 출력중인 글자 수
-            string displayedText = "";
-            StringBuilder builder = new StringBuilder(displayedText);
-            while (currentTargetNumber < inputTextString.Length)
+            inputTextUI.text = "";
+            int length = inputTextString.Length;
+            StringBuilder builder = new StringBuilder();
+
+            bool skipRequested = false;
+
+            // 1) 한 글자씩 출력
+            for (int i = 0; i < length; i++)
             {
-                while (currentNumber < currentTargetNumber)
-                { // 목표 글자수까지 출력
-                  //displayedText += inputTextString.Substring(currentNumber,1);
-                    builder.Append(inputTextString.Substring(currentNumber, 1));
-                    currentNumber++;
-                }
-                //inputTextUI.text = displayedText;
+                builder.Append(inputTextString[i]);
                 inputTextUI.text = builder.ToString();
-                yield return null;
-                miniTimer += Time.deltaTime;
-                currentTargetNumber = miniTimer / eachTime;
-                if ((Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space)) && canClickSkip)
+
+                float timer = 0f;
+                while (timer < eachTime)
                 {
-                    break;
+                    // 첫 번째 클릭(혹은 클릭 홀드) 감지
+                    if (canClickSkip &&
+                        (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)))
+                    {
+                        skipRequested = true;
+                        break;
+                    }
+                    timer += Time.deltaTime;
+                    yield return null;
                 }
+
+                if (skipRequested)
+                    break;
             }
-            while (currentNumber < inputTextString.Length)
-            { // 목표 글자수까지 출력
-                builder.Append(inputTextString.Substring(currentNumber, 1));
-                currentNumber++;
+
+            // 2) 스킵 요청이 들어왔으면 즉시 전체 노출
+            if (skipRequested)
+            {
+                inputTextUI.text = inputTextString;
+
+                // 3) 버튼을 완전히 뗄 때까지 대기 (Hold→Release 분리)
+                yield return new WaitUntil(() =>
+                    !Input.GetMouseButton(0) && !Input.GetKey(KeyCode.Space)
+                );
+
+                // 4) Release 이후, 진짜 다음 클릭(또 누름)까지 대기
+                yield return new WaitUntil(() =>
+                    Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)
+                );
             }
-            inputTextUI.text = builder.ToString();
-            yield return null;
+            else
+            {
+                // 자연스럽게 다 찍혔다면 이미 전부 노출된 상태
+                inputTextUI.text = inputTextString;
+            }
+
+            // 5) 이제야 종료 플래그 해제
             nowTexting = false;
+            yield return null;
+
+
         }
 
         #region 일러스트 경로 반환 함수 오버로드

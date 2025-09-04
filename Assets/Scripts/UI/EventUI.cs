@@ -62,18 +62,26 @@ namespace Client
 
         public void OnPointerClick(PointerEventData evt)
         {
-            // 다 보이긴 하는데,, 보이고 바로 다음 LoadNextDialogue이 실행되어버림
+            // 텍스트 입력 중(또는 첫 번째 클릭 후 전체 노출 대기 중)이라면 무시
             if (Util.nowTexting)
-            {
-                StopCoroutine(coroutine);
-                coroutine = null;
-                GetText((int)Texts.TMP_CharLine).ForceMeshUpdate();
-            }
-            else
-            {
-                SoundManager.Instance.Play(eSound.SFX_DialogClick);
-                coroutine = StartCoroutine(LoadNextDialogue());
-            }
+                return;
+
+            // nowTexting == false가 된 시점에만 다음 다이얼로그 진행
+            SoundManager.Instance.Play(eSound.SFX_DialogClick);
+            coroutine = StartCoroutine(LoadNextDialogue());
+
+            //// 다 보이긴 하는데,, 보이고 바로 다음 LoadNextDialogue이 실행되어버림
+            //if (Util.nowTexting)
+            //{
+            //    StopCoroutine(coroutine);
+            //    coroutine = null;
+            //    GetText((int)Texts.TMP_CharLine).ForceMeshUpdate();
+            //}
+            //else
+            //{
+            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
+            //    coroutine = StartCoroutine(LoadNextDialogue());
+            //}
 
             //if (coroutine != null)
             //{

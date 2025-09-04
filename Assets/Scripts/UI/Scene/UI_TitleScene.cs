@@ -28,7 +28,7 @@ namespace Client
         {
             if (!IsExistSaveDatas())
             {
-                Debug.LogError("세이브 데이터 없음. 새로하기 ㄱㄱ");
+                Debug.LogWarning("세이브 데이터 없음. 새로하기 ㄱㄱ");
                 GetButton((int)Buttons.BTN_Continue).interactable = false;
             }
             else
