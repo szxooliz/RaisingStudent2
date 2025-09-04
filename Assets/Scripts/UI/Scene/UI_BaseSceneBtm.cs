@@ -97,11 +97,12 @@ namespace Client
             // 육성 상태일 경우 스탯, 스트레스 업데이트
             if (index == (int)UIs.MainUI)
             {
+                DataManager.Instance.ApplyTurnStat();
+
                 ChangeBackGround("bg_school");
                 UpdateStatUIs();
                 UpdateStressUIs();
                 StartCoroutine(conversation.ResetBubble());
-                GameManager.Instance.OnActivity?.Invoke();
             }
         }
 

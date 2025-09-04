@@ -31,7 +31,10 @@ namespace Client
                 Debug.LogError("세이브 데이터 없음. 새로하기 ㄱㄱ");
                 GetButton((int)Buttons.BTN_Continue).interactable = false;
             }
-            else GetButton((int)Buttons.BTN_Continue).interactable = true;
+            else
+            {
+                GetButton((int)Buttons.BTN_Continue).interactable = true;
+            }
 
         }
 
@@ -41,7 +44,7 @@ namespace Client
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.BTN_NewGame).gameObject, OnClickNewGameBtn);
-            BindEvent(GetButton((int)Buttons.BTN_Continue).gameObject, OnClickContinueBtn);
+            GetButton((int)Buttons.BTN_Continue).onClick.AddListener(() => OnClickContinueBtn()); 
             BindEvent(GetButton((int)Buttons.BTN_EndingList).gameObject, OnClickEndingListBtn);
             BindEvent(GetButton((int)Buttons.BTN_Settings).gameObject, OnClickSettingsBtn);
         }
@@ -63,7 +66,7 @@ namespace Client
                 SceneManager.LoadScene("BaseScene");
             }
         }
-        void OnClickContinueBtn(PointerEventData evt)
+        void OnClickContinueBtn()
         {
             Debug.Log("이어 하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);

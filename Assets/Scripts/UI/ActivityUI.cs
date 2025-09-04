@@ -89,10 +89,9 @@ namespace Client
 
             if (DataManager.Instance.playerData.CurrentStatus == eStatus.Activity)
             {
-                GameManager.Instance.OnActivity?.Invoke();
                 coroutine = StartCoroutine(ShowResult1());
                 charName.text = Util.GetCharNameKor(DataManager.Instance.playerData.CharName);
-                UpdateStatUIs();
+                //UpdateStatUIs();
             }
         }
 
@@ -104,10 +103,7 @@ namespace Client
             GetGameObject((int)GameObjects.Activity2).SetActive(false);
         }
 
-        /// <summary>
-        /// 오브젝트에서 포인터를 누르고 뗄 때 호출됨
-        /// </summary>
-        /// <param name="evt"></param>
+        /// <summary> 오브젝트에서 포인터를 누르고 뗄 때 호출됨 </summary>
         public void OnPointerClick(PointerEventData evt)
         {
             if(Util.nowTexting)
@@ -180,14 +176,13 @@ namespace Client
             //}
         }
 
-        /// <summary>
-        /// 스탯 UI를 업데이트
-        /// </summary>
+        /// <summary> 스탯 UI를 업데이트, 턴 실행 전 스탯과 해당 턴에 얻은 스탯들의 합으로 표현 </summary>
         void UpdateStatUIs()
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = DataManager.Instance.playerData.StatsAmounts[i].ToString();
+                // 이거 타이밍이..
+                GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempResultStat[i]).ToString();
             }
         }
 
@@ -229,10 +224,7 @@ namespace Client
 
         }
 
-        /// <summary>
-        /// 활동 결과 1 화면 - 캐릭터 대사
-        /// </summary>
-        /// <returns></returns>
+        /// <summary> 활동 결과 1 화면 - 캐릭터 대사 </summary>
         IEnumerator ShowResult1()
         {
             string str = null;
@@ -252,10 +244,8 @@ namespace Client
             yield return null;
         }
 
-        /// <summary>
-        /// 활동 결과 2 화면 - 활동 결과
-        /// </summary>
-        /// <returns></returns>
+        /// <summary> 활동 결과 2 화면 - 활동 결과 </summary>
+
         IEnumerator ShowResult2()
         {
             GetGameObject((int)GameObjects.Activity2).SetActive(true);
@@ -272,6 +262,7 @@ namespace Client
             else
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
+                StoreResultStat(GameManager.Instance.activityData.statNames, GameManager.Instance.activityData.statValues);
                 UpdateStatUIs();
 
                 sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
@@ -286,5 +277,20 @@ namespace Client
 
             yield return null;
         }
+
+        /// <summary> 저장 전 스탯 증가량 저장 </summary>
+        void StoreResultStat(List<eStatName> sname, List<int> svalue)
+        {
+            for (int i = 0; i < sname.Count; i++)
+            {
+                eStatName es = sname[i];
+                int sv = svalue[i];
+                Debug.Log($"활동 결과 저장 {es} {sv}");
+
+                GameManager.Instance.tempResultStat[(int)es] += sv;
+
+            }
+        }
+
     }
 }

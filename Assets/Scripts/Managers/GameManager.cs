@@ -47,9 +47,7 @@ namespace Client
 
         #endregion
 
-        public Action OnActivity; // 활동때 로그버튼 onoff
-        public Action OnSelection; // 이벤트 선택지때 스케줄 확인 버튼 onoff
-
+        public long[] tempResultStat { get; } = new long[4];
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
         public eEndingName endingName;
         static GameManager s_instance;
@@ -61,7 +59,6 @@ namespace Client
             Init();
             DataManager.Instance.PreDataMapping();
         }
-
 
         static void Init()
         {
@@ -84,11 +81,7 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 활동별 실행 내용
-        /// </summary>
-        /// <param name="actType"></param>
-        /// <returns></returns>
+        /// <summary> 활동별 실행 내용  </summary>
         public void StartActivity(eActivityType actType)
         {
             if (actType == eActivityType.MaxCount) 
@@ -203,7 +196,7 @@ namespace Client
                 activityData.statValues[i] = value;
 
                 // 스탯 증감 처리
-                DataManager.Instance.playerData.StatsAmounts[(int)activityData.statNames[i]] += value;
+                //DataManager.Instance.playerData.StatsAmounts[(int)activityData.statNames[i]] += value;
             }
         }
 
@@ -222,6 +215,8 @@ namespace Client
 
         public void NextMonthandTerm()
         {
+            Debug.Log($"<color=green>턴 계산 전: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
+
             // 이전 턴에 하순이었을 때 다음 달로 넘어감
             if (DataManager.Instance.playerData.CurrentThird == eThirds.Third)
             {
@@ -233,6 +228,7 @@ namespace Client
             // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
             DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
 
+            Debug.Log($"<color=green>턴 계산 후: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
         }
 
         public void CheckEndingTurn()
@@ -317,8 +313,6 @@ namespace Client
         /// <summary> 여름 기간에 해당되면 true 반환 </summary>
         public bool IsSummerTerm()
         {
-            Debug.Log($"현재 이미지 확인.. 현재 턴: {DataManager.Instance.playerData.CurrentTurn} 현재 달: {DataManager.Instance.playerData.CurrentMonth}");
-
             return DataManager.Instance.playerData.CurrentMonth > eMonths.Apr && DataManager.Instance.playerData.CurrentMonth < eMonths.Nov;
         }
 

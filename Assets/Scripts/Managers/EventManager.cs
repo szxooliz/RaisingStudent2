@@ -20,6 +20,7 @@ namespace Client
         public Queue<EventTitle> EventIDQueue { get; } = new();
         public Queue<EventData> EventQueue { get; } = new();
 
+        public bool IsEventAllFinished = false;
         public EventData nowEventData;
         public Action OnEventStart;
 
@@ -39,8 +40,6 @@ namespace Client
         {
             EventIDQueue.Clear();
             EventQueue.Clear();
-            //nowEventData.
-
         }
 
         /// <summary> 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기 </summary>
@@ -242,11 +241,14 @@ namespace Client
         {
             EnqueueEventID();
             LoadEventData();
-            if (EventQueue.Count > 0) 
+            if (EventQueue.Count > 0)
+            {
+                IsEventAllFinished = false;
                 StartEventPhase();
+            }
             else 
             {
-                //GameManager.Instance.NextTurn();
+                IsEventAllFinished = true;
                 DataManager.Instance.playerData.CurrentStatus = eStatus.Main; 
             }
         }

@@ -89,6 +89,7 @@ namespace Client
         /// <param name="evt"></param>
         public void OnPointerClick(PointerEventData evt)
         {
+            SoundManager.Instance.Play(eSound.SFX_DialogClick);
             LoadNextScript();
         }
 

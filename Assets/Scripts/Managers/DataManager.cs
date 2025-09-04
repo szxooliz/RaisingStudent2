@@ -300,7 +300,29 @@ namespace Client
 
         public void GoHome()
         {
+            // 이벤트가 없는 경우, 활동 하다가 돌아가는 경우에 실행되지 않도록 처리해야 함
+            if (playerData.CurrentStatus == eStatus.Event)
+            {
+                if (!EventManager.Instance.IsEventAllFinished)
+                {
+                    Debug.Log("이벤트 전부 안 보고 끝내서 턴 -1");
+                    playerData.CurrentTurn -= 1;
+                }
+            }
+            Array.Clear(GameManager.Instance.tempResultStat, 0, GameManager.Instance.tempResultStat.Length);
             playerData.CurrentStatus = eStatus.Main;
+        }
+
+        /// <summary> 턴 종료 후 스탯을 실제로 적용 </summary>
+        public void ApplyTurnStat()
+        {
+
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
+            {
+                Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempResultStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempResultStat[i]}");
+                playerData.StatsAmounts[i] += (int)GameManager.Instance.tempResultStat[i];
+            }
+            Array.Clear(GameManager.Instance.tempResultStat, 0, GameManager.Instance.tempResultStat.Length);
         }
         /// <summary> 캐싱된 스프라이트 로드 / 반환 </summary>
         public Sprite GetOrLoadSprite(string _path)
