@@ -235,8 +235,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 165,8,Comsoon,"와, 벌써 사람이 이렇게나…!
 부스 먼저 구경할래요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 166,8,Narration,잠시 후...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
-167,8,Comsoon,"팔로우 하면 경품 뽑기를 할 수 있다고요?
-헉, 1등상은 콘솔 게임기!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+167,8,Comsoon,"팔로우 하면 경품 뽑기를 할 수 있다고요? 헉, 1등상은 콘솔 게임기!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 168,8,Narration,…,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 169,8,Comsoon,"직접 만드신 거라고요?
 이걸 전부 다요?!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -268,8 +267,7 @@ long,long,string,string,string,bool,eBranchType,long,string,,,,,,,,,,,,,,,,,,
 11월 중순… 시험공부도 미리 해 둬야겠어요!",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 188,9,Comsoon,"역시 그렇죠…
 KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-189,9,Comsoon,"시험공부도 해야 하고, 과제도 해야 하고…
-내년에 가면 되겠죠…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
+189,9,Comsoon,"시험공부도 해야 하고, 과제도 해야 하고… 내년에 가면 되겠죠…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 190,10,Comsoon,몇 시지…,basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 191,10,Comsoon,"헉, 잘못하면 지각하겠다!
 빨리 시험 보러 가야지!",basic,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
@@ -529,8 +527,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 여기 앉아!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1117,107,Narration,…,none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1118,107,SeniorA,"… 그럼 내가 쏘는 거니까, 다들 맛있게 먹어!",basic,TRUE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
-1119,107,Narration,"모임에서 사람들과 즐거운 시간을 보냈다!
-뭔가 잊은 것 같긴 하지만…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
+1119,107,Narration,"모임에서 사람들과 즐거운 시간을 보냈다! 뭔가 잊은 것 같긴 하지만…",none,FALSE,None,,bg_cafe,,,,,,,,,,,,,,,,,,
 1120,107,Comsoon,과제… 해야겠지…,sad,TRUE,None,,bg_home,,,,,,,,,,,,,,,,,,
 1121,107,Narration,다음 날...,none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1122,107,FriendA,컴순 하이! 너 어제 모임 왜 안 나왔어? 연락 못 본 거야?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
@@ -562,8 +559,7 @@ KTX 값도 비싸고…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 과에서 학생들에게 우산을 빌려준다고 했던 것 같은데?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1139,109,Comsoon,"그러니까, 뭐더라…
 과 사무실에 가서…",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
-1140,109,Narration,"기억했던 대로 과에서 우산을 빌려주었고,
-다행히 우산을 쓰고 갈 수 있었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
+1140,109,Narration,"기억했던 대로 과에서 우산을 빌려주었고, 다행히 우산을 쓰고 갈 수 있었다!",none,FALSE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1141,109,Comsoon,…여보세요?,basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
 1142,109,StudentA,"여보세요? 컴순아?
 무슨 일이야?",basic,TRUE,None,,bg_school,,,,,,,,,,,,,,,,,,
