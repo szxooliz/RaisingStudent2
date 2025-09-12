@@ -309,20 +309,28 @@ namespace Client
                     playerData.CurrentTurn -= 1;
                 }
             }
-            Array.Clear(GameManager.Instance.tempResultStat, 0, GameManager.Instance.tempResultStat.Length);
+            Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);
+            GameManager.Instance.tempStress = 0;
+            Debug.Log($"GoHome - 데이터 클리어 스탯: {GameManager.Instance.tempStat}, 스트레스: {GameManager.Instance.tempStress}");
+
+
             playerData.CurrentStatus = eStatus.Main;
         }
 
         /// <summary> 턴 종료 후 스탯을 실제로 적용 </summary>
         public void ApplyTurnStat()
         {
+            if (playerData.CurrentTurn == 0) return;
+
+            Debug.Log($"이번 턴 스트레스 결과 저장 {playerData.StressAmount} + {GameManager.Instance.tempStress} = {playerData.StressAmount + GameManager.Instance.tempStress}");
+            playerData.StressAmount += GameManager.Instance.tempStress;
 
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempResultStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempResultStat[i]}");
-                playerData.StatsAmounts[i] += (int)GameManager.Instance.tempResultStat[i];
+                Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempStat[i]}");
+                playerData.StatsAmounts[i] += (int)GameManager.Instance.tempStat[i];
             }
-            Array.Clear(GameManager.Instance.tempResultStat, 0, GameManager.Instance.tempResultStat.Length);
+            Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);
         }
         /// <summary> 캐싱된 스프라이트 로드 / 반환 </summary>
         public Sprite GetOrLoadSprite(string _path)

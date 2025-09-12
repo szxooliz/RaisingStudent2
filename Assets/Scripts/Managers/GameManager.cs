@@ -47,7 +47,9 @@ namespace Client
 
         #endregion
 
-        public long[] tempResultStat { get; } = new long[4];
+        public long[] tempStat { get; } = new long[4];
+        public float tempStress = 0;
+
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
         public eEndingName endingName;
         static GameManager s_instance;
@@ -200,11 +202,13 @@ namespace Client
             }
         }
 
-        /// <summary> 스트레스 증감 함수 </summary>
+        /// <summary> 스트레스 값 임시 변수에 적용 </summary>
         /// <param name="amount">음수: 감소</param>
         public void UpdateStress()
         {
-            DataManager.Instance.playerData.StressAmount += activityData.stressValue;
+            //DataManager.Instance.playerData.StressAmount += activityData.stressValue;
+            tempStress += activityData.stressValue;
+
         }
 
         /// <summary> 다음 턴으로 넘김 처리 </summary>
@@ -234,7 +238,8 @@ namespace Client
         public void CheckEndingTurn()
         {
             // 엔딩으로 넘어가기
-            
+            DataManager.Instance.ApplyTurnStat();
+
             endingName = CheckEnding();
             Ending ending = new Ending(endingName, DataManager.Instance.playerData);
             DataManager.Instance.persistentData.AddOrUpdateEnding(ending);
@@ -244,6 +249,7 @@ namespace Client
         /// <summary> 엔딩 계산 함수 </summary>
         public eEndingName CheckEnding()
         {
+            Debug.Log($"엔딩 계산 타이밍");
             int highStatsCount = 0;
             bool[] highStats = { false, false, false, false };
 

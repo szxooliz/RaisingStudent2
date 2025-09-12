@@ -57,9 +57,7 @@ namespace Client
 
 
 
-        /// <summary>
-        /// 버튼 바인딩
-        /// </summary>
+        /// <summary> 버튼 바인딩 </summary>
         void BindButton()
         {
             BindEvent(GetButton((int)Buttons.BTN_Rest).gameObject, OnClickRestBtn);
@@ -69,9 +67,7 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Club).gameObject, OnClickClubBtn);
         }
 
-        /// <summary>
-        /// 현재 상태에 맞추어 UI 트랜지션
-        /// </summary>
+        /// <summary> 현재 상태에 맞추어 UI 트랜지션 </summary>
         void OnStatusChanged(object sender, System.EventArgs e)
         {
             MakeTransition((int)DataManager.Instance.playerData.CurrentStatus);
@@ -230,7 +226,6 @@ namespace Client
         /// <summary>
         /// 활동 실행
         /// </summary>
-        /// <param name="actType"></param>
         public void StartActivity(eActivityType actType)
         {
             GameManager.Instance.StartActivity(actType);

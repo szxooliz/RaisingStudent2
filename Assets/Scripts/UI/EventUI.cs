@@ -24,7 +24,7 @@ namespace Client
         {
             TMP_CharLine, TMP_CharName,
             TMP_Select1, TMP_Select2,
-            TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming
+            //TMP_Inteli, TMP_Otaku, TMP_Strength, TMP_Charming
         }
         enum Images
         {
@@ -41,6 +41,9 @@ namespace Client
         private long nowEventScriptID;
         private Coroutine coroutine = null;
         private EventScript pastEventScript = null;
+
+
+        [SerializeField] TextMeshProUGUI[] TMP_Stats;
 
         [SerializeField] CanvasGroup blackCanvasGroup;
         [SerializeField] CanvasGroup otherCanvasGroup;
@@ -70,30 +73,6 @@ namespace Client
             SoundManager.Instance.Play(eSound.SFX_DialogClick);
             coroutine = StartCoroutine(LoadNextDialogue());
 
-            //// 다 보이긴 하는데,, 보이고 바로 다음 LoadNextDialogue이 실행되어버림
-            //if (Util.nowTexting)
-            //{
-            //    StopCoroutine(coroutine);
-            //    coroutine = null;
-            //    GetText((int)Texts.TMP_CharLine).ForceMeshUpdate();
-            //}
-            //else
-            //{
-            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
-            //    coroutine = StartCoroutine(LoadNextDialogue());
-            //}
-
-            //if (coroutine != null)
-            //{
-            //    StopCoroutine(coroutine);
-            //    coroutine = null;
-            //    GetText((int)Texts.TMP_CharLine).ForceMeshUpdate();
-            //}
-            //else
-            //{
-            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
-            //    coroutine = StartCoroutine(LoadNextDialogue());
-            //}
         }
 
         /// <summary>
@@ -354,9 +333,11 @@ namespace Client
 
             for (int i = 0; i < conditions.Count; i++)
             {
-                if (DataManager.Instance.playerData.StatsAmounts[i] < (int)conditions[i])
+                long stat = DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i];
+
+                if (stat < (int)conditions[i])
                 {
-                    Debug.Log($"{(eStatName)i} 스탯 : {DataManager.Instance.playerData.StatsAmounts[i]}, 스탯 기준치 : {conditions[i]}");
+                    Debug.Log($"{(eStatName)i} 스탯 : {stat}, 스탯 기준치 : {conditions[i]}");
                     result = false;
                     break;
                 }
@@ -408,7 +389,10 @@ namespace Client
             {
                 eventResult.Inteli, eventResult.Otaku, eventResult.Strength, eventResult.Charming, eventResult.StressValue
             };
+
+            // 턴 종료 전까지 임시 저장
             StoreResultStat(result);
+            GameManager.Instance.tempStress += eventResult.StressValue;
 
             StringBuilder sb = new();
             for (int i = 0; i < (int)eStatNameAll.MaxCount; i++)
@@ -430,8 +414,8 @@ namespace Client
                 }
 
                 // 실제 스탯에 반영
-                if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
-                else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
+                //if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
+                //else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
 
             }
             GetGameObject((int)GameObjects.Stats).SetActive(true);
@@ -459,7 +443,8 @@ namespace Client
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempResultStat[i]).ToString();
+                TMP_Stats[i].text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
+                Debug.Log($"이벤트 스탯 UI {eStatName.Inteli + i} 업데이트 : {(DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString()}");
             }
         }
         
@@ -470,7 +455,7 @@ namespace Client
             {
                 Debug.Log($"이벤트 결과 저장 {(eStatName)i} {result[i]}");
 
-                GameManager.Instance.tempResultStat[i] += result[i];
+                GameManager.Instance.tempStat[i] += result[i];
             }
         }
         #endregion

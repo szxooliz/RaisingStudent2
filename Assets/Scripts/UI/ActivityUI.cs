@@ -200,7 +200,7 @@ namespace Client
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
                 // 이거 타이밍이..
-                GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempResultStat[i]).ToString();
+                GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
             }
         }
 
@@ -280,7 +280,10 @@ namespace Client
             else
             {
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
+
+                // 턴 결과값 임시 저장
                 StoreResultStat(GameManager.Instance.activityData.statNames, GameManager.Instance.activityData.statValues);
+                GameManager.Instance.tempStress = GameManager.Instance.activityData.stressValue;
                 UpdateStatUIs();
 
                 sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
@@ -305,7 +308,7 @@ namespace Client
                 int sv = svalue[i];
                 Debug.Log($"활동 결과 저장 {es} {sv}");
 
-                GameManager.Instance.tempResultStat[(int)es] += sv;
+                GameManager.Instance.tempStat[(int)es] += sv;
 
             }
         }
