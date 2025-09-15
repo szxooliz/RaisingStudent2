@@ -421,7 +421,7 @@ namespace Client
             GetGameObject((int)GameObjects.Stats).SetActive(true);
             GetText((int)Texts.TMP_CharName).text = "";
 
-            UpdateStatUIs();
+            UpdateStatUIs(result);
             coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
             //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
@@ -436,11 +436,24 @@ namespace Client
             else          return "증가했다!";
         }
 
-        /// <summary>
-        /// 스탯 UI를 업데이트 - 이벤트 결과값 적용
-        /// </summary>
-        void UpdateStatUIs()
+        /// <summary> 스탯 UI를 업데이트 - 이벤트 결과값 적용 </summary>
+        void UpdateStatUIs(List<long> result)
         {
+            List<eStatName> stats = new();
+            // 설정 전 텍스트 스타일 초기화
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
+            {
+                TMP_Stats[i].fontStyle &= ~FontStyles.Bold;
+                if (result[i] > 0) stats.Add((eStatName)i);
+            }
+
+            if (stats.Count <= 0) return;
+
+            foreach (eStatName s in stats)
+            {
+                TMP_Stats[(int)s].fontStyle = FontStyles.Bold;
+            }
+
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
                 TMP_Stats[i].text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
@@ -507,6 +520,8 @@ namespace Client
             otherCanvasGroup.gameObject.SetActive(true);
 
         }
+
+
         #endregion
     }
 }

@@ -124,83 +124,28 @@ namespace Client
                 EventManager.Instance.CheckEvent();
             }
 
-            //if (Util.nowTexting)
-            //{
-            //    StopCoroutine(coroutine);
-            //    coroutine = null;
-
-            //    // 텍스트 전체 보여주기
-            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
-            //    {
-            //        charLine.maxVisibleCharacters = charLine.text.Length;
-            //        charLine.ForceMeshUpdate();
-            //    }
-            //    else if (GetGameObject((int)GameObjects.Activity2).activeSelf)
-            //    {
-            //        line.maxVisibleCharacters = line.text.Length;
-            //    }
-            //}
-            //else
-            //{
-            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
-
-            //    // 다음 단계로 넘어가기
-            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
-            //    {
-            //        GetGameObject((int)GameObjects.Activity2).SetActive(true);
-            //        GetGameObject((int)GameObjects.Activity1).SetActive(false);
-
-            //        coroutine = StartCoroutine(ShowResult2());
-            //    }
-            //    else // 메인으로 돌아가기
-            //    {
-            //        GameManager.Instance.NextTurn();
-            //        EventManager.Instance.CheckEvent();
-            //    }
-            
-            //if (coroutine != null) // 타이핑 애니메이션 중인 경우에
-            //{
-            //    StopCoroutine(coroutine);
-            //    coroutine = null;
-
-            //    // 텍스트 전체 보여주기
-            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
-            //    {
-            //        charLine.maxVisibleCharacters = charLine.text.Length;
-            //        charLine.ForceMeshUpdate();
-            //    }
-            //    else if (GetGameObject((int)GameObjects.Activity2).activeSelf)
-            //    {
-            //        line.maxVisibleCharacters = line.text.Length;
-            //    }
-            //}
-            //else
-            //{
-            //    SoundManager.Instance.Play(eSound.SFX_DialogClick);
-
-            //    // 다음 단계로 넘어가기
-            //    if (GetGameObject((int)GameObjects.Activity1).activeSelf)
-            //    {
-            //        GetGameObject((int)GameObjects.Activity2).SetActive(true);
-            //        GetGameObject((int)GameObjects.Activity1).SetActive(false);
-
-            //        coroutine = StartCoroutine(ShowResult2());
-            //    }
-            //    else // 메인으로 돌아가기
-            //    {
-            //        GameManager.Instance.NextTurn();
-            //        EventManager.Instance.CheckEvent();
-            //    }
-            //}
         }
 
         /// <summary> 스탯 UI를 업데이트, 턴 실행 전 스탯과 해당 턴에 얻은 스탯들의 합으로 표현 </summary>
-        void UpdateStatUIs()
+        void UpdateStatUIs(List<eStatName> result)
         {
+            // 설정 전 텍스트 스타일 초기화
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                // 이거 타이밍이..
+                GetText((int)eStatName.Inteli + i).fontStyle &= ~TMPro.FontStyles.Bold;
+            }
+
+            if (result.Count <= 0) return;
+
+            foreach (eStatName s in result)
+            {
+                GetText((int)s).fontStyle = TMPro.FontStyles.Bold;
+            }
+
+            for (int i = 0; i < (int)eStatName.MaxCount; i++)
+            {
                 GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
+                Debug.Log($"활도 스탯 UI {eStatName.Inteli + i} 업데이트 : {(DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString()}");
             }
         }
 
@@ -284,7 +229,7 @@ namespace Client
                 // 턴 결과값 임시 저장
                 StoreResultStat(GameManager.Instance.activityData.statNames, GameManager.Instance.activityData.statValues);
                 GameManager.Instance.tempStress = GameManager.Instance.activityData.stressValue;
-                UpdateStatUIs();
+                UpdateStatUIs(GameManager.Instance.activityData.statNames);
 
                 sb.AppendLine($"{GetResultTypeKor(GameManager.Instance.activityData.resultType)}");
                 sb.AppendLine($"{GetStatNameKor(GameManager.Instance.activityData.statNames[0])}이 {GameManager.Instance.activityData.statValues[0]} 상승했다.");
