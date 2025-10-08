@@ -320,6 +320,7 @@ namespace Client
         /// <summary> 턴 종료 후 스탯을 실제로 적용 </summary>
         public void ApplyTurnStat()
         {
+            // 스트레스, 스탯 저장
             if (playerData.CurrentTurn == 0) return;
 
             Debug.Log($"이번 턴 스트레스 결과 저장 {playerData.StressAmount} + {GameManager.Instance.tempStress} = {playerData.StressAmount + GameManager.Instance.tempStress}");

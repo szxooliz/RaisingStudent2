@@ -219,20 +219,20 @@ namespace Client
 
         public void NextMonthandTerm()
         {
-            Debug.Log($"<color=green>턴 계산 전: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
+            //Debug.Log($"<color=green>턴 계산 전: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
 
-            // 이전 턴에 하순이었을 때 다음 달로 넘어감
-            if (DataManager.Instance.playerData.CurrentThird == eThirds.Third)
-            {
-                if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
-                    DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
-                else DataManager.Instance.playerData.CurrentMonth++;
-            }
+            //// 이전 턴에 하순이었을 때 다음 달로 넘어감
+            //if (DataManager.Instance.playerData.CurrentThird == eThirds.Third)
+            //{
+            //    if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
+            //        DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
+            //    else DataManager.Instance.playerData.CurrentMonth++;
+            //}
 
-            // 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
+            //// 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
+            //DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
 
-            Debug.Log($"<color=green>턴 계산 후: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
+            Debug.Log($"<color=green>턴 참조: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
         }
 
         public void CheckEndingTurn()
@@ -319,6 +319,7 @@ namespace Client
         /// <summary> 여름 기간에 해당되면 true 반환 </summary>
         public bool IsSummerTerm()
         {
+            // 시발
             return DataManager.Instance.playerData.CurrentMonth > eMonths.Apr && DataManager.Instance.playerData.CurrentMonth < eMonths.Nov;
         }
 

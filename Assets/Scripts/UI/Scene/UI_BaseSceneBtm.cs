@@ -94,6 +94,7 @@ namespace Client
             if (index == (int)UIs.MainUI)
             {
                 DataManager.Instance.ApplyTurnStat();
+                EventManager.Instance.ApplyEvents();
 
                 ChangeBackGround("bg_school");
                 UpdateStatUIs();

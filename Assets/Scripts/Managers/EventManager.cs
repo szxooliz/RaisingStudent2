@@ -21,6 +21,8 @@ namespace Client
         public Queue<EventData> EventQueue { get; } = new();
 
         public bool IsEventAllFinished = false;
+        public EventTitle AppliedEvent; // 참가 여부 결정하는 이벤트 
+        public bool IsEventApplied = false; // 이벤트 참가 여부 저장, 턴 종료 후 적용 
         public EventData nowEventData;
         public Action OnEventStart;
 
@@ -40,6 +42,7 @@ namespace Client
         {
             EventIDQueue.Clear();
             EventQueue.Clear();
+            SaveTempApplyEvent(null, false);
         }
 
         /// <summary> 등장 조건에 맞춰 실행해야 하는 이벤트 인덱스 가져오기 </summary>
@@ -291,20 +294,39 @@ namespace Client
             }
         }
 
+        public void SaveTempApplyEvent(EventTitle eventTitle, bool isEnroll)
+        {
+            AppliedEvent = eventTitle;
+            IsEventApplied = isEnroll;
+        }
         /// <summary> 이벤트 참가 여부 저장 </summary>
         /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
-        public void ApplyEvents(bool isEnroll)
+        public void ApplyEvents()
         {
+            /*
             // 참가 여부 선택이 진행되어야 하는 이벤트에서만 실행
-            if (nowEventData.eventTitle.ApplyOption)
+            //if (nowEventData.eventTitle.ApplyOption)
+            //{
+            //    long eventID = nowEventData.eventTitle.ApplyEvent;
+            //    DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
+
+            //    if (!isEnroll) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록
+
+            //    Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
+            //}*/
+            if (AppliedEvent == null) return;
+            if (AppliedEvent.ApplyOption)
             {
-                long eventID = nowEventData.eventTitle.ApplyEvent;
-                DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
+                long eventID = AppliedEvent.ApplyEvent;
+                if (!DataManager.Instance.playerData.AppliedEventsDict.ContainsKey(eventID)) return;
 
-                if (!isEnroll) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록
+                DataManager.Instance.playerData.AppliedEventsDict.TryAdd(eventID, IsEventApplied);
 
-                Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
+                if (!IsEventApplied) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록
+
+                Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {IsEventApplied}로 함");
             }
+
         }
 
         /// <summary> 엔딩 이력서에 표시될 이벤트 진행 결과 저장 </summary>

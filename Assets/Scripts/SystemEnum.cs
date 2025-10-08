@@ -55,7 +55,7 @@ namespace Client
 
         public enum eThirds
         {
-            First, Second, Third
+            First = 1, Second = 2, Third = 0
         }
         public enum eThirdsKor
         {

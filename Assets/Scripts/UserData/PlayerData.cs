@@ -10,8 +10,8 @@ namespace Client
     {
         public string CharName { get; private set; } = "Comsoon";  // 프로토타입
         public int CurrentTurn { get; set; } = 0;                  // 턴 0~24 - 0: 인트로 이벤트용
-        public eMonths CurrentMonth { get; set; } = eMonths.Mar;   // n월 3-6/9-12
-        public eThirds CurrentThird { get; set; } = eThirds.First; // a순 상중하
+        public eMonths CurrentMonth => GetMonth();   // n월 3-6/9-12
+        public eThirds CurrentThird => GetTerm(); // a순 상중하
 
         public List<(string title, string record)> EventRecordList;
         public List<(string title, string record)> EventRecordList_etc;
@@ -41,6 +41,19 @@ namespace Client
         {
             get => _stressAmount;
             set => _stressAmount = Mathf.Clamp(value, 0, 100);
+        }
+
+        eMonths GetMonth()
+        {
+            int m = CurrentTurn / 3;
+            if (m < 4) return (eMonths)(m + 3);
+            else return (eMonths)(m + 5);
+        }
+
+        eThirds GetTerm()
+        {
+            int l = CurrentTurn % 3;
+            return (eThirds)l;
         }
         public PlayerData() 
         {

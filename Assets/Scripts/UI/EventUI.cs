@@ -267,21 +267,27 @@ namespace Client
 
             nowEventScriptID = isFirst ? selectScript.MoveLine1 : selectScript.MoveLine2;
             string selection = isFirst ? selectScript.Selection1 : selectScript.Selection2;
-
+            EventTitle nowTitle = EventManager.Instance.nowEventData.eventTitle;
             //UnitLog unitLog = new UnitLog(eLineType.NARRATION, selection);
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
             LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.NARRATION, selection);
 
+            /* 이것도 저장했다가 턴 종료되면 추가해야 함*/
 
             if (isFirst) // 첫 번째 버튼이면
             {
+                // 이벤트 등록도 나중에
                 EventManager.Instance.DeleteOtherScripts(selectScript.MoveLine2);
-                EventManager.Instance.ApplyEvents(true);
+                EventManager.Instance.SaveTempApplyEvent(nowTitle, true);
+
+                //EventManager.Instance.ApplyEvents(true);
             }
             else // 두 번째 버튼이면
             {
                 EventManager.Instance.DeleteOtherScripts(selectScript.MoveLine1, selectScript.MoveLine2);
-                EventManager.Instance.ApplyEvents(false);
+                EventManager.Instance.SaveTempApplyEvent(nowTitle, false);
+
+                //EventManager.Instance.ApplyEvents(false);
             }
 
             // 선택지 결과 스크립트 띄우기
@@ -418,7 +424,11 @@ namespace Client
                 //else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
 
             }
-            GetGameObject((int)GameObjects.Stats).SetActive(true);
+
+            bool isOnlyStress = eventResult.StressValue > 0 && (eventResult.Inteli + eventResult.Otaku + eventResult.Strength + eventResult.Charming == 0);
+            if (!isOnlyStress)
+                GetGameObject((int)GameObjects.Stats).SetActive(true);
+
             GetText((int)Texts.TMP_CharName).text = "";
 
             UpdateStatUIs(result);
