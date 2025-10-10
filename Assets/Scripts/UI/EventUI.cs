@@ -75,9 +75,7 @@ namespace Client
 
         }
 
-        /// <summary>
-        /// 대기하고 있는 이벤트 확인 후 실행
-        /// </summary>
+        /// <summary> 대기하고 있는 이벤트 확인 후 실행 </summary>
         void CheckAndShowEvent()
         {
             bool isFinished = DataManager.Instance.playerData.WatchedEventIDList.Contains(12);
@@ -113,9 +111,7 @@ namespace Client
             DataManager.Instance.playerData.CurrentStatus = eStatus.Main;
         }
 
-        /// <summary>
-        /// 새로운 이벤트 초기화 및 UI 상태 리셋
-        /// </summary>
+        /// <summary> 새로운 이벤트 초기화 및 UI 상태 리셋 </summary>
         void InitNewEvent()
         {
             EventData dequeued = EventManager.Instance.EventQueue.Dequeue();
@@ -167,9 +163,7 @@ namespace Client
             return;
         }
 
-        /// <summary>
-        /// 분기 타입별 함수 호출
-        /// </summary>
+        /// <summary> 분기 타입별 함수 호출 </summary>
         /// <param name="_eventScript">다음 대사 로드 전 타이밍의 현재 대사</param>
         void BranchByType(EventScript _eventScript)
         {
@@ -256,9 +250,7 @@ namespace Client
             GetButton((int)Buttons.BTN_Select2).onClick.AddListener(() => OnClickSelection(selectScript, false));
         }
 
-        /// <summary>
-        /// 선택지 버튼 클릭 후 실행될 내용
-        /// </summary>
+        /// <summary> 선택지 버튼 클릭 후 실행될 내용 </summary>
         /// <param name="nextIndex1">옮길 스크립트 인덱스</param>
         /// <param name="isFirst">첫번째 선택지인가?</param>
         void OnClickSelection(SelectScript selectScript, bool isFirst)
@@ -300,9 +292,7 @@ namespace Client
         #endregion
 
         #region 스탯 조건에 따른 분기
-        /// <summary>
-        /// 분기 기준치 결과 스크립트 가져오기
-        /// </summary>
+        /// <summary> 분기 기준치 결과 스크립트 가져오기 </summary>
         void GetStatCondition(long BranchIndex)
         {
             StatCondition statCondition = DataManager.Instance.GetData<StatCondition>(BranchIndex);
@@ -324,11 +314,7 @@ namespace Client
             pastEventScript = eventScript;
         }
 
-        /// <summary>
-        /// 기준치와 현재 스탯 비교해서 조건 만족하는지 확인
-        /// </summary>
-        /// <param name="_statCondition"></param>
-        /// <returns></returns>
+        /// <summary> 기준치와 현재 스탯 비교해서 조건 만족하는지 확인 </summary>
         bool MeasureUpCondition(StatCondition _statCondition)
         {
             bool result = true;
@@ -418,20 +404,20 @@ namespace Client
                     else
                         sb.AppendLine($"{GetStatNameAllKor((eStatNameAll)i)}이 {resultTxt}만큼 {ResultString(result[i])}");
                 }
-
-                // 실제 스탯에 반영
-                //if (i == (int)eStatNameAll.Stress) DataManager.Instance.playerData.StressAmount += result[i];
-                //else DataManager.Instance.playerData.StatsAmounts[i] += (int)result[i];
-
             }
 
-            bool isOnlyStress = eventResult.StressValue > 0 && (eventResult.Inteli + eventResult.Otaku + eventResult.Strength + eventResult.Charming == 0);
-            if (!isOnlyStress)
+            // 이벤트 결과에서 스트레스밖에 없을 때 
+            bool isOnlyStress = eventResult.StressValue != 0 && (eventResult.Inteli + eventResult.Otaku + eventResult.Strength + eventResult.Charming == 0);
+
+            if (!isOnlyStress) 
+            {
+                // 스탯 변경 내용 있을 때만 스탯창 켜고 UI 업데이트
                 GetGameObject((int)GameObjects.Stats).SetActive(true);
+                UpdateStatUIs(result);
+            }
 
             GetText((int)Texts.TMP_CharName).text = "";
 
-            UpdateStatUIs(result);
             coroutine = StartCoroutine(Util.LoadTextOneByOne(sb.ToString(), GetText((int)Texts.TMP_CharLine)));
             //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
@@ -461,13 +447,13 @@ namespace Client
 
             foreach (eStatName s in stats)
             {
+                // 변경스탯 볼드 처리
                 TMP_Stats[(int)s].fontStyle = FontStyles.Bold;
             }
 
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
                 TMP_Stats[i].text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
-                Debug.Log($"이벤트 스탯 UI {eStatName.Inteli + i} 업데이트 : {(DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString()}");
             }
         }
         
