@@ -54,19 +54,16 @@ namespace Client
         #region 버튼 이벤트
         void OnClickPanel(PointerEventData evt)
         {
-            Debug.Log("판넬 누름..");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
         void OnClickCreditBtn(PointerEventData evt)
         {
-            Debug.Log("크레딧 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             UI_Manager.Instance.ShowPopupUI<UI_CreditPopup>();
         }
         void OnClickXBtn(PointerEventData evt)
         {
-            Debug.Log("X 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }

@@ -145,7 +145,7 @@ namespace Client
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
                 GetText((int)eStatName.Inteli + i).text = (DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString();
-                Debug.Log($"활도 스탯 UI {eStatName.Inteli + i} 업데이트 : {(DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString()}");
+                //Debug.Log($"활도 스탯 UI {eStatName.Inteli + i} 업데이트 : {(DataManager.Instance.playerData.StatsAmounts[i] + GameManager.Instance.tempStat[i]).ToString()}");
             }
         }
 

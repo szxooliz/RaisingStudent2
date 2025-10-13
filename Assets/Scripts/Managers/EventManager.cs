@@ -21,7 +21,7 @@ namespace Client
         public Queue<EventData> EventQueue { get; } = new();
 
         public bool IsEventAllFinished = false;
-        public EventTitle AppliedEvent; // 참가 여부 결정하는 이벤트 
+        public EventTitle ApplingEvent; // 참가 여부 결정하는 이벤트 
         public bool IsEventApplied = false; // 이벤트 참가 여부 저장, 턴 종료 후 적용 
         public EventData nowEventData;
         public Action OnEventStart;
@@ -296,7 +296,8 @@ namespace Client
 
         public void SaveTempApplyEvent(EventTitle eventTitle, bool isEnroll)
         {
-            AppliedEvent = eventTitle;
+            // 여기서 이벤트 참가여부 묻는 이벤트 정보를 저장하도록 하고
+            ApplingEvent = eventTitle;
             IsEventApplied = isEnroll;
         }
         /// <summary> 이벤트 참가 여부 저장 </summary>
@@ -314,12 +315,19 @@ namespace Client
 
             //    Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
             //}*/
-            if (AppliedEvent == null) return;
-            if (AppliedEvent.ApplyOption)
-            {
-                long eventID = AppliedEvent.ApplyEvent;
-                if (!DataManager.Instance.playerData.AppliedEventsDict.ContainsKey(eventID)) return;
+            if (ApplingEvent == null) return;
 
+            Debug.Log($"<color=yellow>이벤트{ApplingEvent.EventName}의  다음 이벤트 지원 가능 여부{ApplingEvent.ApplyOption}, 지원 의사: {IsEventApplied}</color>");
+            
+            if (ApplingEvent.ApplyOption)
+            {
+                long eventID = ApplingEvent.ApplyEvent;
+                Debug.Log($"이 값 false이면 뒷 로그 안나옴 {DataManager.Instance.playerData.AppliedEventsDict.ContainsKey(eventID)}");
+                
+                // 이미 지원 정보가 저장되어 있다면 함수 리턴
+                if (DataManager.Instance.playerData.AppliedEventsDict.ContainsKey(eventID)) return;
+                
+                // 저장 안되어있다면 추가
                 DataManager.Instance.playerData.AppliedEventsDict.TryAdd(eventID, IsEventApplied);
 
                 if (!IsEventApplied) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록

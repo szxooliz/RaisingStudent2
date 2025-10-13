@@ -23,25 +23,18 @@ namespace Client
             logClusterList = new();
             textClusters = new();
         }
-        /// <summary>
-        /// 로그 그룹 새로 생성 후 매니저가 관리하는 리스트에 추가
-        /// </summary>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public LogCluster GetNewLogGroup(string title)
-        {
-            LogCluster cluster = new LogCluster(title);
-            logClusterList.Add(cluster);
-            return cluster;
-        }
-        /// <summary>
-        /// 마지막 로그 그룹 가져오기
-        /// </summary>
-        /// <returns></returns>
-        public LogCluster GetLastLogGroup()
-        {
-            return logClusterList[^1];
-        }
+        /// <summary> 로그 그룹 새로 생성 후 매니저가 관리하는 리스트에 추가 </summary>
+        //public LogCluster GetNewLogGroup(string title)
+        //{
+        //    LogCluster cluster = new LogCluster(title);
+        //    logClusterList.Add(cluster);
+        //    return cluster;
+        //}
+        /// <summary> 마지막 로그 그룹 가져오기 </summary>
+        //public LogCluster GetLastLogGroup()
+        //{
+        //    return logClusterList[^1];
+        //}
 
         public TextCluster GetNewClusterGroup(string title)
         {
@@ -49,10 +42,7 @@ namespace Client
             textClusters.Add(cluster);
             return cluster;
         }
-        /// <summary>
-        /// 마지막 로그 그룹 가져오기
-        /// </summary>
-        /// <returns></returns>
+        /// <summary> 마지막 로그 그룹 가져오기 </summary>
         public TextCluster GetLastClusterGroup()
         {
             return textClusters[^1];

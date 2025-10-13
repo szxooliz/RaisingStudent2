@@ -30,14 +30,12 @@ namespace Client
 
         void OnClickPanel(PointerEventData evt)
         {
-            Debug.Log("판넬 누름..");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
 
         void OnClickXBtn(PointerEventData evt)
         {
-            Debug.Log("X 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }

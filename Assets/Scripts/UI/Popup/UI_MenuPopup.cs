@@ -16,7 +16,7 @@ namespace Client
         enum Buttons
         {
             Panel,
-            BTN_Continue, BTN_Renew, BTN_Title
+            BTN_Continue, BTN_Renew, BTN_Title, BTN_X
         }
 
         enum Sliders
@@ -41,6 +41,8 @@ namespace Client
             BindEvent(GetButton((int)Buttons.BTN_Continue).gameObject, OnClickContinueBtn);
             BindEvent(GetButton((int)Buttons.BTN_Renew).gameObject, OnClickRenewBtn);
             BindEvent(GetButton((int)Buttons.BTN_Title).gameObject, OnClickTitleBtn);
+            BindEvent(GetButton((int)Buttons.BTN_X).gameObject, OnClickXBtn);
+
         }
 
         void BindSlider()
@@ -59,7 +61,6 @@ namespace Client
         }
         void OnClickContinueBtn(PointerEventData evt)
         {
-            Debug.Log("이어하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             ClosePopupUI();
         }
@@ -69,7 +70,6 @@ namespace Client
         /// <param name="evt"></param>
         void OnClickRenewBtn(PointerEventData evt)
         {
-            Debug.Log("새로하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             DataManager.Instance.playerData = new PlayerData();
@@ -85,7 +85,6 @@ namespace Client
         /// <param name="evt"></param>
         void OnClickTitleBtn(PointerEventData evt)
         {
-            Debug.Log("타이틀로 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
             DataManager.Instance.GoHome();
 
@@ -93,12 +92,12 @@ namespace Client
             SceneManager.LoadScene("TitleScene");
         }
 
-        /*
-        void LoadTitleScreen(){
+
+        void OnClickXBtn(PointerEventData evt)
+        {
+            SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
-            SceneManager.LoadScene("TitleScene");
         }
-         */
 
 
         void ChangeBGM(float value)

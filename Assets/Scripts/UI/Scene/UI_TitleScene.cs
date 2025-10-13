@@ -52,7 +52,6 @@ namespace Client
         #region Title 버튼 이벤트
         void OnClickNewGameBtn(PointerEventData evt)
         {
-            Debug.Log("새로 하기 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             // 세이브 데이터 확인 후 팝업 띄우기

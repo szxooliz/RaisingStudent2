@@ -35,7 +35,7 @@ namespace Client
 
         int scriptIndex = 0; // 엔딩 대사 index
         int currentEndingNum = 0; // 현재 엔딩을 나타내는 숫자
-        List<EndingScript> newEndingScripts = new List<EndingScript>(); // 현재 엔딩에 맞는 스크립트만을 저장
+        Dictionary<long, EndingScript> endingScriptDict = new(); // 현재 엔딩에 맞는 스크립트만을 저장
 
         private bool hasBackgroundSet = false;        // 배경화면 변경 여부 
         private bool hasIllustrationAppeared = false; // 처음 일러스트 등장 여부
@@ -52,13 +52,15 @@ namespace Client
 
             BindButton();
 
-            //currentEndingNum = GetLatestEndingIndex();
+            // 필요한 데이터 미리 로드
             currentEndingNum = (int)GameManager.Instance.endingName;
-            LogManager.Instance.GetNewLogGroup("육성 완료");
-            LoadScript();
+            endingScriptDict = DataManager.Instance.EndingScriptDict[currentEndingNum];
             LoadIllustration();
-            LoadNextScript();
+            GetNextScript();
+
             GetButton((int)Buttons.BTN_Schedule).interactable = false;
+            LogManager.Instance.GetNewClusterGroup("육성 완료");
+
         }
 
         void BindButton()
@@ -83,57 +85,28 @@ namespace Client
         }
         #endregion
 
-        /// <summary>
-        /// 오브젝트에서 포인터를 누르고 뗄 때 호출됨
-        /// </summary>
-        /// <param name="evt"></param>
+        /// <summary> 오브젝트에서 포인터를 누르고 뗄 때 호출됨 </summary>
         public void OnPointerClick(PointerEventData evt)
         {
+            // 텍스트 입력 중(또는 첫 번째 클릭 후 전체 노출 대기 중)이라면 무시
+            if (Util.nowTexting)
+                return;
+
             SoundManager.Instance.Play(eSound.SFX_DialogClick);
-            LoadNextScript();
+            GetNextScript();
         }
 
-        /// <summary>
-        /// 엔딩에 맞는 스크립트만을 저장
-        /// </summary>
-        void LoadScript()
-        {
-            int tempIndex = 0;
-            while (true)
-            {
-                EndingScript script = DataManager.Instance.GetData<EndingScript>(tempIndex++);
-
-                if (script == null)
-                    break;
-
-                if (script.EndingNum == currentEndingNum) { 
-                    newEndingScripts.Add(script);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 엔딩에 맞는 일러스트 로드
-        /// </summary>
+        /// <summary> 엔딩에 맞는 일러스트 로드 </summary>
         void LoadIllustration()
         {
             string imagePath = endingSpritePath + $"Ending_{currentEndingNum}";
             GetImage((int)Images.IMG_Illustration).sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
         }
 
-        /// <summary>
-        /// 다음 스크립트 로드
-        /// </summary>
-        void LoadNextScript()
+        /// <summary> 다음 스크립트 가져오기 </summary>
+        void GetNextScript()
         {
-            if (coroutine != null)  // 텍스트 애니메이션이 진행 중이라면
-            {
-                coroutine = null;
-                return;
-            }
-
-            //TODO: (scriptIndex == newEndingScripts.Count) 인 경우 게임 종료 나타내기
-            if (scriptIndex >= newEndingScripts.Count)
+            if (scriptIndex >= endingScriptDict.Count)
             {
                 SceneManager.LoadScene("TitleScene");
                 return;
@@ -146,7 +119,7 @@ namespace Client
                 GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);  // 일러스트 인덱스 초기화
             }
 
-            EndingScript endingScript = newEndingScripts[scriptIndex];
+            EndingScript endingScript = endingScriptDict[scriptIndex];
 
             // 배경 설정
             if (!hasBackgroundSet)
@@ -170,10 +143,7 @@ namespace Client
             scriptIndex++;
         }
 
-        /// <summary>
-        /// 다음 엔딩 대사 로드
-        /// </summary>
-        /// <param name="endingScript"></param>
+        /// <summary> 다음 엔딩 대사 로드 </summary>
         IEnumerator LoadNextDialogue(EndingScript endingScript)
         {
             eLineType eLineType = eLineType.SPEAK;
@@ -199,7 +169,7 @@ namespace Client
                 string path = characterSpritePath + "Comsoon_" + endingScript.Face;
                 GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
-            else if (basicSprite != "none")
+            else if (basicSprite == "none")
             {
                 eLineType = eLineType.NARRATION;
 
@@ -217,10 +187,7 @@ namespace Client
             yield return null;
         }
 
-        /// <summary>
-        /// 다음 일러스트 로드
-        /// </summary>
-        /// <param name="endingScript"></param>
+        /// <summary> 다음 일러스트 로드 </summary>
         void LoadIllustration(EndingScript endingScript)
         {
             // 처음으로 일러스트가 등장한 경우 상태 업데이트

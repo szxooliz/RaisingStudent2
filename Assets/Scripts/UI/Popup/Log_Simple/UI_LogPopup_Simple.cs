@@ -116,6 +116,13 @@ namespace Client
 
         void ShowMonthandTerm()
         {
+            if ((int)DataManager.Instance.playerData.CurrentMonth > 12)
+            {
+                string s = "육성 완료";
+                TMP_Term.text = s;
+                return;
+            }
+
             string str = (int)DataManager.Instance.playerData.CurrentMonth + "월 " + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
             TMP_Term.text = str;
         }

@@ -41,8 +41,9 @@ namespace Client
 
         public override void Init()
         {
+            //LoadAllData();
             LoadPersistentData();
-            DeleteAllData();
+            //DeleteAllData();
             LoadSheetDatas();
         }
         
@@ -323,12 +324,12 @@ namespace Client
             // 스트레스, 스탯 저장
             if (playerData.CurrentTurn == 0) return;
 
-            Debug.Log($"이번 턴 스트레스 결과 저장 {playerData.StressAmount} + {GameManager.Instance.tempStress} = {playerData.StressAmount + GameManager.Instance.tempStress}");
+            //Debug.Log($"이번 턴 스트레스 결과 저장 {playerData.StressAmount} + {GameManager.Instance.tempStress} = {playerData.StressAmount + GameManager.Instance.tempStress}");
             playerData.StressAmount += GameManager.Instance.tempStress;
 
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempStat[i]}");
+                //Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempStat[i]}");
                 playerData.StatsAmounts[i] += (int)GameManager.Instance.tempStat[i];
             }
             Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);

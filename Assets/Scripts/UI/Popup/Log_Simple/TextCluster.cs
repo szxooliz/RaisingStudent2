@@ -6,7 +6,7 @@ using static Client.SystemEnum;
 
 namespace Client
 {
-    public class TextCluster : MonoBehaviour
+    public class TextCluster
     {
         int _uid = 0;
         public string title;

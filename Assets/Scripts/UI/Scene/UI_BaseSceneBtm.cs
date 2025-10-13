@@ -104,9 +104,7 @@ namespace Client
         }
 
         #region 스탯, 스트레스 UI 업데이트
-        /// <summary>
-        /// 스탯 UI 수치 업데이트
-        /// </summary>
+        /// <summary> 스탯 UI 수치 업데이트 </summary>
         void UpdateStatUIs()
         {
             for (int i = 0; i < (int)eStatName.MaxCount; i++)

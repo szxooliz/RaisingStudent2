@@ -33,14 +33,12 @@ namespace Client
         #region 버튼 이벤트
         void OnClickPanel(PointerEventData evt)
         {
-            Debug.Log("판넬 누름..");
             SoundManager.Instance.Play(eSound.SFX_Negative);
             ClosePopupUI();
         }
 
         void OnClickYesBtn(PointerEventData evt)
         {
-            Debug.Log("예 버튼 클릭");
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
             // 플레이어 데이터를 초기화 시킨 후 게임 화면으로 이동 
@@ -48,7 +46,6 @@ namespace Client
             LogManager.Instance.ResetLogData();
             EventManager.Instance.ResetEventData();
 
-            //TODO : 플레이어 데이터만 새로 만든다고 능사가 아님
             // DataManager에서 ResetData() 만들고, 씬 내의 게임 오브젝트 초기화하거나 코루틴 초기화 하고, UI 초기화도 확인
 
             //변수 → 초기값으로 대입
