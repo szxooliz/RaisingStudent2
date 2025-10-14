@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using Unity.VisualScripting;
@@ -304,22 +305,25 @@ namespace Client
 
         public void GoHome()
         {
-            // 이벤트가 없는 경우, 활동 하다가 돌아가는 경우에 실행되지 않도록 처리해야 함
-            if (playerData.CurrentStatus == eStatus.Event)
+            // 이벤트 상태이고 이벤트가 아직 끝나지 않았을 때
+            if (playerData.CurrentStatus == eStatus.Event && !EventManager.Instance.IsEventAllFinished)
             {
-                if (!EventManager.Instance.IsEventAllFinished)
+                if (playerData.CurrentTurn != 0)
                 {
                     Debug.Log("이벤트 전부 안 보고 끝내서 턴 -1");
                     playerData.CurrentTurn -= 1;
                 }
+                // CurrentTurn이 0이면 아무것도 하지 않고 아래 공통 로직으로 진행
             }
+
+            // 공통 처리: 임시 스탯 초기화 및 상태 복귀
             Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);
             GameManager.Instance.tempStress = 0;
             Debug.Log($"GoHome - 데이터 클리어 스탯: {GameManager.Instance.tempStat}, 스트레스: {GameManager.Instance.tempStress}");
 
-
             playerData.CurrentStatus = eStatus.Main;
         }
+
 
         /// <summary> 턴 종료 후 스탯을 실제로 적용 </summary>
         public void ApplyTurnStat()

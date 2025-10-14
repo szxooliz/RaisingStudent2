@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 8336628307286124922}
   - component: {fileID: 3236870031334457179}
   m_Layer: 5
-  m_Name: UI_EndingListScene
+  m_Name: UI_EndingListScene 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
