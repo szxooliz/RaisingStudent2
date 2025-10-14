@@ -42,8 +42,10 @@ namespace Client
         public override void Init()
         {
             //LoadAllData();
+#if UNITY_EDITOR
+            DeleteAllData();
+#endif
             LoadPersistentData();
-            //DeleteAllData();
             LoadSheetDatas();
         }
         
@@ -202,13 +204,6 @@ namespace Client
                 if (!_endingScriptDict[endingScript.EndingNum].ContainsKey(endingScript.index))
                     _endingScriptDict[endingScript.EndingNum].Add(endingScript.index, endingScript);
             }
-            Debug.Log($"엔딩스크립트 모음.. {_endingScriptDict.Count}");
-            for (int i = 0; i < 6; i++)
-            {
-                Debug.Log($"<color=red>엔딩 {i} 딕셔너리 안에.. {_endingScriptDict[i].Count}</color>");
-                Debug.Log($"<color=red>엔딩 {i} 딕셔너리 안에.. min key {_endingScriptDict[i].Keys.Min()}</color>");
-
-            }
         }
 
         #endregion
@@ -268,6 +263,14 @@ namespace Client
         {
             string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
             persistentData = LoadData<PersistentData>(persistentData_path);
+            if (persistentData != null) 
+            {
+                Debug.Log("persistentData 있음");
+            }
+            else
+            {
+                Debug.Log("persistentData 없음");
+            }
         }
         public void LoadAllData()
         {

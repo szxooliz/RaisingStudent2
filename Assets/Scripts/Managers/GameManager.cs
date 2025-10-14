@@ -197,8 +197,6 @@ namespace Client
                 int value = (int)Math.Ceiling(activityData.statValues[i] * multiplier);
                 activityData.statValues[i] = value;
 
-                // 스탯 증감 처리
-                //DataManager.Instance.playerData.StatsAmounts[(int)activityData.statNames[i]] += value;
             }
         }
 
@@ -219,19 +217,6 @@ namespace Client
 
         public void NextMonthandTerm()
         {
-            //Debug.Log($"<color=green>턴 계산 전: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
-
-            //// 이전 턴에 하순이었을 때 다음 달로 넘어감
-            //if (DataManager.Instance.playerData.CurrentThird == eThirds.Third)
-            //{
-            //    if (DataManager.Instance.playerData.CurrentMonth == eMonths.Jun)
-            //        DataManager.Instance.playerData.CurrentMonth = eMonths.Sep;
-            //    else DataManager.Instance.playerData.CurrentMonth++;
-            //}
-
-            //// 턴 수를 3으로 나눈 나머지로 상/중/하순 결정
-            //DataManager.Instance.playerData.CurrentThird = (eThirds)(DataManager.Instance.playerData.CurrentTurn % 3);
-
             Debug.Log($"<color=green>턴 참조: {DataManager.Instance.playerData.CurrentMonth} {DataManager.Instance.playerData.CurrentThird} ({DataManager.Instance.playerData.CurrentTurn})</color>");
         }
 
@@ -289,27 +274,6 @@ namespace Client
                 var key = (Math.Min(first, second), Math.Max(first, second));
                 if (endingMap.TryGetValue(key, out var ending))
                     return ending;
-                /*
-                if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Charming])
-                {
-                    // 대기업
-                    return eEndingName.CorporateSI;
-                }
-                else if (highStats[(int)eStatName.Inteli] && highStats[(int)eStatName.Otaku])
-                {
-                    // 게임회사
-                    return eEndingName.GameCompany;
-                }
-                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Charming])
-                {
-                    // 버부버
-                    return eEndingName.VirtualYoutuber;
-                }
-                else if (highStats[(int)eStatName.Otaku] && highStats[(int)eStatName.Strength])
-                {
-                    // 프로게
-                    return eEndingName.ProGamer;
-                }*/
             }
             
             // 위에서 하나도 안 걸리면

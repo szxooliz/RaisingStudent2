@@ -132,6 +132,17 @@ namespace Client
             Canvas.ForceUpdateCanvases();
             scrollRect.verticalNormalizedPosition = 0f;
         }
+
+        public void ClearLogUI()
+        {
+            foreach (var clusterUI in clusterUIList)
+            {
+                Destroy(clusterUI);
+            }
+            clusterUIList.Clear();
+            clusterLineProgress.Clear();
+        }
+
     }
 
 }
