@@ -71,10 +71,8 @@ namespace Client
         void OnClickRenewBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
-
+            ClearLogData();
             DataManager.Instance.playerData = new PlayerData();
-
-            // LoadTitleScreen();
 
             ClosePopupUI();
             SceneManager.LoadScene("TitleScene");
@@ -86,6 +84,7 @@ namespace Client
         void OnClickTitleBtn(PointerEventData evt)
         {
             SoundManager.Instance.Play(eSound.SFX_Positive);
+            ClearLogData();
             DataManager.Instance.GoHome();
 
             ClosePopupUI();
@@ -131,6 +130,19 @@ namespace Client
                 // default
                 return 1.0f;
             }
+        }
+
+        /// <summary> 육성화면에서 나갈 때마다 로그 초기화하도록 </summary>
+        public void ClearLogData()
+        {
+            LogManager.Instance.ResetLogData();         // 로그 데이터 초기화
+
+            var logPopup = FindObjectOfType<UI_LogPopup_Simple>();
+            if (logPopup != null)
+            {
+                logPopup.ClearLogUI();                  // UI 초기화
+            }
+
         }
 
     }

@@ -34,5 +34,6 @@ namespace Client
         {
             return textClusters[^1];
         }
+
     }
 }
