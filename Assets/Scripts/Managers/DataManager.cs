@@ -44,7 +44,7 @@ namespace Client
         {
             //LoadAllData();
 #if UNITY_EDITOR
-            DeleteAllData();
+            //DeleteAllData();
 #endif
             LoadPersistentData();
             LoadSheetDatas();
