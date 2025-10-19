@@ -95,6 +95,7 @@ namespace Client
             {
                 DataManager.Instance.ApplyTurnStat();
                 EventManager.Instance.ApplyEvents();
+                DataManager.Instance.SaveAllData();
 
                 ChangeBackGround("bg_school");
                 UpdateStatUIs();

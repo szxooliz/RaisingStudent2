@@ -49,6 +49,7 @@ namespace Client
 
         public long[] tempStat { get; } = new long[4];
         public float tempStress = 0;
+        public List<long> tempEventIDList = new();
 
         public ActivityData activityData; // 활동 하나의 데이터, 결과 전달용
         public eEndingName endingName;

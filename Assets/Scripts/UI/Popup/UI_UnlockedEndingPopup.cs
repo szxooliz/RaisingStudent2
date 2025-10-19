@@ -78,25 +78,25 @@ namespace Client
                 return;
 
             // 엔딩 제목 설정
-            GetText((int)Texts.TMP_Title).text = $"엔딩{(char)('A' + (int)(ending.endingName))}";
-            GetText((int)Texts.TMP_EndingName).text = GetEndingNameKor(ending.endingName);
+            GetText((int)Texts.TMP_Title).text = $"엔딩{(char)('A' + (int)(ending.EndingName))}";
+            GetText((int)Texts.TMP_EndingName).text = GetEndingNameKor(ending.EndingName);
 
             // 일러스트 설정
-            string imagePath = $"{endingSpritePath}Ending_{(int)(ending.endingName)}";
+            string imagePath = $"{endingSpritePath}Ending_{(int)(ending.EndingName)}";
             GetButton((int)Buttons.BTN_Illustration).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
             GetButton((int)Buttons.BTN_BigIllustraion).image.sprite = DataManager.Instance.GetOrLoadSprite(imagePath);
 
             // 시험 성적 입력
             for (int i = 0; i < ending.playerData.EventRecordList.Count; i++)
             {
-                GetText((int)Texts.TMP_Awards1 + i).text = ending.playerData.EventRecordList[i].record;
+                GetText((int)Texts.TMP_Awards1 + i).text = ending.playerData.EventRecordList[i].Record;
             }
 
             // 기타 이력 입력
             StringBuilder sb = new();
             foreach(var recordList in ending.playerData.EventRecordList_etc)
             {
-                sb.AppendLine($"{recordList.title} {recordList.record}");
+                sb.AppendLine($"{recordList.Title} {recordList.Record}");
             }
             GetText((int)Texts.TMP_Contents).text = sb.ToString();
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 using static Client.SystemEnum;
 
 namespace Client
@@ -8,18 +9,20 @@ namespace Client
     [Serializable]
     public class PlayerData
     {
-        public string CharName { get; private set; } = "Comsoon";  // 프로토타입
-        public int CurrentTurn { get; set; } = 0;                  // 턴 0~24 - 0: 인트로 이벤트용
-        public eMonths CurrentMonth => GetMonth();   // n월 3-6/9-12
-        public eThirds CurrentThird => GetTerm(); // a순 상중하
+        [JsonProperty] public string CharName { get; set; } = "Comsoon";
+        [JsonProperty] public int CurrentTurn { get; set; } = 0;
 
-        public List<(string title, string record)> EventRecordList;
-        public List<(string title, string record)> EventRecordList_etc;
-        public Dictionary<long, bool> AppliedEventsDict;
-        public List<long> WatchedEventIDList;
+        [JsonIgnore] public eMonths CurrentMonth => GetMonth();
+        [JsonIgnore] public eThirds CurrentThird => GetTerm();
+
+        [JsonProperty] public List<EventRecord> EventRecordList { get; set; } = new();
+        [JsonProperty] public List<EventRecord> EventRecordList_etc { get; set; } = new();
+        [JsonProperty] public Dictionary<long, bool> AppliedEventsDict { get; set; } = new();
+        [JsonProperty] public List<long> WatchedEventIDList { get; set; } = new();
+
         public event EventHandler OnStatusChanged;
 
-        private eStatus _currentStatus = eStatus.Main;
+        [JsonProperty]
         public eStatus CurrentStatus
         {
             get => _currentStatus;
@@ -28,39 +31,49 @@ namespace Client
                 if (_currentStatus != value)
                 {
                     Debug.Log($"CurrrentState 변경 감지 : {_currentStatus} -> {value}");
-
                     _currentStatus = value;
                     OnStatusChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
-        public int[] StatsAmounts { get; } = new int[4];
+
+        [JsonProperty] public int[] StatsAmounts { get; set; } = new int[4];
 
         private float _stressAmount;
+        [JsonProperty]
         public float StressAmount
         {
             get => _stressAmount;
             set => _stressAmount = Mathf.Clamp(value, 0, 100);
         }
 
-        eMonths GetMonth()
+        private eStatus _currentStatus = eStatus.Main;
+
+        private eMonths GetMonth()
         {
             int m = CurrentTurn / 3;
-            if (m < 4) return (eMonths)(m + 3);
-            else return (eMonths)(m + 5);
+            return (m < 4) ? (eMonths)(m + 3) : (eMonths)(m + 5);
         }
 
-        eThirds GetTerm()
+        private eThirds GetTerm()
         {
             int l = CurrentTurn % 3;
             return (eThirds)l;
         }
-        public PlayerData() 
+    }
+
+    [Serializable]
+    public class EventRecord
+    {
+        public string Title { get; set; }
+        public string Record { get; set; }
+
+        public EventRecord() { }
+
+        public EventRecord(string title, string record)
         {
-            EventRecordList = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 성적
-            EventRecordList_etc = new(); // 엔딩 이력서 표시용 이벤트 진행 결과 - 기타이력
-            AppliedEventsDict = new(); // 이벤트 참여 여부 기록
-            WatchedEventIDList = new(); // 진행한 이벤트 아이디만 담아둠
+            Title = title;
+            Record = record;
         }
     }
 }

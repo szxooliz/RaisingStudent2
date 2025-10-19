@@ -77,6 +77,7 @@ namespace Client
             }
             else
             {
+                DataManager.Instance.LoadPlayerData();
                 SceneManager.LoadScene("BaseScene");
             }
         }

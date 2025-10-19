@@ -47,7 +47,7 @@ namespace Client
         public void SetIcon()
         {
             char endingCode = (char)('A' + (int)(eEndingNumber));
-            bool isUnlocked = DataManager.Instance.persistentData.endingDict.ContainsKey(eEndingNumber);
+            bool isUnlocked = DataManager.Instance.persistentData.EndingDict.ContainsKey(eEndingNumber);
 
             // 자물쇠 버튼 활성화 여부 & 페이지 이미지 설정
             lockButton.gameObject.SetActive(!isUnlocked);
@@ -69,14 +69,14 @@ namespace Client
         /// <summary> 클릭 시 엔딩 내용 팝업 </summary>
         public void OnClickUnlockedEnding()
         {
-            if(!DataManager.Instance.persistentData.endingDict.ContainsKey(eEndingNumber))
+            if(!DataManager.Instance.persistentData.EndingDict.ContainsKey(eEndingNumber))
             {
                 return;
             }
 
             SoundManager.Instance.Play(eSound.SFX_Positive);
 
-            Ending ending = DataManager.Instance.persistentData.endingDict[eEndingNumber];
+            Ending ending = DataManager.Instance.persistentData.EndingDict[eEndingNumber];
             var popup = UI_Manager.Instance.ShowPopupUI<UI_UnlockedEndingPopup>();
             popup.SetUnlockedEndingPopup(ending);
         }

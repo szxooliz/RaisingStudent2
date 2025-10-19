@@ -9,7 +9,6 @@ namespace Client
         private void Awake()
         {
             GameManager instance = GameManager.Instance;
-            //UI_Manager.Instance.Clear();
         }
 
         private void Start()

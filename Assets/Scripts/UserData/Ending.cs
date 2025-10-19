@@ -1,19 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
+using Newtonsoft.Json;
 using static Client.SystemEnum;
 
 namespace Client
 {
     public class Ending
     {
-        public PlayerData playerData;
-        public eEndingName endingName;
+        [JsonProperty] public PlayerData playerData;
+        [JsonProperty] public eEndingName EndingName;
 
         public Ending(eEndingName name, PlayerData _playerData)
         {
-            endingName = name;
-            this.playerData = _playerData;
+            EndingName = name;
+            playerData = _playerData;
         }
     }
 }

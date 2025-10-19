@@ -188,7 +188,9 @@ namespace Client
         {
             if (_eventScript == null)
             {
-                EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
+                long eventID = EventManager.Instance.nowEventData.eventTitle.index;
+                GameManager.Instance.tempEventIDList.Add(eventID);
+                //EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
                 CheckAndShowEvent();
                 return;
             }
@@ -422,7 +424,7 @@ namespace Client
             //UnitLog unitLog = new UnitLog(eLineType.RESULT, sb.ToString());
             //LogManager.Instance.GetLastLogGroup().AddUnitLogList(unitLog);
             LogManager.Instance.GetLastClusterGroup().AddLine(eLineType.RESULT, sb.ToString());
-            DataManager.Instance.SaveAllData();
+            //DataManager.Instance.SaveAllData();
 
         }
 
@@ -500,6 +502,8 @@ namespace Client
 
         public IEnumerator FadeBlackImage()
         {
+            blackCanvasGroup.blocksRaycasts = true;
+
             otherCanvasGroup.gameObject.SetActive(false);
             blackCanvasGroup.gameObject.SetActive(true);
             yield return fadeInOut(blackCanvasGroup, fadeInOutTime, true);
@@ -514,6 +518,8 @@ namespace Client
             yield return fadeInOut(blackCanvasGroup, fadeInOutTime, false);
             blackCanvasGroup.gameObject.SetActive(false);
             otherCanvasGroup.gameObject.SetActive(true);
+
+            blackCanvasGroup.blocksRaycasts = false;
 
         }
 

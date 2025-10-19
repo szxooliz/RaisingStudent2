@@ -1,4 +1,5 @@
 using DG.Tweening.Plugins.Core.PathCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -228,18 +229,16 @@ namespace Client
             string jsonData = Encoding.UTF8.GetString(fileData);
 
             Debug.Log("데이터 Load 성공: " + path);
-            return JsonUtility.FromJson<T>(jsonData);
+            return JsonConvert.DeserializeObject<T>(jsonData);
         }
 
         public void SaveData<T>(string path, T data)
         {
-            string jsonData = JsonUtility.ToJson(data, true);
-            FileStream fileStream = new FileStream(path, FileMode.Create);
-            byte[] fileData = Encoding.UTF8.GetBytes(jsonData);
-            fileStream.Write(fileData, 0, fileData.Length);
-            fileStream.Close();
+            string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(path, jsonData);
 
             Debug.Log("데이터 Save 성공: " + path);
+            Debug.Log(jsonData);
         }
 
         void DeleteSaveFile(string path)
@@ -262,16 +261,17 @@ namespace Client
         }
         public void LoadPersistentData()
         {
-            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
-            persistentData = LoadData<PersistentData>(persistentData_path);
-            if (persistentData != null) 
+            if (persistentData != null)
             {
-                Debug.Log("persistentData 있음");
+                Debug.Log("persistentData 있음, 그대로 로드");
             }
             else
             {
-                Debug.Log("persistentData 없음");
+                Debug.Log("persistentData 없음, 새로 생성해야 됨");
             }
+
+            string persistentData_path = $"{Application.persistentDataPath}/PersistentData.json";
+            persistentData = LoadData<PersistentData>(persistentData_path);
         }
         public void LoadAllData()
         {
@@ -319,6 +319,7 @@ namespace Client
             // 공통 처리: 임시 스탯 초기화 및 상태 복귀
             Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);
             GameManager.Instance.tempStress = 0;
+            GameManager.Instance.tempEventIDList.Clear();
             Debug.Log($"GoHome - 데이터 클리어 스탯: {GameManager.Instance.tempStat}, 스트레스: {GameManager.Instance.tempStress}");
 
             playerData.CurrentStatus = eStatus.Main;
@@ -331,14 +332,18 @@ namespace Client
             // 스트레스, 스탯 저장
             if (playerData.CurrentTurn == 0) return;
 
-            //Debug.Log($"이번 턴 스트레스 결과 저장 {playerData.StressAmount} + {GameManager.Instance.tempStress} = {playerData.StressAmount + GameManager.Instance.tempStress}");
             playerData.StressAmount += GameManager.Instance.tempStress;
 
             for (int i = 0; i < (int)eStatName.MaxCount; i++)
             {
-                //Debug.Log($"이번 턴 결과 저장 {(eStatName)i} {playerData.StatsAmounts[i]} + {(int)GameManager.Instance.tempStat[i]} = {playerData.StatsAmounts[i] + (int)GameManager.Instance.tempStat[i]}");
                 playerData.StatsAmounts[i] += (int)GameManager.Instance.tempStat[i];
             }
+            // 봤던 이벤트 저장
+            foreach(long id in GameManager.Instance.tempEventIDList)
+            {
+                EventManager.Instance.AddWatchedEvent(id);
+            }
+            GameManager.Instance.tempEventIDList.Clear();
             Array.Clear(GameManager.Instance.tempStat, 0, GameManager.Instance.tempStat.Length);
         }
         /// <summary> 캐싱된 스프라이트 로드 / 반환 </summary>

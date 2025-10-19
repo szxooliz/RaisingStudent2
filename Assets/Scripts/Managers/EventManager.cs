@@ -124,19 +124,17 @@ namespace Client
             else return false;
         }
 
-        /// <summary>
-        /// 봤던 이벤트로 기록
-        /// </summary>
-        public void AddWatchedEvent(EventData eventData)
+        /// <summary> 봤던 이벤트로 기록 </summary>
+        public void AddWatchedEvent(long eventID)
         {
-            if (DataManager.Instance.playerData.WatchedEventIDList.Contains(eventData.eventTitle.index))
+            if (DataManager.Instance.playerData.WatchedEventIDList.Contains(eventID))
             {
-                Debug.LogError($"{eventData.eventTitle.EventName} : {eventData.eventTitle.index}는 이미 등록된 이벤트 인덱스입니다");
+                Debug.LogError($"{eventID}는 이미 등록된 이벤트 인덱스입니다");
                 return;
             }
 
-            Debug.Log($"이벤트 끝, {eventData.eventTitle.EventName} 등록");
-            DataManager.Instance.playerData.WatchedEventIDList.Add(eventData.eventTitle.index);
+            Debug.Log($"이벤트 끝, {eventID} 등록");
+            DataManager.Instance.playerData.WatchedEventIDList.Add(eventID);
             // TODO : 플레이어 데이터 save 하기
             DataManager.Instance.SaveAllData();
         }
@@ -345,12 +343,12 @@ namespace Client
             if (title.EndsWith("!")) // "!" 지우기
             {
                 title = title.Substring(0, title.Length - 1);
-                DataManager.Instance.playerData.EventRecordList_etc.Add((title, str));
+                DataManager.Instance.playerData.EventRecordList_etc.Add(new(title, str));
             }
             else // "고사" 지우기
             {
                 title = title.Substring(0, title.Length - 2);
-                DataManager.Instance.playerData.EventRecordList.Add((title, str));
+                DataManager.Instance.playerData.EventRecordList.Add(new(title, str));
             }
         }
     }

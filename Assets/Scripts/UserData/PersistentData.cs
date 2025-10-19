@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Newtonsoft.Json;
 using static Client.SystemEnum;
 
 namespace Client
@@ -9,7 +8,9 @@ namespace Client
     [System.Serializable]
     public class PersistentData
     {
-        public Dictionary<eEndingName, Ending> endingDict = new();
+        [JsonProperty]
+        public Dictionary<eEndingName, Ending> EndingDict { get; set; } = new();
+
 
         public PersistentData()
         {}
@@ -19,13 +20,13 @@ namespace Client
         /// </summary>
         public void AddOrUpdateEnding(Ending newEnding)
         {
-            if (endingDict.ContainsKey(newEnding.endingName))
+            if (EndingDict.ContainsKey(newEnding.EndingName))
             {
-                endingDict[newEnding.endingName] = newEnding;
+                EndingDict[newEnding.EndingName] = newEnding;
             }
             else
             {
-                endingDict.Add(newEnding.endingName, newEnding);
+                EndingDict.Add(newEnding.EndingName, newEnding);
             }
         }
     }
