@@ -90,6 +90,9 @@ namespace Client
             switch (DataManager.Instance.playerData.CurrentStatus)
             {
                 case eStatus.Main:
+                    DataManager.Instance.ApplyTurnStat();
+                    EventManager.Instance.ApplyEvents();
+                    DataManager.Instance.SaveAllData();
                     GameManager.Instance.NextMonthandTerm();
                     UpdateTermUI();
                     UpdateTurnUI();
@@ -105,8 +108,9 @@ namespace Client
 
             img.sprite = DataManager.Instance.GetOrLoadSprite(path);
         }
-        /// 학사 일정 표시된 주요 이벤트까지 남은 턴 표시
-        /// </summary>
+
+
+        /// <summary> 학사 일정 표시된 주요 이벤트까지 남은 턴 표시 </summary>
         void UpdateTurnUI()
         {
             int turn = DataManager.Instance.playerData.CurrentTurn;
@@ -125,9 +129,7 @@ namespace Client
             GetText((int)Texts.TMP_Turn).text = str;
         }
 
-        /// <summary>
-        /// 시기 표시 UI 업데이트
-        /// </summary>
+        /// <summary> 시기 표시 UI 업데이트 </summary>
         void UpdateTermUI()
         {
             string str = (int)DataManager.Instance.playerData.CurrentMonth + "월 " + GetThirdsKor(DataManager.Instance.playerData.CurrentThird);
@@ -136,9 +138,7 @@ namespace Client
             Debug.Log($"UI 턴 : {str}, 숫자로: {DataManager.Instance.playerData.CurrentTurn}");
         }
 
-        /// <summary>
-        /// 이벤트 실행 시에 턴 대신 이벤트 이름 표시 함수
-        /// </summary>
+        /// <summary> 이벤트 실행 시에 턴 대신 이벤트 이름 표시 함수 </summary>
         public void ShowEventName()
         {
             GetText((int)Texts.TMP_Turn).text = EventManager.Instance.nowEventData.eventTitle.EventName;

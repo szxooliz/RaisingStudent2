@@ -48,6 +48,8 @@ namespace Client
         [SerializeField] CanvasGroup blackCanvasGroup;
         [SerializeField] CanvasGroup otherCanvasGroup;
         [SerializeField] float fadeInOutTime = 0.1f;
+        private bool isBlockingInput = false;
+
 
 
         public override void Init()
@@ -65,6 +67,8 @@ namespace Client
 
         public void OnPointerClick(PointerEventData evt)
         {
+            if (isBlockingInput) return;
+
             // 텍스트 입력 중(또는 첫 번째 클릭 후 전체 노출 대기 중)이라면 무시
             if (Util.nowTexting)
                 return;
@@ -78,7 +82,7 @@ namespace Client
         /// <summary> 대기하고 있는 이벤트 확인 후 실행 </summary>
         void CheckAndShowEvent()
         {
-            bool isFinished = DataManager.Instance.playerData.WatchedEventIDList.Contains(12);
+            bool isFinished =  GameManager.Instance.tempEventIDList.Contains(12) || DataManager.Instance.playerData.WatchedEventIDList.Contains(12);
 
             Debug.Log($"<color=yellow> CheckAndShowEvent / 엔딩 보여줄 수 있음? : {isFinished}</color>");
 
@@ -190,7 +194,6 @@ namespace Client
             {
                 long eventID = EventManager.Instance.nowEventData.eventTitle.index;
                 GameManager.Instance.tempEventIDList.Add(eventID);
-                //EventManager.Instance.AddWatchedEvent(EventManager.Instance.nowEventData);
                 CheckAndShowEvent();
                 return;
             }
@@ -502,7 +505,7 @@ namespace Client
 
         public IEnumerator FadeBlackImage()
         {
-            blackCanvasGroup.blocksRaycasts = true;
+            isBlockingInput = true;
 
             otherCanvasGroup.gameObject.SetActive(false);
             blackCanvasGroup.gameObject.SetActive(true);
@@ -519,7 +522,7 @@ namespace Client
             blackCanvasGroup.gameObject.SetActive(false);
             otherCanvasGroup.gameObject.SetActive(true);
 
-            blackCanvasGroup.blocksRaycasts = false;
+            isBlockingInput = false;
 
         }
 

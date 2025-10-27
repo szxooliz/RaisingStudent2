@@ -55,8 +55,6 @@ namespace Client
             DataManager.Instance.playerData.OnStatusChanged -= OnStatusChanged;
         }
 
-
-
         /// <summary> 버튼 바인딩 </summary>
         void BindButton()
         {
@@ -93,10 +91,6 @@ namespace Client
             // 육성 상태일 경우 스탯, 스트레스 업데이트
             if (index == (int)UIs.MainUI)
             {
-                DataManager.Instance.ApplyTurnStat();
-                EventManager.Instance.ApplyEvents();
-                DataManager.Instance.SaveAllData();
-
                 ChangeBackGround("bg_school");
                 UpdateStatUIs();
                 UpdateStressUIs();

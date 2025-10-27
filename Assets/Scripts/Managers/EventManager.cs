@@ -106,9 +106,7 @@ namespace Client
         }
 
         #region 이벤트 진행 상황, 조건 체크
-        /// <summary>
-        /// 메인 이벤트 등장 조건 체크
-        /// </summary>
+        /// <summary> 메인 이벤트 등장 조건 체크 </summary>
         private bool IsMainEventAddable(EventTitle eventTitle)
         {
             if (DataManager.Instance.playerData.AppliedEventsDict.TryGetValue(eventTitle.index, out bool value))
@@ -135,13 +133,10 @@ namespace Client
 
             Debug.Log($"이벤트 끝, {eventID} 등록");
             DataManager.Instance.playerData.WatchedEventIDList.Add(eventID);
-            // TODO : 플레이어 데이터 save 하기
             DataManager.Instance.SaveAllData();
         }
 
-        /// <summary>
-        /// 후보 랜덤 이벤트 중에서 이미 봤던 이벤트는 제외
-        /// </summary>
+        /// <summary> 후보 랜덤 이벤트 중에서 이미 봤던 이벤트는 제외 </summary>
         private void DeleteWatchedEvent(List<EventTitle> randomList)
         {
             // 제거 때문에 역 for문 사용
@@ -154,9 +149,7 @@ namespace Client
             }
         }
 
-        /// <summary>
-        /// 한 턴에 랜덤 이벤트 최대 1개, 재등장 불가
-        /// </summary>
+        /// <summary> 한 턴에 랜덤 이벤트 최대 1개, 재등장 불가 </summary>
         private EventTitle GetOneRandomEvent(List<EventTitle> randomList)
         {
             if (randomList.Count == 0) return null;
@@ -165,19 +158,14 @@ namespace Client
             return randomList[UnityEngine.Random.Range(0, randomList.Count)];
         }
 
-        /// <summary>
-        /// 등장 가능 범위 내의 이벤트인지 확인
-        /// </summary>
-        /// <param name="eventTitle"></param>
+        /// <summary> 등장 가능 범위 내의 이벤트인지 확인 </summary>
         private bool IsInTurnRange(EventTitle eventTitle)
         {
             int currentTurn = DataManager.Instance.playerData.CurrentTurn;
             return currentTurn >= eventTitle.AppearStart && currentTurn <= eventTitle.AppearEnd;
         }
 
-        /// <summary>
-        /// 랜덤 이벤트 자체 발생 확률 계산
-        /// </summary>
+        /// <summary> 랜덤 이벤트 자체 발생 확률 계산 </summary>
         private bool TriggerRandomEvent()
         {
             bool tm = UnityEngine.Random.Range(0, 101) <= RANDOM_PROB;
@@ -187,9 +175,7 @@ namespace Client
         #endregion
 
         #region 학사일정 팝업 전달용
-        /// <summary>
-        /// 학사 일정 이벤트 중에서 watchedEvent에 기록된 게 있으면 제일 마지막 기록된 인덱스 리턴
-        /// </summary>
+        /// <summary> 학사 일정 이벤트 중에서 watchedEvent에 기록된 게 있으면 제일 마지막 기록된 인덱스 리턴 </summary>
         public long GetLargestScheduleID()
         {
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
@@ -208,9 +194,7 @@ namespace Client
             return watchedEventID;
         }
 
-        /// <summary>
-        /// 다음 실행될 예정인 학사일정 이벤트 enum 리턴
-        /// </summary>
+        /// <summary> 다음 실행될 예정인 학사일정 이벤트 enum 리턴 </summary>
         public long GetNextScheduleID()
         {
             List<eScheduleEvent> scheduleList = new List<eScheduleEvent>((eScheduleEvent[])Enum.GetValues(typeof(eScheduleEvent)));
@@ -235,9 +219,7 @@ namespace Client
         }
         #endregion
 
-        /// <summary>
-        /// 외부에서 이벤트 확인하고 로드할 때 호출
-        /// </summary>
+        /// <summary> 외부에서 이벤트 확인하고 로드할 때 호출 </summary>
         public void CheckEvent()
         {
             EnqueueEventID();
@@ -245,19 +227,13 @@ namespace Client
             if (EventQueue.Count > 0)
             {
                 IsEventAllFinished = false;
-                StartEventPhase();
+                DataManager.Instance.playerData.CurrentStatus = eStatus.Event;
             }
             else 
             {
                 IsEventAllFinished = true;
                 DataManager.Instance.playerData.CurrentStatus = eStatus.Main; 
             }
-        }
-
-        /// <summary> 이벤트 페이즈로 넘어감 </summary>
-        private void StartEventPhase()
-        {
-            DataManager.Instance.playerData.CurrentStatus = eStatus.Event;
         }
 
         /// <summary> 이벤트 데이터를 로드해서 대기열에 추가 </summary>
@@ -302,17 +278,6 @@ namespace Client
         /// <param name="isEnroll">첫번째 버튼 : true / 두번째 버튼 : false</param>
         public void ApplyEvents()
         {
-            /*
-            // 참가 여부 선택이 진행되어야 하는 이벤트에서만 실행
-            //if (nowEventData.eventTitle.ApplyOption)
-            //{
-            //    long eventID = nowEventData.eventTitle.ApplyEvent;
-            //    DataManager.Instance.playerData.AppliedEventsDict.Add(eventID, isEnroll);
-
-            //    if (!isEnroll) RecordEventResult(eventID); // 엔딩 이력서 표시용 기록
-
-            //    Debug.Log($"다음의 {eventID}번 이벤트 참가 신청을 {isEnroll}로 함");
-            //}*/
             if (ApplingEvent == null) return;
 
             Debug.Log($"<color=yellow>이벤트{ApplingEvent.EventName}의  다음 이벤트 지원 가능 여부{ApplingEvent.ApplyOption}, 지원 의사: {IsEventApplied}</color>");

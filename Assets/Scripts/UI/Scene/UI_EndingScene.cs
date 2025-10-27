@@ -99,6 +99,7 @@ namespace Client
             scriptIndex = endingScriptDict.Keys.Min();
             LoadIllustration();
 
+            DataManager.Instance.SaveAllData();
         }
 
 
@@ -114,27 +115,7 @@ namespace Client
             return endingScriptDict.GetValueOrDefault(index, null);
         }
 
-        void GetNextScript1()
-        {
-            // 일러스트가 표시된 상태
-            if (isIllustrationDisplayed)
-            {
-                isIllustrationDisplayed = false;
-                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);  // 일러스트 인덱스 초기화
-            }
 
-            EndingScript endingScript = endingScriptDict[scriptIndex];
-
-
-            // 처음으로 일러스트가 등장한 경우
-            if (!hasIllustrationAppeared && endingScript.HasIllust)
-            {
-                LoadIllustration(endingScript);
-                isIllustrationDisplayed = true;  // 일러스트가 표시되었음을 기록
-                return;
-            }
-
-        }
 
         /// <summary> 다음 엔딩 대사 로드 </summary>
         IEnumerator LoadNextDialogue()
@@ -203,17 +184,19 @@ namespace Client
                 string path = characterSpritePath + "Comsoon_" + endingScript.Face;
                 GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
-            else if (basicSprite == "none")
+            else if (basicSprite == "none") // 냐레이션, 플레이어이면 표시 안함
             {
                 eLineType = eLineType.NARRATION;
 
                 GetImage((int)Images.IMG_CharFace).gameObject.SetActive(false);
-                string path = characterSpritePath + basicSprite;
-                //GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
             }
             else
             {
-                GetImage((int)Images.IMG_CharFace).gameObject.SetActive(false);
+                // 컴순, 나레이션 제외라면 이미지 표시해야 됨
+                GetImage((int)Images.IMG_CharFace).gameObject.SetActive(true);
+                string path = characterSpritePath + basicSprite;
+                GetImage((int)Images.IMG_CharFace).sprite = DataManager.Instance.GetOrLoadSprite(path);
+
             }
 
             StartCoroutine(Util.LoadTextOneByOne(str, charLine));
