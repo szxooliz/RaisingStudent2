@@ -36,9 +36,9 @@ namespace Client
         EndingScript pastEndingScript = null;
 
         private bool hasBackgroundSet = false;        // 배경화면 변경 여부 
-        private bool hasIllustrationAppeared = false; // 처음 일러스트 등장 여부
-        private bool isIllustrationDisplayed = false; // 현재 일러스트가 표시된 상태인지 확인
-
+        //private bool hasIllustrationAppeared = false; // 처음 일러스트 등장 여부
+        //private bool isIllustrationDisplayed = false; // 현재 일러스트가 표시된 상태인지 확인
+        bool isIllustOn = false; // 일러스트가 등장 했는지 기록용 플래그
         private Coroutine coroutine = null;
 
         public override void Init()
@@ -52,6 +52,8 @@ namespace Client
 
             LoadEndingData();
             coroutine = StartCoroutine(LoadNextDialogue());
+
+            GetImage((int)Images.IMG_Illustration).gameObject.SetActive(false);
 
             GetButton((int)Buttons.BTN_Schedule).interactable = false;
             LogManager.Instance.GetNewClusterGroup("육성 완료");
@@ -120,24 +122,23 @@ namespace Client
         /// <summary> 다음 엔딩 대사 로드 </summary>
         IEnumerator LoadNextDialogue()
         {
-            // 일러스트가 표시된 상태
-            if (isIllustrationDisplayed)
+            // 이게 먼저 실행되는 이유는 DisplayIllust()에서 플래그가 true 되기때문
+            if (isIllustOn)
             {
-                isIllustrationDisplayed = false;
-                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);  // 일러스트 인덱스 초기화
+                // 일러스트 레이어 순서 변경
+                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(1);
+            }
+
+            // 이전 스크립트에서 일러스트 등장 플래그=참이면 다음에 일러스트 등장 타이밍
+            if (pastEndingScript != null && pastEndingScript.HasIllust && !isIllustOn)
+            {
+                DisplayIllust();
+                yield break;
             }
 
             EndingScript endingScript = GetNextScript(scriptIndex);
             DisplayScript(endingScript);
             pastEndingScript = endingScript;
-
-            // 처음으로 일러스트가 등장한 경우
-            if (!hasIllustrationAppeared && endingScript.HasIllust)
-            {
-                LoadIllustration(endingScript);
-                isIllustrationDisplayed = true;  // 일러스트가 표시되었음을 기록
-            }
-
             yield return null;
 
         }
@@ -203,17 +204,13 @@ namespace Client
             LogManager.Instance.GetLastClusterGroup().AddLine(eLineType, endingScript);
 
         }
-
-        /// <summary> 다음 일러스트 로드 </summary>
-        void LoadIllustration(EndingScript endingScript)
+        void DisplayIllust()
         {
-            // 처음으로 일러스트가 등장한 경우 상태 업데이트
-            if (endingScript.HasIllust)
-            {
-                hasIllustrationAppeared = true;
-                GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(4);
-            }
+            GetImage((int)Images.IMG_Illustration).gameObject.SetActive(true);
+            GetImage((int)Images.IMG_Illustration).transform.SetSiblingIndex(4);
+            isIllustOn = true;
         }
+
         IEnumerator DelayedTransition()
         {
             yield return new WaitForSeconds(0.3f); // 최종 스크립트 표시 시간 확보
